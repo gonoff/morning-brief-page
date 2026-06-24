@@ -4,7 +4,6 @@
   "data_as_of": "2026-06-24T18:21:44+00:00",
   "greeting": "Morning, Haniel. Calendar's clear — the whole day is yours.",
   "hype": "GS financial data gets locked down, the CT Pros QB wizard ships, and the quality-gate engine gets torn apart. Full runway, no excuses. Let's go.",
-  "notice": "Sync script hit a macOS permissions error on ~/Desktop/Projects — snapshots not updated. Tasks are from the last successful sync; check 'sync.err.log' and grant Full Disk Access to fix it.",
   "difficulty": {
     "rating": "Solid",
     "planned_minutes": 390,
