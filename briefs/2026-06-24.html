@@ -1,508 +1,327 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="robots" content="noindex,nofollow">
-<title>Morning Brief — Wednesday, June 24 2026</title>
-<style>
-  :root {
-    --bg: #0f172a; --surface: #1e293b; --surface2: #263348; --border: #334155;
-    --text: #e2e8f0; --muted: #94a3b8; --amber: #f59e0b; --emerald: #10b981;
-    --indigo: #818cf8; --red: #ef4444; --yellow: #eab308; --blue: #3b82f6; --gap: 1.25rem;
-  }
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { background: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 15px; line-height: 1.6; padding: 1rem; }
-  .notice { background: #1e3a5f; border: 1px solid #3b82f6; border-radius: 8px; padding: 0.6rem 1rem; font-size: 0.85rem; color: #93c5fd; margin-bottom: 1rem; }
-  header { text-align: center; margin-bottom: 2rem; }
-  header .date { font-size: 0.9rem; color: var(--muted); letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 0.3rem; }
-  header h1 { font-size: 1.5rem; font-weight: 700; margin-bottom: 0.75rem; }
-  .badge { display: inline-block; padding: 0.35rem 1.1rem; border-radius: 999px; font-weight: 700; font-size: 1rem; letter-spacing: 0.05em; }
-  .badge-solid { background: #1d4ed8; color: #bfdbfe; }
-  header .hype { margin-top: 0.75rem; font-size: 1.05rem; color: var(--muted); font-style: italic; }
-  .graphs { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: var(--gap); margin-bottom: 2rem; }
-  .card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.25rem; }
-  .card-title { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin-bottom: 0.75rem; }
-  .rings { display: flex; gap: 1.5rem; justify-content: center; align-items: center; flex-wrap: wrap; }
-  .ring-wrap { display: flex; flex-direction: column; align-items: center; gap: 0.4rem; }
-  .ring-label { font-size: 0.75rem; color: var(--muted); text-align: center; max-width: 80px; }
-  .ring-pct { font-size: 0.8rem; font-weight: 700; color: var(--text); }
-  .timeline-bar { position: relative; height: 48px; background: var(--surface2); border-radius: 8px; overflow: hidden; }
-  .tl-seg { position: absolute; top: 0; height: 100%; display: flex; align-items: center; justify-content: center; font-size: 0.65rem; font-weight: 600; color: rgba(255,255,255,0.85); overflow: hidden; white-space: nowrap; }
-  .tl-label { font-size: 0.7rem; color: var(--muted); display: flex; justify-content: space-between; margin-top: 0.3rem; }
-  .gauge-wrap { display: flex; align-items: center; gap: 1rem; }
-  .gauge-text strong { font-size: 1.4rem; color: var(--text); display: block; }
-  .gauge-text span { color: var(--muted); font-size: 0.8rem; }
-  section.project { margin-bottom: 2rem; }
-  .proj-header { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem; }
-  .proj-dot { width: 14px; height: 14px; border-radius: 50%; flex-shrink: 0; }
-  .proj-header h2 { font-size: 1.1rem; font-weight: 700; }
-  .proj-header .client { font-size: 0.8rem; color: var(--muted); }
-  .task-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.1rem 1.25rem; margin-bottom: 0.85rem; }
-  .task-meta { display: flex; align-items: center; gap: 0.6rem; margin-bottom: 0.6rem; flex-wrap: wrap; }
-  .task-time { font-size: 0.8rem; color: var(--muted); font-weight: 600; }
-  .est-badge { font-size: 0.7rem; padding: 0.15rem 0.5rem; border-radius: 4px; background: var(--surface2); border: 1px solid var(--border); font-weight: 700; }
-  .prio-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
-  .prio-high { background: var(--red); }
-  .prio-med { background: var(--yellow); }
-  .task-title { font-size: 1rem; font-weight: 700; margin-bottom: 0.75rem; color: var(--text); }
-  .prep-row { margin-bottom: 0.55rem; }
-  .prep-label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin-bottom: 0.15rem; }
-  .prep-body { font-size: 0.88rem; color: var(--text); }
-  .prep-body ol, .prep-body ul { padding-left: 1.2rem; margin-top: 0.2rem; }
-  .prep-body li { margin-bottom: 0.15rem; }
-  code { background: var(--surface2); padding: 0.1rem 0.3rem; border-radius: 3px; font-size: 0.82em; font-family: 'SF Mono', monospace; }
-  .copy-btn { margin-top: 1rem; display: inline-block; padding: 0.45rem 1rem; border-radius: 6px; border: 1px solid var(--border); background: var(--surface2); color: var(--muted); font-size: 0.8rem; cursor: pointer; }
-  .copy-btn:hover { background: var(--border); color: var(--text); }
-  .waiting-card { background: var(--surface); border: 1px solid #475569; border-radius: 8px; padding: 0.7rem 1rem; margin-bottom: 0.5rem; }
-  .waiting-card .wtask { font-weight: 600; color: var(--text); font-size: 0.88rem; }
-  .waiting-card .wreason { color: var(--muted); font-size: 0.82rem; }
-  .ondeck { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1rem 1.25rem; margin-bottom: 2rem; }
-  .ondeck-header { display: flex; align-items: center; gap: 0.6rem; }
-  .ondeck-header h3 { font-size: 0.95rem; font-weight: 700; }
-  .ondeck-sub { font-size: 0.82rem; color: var(--muted); margin-top: 0.35rem; }
-  footer { text-align: center; font-size: 0.78rem; color: var(--muted); padding-top: 1.5rem; border-top: 1px solid var(--border); margin-top: 2rem; }
-  .section-label { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 0.85rem; }
-  @media (max-width: 480px) { body { padding: 0.6rem; font-size: 14px; } header h1 { font-size: 1.2rem; } .task-card { padding: 0.9rem 1rem; } }
-</style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <title>Morning Brief · June 24, 2026</title>
+  <style>
+    :root {
+      --bg: #0f1117;
+      --surface: #1a1d27;
+      --surface2: #22263a;
+      --border: #2e3248;
+      --text: #e8eaf0;
+      --muted: #7b82a0;
+      --gs: #C47D3B;
+      --ct: #3B82F6;
+      --high: #ef4444;
+      --med: #f59e0b;
+      --low: #6b7280;
+      --green: #22c55e;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 15px; line-height: 1.5; min-height: 100vh; }
+    .notice { background: #1c2233; border-bottom: 1px solid #2e3f6e; padding: 10px 20px; text-align: center; font-size: 13px; color: #7b96c8; }
+    .container { max-width: 900px; margin: 0 auto; padding: 24px 16px 60px; }
+    .header { margin-bottom: 28px; }
+    .header-top { display: flex; align-items: flex-start; justify-content: space-between; flex-wrap: wrap; gap: 12px; margin-bottom: 8px; }
+    .date-label { font-size: 13px; color: var(--muted); letter-spacing: 0.04em; text-transform: uppercase; margin-bottom: 4px; }
+    .greeting { font-size: 26px; font-weight: 700; color: var(--text); }
+    .difficulty-badge { display: flex; flex-direction: column; align-items: center; background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 10px 18px; min-width: 130px; }
+    .difficulty-rating { font-size: 18px; font-weight: 800; color: #f59e0b; }
+    .difficulty-sub { font-size: 12px; color: var(--muted); margin-top: 2px; }
+    .hype { font-size: 14px; color: #a0aec0; border-left: 3px solid var(--gs); padding-left: 12px; margin-top: 10px; }
+    .graphs { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin-bottom: 28px; }
+    @media(max-width:600px){ .graphs { grid-template-columns: 1fr 1fr; } }
+    .graph-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 16px; display: flex; flex-direction: column; align-items: center; }
+    .graph-title { font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 10px; text-align: center; }
+    .graph-label { font-size: 13px; color: var(--muted); margin-top: 8px; text-align: center; }
+    .timeline-wrap { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 16px; margin-bottom: 28px; }
+    .timeline-title { font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 12px; }
+    .timeline-bar { position: relative; height: 36px; background: var(--bg); border-radius: 6px; overflow: hidden; }
+    .tl-block { position: absolute; top: 0; height: 100%; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 600; border-radius: 3px; overflow: hidden; white-space: nowrap; }
+    .timeline-labels { display: flex; justify-content: space-between; margin-top: 6px; font-size: 11px; color: var(--muted); }
+    .section { margin-bottom: 32px; }
+    .section-header { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; flex-wrap: wrap; }
+    .project-dot { width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0; }
+    .section-title { font-size: 18px; font-weight: 700; }
+    .section-client { font-size: 13px; color: var(--muted); }
+    .copy-btn { margin-left: auto; background: var(--surface2); border: 1px solid var(--border); color: var(--muted); font-size: 12px; padding: 6px 14px; border-radius: 8px; cursor: pointer; transition: all 0.15s; white-space: nowrap; }
+    .copy-btn:hover { border-color: var(--ct); color: var(--ct); }
+    .copy-btn.copied { border-color: var(--green); color: var(--green); }
+    .task-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 18px; margin-bottom: 14px; }
+    .task-card.gs { border-left: 3px solid var(--gs); }
+    .task-card.ct { border-left: 3px solid var(--ct); }
+    .task-meta { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; flex-wrap: wrap; }
+    .time-badge { background: var(--surface2); border: 1px solid var(--border); border-radius: 6px; font-size: 12px; font-weight: 600; color: var(--text); padding: 3px 8px; font-variant-numeric: tabular-nums; }
+    .est-badge { border-radius: 4px; font-size: 11px; font-weight: 700; padding: 2px 7px; text-transform: uppercase; letter-spacing: 0.05em; }
+    .est-s { background: rgba(99,102,241,0.2); color: #818cf8; }
+    .est-m { background: rgba(139,92,246,0.2); color: #a78bfa; }
+    .est-l { background: rgba(168,85,247,0.2); color: #c084fc; }
+    .priority-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+    .p-high { background: var(--high); }
+    .p-med { background: var(--med); }
+    .p-low { background: var(--low); }
+    .task-id { font-size: 11px; color: var(--muted); font-family: monospace; }
+    .task-title { font-size: 15px; font-weight: 600; margin-bottom: 14px; color: var(--text); }
+    .prep-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    @media(max-width:640px){ .prep-grid { grid-template-columns: 1fr; } }
+    .prep-block { background: var(--bg); border: 1px solid var(--border); border-radius: 8px; padding: 12px; }
+    .prep-block.full { grid-column: 1 / -1; }
+    .prep-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; color: var(--muted); margin-bottom: 6px; }
+    .prep-text { font-size: 13px; color: #c5cae0; line-height: 1.55; }
+    .prep-text ol { padding-left: 18px; }
+    .prep-text li { margin-bottom: 3px; }
+    .resources-list { list-style: none; padding: 0; }
+    .resources-list li { font-size: 12px; color: #8892b0; padding: 3px 0; border-bottom: 1px solid var(--border); }
+    .resources-list li:last-child { border-bottom: none; }
+    .resources-list li::before { content: "→ "; color: var(--muted); }
+    .on-deck { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 18px; margin-bottom: 28px; opacity: 0.7; }
+    .on-deck-title { font-size: 13px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 6px; }
+    .on-deck-content { font-size: 14px; color: var(--muted); }
+    .waiting-section { margin-bottom: 32px; }
+    .waiting-title { font-size: 14px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 12px; }
+    .waiting-card { background: var(--surface); border: 1px solid var(--border); border-left: 3px solid #6b7280; border-radius: 8px; padding: 12px 16px; margin-bottom: 8px; }
+    .waiting-project { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 4px; }
+    .waiting-task { font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 4px; }
+    .waiting-reason { font-size: 13px; color: var(--muted); }
+    .footer { text-align: center; padding-top: 24px; border-top: 1px solid var(--border); }
+    .footer-data { font-size: 12px; color: var(--muted); margin-bottom: 8px; }
+    .footer-hype { font-size: 14px; color: #a0aec0; font-style: italic; }
+  </style>
 </head>
 <body>
 
-<div class="notice">&#8505;&#65039; Create a <strong>'Work Plan'</strong> calendar in Google Calendar to get time-blocks added automatically to your calendar.</div>
+<div class="notice">💡 Create a <strong>"Work Plan"</strong> calendar in Google Calendar to get automatic time-blocks.</div>
 
-<header>
-  <div class="date">Wednesday &middot; June 24, 2026</div>
-  <h1>Morning, Haniel. Let's get after it.</h1>
-  <span class="badge badge-solid">&#9889; Solid Day &mdash; 88%</span>
-  <div class="hype">Five tasks, two projects, zero fluff &mdash; ship it all before 6 PM.</div>
-</header>
+<div class="container">
 
-<div class="graphs">
-  <div class="card">
-    <div class="card-title">Project Progress</div>
-    <div class="rings">
-      <div class="ring-wrap">
-        <svg width="80" height="80" viewBox="0 0 80 80">
-          <circle cx="40" cy="40" r="32" fill="none" stroke="#263348" stroke-width="10"/>
-          <circle cx="40" cy="40" r="32" fill="none" stroke="#f59e0b" stroke-width="10"
-            stroke-dasharray="201.06" stroke-dashoffset="94.5" stroke-linecap="round" transform="rotate(-90 40 40)"/>
-          <text x="40" y="44" text-anchor="middle" fill="#e2e8f0" font-size="14" font-weight="700">53%</text>
-        </svg>
-        <div class="ring-label">CT Pros ERP</div>
-        <div class="ring-pct">17 / 32</div>
+  <div class="header">
+    <div class="header-top">
+      <div>
+        <div class="date-label">Wednesday · June 24, 2026</div>
+        <div class="greeting">Morning, Haniel. Let's make it count.</div>
       </div>
-      <div class="ring-wrap">
-        <svg width="80" height="80" viewBox="0 0 80 80">
-          <circle cx="40" cy="40" r="32" fill="none" stroke="#263348" stroke-width="10"/>
-          <circle cx="40" cy="40" r="32" fill="none" stroke="#10b981" stroke-width="10"
-            stroke-dasharray="201.06" stroke-dashoffset="88.5" stroke-linecap="round" transform="rotate(-90 40 40)"/>
-          <text x="40" y="44" text-anchor="middle" fill="#e2e8f0" font-size="14" font-weight="700">56%</text>
-        </svg>
-        <div class="ring-label">Takeoff Engine</div>
-        <div class="ring-pct">15 / 27</div>
-      </div>
-      <div class="ring-wrap">
-        <svg width="80" height="80" viewBox="0 0 80 80">
-          <circle cx="40" cy="40" r="32" fill="none" stroke="#263348" stroke-width="10"/>
-          <circle cx="40" cy="40" r="32" fill="none" stroke="#818cf8" stroke-width="10"
-            stroke-dasharray="201.06" stroke-dashoffset="20.1" stroke-linecap="round" transform="rotate(-90 40 40)"/>
-          <text x="40" y="44" text-anchor="middle" fill="#e2e8f0" font-size="14" font-weight="700">90%</text>
-        </svg>
-        <div class="ring-label">GS-ERP (on deck)</div>
-        <div class="ring-pct">570 / 634</div>
+      <div class="difficulty-badge">
+        <div class="difficulty-rating">Solid Day</div>
+        <div class="difficulty-sub">81% loaded · 6.5h planned</div>
       </div>
     </div>
+    <div class="hype">7 tasks. No meetings. Clear runway. GS Polishing Crusade hits S5 today — you're stacking wins on the most important ERP in the pipeline. Let's go.</div>
   </div>
 
-  <div class="card">
-    <div class="card-title">Day Load</div>
-    <div class="gauge-wrap">
-      <svg width="110" height="70" viewBox="0 0 110 70">
-        <path d="M 10 60 A 45 45 0 0 1 100 60" fill="none" stroke="#263348" stroke-width="12" stroke-linecap="round"/>
-        <path d="M 10 60 A 45 45 0 0 1 100 60" fill="none" stroke="#1d4ed8" stroke-width="12"
-          stroke-dasharray="141.37" stroke-dashoffset="17.7" stroke-linecap="round"/>
-        <text x="55" y="52" text-anchor="middle" fill="#e2e8f0" font-size="16" font-weight="700">88%</text>
+  <div class="graphs">
+    <div class="graph-card">
+      <div class="graph-title">GS-ERP Progress</div>
+      <svg width="90" height="90" viewBox="0 0 90 90">
+        <circle cx="45" cy="45" r="38" fill="none" stroke="#22263a" stroke-width="8"/>
+        <circle cx="45" cy="45" r="38" fill="none" stroke="#C47D3B" stroke-width="8" stroke-dasharray="238.76" stroke-dashoffset="71.63" stroke-linecap="round" transform="rotate(-90 45 45)"/>
+        <text x="45" y="49" text-anchor="middle" fill="#e8eaf0" font-size="16" font-weight="700">71%</text>
       </svg>
-      <div class="gauge-text">
-        <strong>7h 45m</strong>
-        <span>planned of 8h available</span><br>
-        <span style="color:#6ee7b7;font-size:0.8rem;">15 min to spare</span>
-      </div>
+      <div class="graph-label">70 open · ~245 total</div>
+    </div>
+    <div class="graph-card">
+      <div class="graph-title">CT Pros ERP Progress</div>
+      <svg width="90" height="90" viewBox="0 0 90 90">
+        <circle cx="45" cy="45" r="38" fill="none" stroke="#22263a" stroke-width="8"/>
+        <circle cx="45" cy="45" r="38" fill="none" stroke="#3B82F6" stroke-width="8" stroke-dasharray="238.76" stroke-dashoffset="114.61" stroke-linecap="round" transform="rotate(-90 45 45)"/>
+        <text x="45" y="49" text-anchor="middle" fill="#e8eaf0" font-size="16" font-weight="700">52%</text>
+      </svg>
+      <div class="graph-label">15 open · ~32 total</div>
+    </div>
+    <div class="graph-card">
+      <div class="graph-title">Day Load</div>
+      <svg width="90" height="90" viewBox="0 0 90 90">
+        <circle cx="45" cy="45" r="38" fill="none" stroke="#22263a" stroke-width="8"/>
+        <circle cx="45" cy="45" r="38" fill="none" stroke="#f59e0b" stroke-width="8" stroke-dasharray="238.76" stroke-dashoffset="45.36" stroke-linecap="round" transform="rotate(-90 45 45)"/>
+        <text x="45" y="44" text-anchor="middle" fill="#e8eaf0" font-size="14" font-weight="700">81%</text>
+        <text x="45" y="57" text-anchor="middle" fill="#7b82a0" font-size="9">SOLID</text>
+      </svg>
+      <div class="graph-label">390 / 480 min</div>
     </div>
   </div>
 
-  <div class="card" style="grid-column: 1 / -1;">
-    <div class="card-title">Day Timeline &mdash; 9 AM to 6 PM (540 min window)</div>
+  <div class="timeline-wrap">
+    <div class="timeline-title">Day Timeline · 09:00 – 18:00</div>
     <div class="timeline-bar">
-      <div class="tl-seg" style="left:0%;width:11.11%;background:#92400e;" title="9:00-10:00 CT Pros t29">t29</div>
-      <div class="tl-seg" style="left:13.89%;width:11.11%;background:#92400e;" title="10:15-11:15 CT Pros t19">t19</div>
-      <div class="tl-seg" style="left:27.78%;width:11.11%;background:#065f46;" title="11:30-12:30 Takeoff t26">t26</div>
-      <div class="tl-seg" style="left:38.89%;width:11.11%;background:#374151;opacity:0.8;" title="12:30-1:30 Lunch">lunch</div>
-      <div class="tl-seg" style="left:50%;width:22.22%;background:#065f46;" title="1:30-3:30 Takeoff t18">t18 (2h)</div>
-      <div class="tl-seg" style="left:75%;width:22.22%;background:#92400e;" title="3:45-5:45 CT Pros t31">t31 (2h)</div>
+      <div class="tl-block" style="left:0%;width:5.56%;background:#C47D3B;color:#fff;">t58</div>
+      <div class="tl-block" style="left:8.33%;width:5.56%;background:#C47D3B;color:#fff;">t57</div>
+      <div class="tl-block" style="left:16.67%;width:5.56%;background:#3B82F6;color:#fff;">t28</div>
+      <div class="tl-block" style="left:24.44%;width:11.11%;background:#3B82F6;color:#fff;">t19</div>
+      <div class="tl-block" style="left:35.56%;width:11.11%;background:#22263a;color:#7b82a0;">LUNCH</div>
+      <div class="tl-block" style="left:46.67%;width:11.11%;background:#3B82F6;color:#fff;">t29</div>
+      <div class="tl-block" style="left:59.72%;width:11.11%;background:#C47D3B;color:#fff;">t56</div>
+      <div class="tl-block" style="left:73.06%;width:22.22%;background:#C47D3B;color:#fff;">t609 S5</div>
     </div>
-    <div class="tl-label"><span>9 AM</span><span>12 PM</span><span>3 PM</span><span>6 PM</span></div>
-    <div style="display:flex;gap:1rem;margin-top:0.6rem;flex-wrap:wrap;">
-      <span style="font-size:0.72rem;color:#f59e0b;">&#9632; CT Pros ERP</span>
-      <span style="font-size:0.72rem;color:#10b981;">&#9632; Takeoff Engine</span>
-      <span style="font-size:0.72rem;color:#6b7280;">&#9632; Lunch</span>
-      <span style="font-size:0.72rem;color:#475569;">&#9632; Buffer (15 min gaps)</span>
+    <div class="timeline-labels">
+      <span>9:00</span><span>10:30</span><span>12:00</span><span>13:30</span><span>15:00</span><span>16:30</span><span>18:00</span>
+    </div>
+    <div style="display:flex;gap:16px;margin-top:10px;flex-wrap:wrap;">
+      <div style="display:flex;align-items:center;gap:6px;font-size:12px;color:#a0a0b0;"><div style="width:12px;height:12px;background:#C47D3B;border-radius:2px;"></div>GS-ERP</div>
+      <div style="display:flex;align-items:center;gap:6px;font-size:12px;color:#a0a0b0;"><div style="width:12px;height:12px;background:#3B82F6;border-radius:2px;"></div>CT Pros ERP</div>
     </div>
   </div>
+
+  <!-- GS-ERP -->
+  <div class="section">
+    <div class="section-header">
+      <div class="project-dot" style="background:#C47D3B;"></div>
+      <div><div class="section-title">GS-ERP</div><div class="section-client">GS Woodworking LLC</div></div>
+      <button class="copy-btn" onclick="copyProject('gs')">📋 Copy tasks JSON</button>
+    </div>
+
+    <div class="task-card gs">
+      <div class="task-meta">
+        <span class="time-badge">09:00–09:30</span><span class="est-badge est-s">S</span>
+        <span class="priority-dot p-high"></span><span class="task-id">t58</span>
+      </div>
+      <div class="task-title">Labor rates + overhead costs (Rony, Giovanne, all roles)</div>
+      <div class="prep-grid">
+        <div class="prep-block full"><div class="prep-label">What</div><div class="prep-text">Sit with Rony and Giovanne to lock in their actual rates — GSAFI LTDA contract amount, Giovanne's role and pay, and the full monthly overhead (rent, utilities, insurance). These numbers go into KB §6.4–6.5 and unlock the financial dashboard.</div></div>
+        <div class="prep-block"><div class="prep-label">Understand</div><div class="prep-text">The cost-plus pricing engine, profit margin rollups, and the bonus system all read these KB placeholders. Right now they're zeroes — every financial calculation in GS-ERP is showing fictional profit margins.</div></div>
+        <div class="prep-block"><div class="prep-label">Approach</div><div class="prep-text"><ol><li>Open KB §6.4 and §6.5 — note every placeholder field.</li><li>Schedule 15-min call with Rony for GSAFI contract rate and Giovanne's compensation.</li><li>Pull monthly overhead line items (rent, utilities, shop insurance, software).</li><li>Update KB with real numbers. Flag t51 that its data dependency is cleared.</li></ol></div></div>
+        <div class="prep-block"><div class="prep-label">Resources</div><ul class="resources-list"><li>KB §6.4 (labor rates)</li><li>KB §6.5 (overhead costs)</li><li>GSAFI LTDA contract / HR records</li><li>Rony contact</li><li>Giovanne HR profile</li></ul></div>
+      </div>
+    </div>
+
+    <div class="task-card gs">
+      <div class="task-meta">
+        <span class="time-badge">09:45–10:15</span><span class="est-badge est-s">S</span>
+        <span class="priority-dot p-high"></span><span class="task-id">t57</span>
+      </div>
+      <div class="task-title">Bonus formula definition (production + paint shop)</div>
+      <div class="prep-grid">
+        <div class="prep-block full"><div class="prep-label">What</div><div class="prep-text">Get the exact production bonus formula from Guilherme and Mayara — the pool/percentage, the equal-vs-weighted split among 12 carpenters, and the paint shop team formula.</div></div>
+        <div class="prep-block"><div class="prep-label">Understand</div><div class="prep-text">BonusEligibilityCalculator exists (actual_days ≤ target_days AND ck2_rework_count==0) but the AMOUNTS are blank. KB §9.1 and §12.13 are placeholders. Two separate formulas needed: (1) production per-marceneiro pool and split, (2) paint shop variant. The split rule is undecided.</div></div>
+        <div class="prep-block"><div class="prep-label">Approach</div><div class="prep-text"><ol><li>Pull KB §9.1 and §12.13 — list every open question.</li><li>Prep a 1-pager for Guilherme/Mayara: bonus pool %, how 12-marceneiro split works, paint quality gate threshold.</li><li>Get real numbers in the session — commit to KB.</li><li>Note what BonusEligibilityCalculator needs vs what's new code (t38).</li></ol></div></div>
+        <div class="prep-block"><div class="prep-label">Resources</div><ul class="resources-list"><li>KB §9.1 (bonus formula)</li><li>KB §12.13 (open bonus questions)</li><li>App/Services/Production/BonusEligibilityCalculator.php</li><li>Project Plan §6 bonus notes</li><li>Guilherme + Mayara contacts</li></ul></div>
+      </div>
+    </div>
+
+    <div class="task-card gs">
+      <div class="task-meta">
+        <span class="time-badge">14:30–15:30</span><span class="est-badge est-m">M</span>
+        <span class="priority-dot p-high"></span><span class="task-id">t56</span>
+      </div>
+      <div class="task-title">Design + installation time benchmarks per project type</div>
+      <div class="prep-grid">
+        <div class="prep-block full"><div class="prep-label">What</div><div class="prep-text">Build a systematic way to capture real design hours and installation hours per project type — the data KB §9.1 needs to calibrate time standards and capacity planning.</div></div>
+        <div class="prep-block"><div class="prep-label">Understand</div><div class="prep-text">TimeStandard values are seeded estimates, not calibrated to GS's actual shop speed. Design hours vary significantly by type (kitchen >> closet). Without real benchmarks, the ProductionPriorityService is scoring on fictional data.</div></div>
+        <div class="prep-block"><div class="prep-label">Approach</div><div class="prep-text"><ol><li>Read KB §9.1 — understand what format benchmarks need to be in.</li><li>Write a query to extract actual design durations from completed projects (timestamp diffs grouped by product_type).</li><li>Interview the 3 install crew leads (GKM, IR Woodworking, Caio) for typical hours per type.</li><li>Compare vs current TimeStandard seeds. Update KB §9.1 with benchmark data + recommended adjustments.</li></ol></div></div>
+        <div class="prep-block"><div class="prep-label">Resources</div><ul class="resources-list"><li>KB §9.1 (time benchmarks)</li><li>TimeStandard model + seeder</li><li>Project query for design timestamps</li><li>ProductionPriorityService source</li><li>Install crew lead contacts (GKM, IR Woodworking, Caio Martins)</li></ul></div>
+      </div>
+    </div>
+
+    <div class="task-card gs">
+      <div class="task-meta">
+        <span class="time-badge">15:45–17:45</span><span class="est-badge est-l">L</span>
+        <span class="priority-dot p-high"></span><span class="task-id">t609</span>
+      </div>
+      <div class="task-title">S5 · Quality gates — CK1–CK4 inspection engine bug hunt + E2E</div>
+      <div class="prep-grid">
+        <div class="prep-block full"><div class="prep-label">What</div><div class="prep-text">Run the V1 Polishing Crusade Sector 5 — bug-hunt the CK1–CK4 inspection engine, adversarially verify every finding against Master_flow.md, fix confirmed HIGH/CRITICAL bugs behind PHPUnit tests, then write E2E specs for all guard paths.</div></div>
+        <div class="prep-block"><div class="prep-label">Understand</div><div class="prep-text">S1–S4 are done (workflow, estimates, billing, QB). S5 covers: Ck1InspectionService, Ck2InspectionService, fail/pass cascades, rework round tracking, photo-upload gates, CK4 signature capture, punch list lifecycle. Converge rule: done when a round finds no new HIGH/CRITICAL confirmed bugs.</div></div>
+        <div class="prep-block"><div class="prep-label">Approach</div><div class="prep-text"><ol><li>Read Master_flow.md §§ on CK1–CK4 (design verification → fabrication QC → cosmetic → install sign-off).</li><li>Walk each path: CK1→clientApproveDrawing gate, CK2 incomplete guard, CK3→awaiting_ck3, CK4→signOffCk4→punch list.</li><li>Hunt for: guard bypasses, cascade missing substep transitions, rework count not incrementing, photo not required when KB says it is, wrong permission gates.</li><li>Adversarially verify — refute if no Master_flow citation. For HIGHs: failing PHPUnit first, then fix. Write .local.spec.ts covering all guard paths.</li></ol></div></div>
+        <div class="prep-block"><div class="prep-label">Resources</div><ul class="resources-list"><li>Master_flow.md §§ on CK1/CK2/CK3/CK4</li><li>Ck1InspectionService / Ck2InspectionService / CK3 / CK4 classes</li><li>t605–t608 bug hunt notes (S1–S4 patterns)</li><li>Existing .local.spec.ts conventions (port 8000)</li><li>ProjectWorkflow.php passCk2/passCk3/passCk4</li><li>PipelineRegistry.php substep definitions</li></ul></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CT Pros ERP -->
+  <div class="section">
+    <div class="section-header">
+      <div class="project-dot" style="background:#3B82F6;"></div>
+      <div><div class="section-title">CT Pros ERP</div><div class="section-client">CT Pros</div></div>
+      <button class="copy-btn" onclick="copyProject('ct')">📋 Copy tasks JSON</button>
+    </div>
+
+    <div class="task-card ct">
+      <div class="task-meta">
+        <span class="time-badge">10:30–11:00</span><span class="est-badge est-s">S</span>
+        <span class="priority-dot p-med"></span><span class="task-id">t28</span>
+      </div>
+      <div class="task-title">A.5/R4 — dev QB inspector (/dev/qb-inspector) to simulate approve/reject/paid</div>
+      <div class="prep-grid">
+        <div class="prep-block full"><div class="prep-label">What</div><div class="prep-text">Port the GS /dev/qb-inspector dev page to CT Pros — a QB_FAKE-gated UI that lets you trigger approve/reject/paid events against fake QB tables without touching a real QuickBooks environment.</div></div>
+        <div class="prep-block"><div class="prep-label">Understand</div><div class="prep-text">The fake-QB layer intercepts sync() calls in dev/test via QB_FAKE flag and fake_qb_* tables. Without the inspector, you can't test Section F (approval flow, t31) or the payment poller locally. This is the last R4 piece of the A.5 GS-pattern adoption.</div></div>
+        <div class="prep-block"><div class="prep-label">Approach</div><div class="prep-text"><ol><li>Find /dev/qb-inspector in GS repo (routes, controller, Vue page).</li><li>Map GS entities to CT Pros equivalents (clients→customers, documents→estimates/invoices).</li><li>Build route + controller in CT Pros (behind APP_ENV=local AND QB_FAKE=true).</li><li>Build Vue page: simulate estimate accepted, rejected, invoice paid. Wire fake_qb_* table updates.</li></ol></div></div>
+        <div class="prep-block"><div class="prep-label">Resources</div><ul class="resources-list"><li>GS /dev/qb-inspector source</li><li>CT Pros QB_FAKE env flag</li><li>fake_qb_estimates / fake_qb_invoices table schema</li><li>SyncEntityJob + SyncsToQuickBooks trait</li></ul></div>
+      </div>
+    </div>
+
+    <div class="task-card ct">
+      <div class="task-meta">
+        <span class="time-badge">11:15–12:15</span><span class="est-badge est-m">M</span>
+        <span class="priority-dot p-high"></span><span class="task-id">t19</span>
+      </div>
+      <div class="task-title">Initial mapping wizard: expense categories → QB accounts, default income account, tax codes, existing-record matching</div>
+      <div class="prep-grid">
+        <div class="prep-block full"><div class="prep-label">What</div><div class="prep-text">Build the 4-step Settings → QuickBooks mapping wizard: map expense categories to QB accounts, pick default income account, set tax code, and optionally match existing clients/subcontractors to QB records by name.</div></div>
+        <div class="prep-block"><div class="prep-label">Understand</div><div class="prep-text">Every sync service reads from settings: qb_category_account_map, qb_default_income_account_id, qb_tax_code_id. Without this wizard those settings don't exist → every sync fails at the account-reference lookup. This is the config prerequisite for going live.</div></div>
+        <div class="prep-block"><div class="prep-label">Approach</div><div class="prep-text"><ol><li>Add 4-step Vue wizard at /settings/quickbooks/mapping.</li><li>Step 1: fetch QB Accounts via QuickBooksClient → dropdown per ExpenseCategory. Step 2: pick default income account. Step 3: pick QB TaxCode.</li><li>Step 4: fuzzy-match CT Pros clients/subs by name to QB Customers/Vendors — confirm, write qb_id back.</li><li>Persist via PATCH /settings/quickbooks/mapping.</li></ol></div></div>
+        <div class="prep-block"><div class="prep-label">Resources</div><ul class="resources-list"><li>QB v3 API /query (SELECT * FROM Account WHERE Active=true)</li><li>QuickBooksClient service</li><li>Setting::getValue()/setValue()</li><li>ExpenseCategory model</li><li>Existing QB settings page at /settings/quickbooks</li></ul></div>
+      </div>
+    </div>
+
+    <div class="task-card ct">
+      <div class="task-meta">
+        <span class="time-badge">13:15–14:15</span><span class="est-badge est-m">M</span>
+        <span class="priority-dot p-high"></span><span class="task-id">t29</span>
+      </div>
+      <div class="task-title">Sandbox-validate all 6 entity QB mappings + upsert/LinkedTxn shapes</div>
+      <div class="prep-grid">
+        <div class="prep-block full"><div class="prep-label">What</div><div class="prep-text">Connect a real Intuit sandbox and run each of the 6 sync services against it to verify field mappings actually work — the fake-QB layer in tests covers flow, not real API shapes.</div></div>
+        <div class="prep-block"><div class="prep-label">Understand</div><div class="prep-text">Known risks: Payment LinkedTxn must be an array of objects (not flat); ItemRef is REQUIRED on Estimate lines; Purchase TotalAmt is output-only in QB. Any of these wrong = silent failure in production. This is the production BLOCKER.</div></div>
+        <div class="prep-block"><div class="prep-label">Approach</div><div class="prep-text"><ol><li>Create Intuit sandbox company at developer.intuit.com; grab ClientId/Secret.</li><li>Set QB_CLIENT_ID/SECRET/ENV=sandbox in local .env; run qb:connect to get tokens.</li><li>Trigger each sync job via tinker: Customer→Vendor→Estimate→Invoice→Payment→Expense.</li><li>Check QB sandbox dashboard: record created? Fields correct? Fix errors + add Http::fake() unit tests.</li></ol></div></div>
+        <div class="prep-block"><div class="prep-label">Resources</div><ul class="resources-list"><li>developer.intuit.com — sandbox company + OAuth app</li><li>QB v3 PHP SDK DataService</li><li>6 sync services (CustomerSync, VendorSync, EstimateSync, InvoiceSync, PaymentSync, ExpenseSync)</li><li>QB v3 API field reference (Payment LinkedTxn, Purchase TotalAmt)</li></ul></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="on-deck">
+    <div class="on-deck-title">On Deck (not today)</div>
+    <div class="on-deck-content">🔧 <strong>Takeoff Engine</strong> · AZ Team AI — 12 open tasks, phases 5–8 in progress. Next: local seal detection (t15, high, L) + assemblies completion (t18, high, L).</div>
+  </div>
+
+  <div class="waiting-section">
+    <div class="waiting-title">⏳ Waiting On</div>
+    <div class="waiting-card">
+      <div class="waiting-project">GS-ERP · t38</div>
+      <div class="waiting-task">Production bonus system (target vs actual + quality gate eligibility)</div>
+      <div class="waiting-reason">Bonus formula not defined — needs private session with Guilherme/Mayara (KB §9.1 + §12.13 are blank)</div>
+    </div>
+    <div class="waiting-card">
+      <div class="waiting-project">GS-ERP · t566</div>
+      <div class="waiting-task">Markup/commission field with hide-from-client toggle</div>
+      <div class="waiting-reason">Needs dedicated design session with team re: compliance + how Silvia tracks the designer passthrough</div>
+    </div>
+    <div class="waiting-card">
+      <div class="waiting-project">CT Pros ERP · t13</div>
+      <div class="waiting-task">Production deployment plan + first deploy</div>
+      <div class="waiting-reason">Deferred until feature-complete app + a domain acquired (no domain as of 2026-06-03)</div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <div class="footer-data">Data as of · 2026-06-24 18:21 UTC · Generated 06:00 ET</div>
+    <div class="footer-hype">You've shipped S1–S4. S5 is yours today. The inspection engine doesn't fix itself. 🔥</div>
+  </div>
+
 </div>
-
-<!-- CT PROS ERP -->
-<section class="project">
-  <div class="proj-header">
-    <div class="proj-dot" style="background:#f59e0b;"></div>
-    <div>
-      <h2>CT Pros ERP</h2>
-      <div class="client">CT Pros &middot; Laravel 11 + Inertia + Vue 3 + QuickBooks</div>
-    </div>
-    <svg width="40" height="40" viewBox="0 0 40 40" style="margin-left:auto;flex-shrink:0;">
-      <circle cx="20" cy="20" r="16" fill="none" stroke="#263348" stroke-width="6"/>
-      <circle cx="20" cy="20" r="16" fill="none" stroke="#f59e0b" stroke-width="6"
-        stroke-dasharray="100.53" stroke-dashoffset="47.2" stroke-linecap="round" transform="rotate(-90 20 20)"/>
-      <text x="20" y="24" text-anchor="middle" fill="#e2e8f0" font-size="10" font-weight="700">53%</text>
-    </svg>
-  </div>
-
-  <div class="task-card">
-    <div class="task-meta">
-      <span class="task-time">9:00 &ndash; 10:00</span>
-      <span class="est-badge">M &middot; 60 min</span>
-      <span class="prio-dot prio-high" title="High"></span>
-      <span style="font-size:0.72rem;color:var(--muted);">t29 &middot; HIGH &middot; CRITICAL before prod</span>
-    </div>
-    <div class="task-title">Sandbox-validate all QuickBooks field mappings</div>
-    <div class="prep-row">
-      <div class="prep-label">What</div>
-      <div class="prep-body">Run every QB sync() method against the Intuit sandbox and verify that every field name, data type, and relationship matches the real QBO API before this ever touches a live client account.</div>
-    </div>
-    <div class="prep-row">
-      <div class="prep-label">Understand</div>
-      <div class="prep-body">Intuit's sandbox is a fully isolated QB company &mdash; changes there never reach real data. The 6 entity syncs (customers, invoices, payments, vendors, bills, expense accounts) each have their own QBO endpoint and their own field quirks (e.g. CustomerRef vs CustomerRefFull, TxnDate vs DocNumber). A mapping that looks right in code can silently write garbage in prod.</div>
-    </div>
-    <div class="prep-row">
-      <div class="prep-label">Approach</div>
-      <div class="prep-body">
-        <ol>
-          <li>Boot your dev env pointed at Intuit sandbox credentials (check <code>.env.testing</code> &mdash; <code>QB_CLIENT_ID</code>, <code>QB_SANDBOX=true</code>).</li>
-          <li>Trigger each of the 6 DataService sync() methods one by one. Read the raw QBO response and diff field names against what your code writes.</li>
-          <li>Fix any mismatch (null fields, wrong type, missing required field). Keep a running list.</li>
-          <li>Add a PHPUnit test per entity that mocks DataService and asserts the payload shape &mdash; locks the contract so regressions are caught automatically.</li>
-        </ol>
-      </div>
-    </div>
-    <div class="prep-row">
-      <div class="prep-label">Resources</div>
-      <div class="prep-body">
-        <ul>
-          <li>Intuit Developer Sandbox: developer.intuit.com &rarr; your sandbox company</li>
-          <li>QBO API Reference: developer.intuit.com/app/developer/qbo/docs/api/accounting</li>
-          <li><code>app/Services/QuickBooks/DataService.php</code> &mdash; your sync methods</li>
-          <li>PHPUnit + <code>Mockery::mock()</code> or Laravel's <code>$this-&gt;mock()</code></li>
-          <li>Postman collection if you have one &mdash; fire raw API calls to see exact QB responses</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-
-  <div class="task-card">
-    <div class="task-meta">
-      <span class="task-time">10:15 &ndash; 11:15</span>
-      <span class="est-badge">M &middot; 60 min</span>
-      <span class="prio-dot prio-high" title="High"></span>
-      <span style="font-size:0.72rem;color:var(--muted);">t19 &middot; HIGH</span>
-    </div>
-    <div class="task-title">QB Mapping Wizard &mdash; 4-step account assignment UI</div>
-    <div class="prep-row">
-      <div class="prep-label">What</div>
-      <div class="prep-body">Build a 4-step wizard: expense categories &rarr; QB accounts, income account, tax codes, fuzzy-match clients. Persist all choices to a settings table that DataService reads at sync time.</div>
-    </div>
-    <div class="prep-row">
-      <div class="prep-label">Understand</div>
-      <div class="prep-body">Without this, the sync runs against missing or hardcoded account IDs and either crashes or posts to the wrong QB chart of accounts. Fuzzy client matching handles the common case where a CT Pros customer name doesn't exactly match the QB customer record (different casing, abbreviations, extra spaces).</div>
-    </div>
-    <div class="prep-row">
-      <div class="prep-label">Approach</div>
-      <div class="prep-body">
-        <ol>
-          <li>Create a Vue 3 wizard component with 4 named steps and Back/Next nav &mdash; a single <code>currentStep</code> ref + <code>v-show</code> per step is plenty.</li>
-          <li>Step 1: expense categories &rarr; QB account dropdown (live fetch from QBO Accounts endpoint). Step 2: income account picker. Step 3: default tax code. Step 4: fuzzy client match preview table.</li>
-          <li>On completion, POST all settings to a Laravel controller &rarr; <code>updateOrCreate</code> into <code>quickbooks_settings</code>.</li>
-          <li>Update DataService to read account IDs from that table at runtime instead of any hardcoded values.</li>
-        </ol>
-      </div>
-    </div>
-    <div class="prep-row">
-      <div class="prep-label">Resources</div>
-      <div class="prep-body">
-        <ul>
-          <li>QBO Accounts endpoint: <code>GET /v3/company/{id}/query?query=SELECT * FROM Account</code></li>
-          <li>Vue 3: <code>const currentStep = ref(1)</code> + <code>v-show="currentStep === N"</code></li>
-          <li>Laravel <code>Model::updateOrCreate(['key' =&gt; $v], [...])</code> for settings upsert</li>
-          <li>PHP <code>similar_text($a, $b, $pct)</code> for fuzzy match &mdash; or a simple Levenshtein helper</li>
-          <li>Inertia.js <code>useForm()</code> if you're submitting via Inertia</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-
-  <div class="task-card">
-    <div class="task-meta">
-      <span class="task-time">3:45 &ndash; 5:45</span>
-      <span class="est-badge">L &middot; 2h</span>
-      <span class="prio-dot prio-high" title="High"></span>
-      <span style="font-size:0.72rem;color:var(--muted);">t31 &middot; HIGH</span>
-    </div>
-    <div class="task-title">Section F &mdash; Estimate approval pipeline (approve &rarr; auto-invoice &rarr; QB payment sync)</div>
-    <div class="prep-row">
-      <div class="prep-label">What</div>
-      <div class="prep-body">Add an Approve button on the <code>/d/{share_token}</code> estimate viewer that records approval, generates an invoice, syncs it to QB, and polls for payment status automatically.</div>
-    </div>
-    <div class="prep-row">
-      <div class="prep-label">Understand</div>
-      <div class="prep-body">This is the money flow. The share token is unauthenticated &mdash; anyone with the link can approve &mdash; so rate-limit it (3 req/min per token) and make it idempotent (second approve = no-op). The poller runs on a schedule and writes payment status back to your DB when QB records a payment, firing an event downstream.</div>
-    </div>
-    <div class="prep-row">
-      <div class="prep-label">Approach</div>
-      <div class="prep-body">
-        <ol>
-          <li>Add <code>POST /d/{share_token}/approve</code>: validate token, mark estimate approved (idempotent), dispatch <code>GenerateInvoiceFromEstimate</code> job.</li>
-          <li>Implement <code>DetectAcceptedEstimatesJob</code>: query estimates accepted since last run, create QB invoices via DataService for any not yet synced.</li>
-          <li>Implement <code>QuickBooksPaymentPoller</code>: query <code>SELECT * FROM Payment WHERE...</code> for linked invoices, update local <code>invoice_payments</code> table, fire <code>InvoicePaidEvent</code>.</li>
-          <li>Register both in <code>app/Console/Kernel.php</code>: DetectAccepted every 15 min, PaymentPoller every 30 min. Add a one-row audit log per run.</li>
-        </ol>
-      </div>
-    </div>
-    <div class="prep-row">
-      <div class="prep-label">Resources</div>
-      <div class="prep-body">
-        <ul>
-          <li>QBO Invoices: <code>POST /v3/company/{id}/invoice</code></li>
-          <li>QBO Payments query: <code>SELECT * FROM Payment WHERE TxnDate &gt; '...'</code></li>
-          <li><code>php artisan make:job DetectAcceptedEstimatesJob</code></li>
-          <li><code>$schedule-&gt;job(new QuickBooksPaymentPoller)-&gt;everyThirtyMinutes()</code></li>
-          <li>Laravel <code>RateLimiter::attempt("approve:{$token}", 3, fn() =&gt; ...)</code> for rate limiting</li>
-          <li>Your existing <code>DataService.php</code> &mdash; model createInvoice() after your other sync methods</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-
-  <button class="copy-btn" onclick="copyProject('ct')">&#128203; Copy tasks JSON &mdash; CT Pros ERP</button>
-</section>
-
-<!-- TAKEOFF ENGINE -->
-<section class="project">
-  <div class="proj-header">
-    <div class="proj-dot" style="background:#10b981;"></div>
-    <div>
-      <h2>Takeoff Engine</h2>
-      <div class="client">AZ Team AI &middot; FastAPI + Python PDF room-detection service</div>
-    </div>
-    <svg width="40" height="40" viewBox="0 0 40 40" style="margin-left:auto;flex-shrink:0;">
-      <circle cx="20" cy="20" r="16" fill="none" stroke="#263348" stroke-width="6"/>
-      <circle cx="20" cy="20" r="16" fill="none" stroke="#10b981" stroke-width="6"
-        stroke-dasharray="100.53" stroke-dashoffset="44.2" stroke-linecap="round" transform="rotate(-90 20 20)"/>
-      <text x="20" y="24" text-anchor="middle" fill="#e2e8f0" font-size="10" font-weight="700">56%</text>
-    </svg>
-  </div>
-
-  <div class="task-card">
-    <div class="task-meta">
-      <span class="task-time">11:30 &ndash; 12:30</span>
-      <span class="est-badge">M &middot; 60 min</span>
-      <span class="prio-dot prio-high" title="High"></span>
-      <span style="font-size:0.72rem;color:var(--muted);">t26 &middot; HIGH &middot; Harborview demo failure</span>
-    </div>
-    <div class="task-title">Label Lane v2 &mdash; productize M3 tiles as opt-in AI label mode</div>
-    <div class="prep-row">
-      <div class="prep-label">What</div>
-      <div class="prep-body">Turn the M3 tiles label-reading prototype that crashed the Harborview demo into a stable, opt-in API endpoint: <code>/sheets/{id}/read-labels?mode=ai</code>, backed by MINIMAX_AI, with callout filtering to kill the false positives.</div>
-    </div>
-    <div class="prep-row">
-      <div class="prep-label">Understand</div>
-      <div class="prep-body">The demo failed because the AI lane was active by default and wasn't production-hardened. The two fixes: (1) make it strictly opt-in so standard requests are never affected, (2) filter callout boxes and dimension leaders that were firing as "labels" &mdash; they were the main source of noise. M3 tiles are the PDF rendered at zoom level 3 and sliced into grid cells.</div>
-    </div>
-    <div class="prep-row">
-      <div class="prep-label">Approach</div>
-      <div class="prep-body">
-        <ol>
-          <li>Add <code>mode: str = "standard"</code> query param to the endpoint. Early-return the standard result if <code>mode != "ai"</code>.</li>
-          <li>Add <code>MINIMAX_AI_KEY</code> to the VPS <code>.env</code> and read it in <code>settings.py</code>.</li>
-          <li>In the AI label lane, add a callout filter: reject any detected text region whose bounding box aspect ratio is &gt; 4:1 (callout leaders are thin horizontal strips) and any region touching a zone boundary (those are dimensions, not room labels).</li>
-          <li>Test with the Harborview sheet as your regression fixture &mdash; confirm only room labels survive.</li>
-        </ol>
-      </div>
-    </div>
-    <div class="prep-row">
-      <div class="prep-label">Resources</div>
-      <div class="prep-body">
-        <ul>
-          <li>FastAPI query param: <code>async def read_labels(sheet_id: str, mode: str = "standard")</code></li>
-          <li>MINIMAX AI: check your existing integration for the API call pattern</li>
-          <li>Live service: aztakeoff.azteamai.com</li>
-          <li>VPS: SSH in, add env var, <code>systemctl restart takeoff-engine</code></li>
-          <li>Harborview test sheet &mdash; your regression fixture</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-
-  <div class="task-card">
-    <div class="task-meta">
-      <span class="task-time">1:30 &ndash; 3:30</span>
-      <span class="est-badge">L &middot; 2h</span>
-      <span class="prio-dot prio-high" title="High"></span>
-      <span style="font-size:0.72rem;color:var(--muted);">t18 &middot; HIGH &middot; in progress</span>
-    </div>
-    <div class="task-title">Assemblies-per-room layer &mdash; classification &rarr; wall quantities &rarr; CSI formulas &rarr; new Excel tab</div>
-    <div class="prep-row">
-      <div class="prep-label">What</div>
-      <div class="prep-body">Add a full assemblies layer: take each detected room's classification, compute wall quantities (perimeter &times; height), apply CSI MasterFormat division formulas, and write everything to a new "Assemblies" tab in the Excel output.</div>
-    </div>
-    <div class="prep-row">
-      <div class="prep-label">Understand</div>
-      <div class="prep-body">CSI MasterFormat organizes construction materials into numbered divisions (Division 09 = Finishes: drywall, paint, flooring &mdash; your most common). Each room type (office, corridor, bathroom) has a standard assembly &mdash; a set of finish types that are presumed. Your engine already has room sqft and perimeter from the detection layer; this task layers material quantities on top. Default wall height: 9 ft commercial, 8 ft residential.</div>
-    </div>
-    <div class="prep-row">
-      <div class="prep-label">Approach</div>
-      <div class="prep-body">
-        <ol>
-          <li>Define an <code>ASSEMBLY_RULES</code> dict: <code>room_type &rarr; list of {csi_code, item, unit, qty_formula}</code>. Start with 5&ndash;6 common room types; you can expand later.</li>
-          <li>For each room: compute <code>wall_sf = perimeter_ft * wall_height_ft</code>, <code>ceiling_sf = room_sqft</code>. Apply rules to get per-item quantities.</li>
-          <li>Aggregate across all rooms &mdash; same CSI item from multiple rooms sums together into one row.</li>
-          <li>Add an "Assemblies" worksheet to the openpyxl workbook: columns = CSI Code | Item | Unit | Qty | Notes. Freeze row 1. Add a subtotal row per division group.</li>
-        </ol>
-      </div>
-    </div>
-    <div class="prep-row">
-      <div class="prep-label">Resources</div>
-      <div class="prep-body">
-        <ul>
-          <li>CSI MasterFormat 2016 &mdash; focus on Div 03 (Concrete), Div 06 (Wood), Div 09 (Finishes)</li>
-          <li>openpyxl: <code>wb.create_sheet("Assemblies")</code>, <code>ws.freeze_panes = "A2"</code></li>
-          <li>Your existing <code>takeoff/export.py</code> (or wherever Excel generation lives) &mdash; add the new sheet there</li>
-          <li>Room classification enum from your detection layer &mdash; keys in <code>ASSEMBLY_RULES</code> must match exactly</li>
-          <li>Wall height config: add <code>WALL_HEIGHT_FT: float = 9.0</code> to <code>settings.py</code></li>
-        </ul>
-      </div>
-    </div>
-  </div>
-
-  <button class="copy-btn" onclick="copyProject('takeoff')">&#128203; Copy tasks JSON &mdash; Takeoff Engine</button>
-</section>
-
-<!-- ON DECK -->
-<div class="ondeck">
-  <div class="ondeck-header">
-    <div class="proj-dot" style="background:#818cf8;"></div>
-    <h3>On Deck &mdash; GS-ERP (GS Woodworking LLC)</h3>
-    <svg width="32" height="32" viewBox="0 0 40 40" style="margin-left:auto;flex-shrink:0;">
-      <circle cx="20" cy="20" r="16" fill="none" stroke="#263348" stroke-width="6"/>
-      <circle cx="20" cy="20" r="16" fill="none" stroke="#818cf8" stroke-width="6"
-        stroke-dasharray="100.53" stroke-dashoffset="10.05" stroke-linecap="round" transform="rotate(-90 20 20)"/>
-      <text x="20" y="24" text-anchor="middle" fill="#e2e8f0" font-size="10" font-weight="700">90%</text>
-    </svg>
-  </div>
-  <div class="ondeck-sub">Laravel 12 + Vue 3 + Spatie woodworking ERP &middot; 570/634 tasks done &middot; 64 open</div>
-  <div class="ondeck-sub" style="margin-top:0.4rem;">Not scheduled today. Active phase (p66) is a data-gathering sprint requiring direct input from Rony &amp; Giovanne before code can proceed: labor rate table, bonus formula definition, time benchmarks, CK inspection checklists.</div>
-  <div class="ondeck-sub" style="margin-top:0.4rem;">Eligible once you have those inputs: t58 (labor rates), t57 (bonus formula), t56 (time benchmarks), t59 (CK inspection lists) &mdash; all HIGH priority, all ready to build immediately after the data is in hand.</div>
-</div>
-
-<!-- WAITING ON -->
-<div class="section-label">&#9203; Waiting On</div>
-
-<div class="waiting-card">
-  <div class="wtask">CT Pros &middot; t13 &mdash; Production deploy</div>
-  <div class="wreason">Needs a feature-complete app AND a domain name. Neither exists yet (noted 2026-06-03). Chase the client for a domain decision &mdash; everything in the deploy chain is blocked behind this.</div>
-</div>
-<div class="waiting-card">
-  <div class="wtask">CT Pros &middot; t14 &mdash; Post-deploy config &amp; monitoring</div>
-  <div class="wreason">Blocked by t13 &mdash; needs the prod URL to configure SSL, monitoring, and env vars.</div>
-</div>
-<div class="waiting-card">
-  <div class="wtask">CT Pros &middot; t27 &mdash; Sync status badges UI</div>
-  <div class="wreason">Depends on t26 (sync badge endpoints) &mdash; t26 is scheduled for today, so this may unlock tomorrow morning.</div>
-</div>
-<div class="waiting-card">
-  <div class="wtask">Takeoff Engine &middot; t21 &mdash; Symbol detector</div>
-  <div class="wreason">Depends on t20 (ML wall-segmentation model) which is still in progress. Symbol detection can't start until the wall model is trained and stable.</div>
-</div>
-<div class="waiting-card">
-  <div class="wtask">GS-ERP &middot; t38 &mdash; Bonus formula implementation</div>
-  <div class="wreason">Business rule not yet defined by Rony/Giovanne (KB items 9.1 + 12.13). No code until the formula is locked in writing.</div>
-</div>
-<div class="waiting-card">
-  <div class="wtask">GS-ERP &middot; t14, t52 &mdash; Module 5 production release flow</div>
-  <div class="wreason">t14 needs production data / Module 5 rollout decision. t52 also requires t60 (QB mapping docs) to be done first.</div>
-</div>
-
-<footer>
-  <div>Data as of: 2026-06-24T18:21:44 UTC &mdash; synced from active-projects.json</div>
-  <div style="margin-top:0.4rem; font-style:italic;">Clear calendar. Five tasks. You know exactly what to do &mdash; now go do it.</div>
-</footer>
 
 <script>
-var DATA = {
-  ct: {
-    project: "CT Pros ERP", client: "CT Pros", date: "2026-06-24",
-    tasks: [
-      { id: "t29", title: "Sandbox-validate all QuickBooks field mappings", phase: "p5", estimate: "m", priority: "high", status: "todo",
-        notes: "CRITICAL before prod. Run all 6 entity sync() methods against Intuit sandbox, verify field names/types/relationships, add PHPUnit tests.",
-        prep: { what: "Run every QB sync() method against the Intuit sandbox and verify every field name, data type, and relationship before touching a live QB account.",
-          understand: "Intuit sandbox is fully isolated. 6 entity syncs: customers, invoices, payments, vendors, bills, expense accounts. Each has QBO API quirks. Silent mismatches write garbage to prod.",
-          approach: "1. Boot dev env with sandbox credentials (.env.testing QB_SANDBOX=true). 2. Trigger each DataService sync(), read raw QBO response, diff field names against code. 3. Fix mismatches. 4. Add PHPUnit test per entity mocking DataService.",
-          resources: ["Intuit Developer Sandbox", "QBO API Reference: developer.intuit.com/app/developer/qbo/docs/api/accounting", "app/Services/QuickBooks/DataService.php", "PHPUnit + Mockery"] } },
-      { id: "t19", title: "QB Mapping Wizard — 4-step account assignment UI", phase: "p5", estimate: "m", priority: "high", status: "todo",
-        notes: "depends t17+t18 done. 4 steps: expense category to QB account, income account, tax code, fuzzy client match. Persist to settings table.",
-        prep: { what: "Build a 4-step wizard to map CT Pros expense categories to QB accounts/tax codes with fuzzy client matching, persisted to a settings table.",
-          understand: "Without this, sync runs against missing or hardcoded account IDs. Settings table becomes DataService source of truth. Fuzzy matching handles name mismatches between CT Pros and QB customer records.",
-          approach: "1. Vue 3 wizard, 4 steps, currentStep ref + v-show. 2. Each step fetches live QB data. 3. POST settings to Laravel controller, updateOrCreate into quickbooks_settings. 4. Wire DataService to read from settings table.",
-          resources: ["QBO Accounts: GET /v3/company/{id}/query?query=SELECT * FROM Account", "Vue 3 currentStep ref pattern", "Laravel Model::updateOrCreate()", "PHP similar_text() for fuzzy match", "Inertia useForm()"] } },
-      { id: "t31", title: "Section F — Estimate approval pipeline", phase: "p5", estimate: "l", priority: "high", status: "todo",
-        notes: "Approve button on /d/{share_token} viewer → auto-invoice → DetectAcceptedEstimatesJob → QuickBooksPaymentPoller",
-        prep: { what: "Build the full approval flow: client clicks Approve on share link → invoice generated → synced to QB → payment polled automatically.",
-          understand: "This is the money flow. Share token is unauthenticated — rate-limit (3 req/min per token) and make idempotent. Poller runs on schedule, updates local DB when QB records payment.",
-          approach: "1. POST /d/{share_token}/approve: validate, mark approved (idempotent), dispatch GenerateInvoiceFromEstimate job. 2. DetectAcceptedEstimatesJob: sync unsynced accepted estimates to QB. 3. QuickBooksPaymentPoller: query QB Payments, update DB, fire InvoicePaidEvent. 4. Register both in Kernel.php: DetectAccepted every 15min, PaymentPoller every 30min.",
-          resources: ["QBO Invoices: POST /v3/company/{id}/invoice", "QBO Payments query endpoint", "php artisan make:job", "Laravel schedule->job()->everyThirtyMinutes()", "Laravel RateLimiter facade"] } }
-    ]
-  },
-  takeoff: {
-    project: "Takeoff Engine", client: "AZ Team AI", date: "2026-06-24",
-    tasks: [
-      { id: "t26", title: "Label Lane v2 — productize M3 tiles as opt-in AI label mode", phase: "p5", estimate: "m", priority: "high", status: "todo",
-        notes: "Harborview demo failure. Make AI lane opt-in via mode=ai query param. Add MINIMAX_AI_KEY to VPS env. Add callout/leader filtering.",
-        prep: { what: "Productize the M3 tiles label-reading prototype as a stable opt-in endpoint /sheets/{id}/read-labels?mode=ai with callout filtering.",
-          understand: "Demo failed because AI lane was on by default and unfiltered. Two fixes: opt-in guard so standard requests are unaffected, plus filter callout boxes and dimension leaders that were the main false-positive source.",
-          approach: "1. Add mode: str = 'standard' query param, early-return standard if mode != 'ai'. 2. Add MINIMAX_AI_KEY to VPS .env, read in settings.py. 3. Add callout filter: reject regions with aspect ratio >4:1 or touching zone boundaries. 4. Test with Harborview sheet.",
-          resources: ["FastAPI query param syntax", "MINIMAX AI API (existing integration)", "aztakeoff.azteamai.com (live)", "VPS SSH + systemctl restart takeoff-engine", "Harborview test sheet (regression fixture)"] } },
-      { id: "t18", title: "Assemblies-per-room layer", phase: "p6", estimate: "l", priority: "high", status: "in_progress",
-        notes: "classification → wall quantities (perimeter × height), CSI MasterFormat formulas, new Assemblies Excel tab",
-        prep: { what: "Add assemblies layer: room classification → wall SF (perimeter × height) → CSI MasterFormat formulas → new Assemblies Excel tab.",
-          understand: "CSI MasterFormat organizes materials by division (Div 09 Finishes most common). Each room type has standard assemblies. Engine already has room sqft and perimeter — this layers material quantities on top. Default wall height 9ft commercial.",
-          approach: "1. Define ASSEMBLY_RULES dict: room_type → list of {csi_code, item, unit, qty_formula}. Start with 5-6 room types. 2. Per room: wall_sf = perimeter_ft * wall_height_ft, ceiling_sf = room_sqft. Apply rules. 3. Aggregate same CSI items across rooms. 4. Add Assemblies worksheet to openpyxl workbook, freeze row 1, add division subtotals.",
-          resources: ["CSI MasterFormat 2016 (Div 03, 06, 09)", "openpyxl wb.create_sheet() + ws.freeze_panes", "takeoff/export.py (existing Excel gen)", "Room classification enum from detection layer", "WALL_HEIGHT_FT = 9.0 in settings.py"] } }
-    ]
-  }
-};
+const GS_JSON = {"project":"GS-ERP","client":"GS Woodworking LLC","date":"2026-06-24","tasks":[{"id":"t58","title":"Labor rates + overhead costs (Rony, Giovanne, all roles)","phase":"Phase 66 · 100% · Bonus, Analytics, Data-gathering & Polish","estimate":"s","priority":"high","status":"todo","notes":"KB 6.4 + 6.5 placeholders. Rony's GSAFI LTDA rate, Giovanne's role + rate, monthly overhead. Required for financial dashboard (t51).","prep":{"what":"Sit with Rony and Giovanne to lock in their actual rates — GSAFI LTDA contract amount, Giovanne's role and pay, and the full monthly overhead (rent, utilities, insurance). These numbers go into KB §6.4–6.5 and unlock the financial dashboard.","understand":"The cost-plus pricing engine, profit margin rollups, and the bonus system all read these KB placeholders. Right now they're zeroes — every financial calculation in GS-ERP is showing fictional profit margins.","approach":"1. Open KB §6.4 and §6.5 — note every placeholder field. 2. Schedule 15-min call with Rony for GSAFI contract rate and Giovanne's compensation. 3. Pull monthly overhead line items (rent, utilities, shop insurance, software). 4. Update KB with real numbers. 5. Flag t51 financial dashboard that its data dependency is cleared.","resources":["KB §6.4 (labor rates)","KB §6.5 (overhead costs)","GSAFI LTDA contract / HR records","Rony contact","Giovanne HR profile"]}},{"id":"t57","title":"Bonus formula definition (production + paint shop)","phase":"Phase 66 · 100% · Bonus, Analytics, Data-gathering & Polish","estimate":"s","priority":"high","status":"todo","notes":"KB 9.1 + 12.13. Private session with Guilherme/Mayara. Production: target days + quality gate. Paint: team-based + labor split rule (equal vs weighted).","prep":{"what":"Get the exact production bonus formula from Guilherme and Mayara — the pool/percentage, the equal-vs-weighted split among 12 carpenters, and the paint shop team formula.","understand":"BonusEligibilityCalculator exists (actual_days ≤ target_days AND ck2_rework_count==0) but the AMOUNTS are blank. KB §9.1 and §12.13 are placeholders. Two separate formulas needed: (1) production per-marceneiro pool and split, (2) paint shop variant. The split rule is undecided.","approach":"1. Pull KB §9.1 and §12.13 — list every open question. 2. Prep a 1-pager for Guilherme/Mayara: bonus pool %, how 12-marceneiro split works, paint quality gate threshold. 3. Get real numbers in the session — commit to KB. 4. Note what BonusEligibilityCalculator needs vs what's new code (t38).","resources":["KB §9.1 (bonus formula)","KB §12.13 (open bonus questions)","App/Services/Production/BonusEligibilityCalculator.php","Project Plan §6 bonus notes","Guilherme + Mayara contacts"]}},{"id":"t56","title":"Design + installation time benchmarks per project type","phase":"Phase 66 · 100% · Bonus, Analytics, Data-gathering & Polish","estimate":"m","priority":"high","status":"todo","notes":"KB 9.1: Track next 10 projects for design time. Interview install crew leads for installation times. Required for capacity planning + accurate scheduling.","prep":{"what":"Build a systematic way to capture real design hours and installation hours per project type — the data KB §9.1 needs to calibrate time standards and capacity planning.","understand":"TimeStandard values are seeded estimates, not calibrated to GS's actual shop speed. Design hours vary significantly by type (kitchen >> closet). Without real benchmarks, the ProductionPriorityService is scoring on fictional data.","approach":"1. Read KB §9.1 — understand what format benchmarks need to be in. 2. Write a query to extract actual design durations from completed projects (timestamp diffs grouped by product_type). 3. Interview the 3 install crew leads (GKM, IR Woodworking, Caio) for typical hours per type. 4. Compare vs current TimeStandard seeds. 5. Update KB §9.1 with benchmark data + recommended adjustments.","resources":["KB §9.1 (time benchmarks)","TimeStandard model + seeder","Project query for design timestamps","ProductionPriorityService source","Install crew lead contacts (GKM, IR Woodworking, Caio Martins)"]}},{"id":"t609","title":"S5 · Quality gates — CK1–CK4 inspection engine bug hunt + E2E","phase":"Phase 78 · V1 Polishing Crusade","estimate":"l","priority":"high","status":"todo","notes":"find -> adversarial-verify (cite Master_flow §) -> gated fix -> edge-case E2E.","prep":{"what":"Run the V1 Polishing Crusade Sector 5 — bug-hunt the CK1–CK4 inspection engine, adversarially verify every finding against Master_flow.md, fix confirmed HIGH/CRITICAL bugs behind PHPUnit tests, then write E2E specs for all guard paths.","understand":"S1–S4 are done (workflow, estimates, billing, QB). S5 covers: Ck1InspectionService, Ck2InspectionService, fail/pass cascades, rework round tracking, photo-upload gates, CK4 signature capture, punch list lifecycle. Converge rule: done when a round finds no new HIGH/CRITICAL confirmed bugs.","approach":"1. Read Master_flow.md §§ on CK1–CK4. 2. Walk each path: CK1→clientApproveDrawing gate, CK2 incomplete guard, CK3→awaiting_ck3, CK4→signOffCk4→punch list. 3. Hunt for: guard bypasses, cascade missing substep transitions, rework count not incrementing, photo not required when KB says it is, wrong permission gates. 4. Adversarially verify — refute if no Master_flow citation. 5. For HIGHs: failing PHPUnit first, then fix. For E2E: .local.spec.ts covering all guard paths.","resources":["Master_flow.md §§ on CK1/CK2/CK3/CK4","Ck1InspectionService / Ck2InspectionService / CK3 / CK4 classes","t605–t608 bug hunt notes (S1–S4 patterns)","Existing .local.spec.ts conventions (port 8000)","ProjectWorkflow.php passCk2/passCk3/passCk4","PipelineRegistry.php substep definitions"]}}]};
+const CT_JSON = {"project":"CT Pros ERP","client":"CT Pros","date":"2026-06-24","tasks":[{"id":"t28","title":"A.5/R4 — dev QB inspector (/dev/qb-inspector) to simulate approve/reject/paid","phase":"Phase 5: QuickBooks Integration","estimate":"s","priority":"med","status":"todo","notes":"Port GS /dev/qb-inspector (gated on QB_FAKE). UI to simulate client-approved / rejected estimate + invoice-paid against the fake_qb_* tables. Needed to exercise Section F locally without QB.","prep":{"what":"Port the GS /dev/qb-inspector dev page to CT Pros — a QB_FAKE-gated UI that lets you trigger approve/reject/paid events against fake QB tables without touching a real QuickBooks environment.","understand":"The fake-QB layer intercepts sync() calls in dev/test via QB_FAKE flag and fake_qb_* tables. Without the inspector, you can't test Section F (approval flow, t31) or the payment poller locally. This is the last R4 piece of the A.5 GS-pattern adoption.","approach":"1. Find /dev/qb-inspector in GS repo (routes, controller, Vue page). 2. Map GS entities to CT Pros equivalents (clients→customers, documents→estimates/invoices, transactions→payments). 3. Build route + controller in CT Pros (behind APP_ENV=local AND QB_FAKE=true). 4. Build Vue page with actions: simulate estimate accepted, estimate rejected, invoice paid. 5. Wire fake_qb_* table updates — verify qb_sync_status updates on entities.","resources":["GS /dev/qb-inspector source","CT Pros QB_FAKE env flag","fake_qb_estimates / fake_qb_invoices table schema","SyncEntityJob + SyncsToQuickBooks trait","t28 notes"]}},{"id":"t19","title":"Initial mapping wizard: expense categories → QB accounts, default income account, tax codes, existing-record matching","phase":"Phase 5: QuickBooks Integration","estimate":"m","priority":"high","status":"todo","notes":"After connecting, walk Admin through a 4-step wizard. Persist mappings in settings table. Wizard accessible from Settings → QuickBooks → Edit Mapping anytime.","prep":{"what":"Build the 4-step Settings → QuickBooks mapping wizard: map expense categories to QB accounts, pick default income account, set tax code, and optionally match existing clients/subcontractors to QB records by name.","understand":"Every sync service reads from settings: qb_category_account_map, qb_default_income_account_id, qb_tax_code_id. Without this wizard those settings don't exist → every sync fails at the account-reference lookup. This is the config prerequisite for going live.","approach":"1. Add 4-step Vue wizard at /settings/quickbooks/mapping. 2. Step 1: fetch QB Accounts via QuickBooksClient query → dropdown per ExpenseCategory. 3. Step 2: pick default income account. 4. Step 3: pick QB TaxCode. 5. Step 4: fuzzy-match CT Pros clients/subs by name to QB Customers/Vendors — confirm matches, write qb_id back. 6. Persist via PATCH /settings/quickbooks/mapping.","resources":["QB v3 API /query (SELECT * FROM Account WHERE Active=true)","QuickBooksClient service","Setting::getValue()/setValue()","ExpenseCategory model","existing QB settings page at /settings/quickbooks","t19 notes + mapping plan"]}},{"id":"t29","title":"Sandbox-validate all 6 entity QB mappings + upsert/LinkedTxn shapes","phase":"Phase 5: QuickBooks Integration","estimate":"m","priority":"high","status":"todo","notes":"BLOCKER before production. Connect an Intuit sandbox, validate: field mappings, sparse upserts, Payment LinkedTxn array-of-objects shape, ItemRef requirement on Estimate lines, Purchase TotalAmt being output-only.","prep":{"what":"Connect a real Intuit sandbox and run each of the 6 sync services against it to verify field mappings actually work — the fake-QB layer in tests covers flow, not real API shapes.","understand":"Known risks: Payment LinkedTxn must be an array of objects (not flat); ItemRef is REQUIRED on Estimate lines; Purchase TotalAmt is output-only in QB. Any of these wrong = silent failure in production. This is the production BLOCKER.","approach":"1. Create Intuit sandbox company at developer.intuit.com; grab ClientId/Secret. 2. Set QB_CLIENT_ID/SECRET/ENV=sandbox in local .env; run qb:connect to get tokens. 3. Create test entities and trigger each sync job via tinker: Customer→Vendor→Estimate→Invoice→Payment→Expense. 4. Check QB sandbox dashboard for each: record created? Fields correct? 5. Fix field mapping errors and add unit tests (Http::fake() against QBO URLs).","resources":["developer.intuit.com — sandbox company + OAuth app","QB v3 PHP SDK DataService","6 sync services (CustomerSync, VendorSync, EstimateSync, InvoiceSync, PaymentSync, ExpenseSync)","QB v3 API field reference (Payment LinkedTxn, Purchase TotalAmt)","t29 notes listing specific risks"]}}]};
 
-function copyProject(key) {
-  var text = JSON.stringify(DATA[key], null, 2);
-  var label = key === 'ct' ? 'CT Pros' : 'Takeoff';
-  navigator.clipboard.writeText(text).then(function() {
-    document.querySelectorAll('.copy-btn').forEach(function(btn) {
-      if (btn.textContent.indexOf(label) !== -1) {
-        var orig = btn.innerHTML;
-        btn.innerHTML = '&#10003; Copied!';
-        setTimeout(function() { btn.innerHTML = orig; }, 2200);
-      }
-    });
-  }).catch(function() {
-    var fallback = key === 'ct' ? 'DATA.ct' : 'DATA.takeoff';
-    alert('Clipboard blocked. Open browser console and run:\nconsole.log(JSON.stringify(' + fallback + ', null, 2))');
+function copyProject(proj) {
+  const data = proj === 'gs' ? GS_JSON : CT_JSON;
+  navigator.clipboard.writeText(JSON.stringify(data, null, 2)).then(() => {
+    const btn = document.querySelector(`button[onclick="copyProject('${proj}')"]`);
+    const orig = btn.textContent;
+    btn.textContent = '✓ Copied!';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = orig; btn.classList.remove('copied'); }, 2000);
   });
 }
 </script>
