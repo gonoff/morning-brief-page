@@ -4,365 +4,287 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noindex,nofollow">
-<title>Morning Brief · June 24, 2026</title>
+<title>Morning Brief</title>
 <style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{
-  --bg:#0f1117;--surface:#1a1d2e;--surface2:#222540;--border:#2d3154;
-  --text:#e2e8f0;--muted:#8892b0;--faint:#3d4468;
-  --gs:#f59e0b;--gs-dim:rgba(245,158,11,.15);
-  --ct:#3b82f6;--ct-dim:rgba(59,130,246,.15);
-  --hi:#ef4444;--med:#f59e0b;--lo:#64748b;--green:#10b981;
-  --r:12px;
-}
-body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;min-height:100vh;padding:1rem}
-.wrap{max-width:860px;margin:0 auto}
-
-/* HEADER */
-.hd{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:1.5rem;margin-bottom:1rem}
-.hd-top{display:flex;justify-content:space-between;align-items:flex-start;gap:.75rem;flex-wrap:wrap}
-.dt{font-size:.78rem;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:.3rem}
-.hi-line{font-size:1.55rem;font-weight:700;line-height:1.2}
-.hype{color:var(--muted);margin-top:.5rem;font-size:.92rem;font-style:italic;line-height:1.4}
-.badge{display:inline-flex;align-items:center;gap:.4rem;padding:.55rem 1.1rem;border-radius:8px;font-weight:700;font-size:1rem;white-space:nowrap;border:1px solid #3b82f6;background:rgba(59,130,246,.12);color:#93c5fd}
-.badge-dot{width:10px;height:10px;border-radius:50%;background:#3b82f6}
-
-/* GRAPHS */
-.graphs{display:grid;grid-template-columns:1fr 1fr 1fr;gap:.85rem;margin-bottom:.85rem}
-.gc{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:1rem;display:flex;flex-direction:column;align-items:center;gap:.6rem}
-.gc h3{font-size:.72rem;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;text-align:center}
-.ring-wrap{position:relative;width:90px;height:90px}
-.ring-wrap svg{width:100%;height:100%;transform:rotate(-90deg)}
-.ring-bg{fill:none;stroke:var(--surface2);stroke-width:9}
-.ring-fill{fill:none;stroke-width:9;stroke-linecap:round}
-.ring-lbl{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
-.ring-pct{font-size:1.15rem;font-weight:700}
-.ring-sub{font-size:.62rem;color:var(--muted);margin-top:1px}
-
-/* TIMELINE */
-.tl{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:1rem 1.25rem;margin-bottom:.85rem}
-.tl h3{font-size:.72rem;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:.6rem}
-.tl-bar{display:flex;height:34px;border-radius:8px;overflow:hidden;background:var(--surface2)}
-.tl-seg{height:100%;display:flex;align-items:center;justify-content:center;font-size:.62rem;font-weight:600;overflow:hidden;white-space:nowrap;color:rgba(255,255,255,.85)}
-.tl-times{display:flex;justify-content:space-between;margin-top:.3rem}
-.tl-t{font-size:.68rem;color:var(--muted)}
-.tl-leg{display:flex;gap:1rem;flex-wrap:wrap;margin-top:.55rem}
-.tl-li{display:flex;align-items:center;gap:.3rem;font-size:.72rem;color:var(--muted)}
-.tl-dot{width:10px;height:10px;border-radius:3px;flex-shrink:0}
-
-/* PROJECTS */
-.proj{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:1.4rem;margin-bottom:.85rem}
-.proj-hd{display:flex;align-items:center;gap:.9rem;margin-bottom:1.1rem;flex-wrap:wrap}
-.proj-bar{width:4px;height:52px;border-radius:4px;flex-shrink:0}
-.proj-info{flex:1;min-width:0}
-.proj-name{font-size:1.15rem;font-weight:700;line-height:1.2}
-.proj-client{color:var(--muted);font-size:.8rem;margin-top:.15rem}
-.proj-ring{flex-shrink:0}
-.copy-btn{margin-left:auto;flex-shrink:0;background:var(--surface2);border:1px solid var(--border);color:var(--muted);border-radius:8px;padding:.4rem .85rem;cursor:pointer;font-size:.78rem;transition:background .15s,color .15s}
-.copy-btn:hover{background:var(--border);color:var(--text)}
-.copy-btn.copied{color:#10b981;border-color:#10b981}
-
-/* TASK CARDS */
-.tc{background:var(--surface2);border-radius:10px;padding:1rem;margin-bottom:.7rem;border:1px solid var(--border)}
-.tc-meta{display:flex;align-items:center;gap:.5rem;flex-wrap:wrap;margin-bottom:.55rem}
-.tc-time{font-weight:700;font-size:.88rem;font-variant-numeric:tabular-nums;color:var(--text)}
-.tc-title{font-size:.97rem;font-weight:600;line-height:1.35;margin-bottom:.75rem}
-.est{padding:.12rem .45rem;border-radius:5px;font-size:.68rem;font-weight:700;text-transform:uppercase;background:var(--surface)}
-.est-s{color:#10b981}.est-m{color:#f59e0b}.est-l{color:#ef4444}
-.pdot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
-.p-hi{background:#ef4444}.p-med{background:#f59e0b}.p-lo{background:#64748b}
-.prep{display:grid;gap:.45rem}
-.pr{display:grid;grid-template-columns:72px 1fr;gap:.5rem;align-items:baseline}
-.pl{font-size:.68rem;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;font-weight:600;padding-top:.15rem}
-.pv{font-size:.87rem;line-height:1.5;color:var(--text)}
-.res-list{list-style:none;padding:0;margin:.15rem 0 0}
-.res-list li{padding:.18rem 0 .18rem 1rem;position:relative;font-size:.82rem;color:#a0aec0}
-.res-list li::before{content:'→';position:absolute;left:0;color:var(--muted)}
-.steps{padding-left:1.1rem;margin:.1rem 0 0}
-.steps li{margin-bottom:.2rem;font-size:.87rem;line-height:1.4}
-
-/* ON DECK */
-.ondeck{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);margin-bottom:.85rem}
-.ondeck summary{padding:1rem 1.4rem;cursor:pointer;list-style:none;color:var(--muted);font-size:.88rem;display:flex;align-items:center;gap:.6rem;user-select:none}
-.ondeck summary::-webkit-details-marker{display:none}
-.od-arrow{font-size:.7rem;transition:transform .2s}
-details[open] .od-arrow{transform:rotate(90deg)}
-.od-body{padding:0 1.4rem 1.2rem;color:var(--muted);font-size:.85rem;line-height:1.6}
-.od-tasks{list-style:none;padding:0;margin-top:.5rem}
-.od-tasks li{padding:.25rem 0;border-top:1px solid var(--border);font-size:.83rem}
-.od-tasks li span{color:var(--text)}
-
-/* WAITING ON */
-.waiting{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:1.4rem;margin-bottom:.85rem}
-.waiting h2{font-size:1rem;font-weight:700;margin-bottom:.9rem}
-.wi{background:var(--surface2);border-radius:8px;padding:.7rem .9rem;margin-bottom:.5rem;border-left:3px solid var(--faint)}
-.wi-proj{font-size:.7rem;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);margin-bottom:.15rem}
-.wi-title{font-size:.88rem;font-weight:500;line-height:1.3}
-.wi-reason{font-size:.8rem;color:var(--muted);margin-top:.2rem}
-
-/* FOOTER */
-footer{text-align:center;color:var(--muted);font-size:.78rem;padding:1rem;line-height:1.5}
-
-@media(max-width:620px){
-  .graphs{grid-template-columns:1fr 1fr}
-  .gc:last-child{grid-column:1/-1}
-  .pr{grid-template-columns:1fr}
-  .pl{margin-bottom:.05rem}
-  .proj-ring{display:none}
-  .hd-top{flex-direction:column}
-  .copy-btn{margin-left:0}
-  .proj-hd{gap:.6rem}
-}
+  :root {
+    --bg: #0f172a; --surface: #1e293b; --surface2: #263348; --border: #334155;
+    --text: #e2e8f0; --muted: #94a3b8; --amber: #f59e0b; --emerald: #10b981;
+    --indigo: #818cf8; --red: #ef4444; --yellow: #eab308; --blue: #3b82f6; --gap: 1.25rem;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 15px; line-height: 1.6; padding: 1rem; max-width: 1100px; margin: 0 auto; }
+  .notice { background: #1e3a5f; border: 1px solid #3b82f6; border-radius: 8px; padding: 0.6rem 1rem; font-size: 0.85rem; color: #93c5fd; margin-bottom: 1rem; }
+  header { text-align: center; margin-bottom: 2rem; }
+  header .date { font-size: 0.9rem; color: var(--muted); letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 0.3rem; }
+  header h1 { font-size: 1.5rem; font-weight: 700; margin-bottom: 0.75rem; }
+  .badge { display: inline-block; padding: 0.35rem 1.1rem; border-radius: 999px; font-weight: 700; font-size: 1rem; letter-spacing: 0.05em; }
+  .badge-solid { background: #1d4ed8; color: #bfdbfe; }
+  .badge-chill { background: #065f46; color: #a7f3d0; }
+  .badge-brutal { background: #7f1d1d; color: #fecaca; }
+  header .hype { margin-top: 0.75rem; font-size: 1.05rem; color: var(--muted); font-style: italic; }
+  .graphs { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: var(--gap); margin-bottom: 2rem; }
+  .card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.25rem; }
+  .card-title { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin-bottom: 0.75rem; }
+  .rings { display: flex; gap: 1.5rem; justify-content: center; align-items: center; flex-wrap: wrap; }
+  .ring-wrap { display: flex; flex-direction: column; align-items: center; gap: 0.4rem; }
+  .ring-label { font-size: 0.75rem; color: var(--muted); text-align: center; max-width: 90px; }
+  .ring-pct { font-size: 0.8rem; font-weight: 700; color: var(--text); }
+  .timeline-bar { position: relative; height: 48px; background: var(--surface2); border-radius: 8px; overflow: hidden; }
+  .tl-seg { position: absolute; top: 0; height: 100%; display: flex; align-items: center; justify-content: center; font-size: 0.65rem; font-weight: 600; color: rgba(255,255,255,0.9); overflow: hidden; white-space: nowrap; border-right: 1px solid rgba(15,23,42,0.5); }
+  .tl-label { font-size: 0.7rem; color: var(--muted); display: flex; justify-content: space-between; margin-top: 0.3rem; }
+  .tl-legend { display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 0.6rem; font-size: 0.72rem; color: var(--muted); }
+  .tl-legend span { display: inline-flex; align-items: center; gap: 0.3rem; }
+  .legend-dot { width: 10px; height: 10px; border-radius: 3px; display: inline-block; }
+  .gauge-wrap { display: flex; align-items: center; gap: 1rem; }
+  .gauge-text strong { font-size: 1.4rem; color: var(--text); display: block; }
+  .gauge-text span { color: var(--muted); font-size: 0.8rem; }
+  .gauge-text .spare { color: var(--emerald); }
+  .gauge-text .over { color: var(--amber); }
+  section.project { margin-bottom: 2rem; }
+  .proj-header { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem; }
+  .proj-dot { width: 14px; height: 14px; border-radius: 50%; flex-shrink: 0; }
+  .proj-header h2 { font-size: 1.1rem; font-weight: 700; }
+  .proj-header .client { font-size: 0.8rem; color: var(--muted); }
+  .proj-header .spacer { flex: 1; }
+  .task-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.1rem 1.25rem; margin-bottom: 0.85rem; }
+  .task-meta { display: flex; align-items: center; gap: 0.6rem; margin-bottom: 0.6rem; flex-wrap: wrap; }
+  .task-time { font-size: 0.8rem; color: var(--muted); font-weight: 600; }
+  .est-badge { font-size: 0.7rem; padding: 0.15rem 0.5rem; border-radius: 4px; background: var(--surface2); border: 1px solid var(--border); font-weight: 700; }
+  .task-id { font-size: 0.72rem; color: var(--muted); }
+  .prio-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+  .prio-high { background: var(--red); }
+  .prio-med { background: var(--yellow); }
+  .prio-low { background: var(--muted); }
+  .task-title { font-size: 1rem; font-weight: 700; margin-bottom: 0.75rem; color: var(--text); }
+  .prep-row { margin-bottom: 0.55rem; }
+  .prep-label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin-bottom: 0.15rem; }
+  .prep-body { font-size: 0.88rem; color: var(--text); }
+  .prep-body ol, .prep-body ul { padding-left: 1.2rem; margin-top: 0.2rem; }
+  .prep-body li { margin-bottom: 0.15rem; }
+  code { background: var(--surface2); padding: 0.1rem 0.3rem; border-radius: 3px; font-size: 0.82em; font-family: 'SF Mono', ui-monospace, monospace; }
+  .copy-btn { margin-top: 0.5rem; display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.45rem 1rem; border-radius: 6px; border: 1px solid var(--border); background: var(--surface2); color: var(--muted); font-size: 0.8rem; cursor: pointer; font-family: inherit; }
+  .copy-btn:hover { background: var(--border); color: var(--text); }
+  .waiting-card { background: var(--surface); border: 1px solid #475569; border-radius: 8px; padding: 0.7rem 1rem; margin-bottom: 0.5rem; }
+  .waiting-card .wtask { font-weight: 600; color: var(--text); font-size: 0.88rem; }
+  .waiting-card .wreason { color: var(--muted); font-size: 0.82rem; }
+  .ondeck { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1rem 1.25rem; margin-bottom: 2rem; display: flex; align-items: center; gap: 1.25rem; flex-wrap: wrap; }
+  .ondeck h3 { font-size: 0.95rem; font-weight: 700; }
+  .ondeck-sub { font-size: 0.82rem; color: var(--muted); margin-top: 0.25rem; }
+  footer { text-align: center; font-size: 0.78rem; color: var(--muted); padding-top: 1.5rem; border-top: 1px solid var(--border); margin-top: 2rem; }
+  .section-label { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 0.85rem; }
+  .empty { text-align: center; padding: 6rem 1rem; color: var(--muted); }
+  .empty .sun { font-size: 56px; }
+  .empty h1 { font-size: 1.4rem; color: var(--text); margin: 0.5rem 0; }
+  .toast { position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%) translateY(20px); background: var(--emerald); color: #04130c; font-weight: 700; padding: 0.6rem 1.2rem; border-radius: 999px; opacity: 0; transition: all 0.2s; pointer-events: none; font-size: 0.85rem; }
+  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+  @media (max-width: 480px) { body { padding: 0.6rem; font-size: 14px; } header h1 { font-size: 1.2rem; } .task-card { padding: 0.9rem 1rem; } }
 </style>
 </head>
 <body>
-<div class="wrap">
-
-<div class="hd">
-  <div class="hd-top">
-    <div>
-      <div class="dt">Wednesday · June 24, 2026</div>
-      <div class="hi-line">Good morning, Haniel.</div>
-      <div class="hype">GS polishing crusade + CT Pros QuickBooks milestone — both fully unlocked, zero meetings, clean runway. Five blocks and you're closing real ground on two client projects today. Let's go.</div>
-    </div>
-    <div class="badge"><span class="badge-dot"></span>Solid Day</div>
-  </div>
-</div>
-
-<div class="graphs">
-  <div class="gc">
-    <h3>GS-ERP Progress</h3>
-    <div class="ring-wrap">
-      <svg viewBox="0 0 100 100">
-        <circle class="ring-bg" cx="50" cy="50" r="40"/>
-        <circle class="ring-fill" cx="50" cy="50" r="40" stroke="#f59e0b" stroke-dasharray="163.4 251.33"/>
-      </svg>
-      <div class="ring-lbl">
-        <span class="ring-pct" style="color:#f59e0b">65%</span>
-        <span class="ring-sub">done</span>
-      </div>
-    </div>
-    <div style="font-size:.75rem;color:var(--muted);text-align:center">70 open · GS Woodworking LLC</div>
-  </div>
-  <div class="gc">
-    <h3>CT Pros Progress</h3>
-    <div class="ring-wrap">
-      <svg viewBox="0 0 100 100">
-        <circle class="ring-bg" cx="50" cy="50" r="40"/>
-        <circle class="ring-fill" cx="50" cy="50" r="40" stroke="#3b82f6" stroke-dasharray="133.2 251.33"/>
-      </svg>
-      <div class="ring-lbl">
-        <span class="ring-pct" style="color:#3b82f6">53%</span>
-        <span class="ring-sub">done</span>
-      </div>
-    </div>
-    <div style="font-size:.75rem;color:var(--muted);text-align:center">15 open · CT Pros</div>
-  </div>
-  <div class="gc">
-    <h3>Day Load</h3>
-    <div class="ring-wrap">
-      <svg viewBox="0 0 100 100">
-        <circle class="ring-bg" cx="50" cy="50" r="40"/>
-        <circle class="ring-fill" cx="50" cy="50" r="40" stroke="#10b981" stroke-dasharray="204.2 251.33"/>
-      </svg>
-      <div class="ring-lbl">
-        <span class="ring-pct" style="color:#10b981">81%</span>
-        <span class="ring-sub">loaded</span>
-      </div>
-    </div>
-    <div style="font-size:.75rem;color:var(--muted);text-align:center">6.5 h planned · 8 h available</div>
-  </div>
-</div>
-
-<div class="tl">
-  <h3>Day Timeline — 09:00 → 18:00</h3>
-  <div class="tl-bar">
-    <div class="tl-seg" style="width:22.2%;background:#92400e" title="09:00–11:00 · GS t609">t609</div>
-    <div class="tl-seg" style="width:2.8%;background:#1e2035"></div>
-    <div class="tl-seg" style="width:11.1%;background:#1e3a8a" title="11:15–12:15 · CT t19">t19</div>
-    <div class="tl-seg" style="width:2.8%;background:#1e2035"></div>
-    <div class="tl-seg" style="width:11.1%;background:#171a2e;color:var(--muted)">lunch</div>
-    <div class="tl-seg" style="width:11.1%;background:#1e3a8a" title="13:30–14:30 · CT t29">t29</div>
-    <div class="tl-seg" style="width:2.8%;background:#1e2035"></div>
-    <div class="tl-seg" style="width:22.2%;background:#92400e" title="14:45–16:45 · GS t610">t610</div>
-    <div class="tl-seg" style="width:2.8%;background:#1e2035"></div>
-    <div class="tl-seg" style="width:5.6%;background:#1e3a8a" title="17:00–17:30 · CT t28">t28</div>
-    <div class="tl-seg" style="width:5.6%;background:#171a2e;color:var(--muted);font-size:.58rem">flex</div>
-  </div>
-  <div class="tl-times">
-    <span class="tl-t">9am</span><span class="tl-t">10am</span><span class="tl-t">11am</span><span class="tl-t">12pm</span><span class="tl-t">1pm</span><span class="tl-t">2pm</span><span class="tl-t">3pm</span><span class="tl-t">4pm</span><span class="tl-t">5pm</span><span class="tl-t">6pm</span>
-  </div>
-  <div class="tl-leg">
-    <div class="tl-li"><div class="tl-dot" style="background:#b45309"></div>GS-ERP</div>
-    <div class="tl-li"><div class="tl-dot" style="background:#1d4ed8"></div>CT Pros ERP</div>
-    <div class="tl-li"><div class="tl-dot" style="background:#1e2035"></div>Buffer / Flex</div>
-    <div class="tl-li"><div class="tl-dot" style="background:#171a2e"></div>Lunch</div>
-  </div>
-</div>
-
-<div class="proj" id="gs-erp">
-  <div class="proj-hd">
-    <div class="proj-bar" style="background:#f59e0b"></div>
-    <div class="proj-info">
-      <div class="proj-name">GS-ERP</div>
-      <div class="proj-client">GS Woodworking LLC</div>
-    </div>
-    <div class="proj-ring">
-      <svg width="52" height="52" viewBox="0 0 100 100" style="transform:rotate(-90deg)">
-        <circle fill="none" stroke="#222540" stroke-width="12" cx="50" cy="50" r="40"/>
-        <circle fill="none" stroke="#f59e0b" stroke-width="12" stroke-linecap="round" cx="50" cy="50" r="40" stroke-dasharray="163.4 251.33"/>
-      </svg>
-    </div>
-    <button class="copy-btn" onclick="copyJSON('gs-json',this)">📋 Copy tasks JSON</button>
-  </div>
-
-  <div class="tc">
-    <div class="tc-meta">
-      <span class="tc-time">09:00 – 11:00</span>
-      <span class="est est-l">L</span>
-      <span class="pdot p-hi"></span>
-      <span style="font-size:.78rem;color:var(--muted)">Phase 78 · V1 Polishing Crusade</span>
-    </div>
-    <div class="tc-title">S5 · Quality gates — CK1–CK4 inspection engine, punch lists, fail/rework cascades</div>
-    <div class="prep">
-      <div class="pr"><div class="pl">What</div><div class="pv">Full bug hunt + E2E sweep for the inspection gate system — CK1 (design verify), CK2 (fabrication), CK3 (cosmetic/paint), CK4 (install) — checklists, punch-list logic, and the fail → rework → re-pass cascade.</div></div>
-      <div class="pr"><div class="pl">Understand</div><div class="pv">The crusade pattern: find → adversarially verify each finding vs the Master_flow spec → gated fix → edge-case E2E. "Verified" = 2 finder rounds with zero new confirmed bugs. Known LOW (t634): CK1 double-submit triggers a no-transaction 500 and orphan; CK2 has a deactivated-row edge case.</div></div>
-      <div class="pr"><div class="pl">Approach</div><div class="pv"><ol class="steps"><li>Read <code>docs/Master_flow.md</code> quality-gates section — know the spec before hunting.</li><li>Finder round 1: failing tests for each gate lifecycle (store → fail → rework → pass). Start with the known CK1 double-submit bug.</li><li>Adversarially verify each finding: cite the Master_flow section.</li><li>Fix confirmed bugs with edge-case E2E tests.</li><li>Finder round 2 to confirm zero new bugs.</li></ol></div></div>
-      <div class="pr"><div class="pl">Resources</div><div class="pv"><ul class="res-list"><li><code>docs/Master_flow.md</code> — quality gates section (CK1–CK4 spec)</li><li><code>app/Services/</code> — inspection / quality services</li><li><code>tests/Feature/Quality*</code></li><li>t634 LOW: CK1 double-submit 500+orphan; CK2 deactivated-row edge</li></ul></div></div>
-    </div>
-  </div>
-
-  <div class="tc">
-    <div class="tc-meta">
-      <span class="tc-time">14:45 – 16:45</span>
-      <span class="est est-l">L</span>
-      <span class="pdot p-hi"></span>
-      <span style="font-size:.78rem;color:var(--muted)">Phase 78 · V1 Polishing Crusade</span>
-    </div>
-    <div class="tc-title">S6 · Procurement/inventory — suppliers, POs, requisitions, material lists, receiving, variance</div>
-    <div class="prep">
-      <div class="pr"><div class="pl">What</div><div class="pv">Full bug hunt + E2E sweep for the procurement and inventory module: the full chain from suppliers through POs, requisitions, material lists, inventory movements, receiving, and variance tracking.</div></div>
-      <div class="pr"><div class="pl">Understand</div><div class="pv">Same crusade pattern as t609. Confirmed starting bug from t635: <code>shop_lead</code> holds <code>purchase_orders.pay</code> permission — spec says <code>accountant</code> only. That's your first verified fix.</div></div>
-      <div class="pr"><div class="pl">Approach</div><div class="pv"><ol class="steps"><li>Fix known bug: <code>Plan3RolesAndPermissionsSeeder.php</code> line ~37 — move <code>purchase_orders.pay</code> from <code>shop_lead</code> → <code>accountant</code>.</li><li>Read <code>docs/Master_flow.md</code> procurement section.</li><li>Finder round 1: trace PO lifecycle in tests (requisition → PO → receive → inventory → variance). Find broken edges.</li><li>Adversarially verify + fix confirmed bugs with E2E tests.</li><li>Finder round 2 to confirm convergence.</li></ol></div></div>
-      <div class="pr"><div class="pl">Resources</div><div class="pv"><ul class="res-list"><li><code>database/seeders/Plan3RolesAndPermissionsSeeder.php</code> (line ~37)</li><li><code>app/Services/Procurement*</code></li><li><code>app/Models/PurchaseOrder*</code>, <code>Requisition*</code>, <code>InventoryMovement*</code></li><li><code>tests/Feature/Procurement*</code></li><li><code>docs/Master_flow.md</code> — procurement section</li></ul></div></div>
-    </div>
-  </div>
-</div>
-
-<div class="proj" id="ct-pros">
-  <div class="proj-hd">
-    <div class="proj-bar" style="background:#3b82f6"></div>
-    <div class="proj-info">
-      <div class="proj-name">CT Pros ERP</div>
-      <div class="proj-client">CT Pros</div>
-    </div>
-    <div class="proj-ring">
-      <svg width="52" height="52" viewBox="0 0 100 100" style="transform:rotate(-90deg)">
-        <circle fill="none" stroke="#222540" stroke-width="12" cx="50" cy="50" r="40"/>
-        <circle fill="none" stroke="#3b82f6" stroke-width="12" stroke-linecap="round" cx="50" cy="50" r="40" stroke-dasharray="133.2 251.33"/>
-      </svg>
-    </div>
-    <button class="copy-btn" onclick="copyJSON('ct-json',this)">📋 Copy tasks JSON</button>
-  </div>
-
-  <div class="tc">
-    <div class="tc-meta">
-      <span class="tc-time">11:15 – 12:15</span>
-      <span class="est est-m">M</span>
-      <span class="pdot p-hi"></span>
-      <span style="font-size:.78rem;color:var(--muted)">Phase 5 · QuickBooks Integration</span>
-    </div>
-    <div class="tc-title">Initial mapping wizard — expense categories → QB accounts, income account, tax codes, entity matching</div>
-    <div class="prep">
-      <div class="pr"><div class="pl">What</div><div class="pv">Build the 4-step QuickBooks first-run setup wizard: map expense categories to QB accounts, choose a default income account, set a tax code, and fuzzy-match existing clients/subcontractors to existing QB records.</div></div>
-      <div class="pr"><div class="pl">Understand</div><div class="pv">t17 (OAuth) and t18 (queue infra) are both done — the app can already call QB. This wizard provides the mapping config that makes syncs valid. Without it, sync jobs fire with null <code>AccountRef</code> and QB rejects every entity. Re-accessible from Settings → QuickBooks at any time.</div></div>
-      <div class="pr"><div class="pl">Approach</div><div class="pv"><ol class="steps"><li>Build 4-step Vue wizard. Step 1: pull QB Accounts → select per ExpenseCategory. Step 2: default income account picker. Step 3: TaxCode picker. Step 4: pull QB Customers+Vendors → fuzzy-match to local records → write <code>qb_id</code> on confirm.</li><li>Persist to settings table: <code>qb_category_account_map</code>, <code>qb_default_income_account_id</code>, <code>qb_tax_code_id</code>.</li><li>Gate with existing QB connection guard.</li><li>Verify sync jobs read the new settings cleanly.</li></ol></div></div>
-      <div class="pr"><div class="pl">Resources</div><div class="pv"><ul class="res-list"><li>QB v3 API: <code>/v3/company/{realmId}/query?query=select * from Account</code></li><li><code>select * from TaxCode</code>, <code>Customer</code>, <code>Vendor</code></li><li><code>app/Services/QuickBooksClient.php</code></li><li>settings table</li><li><code>docs/superpowers/plans/2026-06-03-quickbooks-integration-v2.md</code> Section B</li></ul></div></div>
-    </div>
-  </div>
-
-  <div class="tc">
-    <div class="tc-meta">
-      <span class="tc-time">13:30 – 14:30</span>
-      <span class="est est-m">M</span>
-      <span class="pdot p-hi"></span>
-      <span style="font-size:.78rem;color:var(--muted)">Phase 5 · QuickBooks Integration</span>
-    </div>
-    <div class="tc-title">Sandbox-validate all 6 entity QB mappings + upsert / LinkedTxn shapes</div>
-    <div class="prep">
-      <div class="pr"><div class="pl">What</div><div class="pv">Connect to an Intuit developer sandbox and verify that all 6 entity <code>sync()</code> methods (Customer, Vendor, Estimate, Invoice, Payment, Expense) produce valid QB records. This is the <strong>blocker before production</strong>.</div></div>
-      <div class="pr"><div class="pl">Understand</div><div class="pv">The fake layer has covered all tests — no real QB API calls validated yet. Known unknowns: Payment <code>LinkedTxn</code> shape (array-of-objects vs strings), <code>ItemRef</code> requirement on Estimate lines, <code>Purchase.TotalAmt</code> being output-only.</div></div>
-      <div class="pr"><div class="pl">Approach</div><div class="pv"><ol class="steps"><li>Intuit Developer Portal → sandbox company → get OAuth credentials.</li><li>Set <code>QB_FAKE=false</code> in local <code>.env</code>; configure sandbox tokens.</li><li>Trigger each sync in order: client (Customer) → subcontractor (Vendor) → estimate → invoice → payment → expense. Verify each in QB sandbox.</li><li>Fix field mapping bugs (most likely in <code>LinkedTxn</code> and <code>ItemRef</code>).</li><li>Add unit tests mocking DataService per code-reviewer gaps.</li></ol></div></div>
-      <div class="pr"><div class="pl">Resources</div><div class="pv"><ul class="res-list"><li>Intuit Developer Portal → developer.intuit.com → sandbox</li><li><code>app/Services/QuickBooksClient.php</code></li><li><code>app/Jobs/Sync*Job.php</code> — all 6 entity jobs</li><li>QB v3 API: Payment <code>LinkedTxn</code> object, Estimate Line <code>ItemRef</code>, Purchase <code>TotalAmt</code></li><li><code>tests/Feature/QuickBooks/</code> (Http::fake() pattern to extend)</li></ul></div></div>
-    </div>
-  </div>
-
-  <div class="tc">
-    <div class="tc-meta">
-      <span class="tc-time">17:00 – 17:30</span>
-      <span class="est est-s">S</span>
-      <span class="pdot p-med"></span>
-      <span style="font-size:.78rem;color:var(--muted)">Phase 5 · QuickBooks Integration</span>
-    </div>
-    <div class="tc-title">A.5/R4 — dev QB inspector (/dev/qb-inspector) to simulate approve/reject/paid</div>
-    <div class="prep">
-      <div class="pr"><div class="pl">What</div><div class="pv">Port the GS-style <code>/dev/qb-inspector</code> into CT Pros — a <code>QB_FAKE</code>-gated dev UI to simulate estimate approve/reject and invoice-paid events against the fake QB tables. Last of the A.5 dev-infra tasks.</div></div>
-      <div class="pr"><div class="pl">Understand</div><div class="pv">Without the inspector, Section F (approval pipeline) can't be tested locally — you'd need a live QB to fire events. The inspector simulates those events against <code>fake_qb_*</code> tables so the full approval flow can be driven in dev.</div></div>
-      <div class="pr"><div class="pl">Approach</div><div class="pv"><ol class="steps"><li>Read the GS <code>/dev/qb-inspector</code> implementation for the exact controller + Vue pattern.</li><li>Create <code>DevQbInspectorController</code> in CT Pros gated on <code>env('QB_FAKE')</code>; register under <code>/dev</code>.</li><li>Vue page: pending estimates → Approve / Reject buttons; invoices → Mark Paid. Each writes a simulated event to <code>fake_qb_*</code>.</li><li>Verify the observer picks up the event and transitions document status.</li></ol></div></div>
-      <div class="pr"><div class="pl">Resources</div><div class="pv"><ul class="res-list"><li>GS codebase: <code>/dev/qb-inspector</code> route + controller + Vue page</li><li>CT Pros <code>fake_qb_estimates</code>, <code>fake_qb_invoices</code> tables (A.5 R1–R3)</li><li><code>QB_FAKE</code> env guard in <code>QuickBooksClient.php</code></li><li><code>docs/superpowers/plans/2026-06-03-quickbooks-integration-v2.md</code> Section A.5/R4 + Section F</li></ul></div></div>
-    </div>
-  </div>
-</div>
-
-<details class="ondeck">
-  <summary><span class="od-arrow">▶</span> 🗂️ On Deck — Takeoff Engine (AZ Team AI) · 12 open tasks</summary>
-  <div class="od-body">
-    <p>Deferred today — pick it up when GS + CT Pros are in a good rhythm. Top eligible tasks:</p>
-    <ul class="od-tasks">
-      <li><span>t26 [HIGH · M]</span> — Label lane v2: M3 vision for outlined-text firms + callout-vs-room filtering</li>
-      <li><span>t18 [HIGH · L · in progress]</span> — Assemblies-per-room → paint/drywall/flooring quantities + wall heights</li>
-      <li><span>t15 [HIGH · L]</span> — Per-opening LOCAL seal — retire global SEAL_FT per firm (coverage→relax)</li>
-      <li><span>t16 [MED · M]</span> — Door recall round 2 + bi-fold / cased-opening recall</li>
-      <li><span>t17 [MED · M]</span> — Fixtures / counts v1 — matchShapes 'pick one, find all'</li>
-    </ul>
-  </div>
-</details>
-
-<div class="waiting">
-  <h2>⏳ Waiting On</h2>
-  <div class="wi"><div class="wi-proj">GS-ERP</div><div class="wi-title">t38 · Production bonus system (target vs actual + quality gate eligibility)</div><div class="wi-reason">Bonus formula not defined — needs private session with Guilherme/Mayara (KB 9.1 + 12.13). BonusEligibilityCalculator service is partially built.</div></div>
-  <div class="wi"><div class="wi-proj">GS-ERP</div><div class="wi-title">t52 · Capacity planning (pipeline load vs team capacity)</div><div class="wi-reason">Waiting on Module 5 production release flow + time benchmarks (t56 must ship first).</div></div>
-  <div class="wi"><div class="wi-proj">GS-ERP</div><div class="wi-title">t14 · Time standard refinement loop (capture actual vs estimated)</div><div class="wi-reason">Waiting on Module 5 production release flow — needs real actuals flowing through production.</div></div>
-  <div class="wi"><div class="wi-proj">GS-ERP</div><div class="wi-title">t566 · Markup/commission field with hide-from-client toggle</div><div class="wi-reason">Needs dedicated design session with team on compliance and Silvia's passthrough tracking rules.</div></div>
-  <div class="wi"><div class="wi-proj">CT Pros ERP</div><div class="wi-title">t13 · Production deployment plan + first deploy</div><div class="wi-reason">Deferred until feature-complete app + domain acquired. Runbook ready at <code>docs/deployment-runbook.md</code>.</div></div>
-  <div class="wi"><div class="wi-proj">CT Pros ERP</div><div class="wi-title">t14 · End-to-end mobile smoke test (PWA install, share, PDF, quick-add)</div><div class="wi-reason">Blocked by t13 (no prod URL) and soft-blocked by t9 (placeholder PWA icons).</div></div>
-</div>
-
-<footer>Data as of 2026-06-24T18:21:44 UTC &nbsp;·&nbsp; Generated 2026-06-24T10:00:00Z &nbsp;·&nbsp; 5 blocks · 390 min planned · Solid day</footer>
-
-</div>
-
-<script id="gs-json" type="application/json">{"project":"GS-ERP","client":"GS Woodworking LLC","date":"2026-06-24","tasks":[{"id":"t609","title":"S5 · Quality gates — CK1-CK4 inspection engine (one pattern x4), punch lists, fail/rework cascades","phase":"Phase 78 · V1 Polishing Crusade","estimate":"l","priority":"high","status":"todo","notes":"find → adversarial-verify (cite Master_flow §) → gated fix → edge-case E2E. Verified = 2 finder rounds, 0 new confirmed bugs.","prep":{"what":"Full bug hunt and E2E sweep for the CK1–CK4 inspection gate system: checklists, punch lists, fail/rework cascades.","understand":"Four inspection gates: CK1=design verify, CK2=fabrication, CK3=cosmetic/paint, CK4=install. Crusade pattern: find → adversarially verify citing Master_flow → fix → E2E. Known LOW (t634): CK1 double-submit triggers a no-transaction 500 and orphan; CK2 deactivated-row edge case.","approach":"1. Read docs/Master_flow.md quality-gates section first. 2. Finder round 1: write failing tests for each gate lifecycle (store → fail → rework → pass), starting with the CK1 double-submit bug. 3. Adversarially verify each finding vs the spec. 4. Fix confirmed bugs with edge-case E2E tests. 5. Finder round 2 to confirm zero new bugs.","resources":["docs/Master_flow.md — quality gates section","app/Services/ — inspection/quality services","tests/Feature/Quality*","t634 LOW: CK1 store no-transaction 500+orphan on double-submit; CK2 deactivated-row edge"]}},{"id":"t610","title":"S6 · Procurement/inventory — suppliers, POs, requisitions, material lists, inventory movements, receiving, variance","phase":"Phase 78 · V1 Polishing Crusade","estimate":"l","priority":"high","status":"todo","notes":"find → adversarial-verify (cite Master_flow §) → gated fix → edge-case E2E. Verified = 2 finder rounds, 0 new confirmed bugs.","prep":{"what":"Full bug hunt and E2E sweep for the procurement/inventory module: suppliers, POs, requisitions, material lists, inventory movements, receiving, variance.","understand":"Confirmed starting bug from t635: shop_lead holds purchase_orders.pay permission — spec says Accountant only. Same crusade pattern as t609.","approach":"1. Fix the known bug: Plan3RolesAndPermissionsSeeder.php line ~37 — move purchase_orders.pay from shop_lead to accountant. 2. Read Master_flow § procurement. 3. Trace full PO lifecycle in tests. 4. Adversarially verify findings. 5. Finder round 2 to confirm convergence.","resources":["database/seeders/Plan3RolesAndPermissionsSeeder.php (line ~37)","app/Services/Procurement*","app/Models/PurchaseOrder*, Requisition*, InventoryMovement*","tests/Feature/Procurement*","docs/Master_flow.md — procurement section"]}}]}</script>
-
-<script id="ct-json" type="application/json">{"project":"CT Pros ERP","client":"CT Pros","date":"2026-06-24","tasks":[{"id":"t19","title":"Initial mapping wizard: expense categories → QB accounts, default income account, tax codes, existing-record matching","phase":"Phase 5: QuickBooks Integration","estimate":"m","priority":"high","status":"todo","notes":"4-step wizard: (1) map ExpenseCategory → QB Account; (2) default income account; (3) TaxCode; (4) fuzzy-match existing clients/subcontractors to QB records.","prep":{"what":"Build the 4-step QuickBooks first-run setup wizard: map expense categories to QB accounts, set default income account and tax code, and fuzzy-match existing local records to QB entities.","understand":"t17 (OAuth) and t18 (queue infra) are done. This wizard provides the mapping config that makes syncs valid. Without it, sync jobs fire with null AccountRef and QB rejects entities.","approach":"1. Build 4-step Vue wizard: Step 1 pull QB Accounts → select per ExpenseCategory; Step 2 income account picker; Step 3 TaxCode mapping; Step 4 fuzzy-match QB Customers/Vendors to local records → write qb_id on confirm. 2. Persist to settings table. 3. Gate with QB connection check.","resources":["QB v3 API: /v3/company/{realmId}/query?query=select * from Account","select * from TaxCode / Customer / Vendor","app/Services/QuickBooksClient.php","settings table","docs/superpowers/plans/2026-06-03-quickbooks-integration-v2.md Section B"]}},{"id":"t29","title":"Sandbox-validate all 6 entity QB mappings + upsert/LinkedTxn shapes","phase":"Phase 5: QuickBooks Integration","estimate":"m","priority":"high","status":"todo","notes":"BLOCKER before production. Connect Intuit sandbox, validate field mappings, sparse upserts, Payment LinkedTxn array-of-objects shape, ItemRef on Estimate lines, Purchase TotalAmt output-only.","prep":{"what":"Connect to Intuit developer sandbox and validate all 6 entity sync() methods produce valid QB records with correct field shapes.","understand":"The fake layer has covered all tests — no real QB calls validated. Known unknowns: Payment LinkedTxn array shape, ItemRef on Estimate lines, Purchase TotalAmt output-only. BLOCKER before production.","approach":"1. Intuit Developer Portal → sandbox → OAuth credentials. 2. QB_FAKE=false in .env. 3. Trigger each entity sync manually and verify in QB sandbox. 4. Fix mapping bugs. 5. Add unit tests mocking DataService.","resources":["Intuit Developer Portal → developer.intuit.com → sandbox","app/Services/QuickBooksClient.php","app/Jobs/Sync*Job.php","QB v3 API: Payment LinkedTxn, Estimate Line ItemRef, Purchase TotalAmt","tests/Feature/QuickBooks/"]}},{"id":"t28","title":"A.5/R4 — dev QB inspector (/dev/qb-inspector) to simulate approve/reject/paid","phase":"Phase 5: QuickBooks Integration","estimate":"s","priority":"med","status":"todo","notes":"Port GS /dev/qb-inspector (gated on QB_FAKE). UI to simulate estimate approved/rejected + invoice-paid against fake_qb_* tables. Last A.5 task.","prep":{"what":"Build /dev/qb-inspector in CT Pros: QB_FAKE-gated dev UI to simulate estimate approve/reject and invoice-paid events against fake QB tables.","understand":"Without the inspector, Section F (approval pipeline) can't be tested locally. The inspector simulates QB events against fake_qb_* tables.","approach":"1. Read GS /dev/qb-inspector for the exact pattern. 2. Create DevQbInspectorController + route gated on QB_FAKE. 3. Vue page: pending estimates with Approve/Reject; pending invoices with Mark Paid. 4. Each button writes to fake_qb_* tables. 5. Verify observer transitions status.","resources":["GS codebase: /dev/qb-inspector route + controller + Vue page","CT Pros fake_qb_estimates, fake_qb_invoices tables (A.5 R1–R3)","QB_FAKE env guard in QuickBooksClient.php","docs/superpowers/plans/2026-06-03-quickbooks-integration-v2.md Section A.5/R4 and Section F"]}}]}</script>
-
+<div id="app"></div>
+<div id="toast" class="toast">Copied ✓</div>
 <script>
-function copyJSON(id, btn) {
-  var el = document.getElementById(id);
-  if (!el) return;
-  var text = el.textContent.trim();
-  if (navigator.clipboard && window.isSecureContext) {
-    navigator.clipboard.writeText(text).then(function() {
-      btn.textContent = '✓ Copied!'; btn.classList.add('copied');
-      setTimeout(function(){ btn.textContent = '📋 Copy tasks JSON'; btn.classList.remove('copied'); }, 2000);
-    });
-  } else {
-    var ta = document.createElement('textarea'); ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
-    document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta);
-    btn.textContent = '✓ Copied!'; btn.classList.add('copied');
-    setTimeout(function(){ btn.textContent = '📋 Copy tasks JSON'; btn.classList.remove('copied'); }, 2000);
-  }
+const PALETTE = ['#f59e0b','#10b981','#818cf8','#3b82f6','#ec4899','#22d3ee'];
+const RING_CIRC = 2 * Math.PI * 32;
+const EST = { s: 'S · 30 min', m: 'M · 1h', l: 'L · 2h' };
+
+const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const code = s => esc(s).replace(/`([^`]+)`/g, '<code>$1</code>');
+const t2m = t => { const p = String(t).split(':'); return (+p[0]) * 60 + (+(p[1]||0)); };
+const fmtClock = t => { const p = String(t).split(':'); return (+p[0]) + ':' + (p[1]||'00'); };
+const fmtHour = m => { let h = Math.floor(m/60), ap = h>=12?'PM':'AM', hh = h%12||12; return hh + (m%60? ':'+String(m%60).padStart(2,'0'):'') + ' ' + ap; };
+const fmtMins = m => { const h = Math.floor(m/60), mm = Math.round(m%60); return (h?h+'h':'') + (mm?' '+mm+'m':'') || '0m'; };
+
+function ring(pct, color, size) {
+  size = size || 80;
+  const off = RING_CIRC * (1 - Math.max(0, Math.min(1, pct)));
+  return `<svg width="${size}" height="${size}" viewBox="0 0 80 80">
+    <circle cx="40" cy="40" r="32" fill="none" stroke="#263348" stroke-width="10"/>
+    <circle cx="40" cy="40" r="32" fill="none" stroke="${color}" stroke-width="10"
+      stroke-dasharray="${RING_CIRC.toFixed(2)}" stroke-dashoffset="${off.toFixed(2)}"
+      stroke-linecap="round" transform="rotate(-90 40 40)"/>
+    <text x="40" y="45" text-anchor="middle" fill="#e2e8f0" font-size="15" font-weight="700">${Math.round(pct*100)}%</text>
+  </svg>`;
 }
+function prioClass(p) { p = (p||'').toLowerCase(); return p[0]==='h'?'prio-high':p[0]==='l'?'prio-low':'prio-med'; }
+function ratingColor(r) { r=(r||'').toLowerCase(); return r==='chill'?'#10b981':r==='brutal'?'#f59e0b':'#3b82f6'; }
+function badgeClass(r) { r=(r||'').toLowerCase(); return r==='chill'?'badge-chill':r==='brutal'?'badge-brutal':'badge-solid'; }
+
+function isOnDeck(p, b) {
+  if (typeof p.on_deck === 'boolean') return p.on_deck;
+  if (Array.isArray(b.on_deck) && typeof b.on_deck[0] === 'string') return b.on_deck.includes(p.slug);
+  if (Array.isArray(b.focus_projects)) return !b.focus_projects.includes(p.slug);
+  return !(p.tasks && p.tasks.length);
+}
+function approachSteps(a) {
+  if (Array.isArray(a)) return a;
+  if (!a) return [];
+  const s = String(a).trim();
+  const byNum = s.split(/\s*\d+\.\s+/).map(x=>x.trim()).filter(Boolean);
+  if (byNum.length > 1) return byNum;
+  const byNl = s.split(/\n+/).map(x=>x.trim()).filter(Boolean);
+  return byNl.length > 1 ? byNl : [s];
+}
+function pctOf(p) {
+  const tot = +p.tasks_total || 0, done = +p.tasks_done || 0;
+  return tot > 0 ? done/tot : null;
+}
+
+let COPY = {};
+function copyProject(slug) {
+  navigator.clipboard.writeText(COPY[slug] || '{}').then(() => {
+    const t = document.getElementById('toast'); t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 1400);
+  });
+}
+
+function render(b) {
+  const projects = b.projects || [];
+  const focus = projects.filter(p => !isOnDeck(p, b));
+  const onDeck = projects.filter(p => isOnDeck(p, b));
+  const colorOf = {};
+  focus.forEach((p, i) => colorOf[p.slug] = PALETTE[i % PALETTE.length]);
+  onDeck.forEach(p => colorOf[p.slug] = '#64748b');
+
+  const d = new Date((b.date || '') + 'T12:00:00');
+  const dateStr = isNaN(d) ? (b.date||'') : d.toLocaleDateString('en-US', {weekday:'long', month:'long', day:'numeric', year:'numeric'});
+  document.title = 'Morning Brief — ' + dateStr;
+
+  let h = '';
+  if (b.notice) h += `<div class="notice">ℹ️ ${code(b.notice)}</div>`;
+
+  const dif = b.difficulty || {};
+  const ratio = +dif.ratio || (dif.available_minutes ? dif.planned_minutes/dif.available_minutes : 0);
+  h += `<header>
+    <div class="date">${esc(dateStr)}</div>
+    <h1>${esc(b.greeting || 'Morning, Haniel.')}</h1>
+    <span class="badge ${badgeClass(dif.rating)}">⚡ ${esc(dif.rating||'')} Day — ${Math.round(ratio*100)}%</span>
+    ${b.hype ? `<div class="hype">${esc(b.hype)}</div>` : ''}
+  </header>`;
+
+  // graphs: rings + gauge
+  let ringsHtml = '';
+  projects.forEach(p => {
+    const pc = pctOf(p);
+    ringsHtml += `<div class="ring-wrap">
+      ${pc===null ? `<svg width="80" height="80" viewBox="0 0 80 80"><circle cx="40" cy="40" r="32" fill="none" stroke="${colorOf[p.slug]}" stroke-width="10" opacity="0.4"/><text x="40" y="45" text-anchor="middle" fill="#e2e8f0" font-size="13" font-weight="700">${(p.tasks||[]).length||'—'}</text></svg>` : ring(pc, colorOf[p.slug])}
+      <div class="ring-label">${esc(p.project||p.slug)}${isOnDeck(p,b)?' (on deck)':''}</div>
+      ${p.tasks_total ? `<div class="ring-pct">${p.tasks_done||0} / ${p.tasks_total}</div>` : ''}
+    </div>`;
+  });
+
+  const planned = +dif.planned_minutes || 0, avail = +dif.available_minutes || 0;
+  const spare = avail - planned;
+  const gauge = `<div class="gauge-wrap">
+    ${ring(ratio, ratingColor(dif.rating), 90)}
+    <div class="gauge-text">
+      <strong>${fmtMins(planned)}</strong>
+      <span>planned of ${fmtMins(avail)} available</span><br>
+      ${spare>=0 ? `<span class="spare">${fmtMins(spare)} to spare</span>` : `<span class="over">over by ${fmtMins(-spare)}</span>`}
+      ${dif.note ? `<br><span>${esc(dif.note)}</span>` : ''}
+    </div></div>`;
+
+  h += `<div class="graphs">
+    <div class="card"><div class="card-title">Project Progress</div><div class="rings">${ringsHtml}</div></div>
+    <div class="card"><div class="card-title">Day Load</div>${gauge}</div>
+  </div>`;
+
+  // timeline
+  const sched = (b.schedule || []).filter(s => s.start && s.end);
+  if (sched.length) {
+    const win = b.window || { start: sched[0].start, end: sched[sched.length-1].end };
+    const W0 = t2m(win.start), W1 = t2m(win.end), WD = Math.max(1, W1 - W0);
+    let segs = '';
+    sched.forEach(s => {
+      const left = (t2m(s.start)-W0)/WD*100, width = Math.max(2,(t2m(s.end)-t2m(s.start))/WD*100);
+      const isLunch = s.kind === 'lunch';
+      const col = isLunch ? '#475569' : (colorOf[s.slug] || '#3b82f6');
+      const lbl = isLunch ? 'lunch' : (s.task_id || '');
+      segs += `<div class="tl-seg" style="left:${left}%;width:${width}%;background:${col}">${esc(lbl)}</div>`;
+    });
+    let legend = focus.map(p=>`<span><span class="legend-dot" style="background:${colorOf[p.slug]}"></span>${esc(p.project||p.slug)}</span>`).join('');
+    legend += `<span><span class="legend-dot" style="background:#475569"></span>Lunch</span>`;
+    h += `<div class="card" style="margin-bottom:2rem">
+      <div class="card-title">Day Timeline</div>
+      <div class="timeline-bar">${segs}</div>
+      <div class="tl-label"><span>${fmtHour(W0)}</span><span>${fmtHour(Math.round((W0+W1)/2/30)*30)}</span><span>${fmtHour(W1)}</span></div>
+      <div class="tl-legend">${legend}</div>
+    </div>`;
+  }
+
+  // focus project sections
+  focus.forEach(p => {
+    const pc = pctOf(p);
+    COPY[p.slug] = JSON.stringify({
+      project: p.project, client: p.client, date: b.date,
+      tasks: (p.tasks||[]).map(t => ({ id:t.id, title:t.title, phase:t.phase, estimate:t.estimate, priority:t.priority, status:t.status, notes:t.notes, prep:t.prep }))
+    }, null, 2);
+    let cards = '';
+    (p.tasks||[]).forEach(t => {
+      const blk = t.block || {};
+      const prep = t.prep || {};
+      const steps = approachSteps(prep.approach);
+      const res = Array.isArray(prep.resources) ? prep.resources : (prep.resources?[prep.resources]:[]);
+      cards += `<div class="task-card">
+        <div class="task-meta">
+          ${blk.start ? `<span class="task-time">${fmtClock(blk.start)} – ${fmtClock(blk.end)}</span>` : ''}
+          <span class="est-badge">${EST[(t.estimate||'').toLowerCase()] || esc(t.estimate||'')}</span>
+          <span class="prio-dot ${prioClass(t.priority)}"></span>
+          <span class="task-id">${esc(t.id||'')}${t.priority?' · '+esc(String(t.priority).toUpperCase()):''}</span>
+        </div>
+        <div class="task-title">${esc(t.title||'')}</div>
+        ${prep.what ? `<div class="prep-row"><div class="prep-label">What</div><div class="prep-body">${code(prep.what)}</div></div>` : ''}
+        ${prep.understand ? `<div class="prep-row"><div class="prep-label">Understand</div><div class="prep-body">${code(prep.understand)}</div></div>` : ''}
+        ${steps.length ? `<div class="prep-row"><div class="prep-label">Approach</div><div class="prep-body"><ol>${steps.map(s=>`<li>${code(s)}</li>`).join('')}</ol></div></div>` : ''}
+        ${res.length ? `<div class="prep-row"><div class="prep-label">Resources</div><div class="prep-body"><ul>${res.map(r=>`<li>${code(r)}</li>`).join('')}</ul></div></div>` : ''}
+      </div>`;
+    });
+    h += `<section class="project">
+      <div class="proj-header">
+        <span class="proj-dot" style="background:${colorOf[p.slug]}"></span>
+        <div><h2>${esc(p.project||p.slug)}</h2><div class="client">${esc(p.client||'')}</div></div>
+        <span class="spacer"></span>
+        ${pc!==null ? ring(pc, colorOf[p.slug], 44) : ''}
+      </div>
+      ${cards}
+      <button class="copy-btn" onclick="copyProject('${esc(p.slug)}')">📋 Copy tasks JSON — ${esc(p.project||p.slug)}</button>
+    </section>`;
+  });
+
+  // on deck
+  if (onDeck.length) {
+    h += onDeck.map(p => `<div class="ondeck">
+      ${pctOf(p)!==null ? ring(pctOf(p), '#64748b', 56) : ''}
+      <div><h3>${esc(p.project||p.slug)} · on deck</h3>
+      <div class="ondeck-sub">Deferred today to protect focus${p.tasks_total?` — ${p.tasks_done||0}/${p.tasks_total} done`:''}.</div></div>
+    </div>`).join('');
+  }
+
+  // waiting on
+  if ((b.waiting_on||[]).length) {
+    h += `<div class="section-label">⏳ Waiting on</div>`;
+    h += b.waiting_on.map(w => `<div class="waiting-card">
+      <div class="wtask">${esc(w.title||'')} <span style="color:var(--muted);font-weight:400">— ${esc(w.project||'')} ${esc(w.task_id||'')}</span></div>
+      <div class="wreason">${code(w.reason||'')}</div>
+    </div>`).join('');
+  }
+
+  h += `<footer>Data as of ${esc((b.data_as_of||'').replace('T',' ').slice(0,16))} UTC · generated ${esc((b.generated_at||'').replace('T',' ').slice(0,16))} UTC</footer>`;
+
+  document.getElementById('app').innerHTML = h;
+}
+
+function showEmpty() {
+  document.getElementById('app').innerHTML = `<div class="empty">
+    <div class="sun">🌅</div><h1>No brief yet</h1>
+    <p>Your day plan lands here every weekday at <strong>6:00 AM</strong>.<br>Go get some rest. 💪</p>
+  </div>`;
+}
+
+fetch('brief-latest.json?_=' + Date.now())
+  .then(r => { if (!r.ok) throw new Error('no brief'); return r.json(); })
+  .then(render)
+  .catch(showEmpty);
 </script>
 </body>
 </html>
