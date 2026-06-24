@@ -12,24 +12,95 @@
     "ratio": 0.81,
     "note": ""
   },
-  "window": { "start": "09:00", "end": "18:00" },
+  "window": {
+    "start": "09:00",
+    "end": "18:00"
+  },
   "schedule": [
-    { "start": "09:00", "end": "09:30", "slug": "gs-woodworking-spec", "project": "GS-ERP", "task_id": "t58", "title": "Labor rates + overhead costs (Rony, Giovanne, all roles)", "estimate": "s", "kind": "task" },
-    { "start": "09:45", "end": "10:15", "slug": "gs-woodworking-spec", "project": "GS-ERP", "task_id": "t57", "title": "Bonus formula definition (production + paint shop)", "estimate": "s", "kind": "task" },
-    { "start": "10:30", "end": "11:00", "slug": "ct-pros-erp", "project": "CT Pros ERP", "task_id": "t28", "title": "A.5/R4 — dev QB inspector (/dev/qb-inspector)", "estimate": "s", "kind": "task" },
-    { "start": "11:15", "end": "12:15", "slug": "ct-pros-erp", "project": "CT Pros ERP", "task_id": "t19", "title": "Initial mapping wizard: expense categories → QB accounts", "estimate": "m", "kind": "task" },
-    { "start": "12:15", "end": "13:15", "title": "Lunch", "kind": "lunch" },
-    { "start": "13:30", "end": "14:30", "slug": "ct-pros-erp", "project": "CT Pros ERP", "task_id": "t29", "title": "Sandbox-validate all 6 entity QB mappings + upsert/LinkedTxn shapes", "estimate": "m", "kind": "task" },
-    { "start": "14:45", "end": "15:45", "slug": "gs-woodworking-spec", "project": "GS-ERP", "task_id": "t56", "title": "Design + installation time benchmarks per project type", "estimate": "m", "kind": "task" },
-    { "start": "16:00", "end": "18:00", "slug": "gs-woodworking-spec", "project": "GS-ERP", "task_id": "t609", "title": "S5 · Quality gates — CK1–CK4 inspection engine bug hunt + E2E", "estimate": "l", "kind": "task" }
+    {
+      "start": "09:00",
+      "end": "09:30",
+      "slug": "gs-woodworking-spec",
+      "project": "GS-ERP",
+      "task_id": "t58",
+      "title": "Labor rates + overhead costs (Rony, Giovanne, all roles)",
+      "estimate": "s",
+      "kind": "task"
+    },
+    {
+      "start": "09:45",
+      "end": "10:15",
+      "slug": "gs-woodworking-spec",
+      "project": "GS-ERP",
+      "task_id": "t57",
+      "title": "Bonus formula definition (production + paint shop)",
+      "estimate": "s",
+      "kind": "task"
+    },
+    {
+      "start": "10:30",
+      "end": "11:00",
+      "slug": "ct-pros-erp",
+      "project": "CT Pros ERP",
+      "task_id": "t28",
+      "title": "A.5/R4 — dev QB inspector (/dev/qb-inspector)",
+      "estimate": "s",
+      "kind": "task"
+    },
+    {
+      "start": "11:15",
+      "end": "12:15",
+      "slug": "ct-pros-erp",
+      "project": "CT Pros ERP",
+      "task_id": "t19",
+      "title": "Initial mapping wizard: expense categories → QB accounts",
+      "estimate": "m",
+      "kind": "task"
+    },
+    {
+      "start": "12:15",
+      "end": "13:15",
+      "title": "Lunch",
+      "kind": "lunch"
+    },
+    {
+      "start": "13:30",
+      "end": "14:30",
+      "slug": "ct-pros-erp",
+      "project": "CT Pros ERP",
+      "task_id": "t29",
+      "title": "Sandbox-validate all 6 entity QB mappings + upsert/LinkedTxn shapes",
+      "estimate": "m",
+      "kind": "task"
+    },
+    {
+      "start": "14:45",
+      "end": "15:45",
+      "slug": "gs-woodworking-spec",
+      "project": "GS-ERP",
+      "task_id": "t56",
+      "title": "Design + installation time benchmarks per project type",
+      "estimate": "m",
+      "kind": "task"
+    },
+    {
+      "start": "16:00",
+      "end": "18:00",
+      "slug": "gs-woodworking-spec",
+      "project": "GS-ERP",
+      "task_id": "t609",
+      "title": "S5 · Quality gates — CK1–CK4 inspection engine bug hunt + E2E",
+      "estimate": "l",
+      "kind": "task"
+    }
   ],
   "projects": [
     {
       "slug": "gs-woodworking-spec",
       "project": "GS-ERP",
       "client": "GS Woodworking LLC",
-      "tasks_total": 70,
-      "tasks_done": 0,
+      "tasks_total": 634,
+      "tasks_done": 564,
       "on_deck": false,
       "tasks": [
         {
@@ -40,7 +111,10 @@
           "priority": "high",
           "status": "todo",
           "notes": "KB 6.4 + 6.5 placeholders. Rony's GSAFI LTDA rate, Giovanne's role + rate, monthly overhead. Required for financial dashboard (t51).",
-          "block": { "start": "09:00", "end": "09:30" },
+          "block": {
+            "start": "09:00",
+            "end": "09:30"
+          },
           "prep": {
             "what": "Sit with Rony and Giovanne to lock in real labor rates and monthly overhead — live placeholders in KB §6.4–6.5 that every financial calculation reads.",
             "understand": "The cost-plus pricing engine, margin rollups, and bonus system all pull from these KB fields. Right now they're zeroes — every financial output in GS-ERP is showing fictional profit.",
@@ -68,7 +142,10 @@
           "priority": "high",
           "status": "todo",
           "notes": "KB 9.1 + 12.13. Private session with Guilherme/Mayara. Production: target days + quality gate. Paint: team-based + labor split rule (equal vs weighted).",
-          "block": { "start": "09:45", "end": "10:15" },
+          "block": {
+            "start": "09:45",
+            "end": "10:15"
+          },
           "prep": {
             "what": "Get the exact bonus formula from Guilherme and Mayara: the pool/percentage, equal-vs-weighted split for 12 carpenters, and the paint-shop team variant.",
             "understand": "`BonusEligibilityCalculator` gates on `actual_days ≤ target_days AND ck2_rework_count==0` but payout amounts are blank — KB §9.1 and §12.13 are both placeholders. Two separate formulas needed: production per-marceneiro pool + split, and the paint-shop variant.",
@@ -95,7 +172,10 @@
           "priority": "high",
           "status": "todo",
           "notes": "KB 9.1: Track next 10 projects for design time. Interview install crew leads for installation times. Required for capacity planning + accurate scheduling.",
-          "block": { "start": "14:45", "end": "15:45" },
+          "block": {
+            "start": "14:45",
+            "end": "15:45"
+          },
           "prep": {
             "what": "Build a systematic capture of real design hours and installation hours per project type — the calibration data KB §9.1 needs before capacity planning is meaningful.",
             "understand": "`TimeStandard` values are seeded estimates, not measured against GS's actual shop. Design hours vary significantly by type (kitchen >> closet). Without real benchmarks, `ProductionPriorityService` scores on fiction.",
@@ -123,7 +203,10 @@
           "priority": "high",
           "status": "todo",
           "notes": "find → adversarial-verify (cite Master_flow §) → gated fix → edge-case E2E.",
-          "block": { "start": "16:00", "end": "18:00" },
+          "block": {
+            "start": "16:00",
+            "end": "18:00"
+          },
           "prep": {
             "what": "Run V1 Polishing Crusade Sector 5 — adversarially hunt CK1–CK4 inspection bugs, verify each against `Master_flow.md`, fix confirmed HIGH/CRITICAL with PHPUnit coverage, write E2E specs for all guard paths.",
             "understand": "S1–S4 are done (workflow, estimates, billing, QB). S5 covers `Ck1InspectionService`, `Ck2InspectionService`, fail/pass cascades, rework-round tracking, photo-upload gates, CK4 signature capture, punch list lifecycle. Done when a full round finds zero new HIGH/CRITICAL confirmed bugs.",
@@ -150,8 +233,8 @@
       "slug": "ct-pros-erp",
       "project": "CT Pros ERP",
       "client": "CT Pros",
-      "tasks_total": 15,
-      "tasks_done": 0,
+      "tasks_total": 32,
+      "tasks_done": 17,
       "on_deck": false,
       "tasks": [
         {
@@ -162,7 +245,10 @@
           "priority": "medium",
           "status": "todo",
           "notes": "Port GS /dev/qb-inspector (gated on QB_FAKE). UI to simulate client-approved / rejected estimate + invoice-paid against fake_qb_* tables. Needed to exercise Section F locally.",
-          "block": { "start": "10:30", "end": "11:00" },
+          "block": {
+            "start": "10:30",
+            "end": "11:00"
+          },
           "prep": {
             "what": "Port the GS `/dev/qb-inspector` page to CT Pros — a `QB_FAKE`-gated UI to trigger approve/reject/paid events against fake QB tables without touching real QuickBooks.",
             "understand": "The fake-QB layer intercepts `sync()` calls via the `QB_FAKE` flag and `fake_qb_*` tables. Without this inspector you can't locally test the Section F approval flow (t31) or the payment poller. Last R4 piece of the A.5 GS-pattern adoption.",
@@ -190,7 +276,10 @@
           "priority": "high",
           "status": "todo",
           "notes": "After connecting, walk Admin through a 4-step wizard. Persist mappings in settings table. Accessible from Settings → QuickBooks → Edit Mapping anytime.",
-          "block": { "start": "11:15", "end": "12:15" },
+          "block": {
+            "start": "11:15",
+            "end": "12:15"
+          },
           "prep": {
             "what": "Build the 4-step Settings → QuickBooks mapping wizard: expense categories to QB accounts, default income account, tax code, and optional client/sub matching to existing QB records.",
             "understand": "Every sync service reads `qb_category_account_map`, `qb_default_income_account_id`, `qb_tax_code_id` from settings. Without this wizard those settings don't exist — every sync fails at the account-reference lookup. This is the config prerequisite for going live.",
@@ -219,7 +308,10 @@
           "priority": "high",
           "status": "todo",
           "notes": "BLOCKER before production. Connect an Intuit sandbox, validate field mappings, sparse upserts, Payment LinkedTxn shapes, ItemRef requirement on Estimate lines, Purchase TotalAmt output-only.",
-          "block": { "start": "13:30", "end": "14:30" },
+          "block": {
+            "start": "13:30",
+            "end": "14:30"
+          },
           "prep": {
             "what": "Connect a real Intuit sandbox and fire each of the 6 sync services against it — the fake-QB layer covers flow, but only a real sandbox catches API shape bugs.",
             "understand": "Known production risks: `Payment.LinkedTxn` must be an array of objects (not flat); `ItemRef` is REQUIRED on Estimate lines; `Purchase.TotalAmt` is output-only. Any one of these wrong = silent failure in production. This is the go-live BLOCKER.",
@@ -245,8 +337,8 @@
       "slug": "takeoff-engine",
       "project": "Takeoff Engine",
       "client": "AZ Team AI",
-      "tasks_total": 12,
-      "tasks_done": 0,
+      "tasks_total": 27,
+      "tasks_done": 15,
       "on_deck": true,
       "tasks": []
     }
