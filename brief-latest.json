@@ -1,0 +1,170 @@
+{
+  "date": "2026-06-24",
+  "generated_at": "2026-06-24T10:00:00Z",
+  "data_as_of": "2026-06-24T18:21:44+00:00",
+  "difficulty": {
+    "rating": "Solid",
+    "planned_minutes": 390,
+    "available_minutes": 480,
+    "ratio": 0.81
+  },
+  "focus_projects": ["gs-woodworking-spec", "ct-pros-erp"],
+  "on_deck": ["takeoff-engine"],
+  "schedule": [
+    { "start": "09:00", "end": "09:30", "project": "GS-ERP", "task_id": "t58", "title": "Labor rates + overhead costs (Rony, Giovanne, all roles)", "estimate": "s" },
+    { "start": "09:45", "end": "10:15", "project": "GS-ERP", "task_id": "t57", "title": "Bonus formula definition (production + paint shop)", "estimate": "s" },
+    { "start": "10:30", "end": "11:00", "project": "CT Pros ERP", "task_id": "t28", "title": "A.5/R4 — dev QB inspector (/dev/qb-inspector)", "estimate": "s" },
+    { "start": "11:15", "end": "12:15", "project": "CT Pros ERP", "task_id": "t19", "title": "Initial mapping wizard: expense categories → QB accounts", "estimate": "m" },
+    { "start": "13:15", "end": "14:15", "project": "CT Pros ERP", "task_id": "t29", "title": "Sandbox-validate all 6 entity QB mappings + upsert/LinkedTxn shapes", "estimate": "m" },
+    { "start": "14:30", "end": "15:30", "project": "GS-ERP", "task_id": "t56", "title": "Design + installation time benchmarks per project type", "estimate": "m" },
+    { "start": "15:45", "end": "17:45", "project": "GS-ERP", "task_id": "t609", "title": "S5 · Quality gates — CK1–CK4 inspection engine bug hunt + E2E", "estimate": "l" }
+  ],
+  "projects": [
+    {
+      "slug": "gs-woodworking-spec",
+      "project": "GS-ERP",
+      "client": "GS Woodworking LLC",
+      "tasks": [
+        {
+          "id": "t58",
+          "title": "Labor rates + overhead costs (Rony, Giovanne, all roles)",
+          "phase": "Phase 66 · 100% · Bonus, Analytics, Data-gathering & Polish",
+          "estimate": "s",
+          "priority": "high",
+          "status": "todo",
+          "notes": "KB 6.4 + 6.5 placeholders. Rony's GSAFI LTDA rate, Giovanne's role + rate, monthly overhead. Required for financial dashboard (t51).",
+          "block": { "start": "09:00", "end": "09:30" },
+          "prep": {
+            "what": "Sit with Rony and Giovanne to lock in their actual rates — GSAFI LTDA contract amount, Giovanne's role and pay, and the full monthly overhead (rent, utilities, insurance). These numbers go into KB §6.4–6.5 and unlock the financial dashboard.",
+            "understand": "The cost-plus pricing engine, profit margin rollups, and the bonus system all read these KB placeholders. Right now they're zeroes — every financial calculation in GS-ERP is showing fictional profit margins.",
+            "approach": "1. Open KB §6.4 and §6.5 — note every placeholder field. 2. Schedule 15-min call with Rony for GSAFI contract rate and Giovanne's compensation. 3. Pull monthly overhead line items (rent, utilities, shop insurance, software). 4. Update KB with real numbers. 5. Flag t51 financial dashboard that its data dependency is cleared.",
+            "resources": ["KB §6.4 (labor rates)", "KB §6.5 (overhead costs)", "GSAFI LTDA contract / HR records", "Rony contact", "Giovanne HR profile"]
+          }
+        },
+        {
+          "id": "t57",
+          "title": "Bonus formula definition (production + paint shop)",
+          "phase": "Phase 66 · 100% · Bonus, Analytics, Data-gathering & Polish",
+          "estimate": "s",
+          "priority": "high",
+          "status": "todo",
+          "notes": "KB 9.1 + 12.13. Private session with Guilherme/Mayara. Production: target days + quality gate. Paint: team-based + labor split rule (equal vs weighted).",
+          "block": { "start": "09:45", "end": "10:15" },
+          "prep": {
+            "what": "Get the exact production bonus formula from Guilherme and Mayara — the pool/percentage, the equal-vs-weighted split among 12 carpenters, and the paint shop team formula.",
+            "understand": "BonusEligibilityCalculator exists (actual_days ≤ target_days AND ck2_rework_count==0) but the AMOUNTS are blank. KB §9.1 and §12.13 are placeholders. Two separate formulas needed: (1) production per-marceneiro pool and split, (2) paint shop variant. The split rule is undecided.",
+            "approach": "1. Pull KB §9.1 and §12.13 — list every open question. 2. Prep a 1-pager for Guilherme/Mayara: what's the bonus pool (% of project profit?), how is the 12-marceneiro split calculated, what's the paint quality gate threshold. 3. Get real numbers in the session — commit to KB. 4. Note what BonusEligibilityCalculator needs vs what's new code (t38).",
+            "resources": ["KB §9.1 (bonus formula)", "KB §12.13 (open bonus questions)", "App/Services/Production/BonusEligibilityCalculator.php", "Project Plan §6 bonus notes", "Guilherme + Mayara contacts"]
+          }
+        },
+        {
+          "id": "t56",
+          "title": "Design + installation time benchmarks per project type",
+          "phase": "Phase 66 · 100% · Bonus, Analytics, Data-gathering & Polish",
+          "estimate": "m",
+          "priority": "high",
+          "status": "todo",
+          "notes": "KB 9.1: Track next 10 projects for design time. Interview install crew leads for installation times. Required for capacity planning + accurate scheduling.",
+          "block": { "start": "14:30", "end": "15:30" },
+          "prep": {
+            "what": "Build a systematic way to capture real design hours and installation hours per project type — the data KB §9.1 needs to calibrate time standards and capacity planning.",
+            "understand": "TimeStandard values are seeded estimates, not calibrated to GS's actual shop speed. Design hours vary significantly by type (kitchen >> closet). Without real benchmarks, the ProductionPriorityService is scoring on fictional data.",
+            "approach": "1. Read KB §9.1 — understand what format benchmarks need to be in. 2. Write a query to extract actual design durations from completed projects (timestamp diffs grouped by product_type). 3. Interview the 3 install crew leads (GKM, IR Woodworking, Caio) for typical hours per type. 4. Compare vs current TimeStandard seeds. 5. Update KB §9.1 with benchmark data + recommended adjustments.",
+            "resources": ["KB §9.1 (time benchmarks)", "TimeStandard model + seeder", "Project query for design timestamps", "ProductionPriorityService source", "Install crew lead contacts (GKM, IR Woodworking, Caio Martins)"]
+          }
+        },
+        {
+          "id": "t609",
+          "title": "S5 · Quality gates — CK1–CK4 inspection engine bug hunt + E2E",
+          "phase": "Phase 78 · V1 Polishing Crusade",
+          "estimate": "l",
+          "priority": "high",
+          "status": "todo",
+          "notes": "find -> adversarial-verify (cite Master_flow §) -> gated fix -> edge-case E2E.",
+          "block": { "start": "15:45", "end": "17:45" },
+          "prep": {
+            "what": "Run the V1 Polishing Crusade Sector 5 — bug-hunt the CK1–CK4 inspection engine, adversarially verify every finding against Master_flow.md, fix confirmed HIGH/CRITICAL bugs behind PHPUnit tests, then write E2E specs for all guard paths.",
+            "understand": "S1–S4 are done (workflow, estimates, billing, QB). S5 covers: Ck1InspectionService, Ck2InspectionService, fail/pass cascades, rework round tracking, photo-upload gates, CK4 signature capture, punch list lifecycle. Converge rule: done when a round finds no new HIGH/CRITICAL confirmed bugs.",
+            "approach": "1. Read Master_flow.md §§ on CK1–CK4 (design verification → fabrication QC → cosmetic → install sign-off). 2. Walk each path: CK1→clientApproveDrawing gate, CK2 incomplete guard, CK3→awaiting_ck3, CK4→signOffCk4→punch list. 3. Hunt for: guard bypasses, cascade missing substep transitions, rework count not incrementing, photo not required when KB says it is, wrong permission gates. 4. Adversarially verify — refute if no Master_flow citation. 5. For HIGHs: failing PHPUnit first, then fix. For E2E: .local.spec.ts covering all guard paths.",
+            "resources": ["Master_flow.md §§ on CK1/CK2/CK3/CK4", "Ck1InspectionService / Ck2InspectionService / CK3 / CK4 classes", "t605–t608 bug hunt notes (S1–S4 patterns)", "Existing .local.spec.ts conventions (port 8000)", "ProjectWorkflow.php passCk2/passCk3/passCk4", "PipelineRegistry.php substep definitions"]
+          }
+        }
+      ]
+    },
+    {
+      "slug": "ct-pros-erp",
+      "project": "CT Pros ERP",
+      "client": "CT Pros",
+      "tasks": [
+        {
+          "id": "t28",
+          "title": "A.5/R4 — dev QB inspector (/dev/qb-inspector) to simulate approve/reject/paid",
+          "phase": "Phase 5: QuickBooks Integration",
+          "estimate": "s",
+          "priority": "med",
+          "status": "todo",
+          "notes": "Port GS /dev/qb-inspector (gated on QB_FAKE). UI to simulate client-approved / rejected estimate + invoice-paid against the fake_qb_* tables. Needed to exercise Section F locally without QB.",
+          "block": { "start": "10:30", "end": "11:00" },
+          "prep": {
+            "what": "Port the GS /dev/qb-inspector dev page to CT Pros — a QB_FAKE-gated UI that lets you trigger approve/reject/paid events against fake QB tables without touching a real QuickBooks environment.",
+            "understand": "The fake-QB layer intercepts sync() calls in dev/test via QB_FAKE flag and fake_qb_* tables. Without the inspector, you can't test Section F (approval flow, t31) or the payment poller locally. This is the last R4 piece of the A.5 GS-pattern adoption.",
+            "approach": "1. Find /dev/qb-inspector in GS repo (routes, controller, Vue page). 2. Map GS entities to CT Pros equivalents (clients→customers, documents→estimates/invoices, transactions→payments). 3. Build route + controller in CT Pros (behind APP_ENV=local AND QB_FAKE=true). 4. Build Vue page with actions: simulate estimate accepted, estimate rejected, invoice paid. 5. Wire fake_qb_* table updates — verify qb_sync_status updates on entities.",
+            "resources": ["GS /dev/qb-inspector source", "CT Pros QB_FAKE env flag", "fake_qb_estimates / fake_qb_invoices table schema", "SyncEntityJob + SyncsToQuickBooks trait", "t28 notes"]
+          }
+        },
+        {
+          "id": "t19",
+          "title": "Initial mapping wizard: expense categories → QB accounts, default income account, tax codes, existing-record matching",
+          "phase": "Phase 5: QuickBooks Integration",
+          "estimate": "m",
+          "priority": "high",
+          "status": "todo",
+          "notes": "After connecting, walk Admin through a 4-step wizard. Persist mappings in settings table. Wizard accessible from Settings → QuickBooks → Edit Mapping anytime.",
+          "block": { "start": "11:15", "end": "12:15" },
+          "prep": {
+            "what": "Build the 4-step Settings → QuickBooks mapping wizard: map expense categories to QB accounts, pick default income account, set tax code, and optionally match existing clients/subcontractors to QB records by name.",
+            "understand": "Every sync service reads from settings: qb_category_account_map, qb_default_income_account_id, qb_tax_code_id. Without this wizard those settings don't exist → every sync fails at the account-reference lookup. This is the config prerequisite for going live.",
+            "approach": "1. Add 4-step Vue wizard at /settings/quickbooks/mapping. 2. Step 1: fetch QB Accounts via QuickBooksClient query → dropdown per ExpenseCategory. 3. Step 2: pick default income account. 4. Step 3: pick QB TaxCode. 5. Step 4: fuzzy-match CT Pros clients/subs by name to QB Customers/Vendors — confirm matches, write qb_id back. 6. Persist via PATCH /settings/quickbooks/mapping.",
+            "resources": ["QB v3 API /query (SELECT * FROM Account WHERE Active=true)", "QuickBooksClient service", "Setting::getValue()/setValue()", "ExpenseCategory model", "existing QB settings page at /settings/quickbooks", "t19 notes + mapping plan"]
+          }
+        },
+        {
+          "id": "t29",
+          "title": "Sandbox-validate all 6 entity QB mappings + upsert/LinkedTxn shapes",
+          "phase": "Phase 5: QuickBooks Integration",
+          "estimate": "m",
+          "priority": "high",
+          "status": "todo",
+          "notes": "BLOCKER before production. Connect an Intuit sandbox, validate: field mappings, sparse upserts, Payment LinkedTxn array-of-objects shape, ItemRef requirement on Estimate lines, Purchase TotalAmt being output-only.",
+          "block": { "start": "13:15", "end": "14:15" },
+          "prep": {
+            "what": "Connect a real Intuit sandbox and run each of the 6 sync services against it to verify field mappings actually work — the fake-QB layer in tests covers flow, not real API shapes.",
+            "understand": "Known risks: Payment LinkedTxn must be an array of objects (not flat); ItemRef is REQUIRED on Estimate lines; Purchase TotalAmt is output-only in QB. Any of these wrong = silent failure in production. This is the production BLOCKER.",
+            "approach": "1. Create Intuit sandbox company at developer.intuit.com; grab ClientId/Secret. 2. Set QB_CLIENT_ID/SECRET/ENV=sandbox in local .env; run qb:connect to get tokens. 3. Create test entities and trigger each sync job via tinker: Customer→Vendor→Estimate→Invoice→Payment→Expense. 4. Check QB sandbox dashboard for each: record created? Fields correct? 5. Fix field mapping errors and add unit tests (Http::fake() against QBO URLs).",
+            "resources": ["developer.intuit.com — sandbox company + OAuth app", "QB v3 PHP SDK DataService", "6 sync services (CustomerSync, VendorSync, EstimateSync, InvoiceSync, PaymentSync, ExpenseSync)", "QB v3 API field reference (Payment LinkedTxn, Purchase TotalAmt)", "t29 notes listing specific risks"]
+          }
+        }
+      ]
+    }
+  ],
+  "waiting_on": [
+    {
+      "project": "GS-ERP",
+      "task_id": "t38",
+      "title": "Production bonus system (target vs actual + quality gate eligibility)",
+      "reason": "Bonus formula not defined — needs private session with Guilherme/Mayara (KB §9.1 + §12.13 are blank)"
+    },
+    {
+      "project": "GS-ERP",
+      "task_id": "t566",
+      "title": "Markup/commission field with hide-from-client toggle",
+      "reason": "Needs dedicated design session with team re: compliance + how Silvia tracks the designer passthrough"
+    },
+    {
+      "project": "CT Pros ERP",
+      "task_id": "t13",
+      "title": "Production deployment plan + first deploy",
+      "reason": "Deferred until feature-complete app + a domain acquired (no domain as of 2026-06-03)"
+    }
+  ]
+}

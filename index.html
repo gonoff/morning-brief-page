@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noindex,nofollow">
-<title>Morning Brief — Wednesday, June 24 2026</title>
+<title>Morning Brief</title>
 <style>
   :root {
     --bg: #0f172a; --surface: #1e293b; --surface2: #263348; --border: #334155;
@@ -12,499 +12,279 @@
     --indigo: #818cf8; --red: #ef4444; --yellow: #eab308; --blue: #3b82f6; --gap: 1.25rem;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { background: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 15px; line-height: 1.6; padding: 1rem; }
+  body { background: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 15px; line-height: 1.6; padding: 1rem; max-width: 1100px; margin: 0 auto; }
   .notice { background: #1e3a5f; border: 1px solid #3b82f6; border-radius: 8px; padding: 0.6rem 1rem; font-size: 0.85rem; color: #93c5fd; margin-bottom: 1rem; }
   header { text-align: center; margin-bottom: 2rem; }
   header .date { font-size: 0.9rem; color: var(--muted); letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 0.3rem; }
   header h1 { font-size: 1.5rem; font-weight: 700; margin-bottom: 0.75rem; }
   .badge { display: inline-block; padding: 0.35rem 1.1rem; border-radius: 999px; font-weight: 700; font-size: 1rem; letter-spacing: 0.05em; }
   .badge-solid { background: #1d4ed8; color: #bfdbfe; }
+  .badge-chill { background: #065f46; color: #a7f3d0; }
+  .badge-brutal { background: #7f1d1d; color: #fecaca; }
   header .hype { margin-top: 0.75rem; font-size: 1.05rem; color: var(--muted); font-style: italic; }
   .graphs { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: var(--gap); margin-bottom: 2rem; }
   .card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.25rem; }
   .card-title { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin-bottom: 0.75rem; }
   .rings { display: flex; gap: 1.5rem; justify-content: center; align-items: center; flex-wrap: wrap; }
   .ring-wrap { display: flex; flex-direction: column; align-items: center; gap: 0.4rem; }
-  .ring-label { font-size: 0.75rem; color: var(--muted); text-align: center; max-width: 80px; }
+  .ring-label { font-size: 0.75rem; color: var(--muted); text-align: center; max-width: 90px; }
   .ring-pct { font-size: 0.8rem; font-weight: 700; color: var(--text); }
   .timeline-bar { position: relative; height: 48px; background: var(--surface2); border-radius: 8px; overflow: hidden; }
-  .tl-seg { position: absolute; top: 0; height: 100%; display: flex; align-items: center; justify-content: center; font-size: 0.65rem; font-weight: 600; color: rgba(255,255,255,0.85); overflow: hidden; white-space: nowrap; }
+  .tl-seg { position: absolute; top: 0; height: 100%; display: flex; align-items: center; justify-content: center; font-size: 0.65rem; font-weight: 600; color: rgba(255,255,255,0.9); overflow: hidden; white-space: nowrap; border-right: 1px solid rgba(15,23,42,0.5); }
   .tl-label { font-size: 0.7rem; color: var(--muted); display: flex; justify-content: space-between; margin-top: 0.3rem; }
+  .tl-legend { display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 0.6rem; font-size: 0.72rem; color: var(--muted); }
+  .tl-legend span { display: inline-flex; align-items: center; gap: 0.3rem; }
+  .legend-dot { width: 10px; height: 10px; border-radius: 3px; display: inline-block; }
   .gauge-wrap { display: flex; align-items: center; gap: 1rem; }
   .gauge-text strong { font-size: 1.4rem; color: var(--text); display: block; }
   .gauge-text span { color: var(--muted); font-size: 0.8rem; }
+  .gauge-text .spare { color: var(--emerald); }
+  .gauge-text .over { color: var(--amber); }
   section.project { margin-bottom: 2rem; }
   .proj-header { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem; }
   .proj-dot { width: 14px; height: 14px; border-radius: 50%; flex-shrink: 0; }
   .proj-header h2 { font-size: 1.1rem; font-weight: 700; }
   .proj-header .client { font-size: 0.8rem; color: var(--muted); }
+  .proj-header .spacer { flex: 1; }
   .task-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.1rem 1.25rem; margin-bottom: 0.85rem; }
   .task-meta { display: flex; align-items: center; gap: 0.6rem; margin-bottom: 0.6rem; flex-wrap: wrap; }
   .task-time { font-size: 0.8rem; color: var(--muted); font-weight: 600; }
   .est-badge { font-size: 0.7rem; padding: 0.15rem 0.5rem; border-radius: 4px; background: var(--surface2); border: 1px solid var(--border); font-weight: 700; }
+  .task-id { font-size: 0.72rem; color: var(--muted); }
   .prio-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
   .prio-high { background: var(--red); }
   .prio-med { background: var(--yellow); }
+  .prio-low { background: var(--muted); }
   .task-title { font-size: 1rem; font-weight: 700; margin-bottom: 0.75rem; color: var(--text); }
   .prep-row { margin-bottom: 0.55rem; }
   .prep-label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin-bottom: 0.15rem; }
   .prep-body { font-size: 0.88rem; color: var(--text); }
   .prep-body ol, .prep-body ul { padding-left: 1.2rem; margin-top: 0.2rem; }
   .prep-body li { margin-bottom: 0.15rem; }
-  code { background: var(--surface2); padding: 0.1rem 0.3rem; border-radius: 3px; font-size: 0.82em; font-family: 'SF Mono', monospace; }
-  .copy-btn { margin-top: 1rem; display: inline-block; padding: 0.45rem 1rem; border-radius: 6px; border: 1px solid var(--border); background: var(--surface2); color: var(--muted); font-size: 0.8rem; cursor: pointer; }
+  code { background: var(--surface2); padding: 0.1rem 0.3rem; border-radius: 3px; font-size: 0.82em; font-family: 'SF Mono', ui-monospace, monospace; }
+  .copy-btn { margin-top: 0.5rem; display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.45rem 1rem; border-radius: 6px; border: 1px solid var(--border); background: var(--surface2); color: var(--muted); font-size: 0.8rem; cursor: pointer; font-family: inherit; }
   .copy-btn:hover { background: var(--border); color: var(--text); }
   .waiting-card { background: var(--surface); border: 1px solid #475569; border-radius: 8px; padding: 0.7rem 1rem; margin-bottom: 0.5rem; }
   .waiting-card .wtask { font-weight: 600; color: var(--text); font-size: 0.88rem; }
   .waiting-card .wreason { color: var(--muted); font-size: 0.82rem; }
-  .ondeck { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1rem 1.25rem; margin-bottom: 2rem; }
-  .ondeck-header { display: flex; align-items: center; gap: 0.6rem; }
-  .ondeck-header h3 { font-size: 0.95rem; font-weight: 700; }
-  .ondeck-sub { font-size: 0.82rem; color: var(--muted); margin-top: 0.35rem; }
+  .ondeck { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1rem 1.25rem; margin-bottom: 2rem; display: flex; align-items: center; gap: 1.25rem; flex-wrap: wrap; }
+  .ondeck h3 { font-size: 0.95rem; font-weight: 700; }
+  .ondeck-sub { font-size: 0.82rem; color: var(--muted); margin-top: 0.25rem; }
   footer { text-align: center; font-size: 0.78rem; color: var(--muted); padding-top: 1.5rem; border-top: 1px solid var(--border); margin-top: 2rem; }
   .section-label { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 0.85rem; }
+  .empty { text-align: center; padding: 6rem 1rem; color: var(--muted); }
+  .empty .sun { font-size: 56px; }
+  .empty h1 { font-size: 1.4rem; color: var(--text); margin: 0.5rem 0; }
+  .toast { position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%) translateY(20px); background: var(--emerald); color: #04130c; font-weight: 700; padding: 0.6rem 1.2rem; border-radius: 999px; opacity: 0; transition: all 0.2s; pointer-events: none; font-size: 0.85rem; }
+  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
   @media (max-width: 480px) { body { padding: 0.6rem; font-size: 14px; } header h1 { font-size: 1.2rem; } .task-card { padding: 0.9rem 1rem; } }
 </style>
 </head>
 <body>
-
-<div class="notice">&#8505;&#65039; Create a <strong>'Work Plan'</strong> calendar in Google Calendar to get time-blocks added automatically to your calendar.</div>
-
-<header>
-  <div class="date">Wednesday &middot; June 24, 2026</div>
-  <h1>Morning, Haniel. Let's get after it.</h1>
-  <span class="badge badge-solid">&#9889; Solid Day &mdash; 88%</span>
-  <div class="hype">Five tasks, two projects, zero fluff &mdash; ship it all before 6 PM.</div>
-</header>
-
-<div class="graphs">
-  <div class="card">
-    <div class="card-title">Project Progress</div>
-    <div class="rings">
-      <div class="ring-wrap">
-        <svg width="80" height="80" viewBox="0 0 80 80">
-          <circle cx="40" cy="40" r="32" fill="none" stroke="#263348" stroke-width="10"/>
-          <circle cx="40" cy="40" r="32" fill="none" stroke="#f59e0b" stroke-width="10"
-            stroke-dasharray="201.06" stroke-dashoffset="94.5" stroke-linecap="round" transform="rotate(-90 40 40)"/>
-          <text x="40" y="44" text-anchor="middle" fill="#e2e8f0" font-size="14" font-weight="700">53%</text>
-        </svg>
-        <div class="ring-label">CT Pros ERP</div>
-        <div class="ring-pct">17 / 32</div>
-      </div>
-      <div class="ring-wrap">
-        <svg width="80" height="80" viewBox="0 0 80 80">
-          <circle cx="40" cy="40" r="32" fill="none" stroke="#263348" stroke-width="10"/>
-          <circle cx="40" cy="40" r="32" fill="none" stroke="#10b981" stroke-width="10"
-            stroke-dasharray="201.06" stroke-dashoffset="88.5" stroke-linecap="round" transform="rotate(-90 40 40)"/>
-          <text x="40" y="44" text-anchor="middle" fill="#e2e8f0" font-size="14" font-weight="700">56%</text>
-        </svg>
-        <div class="ring-label">Takeoff Engine</div>
-        <div class="ring-pct">15 / 27</div>
-      </div>
-      <div class="ring-wrap">
-        <svg width="80" height="80" viewBox="0 0 80 80">
-          <circle cx="40" cy="40" r="32" fill="none" stroke="#263348" stroke-width="10"/>
-          <circle cx="40" cy="40" r="32" fill="none" stroke="#818cf8" stroke-width="10"
-            stroke-dasharray="201.06" stroke-dashoffset="20.1" stroke-linecap="round" transform="rotate(-90 40 40)"/>
-          <text x="40" y="44" text-anchor="middle" fill="#e2e8f0" font-size="14" font-weight="700">90%</text>
-        </svg>
-        <div class="ring-label">GS-ERP (on deck)</div>
-        <div class="ring-pct">570 / 634</div>
-      </div>
-    </div>
-  </div>
-
-  <div class="card">
-    <div class="card-title">Day Load</div>
-    <div class="gauge-wrap">
-      <svg width="110" height="70" viewBox="0 0 110 70">
-        <path d="M 10 60 A 45 45 0 0 1 100 60" fill="none" stroke="#263348" stroke-width="12" stroke-linecap="round"/>
-        <path d="M 10 60 A 45 45 0 0 1 100 60" fill="none" stroke="#1d4ed8" stroke-width="12"
-          stroke-dasharray="141.37" stroke-dashoffset="17.7" stroke-linecap="round"/>
-        <text x="55" y="52" text-anchor="middle" fill="#e2e8f0" font-size="16" font-weight="700">88%</text>
-      </svg>
-      <div class="gauge-text">
-        <strong>7h 45m</strong>
-        <span>planned of 8h available</span><br>
-        <span style="color:#6ee7b7;font-size:0.8rem;">15 min to spare</span>
-      </div>
-    </div>
-  </div>
-
-  <div class="card" style="grid-column: 1 / -1;">
-    <div class="card-title">Day Timeline &mdash; 9 AM to 6 PM (540 min window)</div>
-    <div class="timeline-bar">
-      <div class="tl-seg" style="left:0%;width:11.11%;background:#92400e;" title="9:00-10:00 CT Pros t29">t29</div>
-      <div class="tl-seg" style="left:13.89%;width:11.11%;background:#92400e;" title="10:15-11:15 CT Pros t19">t19</div>
-      <div class="tl-seg" style="left:27.78%;width:11.11%;background:#065f46;" title="11:30-12:30 Takeoff t26">t26</div>
-      <div class="tl-seg" style="left:38.89%;width:11.11%;background:#374151;opacity:0.8;" title="12:30-1:30 Lunch">lunch</div>
-      <div class="tl-seg" style="left:50%;width:22.22%;background:#065f46;" title="1:30-3:30 Takeoff t18">t18 (2h)</div>
-      <div class="tl-seg" style="left:75%;width:22.22%;background:#92400e;" title="3:45-5:45 CT Pros t31">t31 (2h)</div>
-    </div>
-    <div class="tl-label"><span>9 AM</span><span>12 PM</span><span>3 PM</span><span>6 PM</span></div>
-    <div style="display:flex;gap:1rem;margin-top:0.6rem;flex-wrap:wrap;">
-      <span style="font-size:0.72rem;color:#f59e0b;">&#9632; CT Pros ERP</span>
-      <span style="font-size:0.72rem;color:#10b981;">&#9632; Takeoff Engine</span>
-      <span style="font-size:0.72rem;color:#6b7280;">&#9632; Lunch</span>
-      <span style="font-size:0.72rem;color:#475569;">&#9632; Buffer (15 min gaps)</span>
-    </div>
-  </div>
-</div>
-
-<!-- CT PROS ERP -->
-<section class="project">
-  <div class="proj-header">
-    <div class="proj-dot" style="background:#f59e0b;"></div>
-    <div>
-      <h2>CT Pros ERP</h2>
-      <div class="client">CT Pros &middot; Laravel 11 + Inertia + Vue 3 + QuickBooks</div>
-    </div>
-    <svg width="40" height="40" viewBox="0 0 40 40" style="margin-left:auto;flex-shrink:0;">
-      <circle cx="20" cy="20" r="16" fill="none" stroke="#263348" stroke-width="6"/>
-      <circle cx="20" cy="20" r="16" fill="none" stroke="#f59e0b" stroke-width="6"
-        stroke-dasharray="100.53" stroke-dashoffset="47.2" stroke-linecap="round" transform="rotate(-90 20 20)"/>
-      <text x="20" y="24" text-anchor="middle" fill="#e2e8f0" font-size="10" font-weight="700">53%</text>
-    </svg>
-  </div>
-
-  <div class="task-card">
-    <div class="task-meta">
-      <span class="task-time">9:00 &ndash; 10:00</span>
-      <span class="est-badge">M &middot; 60 min</span>
-      <span class="prio-dot prio-high" title="High"></span>
-      <span style="font-size:0.72rem;color:var(--muted);">t29 &middot; HIGH &middot; CRITICAL before prod</span>
-    </div>
-    <div class="task-title">Sandbox-validate all QuickBooks field mappings</div>
-    <div class="prep-row">
-      <div class="prep-label">What</div>
-      <div class="prep-body">Run every QB sync() method against the Intuit sandbox and verify that every field name, data type, and relationship matches the real QBO API before this ever touches a live client account.</div>
-    </div>
-    <div class="prep-row">
-      <div class="prep-label">Understand</div>
-      <div class="prep-body">Intuit's sandbox is a fully isolated QB company &mdash; changes there never reach real data. The 6 entity syncs (customers, invoices, payments, vendors, bills, expense accounts) each have their own QBO endpoint and their own field quirks (e.g. CustomerRef vs CustomerRefFull, TxnDate vs DocNumber). A mapping that looks right in code can silently write garbage in prod.</div>
-    </div>
-    <div class="prep-row">
-      <div class="prep-label">Approach</div>
-      <div class="prep-body">
-        <ol>
-          <li>Boot your dev env pointed at Intuit sandbox credentials (check <code>.env.testing</code> &mdash; <code>QB_CLIENT_ID</code>, <code>QB_SANDBOX=true</code>).</li>
-          <li>Trigger each of the 6 DataService sync() methods one by one. Read the raw QBO response and diff field names against what your code writes.</li>
-          <li>Fix any mismatch (null fields, wrong type, missing required field). Keep a running list.</li>
-          <li>Add a PHPUnit test per entity that mocks DataService and asserts the payload shape &mdash; locks the contract so regressions are caught automatically.</li>
-        </ol>
-      </div>
-    </div>
-    <div class="prep-row">
-      <div class="prep-label">Resources</div>
-      <div class="prep-body">
-        <ul>
-          <li>Intuit Developer Sandbox: developer.intuit.com &rarr; your sandbox company</li>
-          <li>QBO API Reference: developer.intuit.com/app/developer/qbo/docs/api/accounting</li>
-          <li><code>app/Services/QuickBooks/DataService.php</code> &mdash; your sync methods</li>
-          <li>PHPUnit + <code>Mockery::mock()</code> or Laravel's <code>$this-&gt;mock()</code></li>
-          <li>Postman collection if you have one &mdash; fire raw API calls to see exact QB responses</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-
-  <div class="task-card">
-    <div class="task-meta">
-      <span class="task-time">10:15 &ndash; 11:15</span>
-      <span class="est-badge">M &middot; 60 min</span>
-      <span class="prio-dot prio-high" title="High"></span>
-      <span style="font-size:0.72rem;color:var(--muted);">t19 &middot; HIGH</span>
-    </div>
-    <div class="task-title">QB Mapping Wizard &mdash; 4-step account assignment UI</div>
-    <div class="prep-row">
-      <div class="prep-label">What</div>
-      <div class="prep-body">Build a 4-step wizard: expense categories &rarr; QB accounts, income account, tax codes, fuzzy-match clients. Persist all choices to a settings table that DataService reads at sync time.</div>
-    </div>
-    <div class="prep-row">
-      <div class="prep-label">Understand</div>
-      <div class="prep-body">Without this, the sync runs against missing or hardcoded account IDs and either crashes or posts to the wrong QB chart of accounts. Fuzzy client matching handles the common case where a CT Pros customer name doesn't exactly match the QB customer record (different casing, abbreviations, extra spaces).</div>
-    </div>
-    <div class="prep-row">
-      <div class="prep-label">Approach</div>
-      <div class="prep-body">
-        <ol>
-          <li>Create a Vue 3 wizard component with 4 named steps and Back/Next nav &mdash; a single <code>currentStep</code> ref + <code>v-show</code> per step is plenty.</li>
-          <li>Step 1: expense categories &rarr; QB account dropdown (live fetch from QBO Accounts endpoint). Step 2: income account picker. Step 3: default tax code. Step 4: fuzzy client match preview table.</li>
-          <li>On completion, POST all settings to a Laravel controller &rarr; <code>updateOrCreate</code> into <code>quickbooks_settings</code>.</li>
-          <li>Update DataService to read account IDs from that table at runtime instead of any hardcoded values.</li>
-        </ol>
-      </div>
-    </div>
-    <div class="prep-row">
-      <div class="prep-label">Resources</div>
-      <div class="prep-body">
-        <ul>
-          <li>QBO Accounts endpoint: <code>GET /v3/company/{id}/query?query=SELECT * FROM Account</code></li>
-          <li>Vue 3: <code>const currentStep = ref(1)</code> + <code>v-show="currentStep === N"</code></li>
-          <li>Laravel <code>Model::updateOrCreate(['key' =&gt; $v], [...])</code> for settings upsert</li>
-          <li>PHP <code>similar_text($a, $b, $pct)</code> for fuzzy match &mdash; or a simple Levenshtein helper</li>
-          <li>Inertia.js <code>useForm()</code> if you're submitting via Inertia</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-
-  <div class="task-card">
-    <div class="task-meta">
-      <span class="task-time">3:45 &ndash; 5:45</span>
-      <span class="est-badge">L &middot; 2h</span>
-      <span class="prio-dot prio-high" title="High"></span>
-      <span style="font-size:0.72rem;color:var(--muted);">t31 &middot; HIGH</span>
-    </div>
-    <div class="task-title">Section F &mdash; Estimate approval pipeline (approve &rarr; auto-invoice &rarr; QB payment sync)</div>
-    <div class="prep-row">
-      <div class="prep-label">What</div>
-      <div class="prep-body">Add an Approve button on the <code>/d/{share_token}</code> estimate viewer that records approval, generates an invoice, syncs it to QB, and polls for payment status automatically.</div>
-    </div>
-    <div class="prep-row">
-      <div class="prep-label">Understand</div>
-      <div class="prep-body">This is the money flow. The share token is unauthenticated &mdash; anyone with the link can approve &mdash; so rate-limit it (3 req/min per token) and make it idempotent (second approve = no-op). The poller runs on a schedule and writes payment status back to your DB when QB records a payment, firing an event downstream.</div>
-    </div>
-    <div class="prep-row">
-      <div class="prep-label">Approach</div>
-      <div class="prep-body">
-        <ol>
-          <li>Add <code>POST /d/{share_token}/approve</code>: validate token, mark estimate approved (idempotent), dispatch <code>GenerateInvoiceFromEstimate</code> job.</li>
-          <li>Implement <code>DetectAcceptedEstimatesJob</code>: query estimates accepted since last run, create QB invoices via DataService for any not yet synced.</li>
-          <li>Implement <code>QuickBooksPaymentPoller</code>: query <code>SELECT * FROM Payment WHERE...</code> for linked invoices, update local <code>invoice_payments</code> table, fire <code>InvoicePaidEvent</code>.</li>
-          <li>Register both in <code>app/Console/Kernel.php</code>: DetectAccepted every 15 min, PaymentPoller every 30 min. Add a one-row audit log per run.</li>
-        </ol>
-      </div>
-    </div>
-    <div class="prep-row">
-      <div class="prep-label">Resources</div>
-      <div class="prep-body">
-        <ul>
-          <li>QBO Invoices: <code>POST /v3/company/{id}/invoice</code></li>
-          <li>QBO Payments query: <code>SELECT * FROM Payment WHERE TxnDate &gt; '...'</code></li>
-          <li><code>php artisan make:job DetectAcceptedEstimatesJob</code></li>
-          <li><code>$schedule-&gt;job(new QuickBooksPaymentPoller)-&gt;everyThirtyMinutes()</code></li>
-          <li>Laravel <code>RateLimiter::attempt("approve:{$token}", 3, fn() =&gt; ...)</code> for rate limiting</li>
-          <li>Your existing <code>DataService.php</code> &mdash; model createInvoice() after your other sync methods</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-
-  <button class="copy-btn" onclick="copyProject('ct')">&#128203; Copy tasks JSON &mdash; CT Pros ERP</button>
-</section>
-
-<!-- TAKEOFF ENGINE -->
-<section class="project">
-  <div class="proj-header">
-    <div class="proj-dot" style="background:#10b981;"></div>
-    <div>
-      <h2>Takeoff Engine</h2>
-      <div class="client">AZ Team AI &middot; FastAPI + Python PDF room-detection service</div>
-    </div>
-    <svg width="40" height="40" viewBox="0 0 40 40" style="margin-left:auto;flex-shrink:0;">
-      <circle cx="20" cy="20" r="16" fill="none" stroke="#263348" stroke-width="6"/>
-      <circle cx="20" cy="20" r="16" fill="none" stroke="#10b981" stroke-width="6"
-        stroke-dasharray="100.53" stroke-dashoffset="44.2" stroke-linecap="round" transform="rotate(-90 20 20)"/>
-      <text x="20" y="24" text-anchor="middle" fill="#e2e8f0" font-size="10" font-weight="700">56%</text>
-    </svg>
-  </div>
-
-  <div class="task-card">
-    <div class="task-meta">
-      <span class="task-time">11:30 &ndash; 12:30</span>
-      <span class="est-badge">M &middot; 60 min</span>
-      <span class="prio-dot prio-high" title="High"></span>
-      <span style="font-size:0.72rem;color:var(--muted);">t26 &middot; HIGH &middot; Harborview demo failure</span>
-    </div>
-    <div class="task-title">Label Lane v2 &mdash; productize M3 tiles as opt-in AI label mode</div>
-    <div class="prep-row">
-      <div class="prep-label">What</div>
-      <div class="prep-body">Turn the M3 tiles label-reading prototype that crashed the Harborview demo into a stable, opt-in API endpoint: <code>/sheets/{id}/read-labels?mode=ai</code>, backed by MINIMAX_AI, with callout filtering to kill the false positives.</div>
-    </div>
-    <div class="prep-row">
-      <div class="prep-label">Understand</div>
-      <div class="prep-body">The demo failed because the AI lane was active by default and wasn't production-hardened. The two fixes: (1) make it strictly opt-in so standard requests are never affected, (2) filter callout boxes and dimension leaders that were firing as "labels" &mdash; they were the main source of noise. M3 tiles are the PDF rendered at zoom level 3 and sliced into grid cells.</div>
-    </div>
-    <div class="prep-row">
-      <div class="prep-label">Approach</div>
-      <div class="prep-body">
-        <ol>
-          <li>Add <code>mode: str = "standard"</code> query param to the endpoint. Early-return the standard result if <code>mode != "ai"</code>.</li>
-          <li>Add <code>MINIMAX_AI_KEY</code> to the VPS <code>.env</code> and read it in <code>settings.py</code>.</li>
-          <li>In the AI label lane, add a callout filter: reject any detected text region whose bounding box aspect ratio is &gt; 4:1 (callout leaders are thin horizontal strips) and any region touching a zone boundary (those are dimensions, not room labels).</li>
-          <li>Test with the Harborview sheet as your regression fixture &mdash; confirm only room labels survive.</li>
-        </ol>
-      </div>
-    </div>
-    <div class="prep-row">
-      <div class="prep-label">Resources</div>
-      <div class="prep-body">
-        <ul>
-          <li>FastAPI query param: <code>async def read_labels(sheet_id: str, mode: str = "standard")</code></li>
-          <li>MINIMAX AI: check your existing integration for the API call pattern</li>
-          <li>Live service: aztakeoff.azteamai.com</li>
-          <li>VPS: SSH in, add env var, <code>systemctl restart takeoff-engine</code></li>
-          <li>Harborview test sheet &mdash; your regression fixture</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-
-  <div class="task-card">
-    <div class="task-meta">
-      <span class="task-time">1:30 &ndash; 3:30</span>
-      <span class="est-badge">L &middot; 2h</span>
-      <span class="prio-dot prio-high" title="High"></span>
-      <span style="font-size:0.72rem;color:var(--muted);">t18 &middot; HIGH &middot; in progress</span>
-    </div>
-    <div class="task-title">Assemblies-per-room layer &mdash; classification &rarr; wall quantities &rarr; CSI formulas &rarr; new Excel tab</div>
-    <div class="prep-row">
-      <div class="prep-label">What</div>
-      <div class="prep-body">Add a full assemblies layer: take each detected room's classification, compute wall quantities (perimeter &times; height), apply CSI MasterFormat division formulas, and write everything to a new "Assemblies" tab in the Excel output.</div>
-    </div>
-    <div class="prep-row">
-      <div class="prep-label">Understand</div>
-      <div class="prep-body">CSI MasterFormat organizes construction materials into numbered divisions (Division 09 = Finishes: drywall, paint, flooring &mdash; your most common). Each room type (office, corridor, bathroom) has a standard assembly &mdash; a set of finish types that are presumed. Your engine already has room sqft and perimeter from the detection layer; this task layers material quantities on top. Default wall height: 9 ft commercial, 8 ft residential.</div>
-    </div>
-    <div class="prep-row">
-      <div class="prep-label">Approach</div>
-      <div class="prep-body">
-        <ol>
-          <li>Define an <code>ASSEMBLY_RULES</code> dict: <code>room_type &rarr; list of {csi_code, item, unit, qty_formula}</code>. Start with 5&ndash;6 common room types; you can expand later.</li>
-          <li>For each room: compute <code>wall_sf = perimeter_ft * wall_height_ft</code>, <code>ceiling_sf = room_sqft</code>. Apply rules to get per-item quantities.</li>
-          <li>Aggregate across all rooms &mdash; same CSI item from multiple rooms sums together into one row.</li>
-          <li>Add an "Assemblies" worksheet to the openpyxl workbook: columns = CSI Code | Item | Unit | Qty | Notes. Freeze row 1. Add a subtotal row per division group.</li>
-        </ol>
-      </div>
-    </div>
-    <div class="prep-row">
-      <div class="prep-label">Resources</div>
-      <div class="prep-body">
-        <ul>
-          <li>CSI MasterFormat 2016 &mdash; focus on Div 03 (Concrete), Div 06 (Wood), Div 09 (Finishes)</li>
-          <li>openpyxl: <code>wb.create_sheet("Assemblies")</code>, <code>ws.freeze_panes = "A2"</code></li>
-          <li>Your existing <code>takeoff/export.py</code> (or wherever Excel generation lives) &mdash; add the new sheet there</li>
-          <li>Room classification enum from your detection layer &mdash; keys in <code>ASSEMBLY_RULES</code> must match exactly</li>
-          <li>Wall height config: add <code>WALL_HEIGHT_FT: float = 9.0</code> to <code>settings.py</code></li>
-        </ul>
-      </div>
-    </div>
-  </div>
-
-  <button class="copy-btn" onclick="copyProject('takeoff')">&#128203; Copy tasks JSON &mdash; Takeoff Engine</button>
-</section>
-
-<!-- ON DECK -->
-<div class="ondeck">
-  <div class="ondeck-header">
-    <div class="proj-dot" style="background:#818cf8;"></div>
-    <h3>On Deck &mdash; GS-ERP (GS Woodworking LLC)</h3>
-    <svg width="32" height="32" viewBox="0 0 40 40" style="margin-left:auto;flex-shrink:0;">
-      <circle cx="20" cy="20" r="16" fill="none" stroke="#263348" stroke-width="6"/>
-      <circle cx="20" cy="20" r="16" fill="none" stroke="#818cf8" stroke-width="6"
-        stroke-dasharray="100.53" stroke-dashoffset="10.05" stroke-linecap="round" transform="rotate(-90 20 20)"/>
-      <text x="20" y="24" text-anchor="middle" fill="#e2e8f0" font-size="10" font-weight="700">90%</text>
-    </svg>
-  </div>
-  <div class="ondeck-sub">Laravel 12 + Vue 3 + Spatie woodworking ERP &middot; 570/634 tasks done &middot; 64 open</div>
-  <div class="ondeck-sub" style="margin-top:0.4rem;">Not scheduled today. Active phase (p66) is a data-gathering sprint requiring direct input from Rony &amp; Giovanne before code can proceed: labor rate table, bonus formula definition, time benchmarks, CK inspection checklists.</div>
-  <div class="ondeck-sub" style="margin-top:0.4rem;">Eligible once you have those inputs: t58 (labor rates), t57 (bonus formula), t56 (time benchmarks), t59 (CK inspection lists) &mdash; all HIGH priority, all ready to build immediately after the data is in hand.</div>
-</div>
-
-<!-- WAITING ON -->
-<div class="section-label">&#9203; Waiting On</div>
-
-<div class="waiting-card">
-  <div class="wtask">CT Pros &middot; t13 &mdash; Production deploy</div>
-  <div class="wreason">Needs a feature-complete app AND a domain name. Neither exists yet (noted 2026-06-03). Chase the client for a domain decision &mdash; everything in the deploy chain is blocked behind this.</div>
-</div>
-<div class="waiting-card">
-  <div class="wtask">CT Pros &middot; t14 &mdash; Post-deploy config &amp; monitoring</div>
-  <div class="wreason">Blocked by t13 &mdash; needs the prod URL to configure SSL, monitoring, and env vars.</div>
-</div>
-<div class="waiting-card">
-  <div class="wtask">CT Pros &middot; t27 &mdash; Sync status badges UI</div>
-  <div class="wreason">Depends on t26 (sync badge endpoints) &mdash; t26 is scheduled for today, so this may unlock tomorrow morning.</div>
-</div>
-<div class="waiting-card">
-  <div class="wtask">Takeoff Engine &middot; t21 &mdash; Symbol detector</div>
-  <div class="wreason">Depends on t20 (ML wall-segmentation model) which is still in progress. Symbol detection can't start until the wall model is trained and stable.</div>
-</div>
-<div class="waiting-card">
-  <div class="wtask">GS-ERP &middot; t38 &mdash; Bonus formula implementation</div>
-  <div class="wreason">Business rule not yet defined by Rony/Giovanne (KB items 9.1 + 12.13). No code until the formula is locked in writing.</div>
-</div>
-<div class="waiting-card">
-  <div class="wtask">GS-ERP &middot; t14, t52 &mdash; Module 5 production release flow</div>
-  <div class="wreason">t14 needs production data / Module 5 rollout decision. t52 also requires t60 (QB mapping docs) to be done first.</div>
-</div>
-
-<footer>
-  <div>Data as of: 2026-06-24T18:21:44 UTC &mdash; synced from active-projects.json</div>
-  <div style="margin-top:0.4rem; font-style:italic;">Clear calendar. Five tasks. You know exactly what to do &mdash; now go do it.</div>
-</footer>
-
+<div id="app"></div>
+<div id="toast" class="toast">Copied ✓</div>
 <script>
-var DATA = {
-  ct: {
-    project: "CT Pros ERP", client: "CT Pros", date: "2026-06-24",
-    tasks: [
-      { id: "t29", title: "Sandbox-validate all QuickBooks field mappings", phase: "p5", estimate: "m", priority: "high", status: "todo",
-        notes: "CRITICAL before prod. Run all 6 entity sync() methods against Intuit sandbox, verify field names/types/relationships, add PHPUnit tests.",
-        prep: { what: "Run every QB sync() method against the Intuit sandbox and verify every field name, data type, and relationship before touching a live QB account.",
-          understand: "Intuit sandbox is fully isolated. 6 entity syncs: customers, invoices, payments, vendors, bills, expense accounts. Each has QBO API quirks. Silent mismatches write garbage to prod.",
-          approach: "1. Boot dev env with sandbox credentials (.env.testing QB_SANDBOX=true). 2. Trigger each DataService sync(), read raw QBO response, diff field names against code. 3. Fix mismatches. 4. Add PHPUnit test per entity mocking DataService.",
-          resources: ["Intuit Developer Sandbox", "QBO API Reference: developer.intuit.com/app/developer/qbo/docs/api/accounting", "app/Services/QuickBooks/DataService.php", "PHPUnit + Mockery"] } },
-      { id: "t19", title: "QB Mapping Wizard — 4-step account assignment UI", phase: "p5", estimate: "m", priority: "high", status: "todo",
-        notes: "depends t17+t18 done. 4 steps: expense category to QB account, income account, tax code, fuzzy client match. Persist to settings table.",
-        prep: { what: "Build a 4-step wizard to map CT Pros expense categories to QB accounts/tax codes with fuzzy client matching, persisted to a settings table.",
-          understand: "Without this, sync runs against missing or hardcoded account IDs. Settings table becomes DataService source of truth. Fuzzy matching handles name mismatches between CT Pros and QB customer records.",
-          approach: "1. Vue 3 wizard, 4 steps, currentStep ref + v-show. 2. Each step fetches live QB data. 3. POST settings to Laravel controller, updateOrCreate into quickbooks_settings. 4. Wire DataService to read from settings table.",
-          resources: ["QBO Accounts: GET /v3/company/{id}/query?query=SELECT * FROM Account", "Vue 3 currentStep ref pattern", "Laravel Model::updateOrCreate()", "PHP similar_text() for fuzzy match", "Inertia useForm()"] } },
-      { id: "t31", title: "Section F — Estimate approval pipeline", phase: "p5", estimate: "l", priority: "high", status: "todo",
-        notes: "Approve button on /d/{share_token} viewer → auto-invoice → DetectAcceptedEstimatesJob → QuickBooksPaymentPoller",
-        prep: { what: "Build the full approval flow: client clicks Approve on share link → invoice generated → synced to QB → payment polled automatically.",
-          understand: "This is the money flow. Share token is unauthenticated — rate-limit (3 req/min per token) and make idempotent. Poller runs on schedule, updates local DB when QB records payment.",
-          approach: "1. POST /d/{share_token}/approve: validate, mark approved (idempotent), dispatch GenerateInvoiceFromEstimate job. 2. DetectAcceptedEstimatesJob: sync unsynced accepted estimates to QB. 3. QuickBooksPaymentPoller: query QB Payments, update DB, fire InvoicePaidEvent. 4. Register both in Kernel.php: DetectAccepted every 15min, PaymentPoller every 30min.",
-          resources: ["QBO Invoices: POST /v3/company/{id}/invoice", "QBO Payments query endpoint", "php artisan make:job", "Laravel schedule->job()->everyThirtyMinutes()", "Laravel RateLimiter facade"] } }
-    ]
-  },
-  takeoff: {
-    project: "Takeoff Engine", client: "AZ Team AI", date: "2026-06-24",
-    tasks: [
-      { id: "t26", title: "Label Lane v2 — productize M3 tiles as opt-in AI label mode", phase: "p5", estimate: "m", priority: "high", status: "todo",
-        notes: "Harborview demo failure. Make AI lane opt-in via mode=ai query param. Add MINIMAX_AI_KEY to VPS env. Add callout/leader filtering.",
-        prep: { what: "Productize the M3 tiles label-reading prototype as a stable opt-in endpoint /sheets/{id}/read-labels?mode=ai with callout filtering.",
-          understand: "Demo failed because AI lane was on by default and unfiltered. Two fixes: opt-in guard so standard requests are unaffected, plus filter callout boxes and dimension leaders that were the main false-positive source.",
-          approach: "1. Add mode: str = 'standard' query param, early-return standard if mode != 'ai'. 2. Add MINIMAX_AI_KEY to VPS .env, read in settings.py. 3. Add callout filter: reject regions with aspect ratio >4:1 or touching zone boundaries. 4. Test with Harborview sheet.",
-          resources: ["FastAPI query param syntax", "MINIMAX AI API (existing integration)", "aztakeoff.azteamai.com (live)", "VPS SSH + systemctl restart takeoff-engine", "Harborview test sheet (regression fixture)"] } },
-      { id: "t18", title: "Assemblies-per-room layer", phase: "p6", estimate: "l", priority: "high", status: "in_progress",
-        notes: "classification → wall quantities (perimeter × height), CSI MasterFormat formulas, new Assemblies Excel tab",
-        prep: { what: "Add assemblies layer: room classification → wall SF (perimeter × height) → CSI MasterFormat formulas → new Assemblies Excel tab.",
-          understand: "CSI MasterFormat organizes materials by division (Div 09 Finishes most common). Each room type has standard assemblies. Engine already has room sqft and perimeter — this layers material quantities on top. Default wall height 9ft commercial.",
-          approach: "1. Define ASSEMBLY_RULES dict: room_type → list of {csi_code, item, unit, qty_formula}. Start with 5-6 room types. 2. Per room: wall_sf = perimeter_ft * wall_height_ft, ceiling_sf = room_sqft. Apply rules. 3. Aggregate same CSI items across rooms. 4. Add Assemblies worksheet to openpyxl workbook, freeze row 1, add division subtotals.",
-          resources: ["CSI MasterFormat 2016 (Div 03, 06, 09)", "openpyxl wb.create_sheet() + ws.freeze_panes", "takeoff/export.py (existing Excel gen)", "Room classification enum from detection layer", "WALL_HEIGHT_FT = 9.0 in settings.py"] } }
-    ]
-  }
-};
+const PALETTE = ['#f59e0b','#10b981','#818cf8','#3b82f6','#ec4899','#22d3ee'];
+const RING_CIRC = 2 * Math.PI * 32;
+const EST = { s: 'S · 30 min', m: 'M · 1h', l: 'L · 2h' };
 
-function copyProject(key) {
-  var text = JSON.stringify(DATA[key], null, 2);
-  var label = key === 'ct' ? 'CT Pros' : 'Takeoff';
-  navigator.clipboard.writeText(text).then(function() {
-    document.querySelectorAll('.copy-btn').forEach(function(btn) {
-      if (btn.textContent.indexOf(label) !== -1) {
-        var orig = btn.innerHTML;
-        btn.innerHTML = '&#10003; Copied!';
-        setTimeout(function() { btn.innerHTML = orig; }, 2200);
-      }
-    });
-  }).catch(function() {
-    var fallback = key === 'ct' ? 'DATA.ct' : 'DATA.takeoff';
-    alert('Clipboard blocked. Open browser console and run:\nconsole.log(JSON.stringify(' + fallback + ', null, 2))');
+const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const code = s => esc(s).replace(/`([^`]+)`/g, '<code>$1</code>');
+const t2m = t => { const p = String(t).split(':'); return (+p[0]) * 60 + (+(p[1]||0)); };
+const fmtClock = t => { const p = String(t).split(':'); return (+p[0]) + ':' + (p[1]||'00'); };
+const fmtHour = m => { let h = Math.floor(m/60), ap = h>=12?'PM':'AM', hh = h%12||12; return hh + (m%60? ':'+String(m%60).padStart(2,'0'):'') + ' ' + ap; };
+const fmtMins = m => { const h = Math.floor(m/60), mm = Math.round(m%60); return (h?h+'h':'') + (mm?' '+mm+'m':'') || '0m'; };
+
+function ring(pct, color, size) {
+  size = size || 80;
+  const off = RING_CIRC * (1 - Math.max(0, Math.min(1, pct)));
+  return `<svg width="${size}" height="${size}" viewBox="0 0 80 80">
+    <circle cx="40" cy="40" r="32" fill="none" stroke="#263348" stroke-width="10"/>
+    <circle cx="40" cy="40" r="32" fill="none" stroke="${color}" stroke-width="10"
+      stroke-dasharray="${RING_CIRC.toFixed(2)}" stroke-dashoffset="${off.toFixed(2)}"
+      stroke-linecap="round" transform="rotate(-90 40 40)"/>
+    <text x="40" y="45" text-anchor="middle" fill="#e2e8f0" font-size="15" font-weight="700">${Math.round(pct*100)}%</text>
+  </svg>`;
+}
+function prioClass(p) { p = (p||'').toLowerCase(); return p[0]==='h'?'prio-high':p[0]==='l'?'prio-low':'prio-med'; }
+function ratingColor(r) { r=(r||'').toLowerCase(); return r==='chill'?'#10b981':r==='brutal'?'#f59e0b':'#3b82f6'; }
+function badgeClass(r) { r=(r||'').toLowerCase(); return r==='chill'?'badge-chill':r==='brutal'?'badge-brutal':'badge-solid'; }
+
+function isOnDeck(p, b) {
+  if (typeof p.on_deck === 'boolean') return p.on_deck;
+  if (Array.isArray(b.on_deck) && typeof b.on_deck[0] === 'string') return b.on_deck.includes(p.slug);
+  if (Array.isArray(b.focus_projects)) return !b.focus_projects.includes(p.slug);
+  return !(p.tasks && p.tasks.length);
+}
+function approachSteps(a) {
+  if (Array.isArray(a)) return a;
+  if (!a) return [];
+  const s = String(a).trim();
+  const byNum = s.split(/\s*\d+\.\s+/).map(x=>x.trim()).filter(Boolean);
+  if (byNum.length > 1) return byNum;
+  const byNl = s.split(/\n+/).map(x=>x.trim()).filter(Boolean);
+  return byNl.length > 1 ? byNl : [s];
+}
+function pctOf(p) {
+  const tot = +p.tasks_total || 0, done = +p.tasks_done || 0;
+  return tot > 0 ? done/tot : null;
+}
+
+let COPY = {};
+function copyProject(slug) {
+  navigator.clipboard.writeText(COPY[slug] || '{}').then(() => {
+    const t = document.getElementById('toast'); t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 1400);
   });
 }
+
+function render(b) {
+  const projects = b.projects || [];
+  const focus = projects.filter(p => !isOnDeck(p, b));
+  const onDeck = projects.filter(p => isOnDeck(p, b));
+  const colorOf = {};
+  focus.forEach((p, i) => colorOf[p.slug] = PALETTE[i % PALETTE.length]);
+  onDeck.forEach(p => colorOf[p.slug] = '#64748b');
+
+  const d = new Date((b.date || '') + 'T12:00:00');
+  const dateStr = isNaN(d) ? (b.date||'') : d.toLocaleDateString('en-US', {weekday:'long', month:'long', day:'numeric', year:'numeric'});
+  document.title = 'Morning Brief — ' + dateStr;
+
+  let h = '';
+  if (b.notice) h += `<div class="notice">ℹ️ ${code(b.notice)}</div>`;
+
+  const dif = b.difficulty || {};
+  const ratio = +dif.ratio || (dif.available_minutes ? dif.planned_minutes/dif.available_minutes : 0);
+  h += `<header>
+    <div class="date">${esc(dateStr)}</div>
+    <h1>${esc(b.greeting || 'Morning, Haniel.')}</h1>
+    <span class="badge ${badgeClass(dif.rating)}">⚡ ${esc(dif.rating||'')} Day — ${Math.round(ratio*100)}%</span>
+    ${b.hype ? `<div class="hype">${esc(b.hype)}</div>` : ''}
+  </header>`;
+
+  // graphs: rings + gauge
+  let ringsHtml = '';
+  projects.forEach(p => {
+    const pc = pctOf(p);
+    ringsHtml += `<div class="ring-wrap">
+      ${pc===null ? `<svg width="80" height="80" viewBox="0 0 80 80"><circle cx="40" cy="40" r="32" fill="none" stroke="${colorOf[p.slug]}" stroke-width="10" opacity="0.4"/><text x="40" y="45" text-anchor="middle" fill="#e2e8f0" font-size="13" font-weight="700">${(p.tasks||[]).length||'—'}</text></svg>` : ring(pc, colorOf[p.slug])}
+      <div class="ring-label">${esc(p.project||p.slug)}${isOnDeck(p,b)?' (on deck)':''}</div>
+      ${p.tasks_total ? `<div class="ring-pct">${p.tasks_done||0} / ${p.tasks_total}</div>` : ''}
+    </div>`;
+  });
+
+  const planned = +dif.planned_minutes || 0, avail = +dif.available_minutes || 0;
+  const spare = avail - planned;
+  const gauge = `<div class="gauge-wrap">
+    ${ring(ratio, ratingColor(dif.rating), 90)}
+    <div class="gauge-text">
+      <strong>${fmtMins(planned)}</strong>
+      <span>planned of ${fmtMins(avail)} available</span><br>
+      ${spare>=0 ? `<span class="spare">${fmtMins(spare)} to spare</span>` : `<span class="over">over by ${fmtMins(-spare)}</span>`}
+      ${dif.note ? `<br><span>${esc(dif.note)}</span>` : ''}
+    </div></div>`;
+
+  h += `<div class="graphs">
+    <div class="card"><div class="card-title">Project Progress</div><div class="rings">${ringsHtml}</div></div>
+    <div class="card"><div class="card-title">Day Load</div>${gauge}</div>
+  </div>`;
+
+  // timeline
+  const sched = (b.schedule || []).filter(s => s.start && s.end);
+  if (sched.length) {
+    const win = b.window || { start: sched[0].start, end: sched[sched.length-1].end };
+    const W0 = t2m(win.start), W1 = t2m(win.end), WD = Math.max(1, W1 - W0);
+    let segs = '';
+    sched.forEach(s => {
+      const left = (t2m(s.start)-W0)/WD*100, width = Math.max(2,(t2m(s.end)-t2m(s.start))/WD*100);
+      const isLunch = s.kind === 'lunch';
+      const col = isLunch ? '#475569' : (colorOf[s.slug] || '#3b82f6');
+      const lbl = isLunch ? 'lunch' : (s.task_id || '');
+      segs += `<div class="tl-seg" style="left:${left}%;width:${width}%;background:${col}">${esc(lbl)}</div>`;
+    });
+    let legend = focus.map(p=>`<span><span class="legend-dot" style="background:${colorOf[p.slug]}"></span>${esc(p.project||p.slug)}</span>`).join('');
+    legend += `<span><span class="legend-dot" style="background:#475569"></span>Lunch</span>`;
+    h += `<div class="card" style="margin-bottom:2rem">
+      <div class="card-title">Day Timeline</div>
+      <div class="timeline-bar">${segs}</div>
+      <div class="tl-label"><span>${fmtHour(W0)}</span><span>${fmtHour((W0+W1)/2)}</span><span>${fmtHour(W1)}</span></div>
+      <div class="tl-legend">${legend}</div>
+    </div>`;
+  }
+
+  // focus project sections
+  focus.forEach(p => {
+    const pc = pctOf(p);
+    COPY[p.slug] = JSON.stringify({
+      project: p.project, client: p.client, date: b.date,
+      tasks: (p.tasks||[]).map(t => ({ id:t.id, title:t.title, phase:t.phase, estimate:t.estimate, priority:t.priority, status:t.status, notes:t.notes, prep:t.prep }))
+    }, null, 2);
+    let cards = '';
+    (p.tasks||[]).forEach(t => {
+      const blk = t.block || {};
+      const prep = t.prep || {};
+      const steps = approachSteps(prep.approach);
+      const res = Array.isArray(prep.resources) ? prep.resources : (prep.resources?[prep.resources]:[]);
+      cards += `<div class="task-card">
+        <div class="task-meta">
+          ${blk.start ? `<span class="task-time">${fmtClock(blk.start)} – ${fmtClock(blk.end)}</span>` : ''}
+          <span class="est-badge">${EST[(t.estimate||'').toLowerCase()] || esc(t.estimate||'')}</span>
+          <span class="prio-dot ${prioClass(t.priority)}"></span>
+          <span class="task-id">${esc(t.id||'')}${t.priority?' · '+esc(String(t.priority).toUpperCase()):''}</span>
+        </div>
+        <div class="task-title">${esc(t.title||'')}</div>
+        ${prep.what ? `<div class="prep-row"><div class="prep-label">What</div><div class="prep-body">${code(prep.what)}</div></div>` : ''}
+        ${prep.understand ? `<div class="prep-row"><div class="prep-label">Understand</div><div class="prep-body">${code(prep.understand)}</div></div>` : ''}
+        ${steps.length ? `<div class="prep-row"><div class="prep-label">Approach</div><div class="prep-body"><ol>${steps.map(s=>`<li>${code(s)}</li>`).join('')}</ol></div></div>` : ''}
+        ${res.length ? `<div class="prep-row"><div class="prep-label">Resources</div><div class="prep-body"><ul>${res.map(r=>`<li>${code(r)}</li>`).join('')}</ul></div></div>` : ''}
+      </div>`;
+    });
+    h += `<section class="project">
+      <div class="proj-header">
+        <span class="proj-dot" style="background:${colorOf[p.slug]}"></span>
+        <div><h2>${esc(p.project||p.slug)}</h2><div class="client">${esc(p.client||'')}</div></div>
+        <span class="spacer"></span>
+        ${pc!==null ? ring(pc, colorOf[p.slug], 44) : ''}
+      </div>
+      ${cards}
+      <button class="copy-btn" onclick="copyProject('${esc(p.slug)}')">📋 Copy tasks JSON — ${esc(p.project||p.slug)}</button>
+    </section>`;
+  });
+
+  // on deck
+  if (onDeck.length) {
+    h += onDeck.map(p => `<div class="ondeck">
+      ${pctOf(p)!==null ? ring(pctOf(p), '#64748b', 56) : ''}
+      <div><h3>${esc(p.project||p.slug)} · on deck</h3>
+      <div class="ondeck-sub">Deferred today to protect focus${p.tasks_total?` — ${p.tasks_done||0}/${p.tasks_total} done`:''}.</div></div>
+    </div>`).join('');
+  }
+
+  // waiting on
+  if ((b.waiting_on||[]).length) {
+    h += `<div class="section-label">⏳ Waiting on</div>`;
+    h += b.waiting_on.map(w => `<div class="waiting-card">
+      <div class="wtask">${esc(w.title||'')} <span style="color:var(--muted);font-weight:400">— ${esc(w.project||'')} ${esc(w.task_id||'')}</span></div>
+      <div class="wreason">${code(w.reason||'')}</div>
+    </div>`).join('');
+  }
+
+  h += `<footer>Data as of ${esc((b.data_as_of||'').replace('T',' ').slice(0,16))} UTC · generated ${esc((b.generated_at||'').replace('T',' ').slice(0,16))} UTC</footer>`;
+
+  document.getElementById('app').innerHTML = h;
+}
+
+function showEmpty() {
+  document.getElementById('app').innerHTML = `<div class="empty">
+    <div class="sun">🌅</div><h1>No brief yet</h1>
+    <p>Your day plan lands here every weekday at <strong>6:00 AM</strong>.<br>Go get some rest. 💪</p>
+  </div>`;
+}
+
+fetch('brief-latest.json?_=' + Date.now())
+  .then(r => { if (!r.ok) throw new Error('no brief'); return r.json(); })
+  .then(render)
+  .catch(showEmpty);
 </script>
 </body>
 </html>
