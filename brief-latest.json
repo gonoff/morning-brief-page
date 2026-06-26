@@ -1,64 +1,217 @@
 {
   "date": "2026-06-26",
-  "generated_at": "2026-06-26T17:29:28Z",
+  "generated_at": "2026-06-26T10:15:00Z",
   "data_as_of": "2026-06-26T05:13:36+00:00",
-  "greeting": "Afternoon, Haniel \u2014 I'm late on purpose-not: the 6 AM cloud run generated your brief but got bounced pushing it (expired GitHub auth). Caught it, regenerated it here. Here's your runway.",
-  "hype": "Half a day is still a full tank. Two of YOUR products, four clean code blocks, nobody to wait on \u2014 close Phase 2 on Module, then push the Takeoff engine. No meetings, no blockers. Go get it.",
-  "notice": "Tomorrow's 6 AM auto-run needs a 2-min GitHub re-auth first \u2014 ping me and I'll walk you through it.",
+  "greeting": "Morning, Haniel. You had commits landing past 2am — that's the kind of run you finish, not park.",
+  "hype": "GS has an overdue RBAC call and a full data-foundation queue. Module is one UI away from unlocking Phase 3. Clear both and you end today two moves closer to shipping two different clients.",
+  "notice": "CT Pros go-live is fully unblocked (company info, QB OAuth, catalog swap, deploy) — all HIGH, no dependencies. Flag it for your next available session.",
   "difficulty": {
     "rating": "Solid",
-    "planned_minutes": 210,
-    "available_minutes": 270,
-    "ratio": 0.78,
-    "note": "Comfortable afternoon \u2014 15 min slack. If a block runs long, t16 (door recall) is the safe one to bump to tomorrow."
+    "planned_minutes": 360,
+    "available_minutes": 375,
+    "ratio": 0.96,
+    "note": ""
   },
-  "window": {
-    "start": "13:30",
-    "end": "18:00"
-  },
+  "window": { "start": "09:00", "end": "18:00" },
   "schedule": [
-    {
-      "start": "13:30",
-      "end": "14:30",
-      "slug": "module-project",
-      "project": "Module",
-      "task_id": "t9",
-      "title": "Per-module settings UI (labels, statuses, options)",
-      "estimate": "m",
-      "kind": "task"
-    },
-    {
-      "start": "14:45",
-      "end": "15:15",
-      "slug": "module-project",
-      "project": "Module",
-      "task_id": "t11",
-      "title": "UX-max pass on module manager (interface-design gate)",
-      "estimate": "s",
-      "kind": "task"
-    },
-    {
-      "start": "15:30",
-      "end": "16:30",
-      "slug": "takeoff-engine",
-      "project": "Takeoff Engine",
-      "task_id": "t26",
-      "title": "Label lane v2: M3 vision for outlined-text firms + callout-vs-room filtering",
-      "estimate": "m",
-      "kind": "task"
-    },
-    {
-      "start": "16:45",
-      "end": "17:45",
-      "slug": "takeoff-engine",
-      "project": "Takeoff Engine",
-      "task_id": "t16",
-      "title": "Door recall round 2 + bi-fold / cased-opening recall",
-      "estimate": "m",
-      "kind": "task"
-    }
+    { "start": "09:00", "end": "10:00", "slug": "gs-woodworking-spec", "project": "GS-ERP", "task_id": "t661", "title": "Apply owner’s 2026-06-24 RBAC decisions", "estimate": "m", "kind": "task" },
+    { "start": "10:15", "end": "10:45", "slug": "gs-woodworking-spec", "project": "GS-ERP", "task_id": "t57",  "title": "Bonus formula definition (production + paint shop)", "estimate": "s", "kind": "task" },
+    { "start": "11:00", "end": "12:00", "slug": "gs-woodworking-spec", "project": "GS-ERP", "task_id": "t56",  "title": "Design + installation time benchmarks", "estimate": "m", "kind": "task" },
+    { "start": "12:15", "end": "12:45", "slug": "gs-woodworking-spec", "project": "GS-ERP", "task_id": "t60",  "title": "QB integration mapping documentation", "estimate": "s", "kind": "task" },
+    { "start": "13:00", "end": "14:00", "kind": "lunch", "title": "Lunch" },
+    { "start": "14:00", "end": "15:00", "slug": "module-project",       "project": "Module",  "task_id": "t9",   "title": "Per-module settings UI (labels, statuses, options)", "estimate": "m", "kind": "task" },
+    { "start": "15:15", "end": "16:15", "slug": "gs-woodworking-spec", "project": "GS-ERP", "task_id": "t59",  "title": "CK1/CK2/CK3/CK4 inspection item lists", "estimate": "m", "kind": "task" },
+    { "start": "16:30", "end": "17:00", "slug": "gs-woodworking-spec", "project": "GS-ERP", "task_id": "t61",  "title": "Production capacity/concurrent project limits", "estimate": "s", "kind": "task" },
+    { "start": "17:15", "end": "17:45", "slug": "gs-woodworking-spec", "project": "GS-ERP", "task_id": "t167", "title": "Owner notification panel for revision_runaway", "estimate": "s", "kind": "task" }
   ],
   "projects": [
+    {
+      "slug": "gs-woodworking-spec",
+      "project": "GS-ERP",
+      "client": "GS Woodworking LLC",
+      "tasks_total": 650,
+      "tasks_done": 575,
+      "on_deck": false,
+      "tasks": [
+        {
+          "id": "t661",
+          "title": "Apply owner’s 2026-06-24 RBAC decisions",
+          "phase": "Phase 80 · RBAC Permission Verification Suite",
+          "estimate": "m",
+          "priority": "high",
+          "status": "todo",
+          "notes": "Due 2026-06-24 (yesterday). Finalizes the permission matrix and unblocks t654/t655/t656.",
+          "block": { "start": "09:00", "end": "10:00" },
+          "prep": {
+            "what": "Lock in the owner’s finalized permission decisions from the June 24 review into the codebase, unblocking all RBAC regression tests.",
+            "understand": "The permission matrix maps roles to permissions across every GS-ERP module. The owner made specific allow/deny calls on 2026-06-24 (captured in t651/t653 context). Until these are applied to the seeder/config, t654 (regression lock), t655 (E2E allow-direction fixtures), and t656 (nav→route consistency) are all blocked.",
+            "approach": [
+              "Find the June 24 RBAC decision log — check t651/t653 task notes, Slack, or any doc from that session",
+              "Open the permission seeder or role-permission config in GS-ERP",
+              "Apply each decision (role → permission: allow or deny) exactly as recorded",
+              "Run the RBAC test suite to confirm no unexpected regressions"
+            ],
+            "resources": [
+              "Owner’s 2026-06-24 RBAC decision notes (linked in t651/t653)",
+              "Permission seeder / role-permission config in GS-ERP repo",
+              "Phase 80 task chain: t654, t655, t656",
+              "Existing role/permission test suite"
+            ]
+          }
+        },
+        {
+          "id": "t57",
+          "title": "Bonus formula definition (production + paint shop)",
+          "phase": "Phase 66 · 100% · Bonus, Analytics, Data-gathering & Polish",
+          "estimate": "s",
+          "priority": "high",
+          "status": "todo",
+          "notes": "Gate before t38 (production bonus system) can be coded. Defines the actual math the system will run.",
+          "block": { "start": "10:15", "end": "10:45" },
+          "prep": {
+            "what": "Define and document the bonus formula for production workers and paint shop employees so t38 can implement it in code.",
+            "understand": "t38 (production bonus system, HIGH, l) is explicitly blocked until this formula exists. You need: what inputs drive the bonus (project revenue? units? hours?), how production and paint shop differ, and any tiers or thresholds. This is a spec/doc task, not a coding task.",
+            "approach": [
+              "Pull any existing informal bonus agreement from GS ownership (email, ClickUp note, verbal spec)",
+              "Draft the formula: inputs → calculation → output (dollar amount or % of project value per worker)",
+              "Specify production formula and paint shop formula separately if they differ",
+              "Write it as a committed spec doc in the repo (e.g., `docs/bonus-formula.md`) so t38 can reference it directly"
+            ],
+            "resources": [
+              "GS ownership communications about current bonus structure",
+              "t38 task notes (production bonus system) for implementation context",
+              "Existing labor cost and payroll data in the ERP for formula sanity-checking"
+            ]
+          }
+        },
+        {
+          "id": "t56",
+          "title": "Design + installation time benchmarks",
+          "phase": "Phase 66 · 100% · Bonus, Analytics, Data-gathering & Polish",
+          "estimate": "m",
+          "priority": "high",
+          "status": "todo",
+          "notes": "Standard time estimates per job type for design and installation phases — the data layer under capacity planning.",
+          "block": { "start": "11:00", "end": "12:00" },
+          "prep": {
+            "what": "Capture how long each job category actually takes (design hours, install hours per unit/sqft) and encode that in the ERP so scheduling is grounded in reality.",
+            "understand": "Without time benchmarks, the system can’t compute project timelines or flag overload. This is reference data, not a feature build: you’re pulling real-world averages from GS’s history and entering them where the scheduling module reads them.",
+            "approach": [
+              "List the job types in GS-ERP (cabinet, countertop, flooring, etc.) and their phases (design, fab, install)",
+              "Pull 3–5 recent completed projects from QB or the CRM to estimate actuals per type",
+              "Define benchmark values: design hours per project type, install hours per unit or sqft",
+              "Enter them in the settings table or seed file the scheduling module reads"
+            ],
+            "resources": [
+              "Historical project data in QuickBooks (completed estimates + time records)",
+              "GS’s ClickUp history for actual project durations",
+              "Scheduling module settings table in GS-ERP codebase",
+              "GS production manager’s knowledge of typical job durations"
+            ]
+          }
+        },
+        {
+          "id": "t60",
+          "title": "QB integration mapping documentation",
+          "phase": "Phase 66 · 100% · Bonus, Analytics, Data-gathering & Polish",
+          "estimate": "s",
+          "priority": "medium",
+          "status": "todo",
+          "notes": "Written field-by-field mapping for how CRM entities map to QuickBooks — the reference for debugging QB sync.",
+          "block": { "start": "12:15", "end": "12:45" },
+          "prep": {
+            "what": "Write the field-level mapping between GS-ERP records and QuickBooks entities so sync issues can be diagnosed without diving into source code.",
+            "understand": "The QB sync is live but undocumented. Every time something breaks, you’re back reading the QBSync classes cold. A mapping doc is a table: CRM entity → QB entity, CRM field → QB field, transformation rules noted.",
+            "approach": [
+              "Open the QBSync service classes in GS-ERP (QBCustomerSync, QBEstimateSync, QBInvoiceSync, QBVendorSync, QBPaymentSyncer, QBExpenseSync)",
+              "For each entity: list CRM field → QB field in a markdown table, note any status/type transformations",
+              "Add a ‘Known edge cases’ section (e.g., 6240 dup-DisplayName recovery, TxnStatus=Accepted on approval)",
+              "Commit to `docs/qb-mapping.md` in the GS-ERP repo"
+            ],
+            "resources": [
+              "GS-ERP QB sync classes (`app/Services/QuickBooks/`)",
+              "QuickBooks API docs (Intuit Developer — entity schemas for Customer, Estimate, Invoice, Vendor)",
+              "CT Pros QB sync code as a reference (same architecture, already battle-tested)"
+            ]
+          }
+        },
+        {
+          "id": "t59",
+          "title": "CK1/CK2/CK3/CK4 inspection item lists",
+          "phase": "Phase 66 · 100% · Bonus, Analytics, Data-gathering & Polish",
+          "estimate": "m",
+          "priority": "high",
+          "status": "todo",
+          "notes": "Define the checklist items for each quality checkpoint gate (CK1–CK4) in the production process.",
+          "block": { "start": "15:15", "end": "16:15" },
+          "prep": {
+            "what": "Create the quality checklist items for each of the four production checkpoints so inspectors have a clear pass/fail list at every stage.",
+            "understand": "CK1–CK4 are GS’s quality gates through production (likely: CK1=raw material intake, CK2=mid-production, CK3=finishing/QC, CK4=pre-install/delivery). Each needs concrete binary items. This is input data for the inspection module — not a coding task.",
+            "approach": [
+              "Confirm what CK1–CK4 map to with GS (if unclear, check existing ClickUp tasks or ask ownership)",
+              "Pull any existing paper checklists or SOPs GS currently uses on the floor",
+              "Write each item as a clear pass/fail check (e.g., ‘Wood grain direction matches spec: YES/NO’)",
+              "Enter items into the inspection module’s data model (seeder or settings table)"
+            ],
+            "resources": [
+              "GS’s existing production SOPs or paper checklists",
+              "Inspection module in GS-ERP (CK model, admin UI, seeder)",
+              "ClickUp historical tasks for what inspectors actually checked"
+            ]
+          }
+        },
+        {
+          "id": "t61",
+          "title": "Production capacity/concurrent project limits",
+          "phase": "Phase 66 · 100% · Bonus, Analytics, Data-gathering & Polish",
+          "estimate": "s",
+          "priority": "medium",
+          "status": "todo",
+          "notes": "Define and configure the max concurrent projects the production floor can handle — feeds capacity planning and overload warnings.",
+          "block": { "start": "16:30", "end": "17:00" },
+          "prep": {
+            "what": "Set the production floor’s concurrent project cap in the ERP so scheduling can warn when GS is overbooked.",
+            "understand": "This is a configuration task: get the real number from GS (how many projects can run in parallel without quality or deadline risk?), then enter it in the settings key the capacity planning module reads. The feature (t52) already reads this limit — the data just isn’t set yet.",
+            "approach": [
+              "Get the actual concurrent project limit from GS’s production manager or check ClickUp load history",
+              "Find the capacity limit setting in GS-ERP (likely a `production_max_concurrent` settings key)",
+              "Set the value and confirm the overload warning triggers when it’s exceeded",
+              "Document the business logic (e.g., ‘max 4 active cabinet jobs, no cap on small repairs’)"
+            ],
+            "resources": [
+              "GS production manager’s input or ClickUp project load history",
+              "Capacity planning module in GS-ERP (settings key, overload detection logic)",
+              "t52 (capacity planning feature) task notes for how the limit is consumed"
+            ]
+          }
+        },
+        {
+          "id": "t167",
+          "title": "Owner notification panel for revision_runaway",
+          "phase": "Phase 66 · 100% · Bonus, Analytics, Data-gathering & Polish",
+          "estimate": "s",
+          "priority": "medium",
+          "status": "todo",
+          "notes": "Dashboard panel alerting the owner when a project hits revision_runaway — early intervention before scope creep becomes a cost problem.",
+          "block": { "start": "17:15", "end": "17:45" },
+          "prep": {
+            "what": "Add an owner-facing panel that surfaces projects in `revision_runaway` state so they can intervene before it becomes a cost problem.",
+            "understand": "`revision_runaway` is a flag/state on the Project model that triggers when revision cycles exceed a threshold (signals scope creep or communication breakdown). The owner needs this at a glance — not buried in project detail pages.",
+            "approach": [
+              "Find the `revision_runaway` field/event in GS-ERP (Project model, how/when it’s set)",
+              "Build a compact panel component: list of projects with `revision_runaway=true` showing project name, client, revision count",
+              "Wire it into the owner’s dashboard or notification panel (wherever owner-level alerts live)",
+              "Test: set a project to `revision_runaway` and verify it appears in the panel"
+            ],
+            "resources": [
+              "`revision_runaway` field definition in GS-ERP Project model and related events",
+              "Owner dashboard / notification panel code in GS-ERP",
+              "Livewire component patterns already used in GS-ERP for similar dashboard widgets"
+            ]
+          }
+        }
+      ]
+    },
     {
       "slug": "module-project",
       "project": "Module",
@@ -70,133 +223,30 @@
         {
           "id": "t9",
           "title": "Per-module settings UI (labels, statuses, options)",
-          "phase": "Phase 2 \u00b7 MVP \u00b7 Super-Admin Module Manager",
+          "phase": "Phase 2 · MVP · Super-Admin Module Manager",
           "estimate": "m",
           "priority": "high",
           "status": "todo",
-          "notes": "Config form per module reading the settings layer \u2014 rename labels, define statuses/pipeline stages, edit seedable option lists. Zero-hardcode in practice.",
-          "block": {
-            "start": "13:30",
-            "end": "14:30"
-          },
+          "notes": "Config form per module reading the settings layer — rename labels, define statuses/pipeline stages, edit seedable option lists. Zero-hardcode in practice.",
+          "block": { "start": "14:00", "end": "15:00" },
           "prep": {
-            "what": "Build the config form every module gets \u2014 rename labels, define statuses/pipeline stages, edit seedable option lists, all reading the settings layer (zero hardcode).",
-            "understand": "The settings layer is the spine: each module reads its labels/statuses/options from it, nothing hardcoded. This UI is the super-admin surface that writes to that layer \u2014 get the read path confirmed before you build the writer.",
+            "what": "Build the per-module settings form inside the Module Manager so super-admins can configure each module’s labels, statuses, and option lists without touching code.",
+            "understand": "The settings layer (t2) is already live as a keyed store scoped global or per-module. This UI is the front-end: it reads the settings schema for each module and renders an editable form. t8 (module manager grid) is the parent screen to extend. Completing t9 makes t11 (UX-max pass) eligible and closes Phase 2 — which unlocks Phase 3 (Clients module, first real proof of the spine).",
             "approach": [
-              "Map exactly what a module exposes to settings (labels, statuses, seedable option lists) and confirm the read path is already live",
-              "Build ONE config form bound to that schema \u2014 sections for labels, pipeline statuses, seedable options (reuse an existing form pattern, don't rebuild it)",
-              "Persist + re-seed options on save; prove a renamed label / added status propagates to the module with zero code change"
+              "Study the settings layer (t2): how settings are keyed per-module, what value types exist (string, list, pipeline-stages)",
+              "Add a ‘Settings’ tab or section to the existing module manager card (t8’s Livewire component)",
+              "Render grouped form fields: label inputs (text), status pipelines (sortable list), option lists (tag-style CRUD)",
+              "Wire save → `SettingsService` with super-admin-only policy gate; show inline success/error feedback"
             ],
             "resources": [
-              "The module settings/registry layer",
-              "An existing Filament/Inertia form pattern to extend (DRY \u2014 don't hand-roll a new one)",
-              "A throwaway test module to toggle settings against"
-            ]
-          }
-        },
-        {
-          "id": "t11",
-          "title": "UX-max pass on module manager (interface-design gate)",
-          "phase": "Phase 2 \u00b7 MVP \u00b7 Super-Admin Module Manager",
-          "estimate": "s",
-          "priority": "med",
-          "status": "todo",
-          "notes": "Run the module manager through interface-design audit until no-notes. UX is a gate, not a phase \u2014 principle #1.",
-          "block": {
-            "start": "14:45",
-            "end": "15:15"
-          },
-          "prep": {
-            "what": "Run the module manager UI through your interface-design audit until it's no-notes. UX is a gate, not a phase \u2014 principle #1.",
-            "understand": "The manager is the super-admin's daily surface \u2014 it has to be obvious and fast, not just functional. 'Functional but clunky' fails the gate.",
-            "approach": [
-              "Walk the full manager flow as a tired admin \u2014 count clicks, find dead-ends + dropdown overload",
-              "Cut friction: fewer modals/confirms, default behaviors over config knobs, one obvious primary action per screen",
-              "Re-audit until no-notes (lean on the ux-architecture-reviewer agent for the brutal pass)"
-            ],
-            "resources": [
-              "ux-architecture-reviewer agent / your interface-design checklist",
-              "The live module manager screen",
-              "t9's settings UI (audit it in the same pass)"
+              "Settings layer (t2): `SettingsService`, `Setting` model, per-module scope API",
+              "Module manager UI (t8): existing Livewire component + blade view to extend",
+              "Branding settings UI (t10) as a reference implementation for the settings-layer pattern",
+              "UX KB: `.claude/docs/ux-kb/` for settings screen conventions"
             ]
           }
         }
       ]
-    },
-    {
-      "slug": "takeoff-engine",
-      "project": "Takeoff Engine",
-      "client": "AZ Team AI",
-      "tasks_total": 27,
-      "tasks_done": 15,
-      "on_deck": false,
-      "tasks": [
-        {
-          "id": "t26",
-          "title": "Label lane v2: M3 vision for outlined-text firms + callout-vs-room filtering",
-          "phase": "Phase 5 \u00b7 95% \u00b7 Engine Upgrade Waves (W12 R2+)",
-          "estimate": "m",
-          "priority": "high",
-          "status": "todo",
-          "notes": "Caught live on the Harborview demo (2026-06-11): rooms show 'unnamed' because PDFTron outlines ALL text (the famous probe finding \u2014 55 live words, zero room labels), so the free live-text lane finds nothing. Holabird proves the lane works (92/109 named in PROD, scale CONFIRMED). v2 = (a) productize the M3 tiles lane (spike run_labels_m3tiles.py, ~4.3 min/sheet, costs money -> the \u00a77a metered-credits event; MINIMAX_AI key must reach the VPS = a secrets decision) as an opt-in 'read labels (AI)' action; (b) callout-vs-room filtering \u2014 Holabird shows the noise: general-note paragraphs, UP stair arrows, FEC callouts matched as room names (the R13 documented polish).",
-          "block": {
-            "start": "15:30",
-            "end": "16:30"
-          },
-          "prep": {
-            "what": "Ship the AI label-reading lane for firms whose PDFs outline ALL text (so the free live-text lane finds nothing), plus filter callouts/general-notes from real room labels.",
-            "understand": "PDFTron outlines all text on outlined-firm sheets (Harborview: 55 live words, 0 room labels) so the free lane is blind. The M3 tiles lane WORKS (Holabird: 92/109 named in PROD, scale confirmed) but it costs money + ~4.3 min/sheet \u2192 make it opt-in + metered, and the MINIMAX_AI key has to reach the VPS (a secrets decision, not a repo commit).",
-            "approach": [
-              "Productize run_labels_m3tiles.py as an opt-in 'Read labels (AI)' action \u2014 NOT default (it's metered + slow)",
-              "Wire the \u00a77a metered-credits event so the cost is gated + visible before it runs",
-              "Get MINIMAX_AI to the VPS securely (env/secrets path \u2014 never in the repo)",
-              "Add callout-vs-room filtering: drop general-note paragraphs, UP-stair, and other non-room text so only real room labels survive"
-            ],
-            "resources": [
-              "run_labels_m3tiles.py spike",
-              "Holabird (works) + Harborview (the outlined-text failure) test sets",
-              "MINIMAX_AI key + the VPS secrets path",
-              "the \u00a77a metered-credits event spec"
-            ]
-          }
-        },
-        {
-          "id": "t16",
-          "title": "Door recall round 2 + bi-fold / cased-opening recall",
-          "phase": "Phase 5 \u00b7 95% \u00b7 Engine Upgrade Waves (W12 R2+)",
-          "estimate": "m",
-          "priority": "med",
-          "status": "todo",
-          "notes": "Door recall is THE constraint blocking the global seal relax. Bi-fold detection shipped (scallop-ink-inside-gap); push recall higher via raster-gap detection (symbol-based detectors failed on furniture noise).",
-          "block": {
-            "start": "16:45",
-            "end": "17:45"
-          },
-          "prep": {
-            "what": "Push door-detection recall higher (round 2) and add bi-fold + cased-opening recall. Door recall is THE constraint blocking the global seal relax.",
-            "understand": "Door recall gates the global seal relax \u2014 until it's high, you can't relax SEAL_FT. Bi-fold already ships (scallop-ink-inside-gap). Symbol-based detectors already FAILED on furniture noise \u2192 don't go back there, go raster-gap.",
-            "approach": [
-              "Profile where current recall misses \u2014 bi-fold, cased openings, noisy-furniture false-negatives",
-              "Push recall via raster-gap detection (NOT symbol detectors \u2014 proven to fail on furniture)",
-              "Add cased-opening recall; validate against the door-labeled set; confirm recall climbs without precision collapsing"
-            ],
-            "resources": [
-              "The door-detection module + the bi-fold scallop-ink-gap code",
-              "A door-labeled test set incl. bi-fold + cased openings",
-              "raster-gap detection utilities"
-            ]
-          }
-        }
-      ]
-    },
-    {
-      "slug": "gs-woodworking-spec",
-      "project": "GS-ERP",
-      "client": "GS Woodworking LLC",
-      "tasks_total": 650,
-      "tasks_done": 575,
-      "on_deck": true,
-      "tasks": []
     },
     {
       "slug": "ct-pros-sys",
@@ -215,44 +265,29 @@
       "tasks_done": 78,
       "on_deck": true,
       "tasks": []
+    },
+    {
+      "slug": "takeoff-engine",
+      "project": "Takeoff Engine",
+      "client": "AZ Team AI",
+      "tasks_total": 27,
+      "tasks_done": 15,
+      "on_deck": true,
+      "tasks": []
     }
   ],
   "waiting_on": [
     {
-      "project": "Module",
-      "task_id": "t25",
-      "title": "SMS module (DEFERRED \u2014 provider landscape changes too often)",
-      "reason": "Deferred by decision \u2014 do not start until a provider is chosen"
-    },
-    {
       "project": "GS-ERP",
-      "task_id": "t38",
-      "title": "Production bonus system (target vs actual + quality gate eligibility)",
-      "reason": "Bonus formula not defined (KB 9.1 + 12.13)"
-    },
-    {
-      "project": "GS-ERP",
-      "task_id": "t52",
-      "title": "Capacity planning (pipeline load vs team capacity)",
-      "reason": "Module 5 production release flow"
-    },
-    {
-      "project": "GS-ERP",
-      "task_id": "t14",
-      "title": "Time standard refinement loop (capture actual vs estimated)",
-      "reason": "Module 5 production release flow"
+      "task_id": "t566",
+      "title": "Markup/commission hide-from-client toggle",
+      "reason": "Blocked on a design session — needs a UX decision on how markup/commission is surfaced vs. hidden in client-facing views before implementation can start."
     },
     {
       "project": "procounters_erp",
-      "task_id": "t40",
-      "title": "GPS / ETA for installers (FR-22 \u2014 PRD-deferred)",
-      "reason": "v1 sign-off required"
-    },
-    {
-      "project": "procounters_erp",
-      "task_id": "t41",
-      "title": "Native mobile app (PRD \u00a74 non-goal)",
-      "reason": "v1 sign-off + product decision required"
+      "task_id": "t63",
+      "title": "Bookkeeper migration execution: cut over from QB-direct to CRM authoring",
+      "reason": "Waiting on bookkeeper training coordination, QBO Discounts preference verification with Fabio, and a confirmed cutover date."
     }
   ]
 }
