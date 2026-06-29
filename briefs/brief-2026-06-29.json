@@ -133,7 +133,7 @@
             "understand": "CK2 pass is the production bonus eligibility gate — so items must be crisp, binary pass/fail criteria. CK1 is already seeded in the ERP as placeholders. CK2 and CK3 require Eric (fabrication). CK4 requires an install crew lead. Your job today: draft everything from domain knowledge, then route each section to the right reviewer.",
             "approach": [
               "Open the ERP `ChecklistTemplate` seeder — read existing CK1 placeholder items to understand the format.",
-              "Draft CK2 (fabrication): dimensions match spec, correct species/thickness, joinery tight, surfaces sanded to grit, no tearout or defects.",
+              "Draft CK2 (fabrication): dimensions match spec, correct species/thickness, joinery tight, surfaces sanded to correct grit, no tearout or defects.",
               "Draft CK3 (cosmetic): finish uniformity, color matches approved sample, no runs/drips/fish-eyes, hardware holes aligned.",
               "Draft CK4 (installation): cabinets level and plumb, doors/drawers operate freely, all hardware torqued, client walkthrough sign-off.",
               "Email draft CK2/CK3 to Eric and CK4 to an install crew lead — ask for corrections and any missing critical items."
