@@ -1,0 +1,305 @@
+{
+  "date": "2026-06-30",
+  "generated_at": "2026-06-30T10:30:00Z",
+  "data_as_of": "2026-06-30T05:15:15+00:00",
+  "greeting": "Morning, Haniel. Tuesday — GS keeps rolling and CT Pros is this close to live. Let's move.",
+  "hype": "CT Pros has a client waiting on 3 tasks. You've run this go-live sequence before — company info, OAuth, catalog. Knock those out by lunch, then GS gets its time benchmarks, inspection lists, and RBAC fixed. Today you earn real client progress on two fronts. Go.",
+  "window": { "start": "09:00", "end": "18:00" },
+  "difficulty": {
+    "rating": "Solid",
+    "planned_minutes": 420,
+    "available_minutes": 480,
+    "ratio": 0.88,
+    "note": ""
+  },
+  "schedule": [
+    {
+      "start": "09:00", "end": "09:30",
+      "slug": "ct-pros-sys", "project": "CT Pros",
+      "task_id": "t24",
+      "title": "Fill real CT Pros company contact info",
+      "estimate": "s", "kind": "task"
+    },
+    {
+      "start": "09:45", "end": "10:45",
+      "slug": "ct-pros-sys", "project": "CT Pros",
+      "task_id": "t25",
+      "title": "Connect CT Pros's own QuickBooks (fresh OAuth)",
+      "estimate": "m", "kind": "task"
+    },
+    {
+      "start": "11:00", "end": "13:00",
+      "slug": "ct-pros-sys", "project": "CT Pros",
+      "task_id": "t26",
+      "title": "Re-curate material catalog for a GC",
+      "estimate": "l", "kind": "task"
+    },
+    {
+      "start": "13:00", "end": "14:00",
+      "kind": "lunch", "title": "Lunch"
+    },
+    {
+      "start": "14:00", "end": "15:00",
+      "slug": "gs-woodworking-spec", "project": "GS-ERP",
+      "task_id": "t56",
+      "title": "Design + installation time benchmarks per project type",
+      "estimate": "m", "kind": "task"
+    },
+    {
+      "start": "15:15", "end": "16:15",
+      "slug": "gs-woodworking-spec", "project": "GS-ERP",
+      "task_id": "t59",
+      "title": "CK1 / CK2 / CK3 / CK4 inspection item lists",
+      "estimate": "m", "kind": "task"
+    },
+    {
+      "start": "16:30", "end": "17:00",
+      "slug": "gs-woodworking-spec", "project": "GS-ERP",
+      "task_id": "t60",
+      "title": "QB integration mapping documentation",
+      "estimate": "s", "kind": "task"
+    },
+    {
+      "start": "17:00", "end": "18:00",
+      "slug": "gs-woodworking-spec", "project": "GS-ERP",
+      "task_id": "t661",
+      "title": "Apply owner's 2026-06-24 RBAC decisions + fix 500s",
+      "estimate": "m", "kind": "task"
+    }
+  ],
+  "projects": [
+    {
+      "slug": "ct-pros-sys",
+      "project": "CT Pros",
+      "client": "CT Pros",
+      "tasks_total": 34,
+      "tasks_done": 23,
+      "on_deck": false,
+      "tasks": [
+        {
+          "id": "t24",
+          "title": "Fill real CT Pros company contact info",
+          "phase": "Phase 2 · Go-Live (deploy + real config)",
+          "estimate": "s",
+          "priority": "high",
+          "status": "todo",
+          "notes": "config/company.php + .env still hold placeholders inherited from the clone. Set real CT Pros name/address/phone/email BEFORE any client-facing PDF or email goes out.",
+          "block": { "start": "09:00", "end": "09:30" },
+          "prep": {
+            "what": "Update `config/company.php` and `.env` with CT Pros' real business name, address, phone, and email — every PDF and outgoing email still shows HighTech placeholder data until this is done.",
+            "understand": "The codebase is a clone of HighTech. All client-facing output — proposal letterheads, email footers, PDF headers — pulls company info from `config/company.php`. Until this is correct, every document the client or their customers see looks wrong. It's a 20-minute task but it gates all client-facing testing.",
+            "approach": [
+              "Open `config/company.php` and list every placeholder field: name, legal_name, address, city, state, zip, phone, email.",
+              "Gather CT Pros' real info: legal business name, full street address, main phone, and primary billing/contact email.",
+              "Update `.env` for environment-specific fields; update `config/company.php` for the rest.",
+              "Trigger a test PDF (estimate or proposal preview) and confirm CT Pros' real name + address appear in the document header."
+            ],
+            "resources": ["`config/company.php`", "`.env` (local dev)", "CT Pros business registration documents", "Estimate/proposal PDF preview route"]
+          }
+        },
+        {
+          "id": "t25",
+          "title": "Connect CT Pros's own QuickBooks (fresh OAuth)",
+          "phase": "Phase 2 · Go-Live (deploy + real config)",
+          "estimate": "m",
+          "priority": "high",
+          "status": "todo",
+          "notes": "Inherited tokens were HighTech's and were never carried over. Run a fresh OAuth connect against CT Pros's own QBO company so all syncs hit the right books.",
+          "block": { "start": "09:45", "end": "10:45" },
+          "prep": {
+            "what": "Run a fresh QuickBooks OAuth authorization flow for CT Pros's own QBO company — any existing tokens belong to HighTech, so all syncs currently target the wrong books.",
+            "understand": "The full QB OAuth infrastructure is built: QuickBooksAuthController, token exchange, encrypted storage, refresh logic. What's missing is running the flow against the real CT Pros QBO account. You need: (1) an Intuit Developer app with CT Pros' credentials, and (2) the CT Pros QBO company (sandbox is fine initially). The QUICKBOOKS_CLIENT_ID/SECRET in `.env` likely still point to HighTech's app.",
+            "approach": [
+              "Check `.env` for QUICKBOOKS_CLIENT_ID and QUICKBOOKS_CLIENT_SECRET — if these are HighTech's keys, you need CT Pros' own Intuit Developer app credentials.",
+              "Go to developer.intuit.com → find or create the CT Pros app → copy Client ID + Secret → update `.env`.",
+              "Navigate to Settings → QuickBooks → 'Connect to QuickBooks' → complete the OAuth flow logged in to the CT Pros QBO account.",
+              "Verify: `quickbooks_tokens` table has a valid, non-expired `access_token` for the CT Pros company ID. Run `php artisan quickbooks:sync` and confirm it targets the correct company."
+            ],
+            "resources": ["developer.intuit.com (Intuit Developer Portal)", "`.env` QUICKBOOKS_CLIENT_ID / SECRET", "`QuickBooksAuthController` (routes: `auth/quickbooks/redirect` + `callback`)", "`QuickBooksToken` model", "`php artisan quickbooks:sync`"]
+          }
+        },
+        {
+          "id": "t26",
+          "title": "Re-curate material catalog for a GC",
+          "phase": "Phase 2 · Go-Live (deploy + real config)",
+          "estimate": "l",
+          "priority": "high",
+          "status": "todo",
+          "notes": "The 148-SKU HighTech TILE catalog still seeds — wrong domain. Replace with a general-contractor-appropriate catalog before takeoff pricing or estimates are trusted.",
+          "block": { "start": "11:00", "end": "13:00" },
+          "prep": {
+            "what": "Replace the HighTech tile catalog seed with a GC-appropriate material catalog for CT Pros — so takeoff line items and estimates show real GC categories (concrete, lumber, drywall) instead of tile patterns.",
+            "understand": "The catalog data model is correct — this is a seed/data task. CT Pros is a general contractor; their trades are completely different from HighTech's tile domain. You don't need real pricing yet (CT Pros fills that in); you need the right categories and unit types. Aim for 40–60 SKUs across the trades CT Pros actually bids. The Takeoff module line items and estimate builders both pull from this catalog.",
+            "approach": [
+              "Open the existing catalog seeder (`database/seeders/`) — understand the schema fields (category, name, unit_type, unit_cost, etc.). Note the HighTech tile categories to replace.",
+              "Draft GC categories: Concrete & Masonry, Framing Lumber, Sheathing & OSB, Drywall & Insulation, Roofing, Rough Electrical, Rough Plumbing, Hardware & Fasteners, Doors & Windows, Labor (by trade).",
+              "Write the new seeder with placeholder unit costs. Run `php artisan db:seed --class=MaterialCatalogSeeder` on a fresh test DB to verify it loads cleanly.",
+              "Open the Takeoff module → create a test takeoff → confirm the line item picker shows GC categories, not tile. Verify estimates generated from takeoffs pull correct unit types."
+            ],
+            "resources": ["Existing catalog seeder file (`database/seeders/`)", "`php artisan db:seed --class=MaterialCatalogSeeder`", "CT Pros estimate template or past bid sheet (correct category list)", "RS Means or Craftsman GC cost data (category reference only)"]
+          }
+        }
+      ]
+    },
+    {
+      "slug": "gs-woodworking-spec",
+      "project": "GS-ERP",
+      "client": "GS Woodworking LLC",
+      "tasks_total": 673,
+      "tasks_done": 595,
+      "on_deck": false,
+      "tasks": [
+        {
+          "id": "t56",
+          "title": "Design + installation time benchmarks per project type",
+          "phase": "Phase 66 · 100% · Bonus, Analytics, Data-gathering & Polish (consolidated)",
+          "estimate": "m",
+          "priority": "high",
+          "status": "todo",
+          "notes": "KB 9.1: Track next 10 projects for design time. Interview install crew leads for installation times. Required for capacity planning + accurate scheduling.",
+          "block": { "start": "14:00", "end": "15:00" },
+          "prep": {
+            "what": "Build a per-project-type benchmark table for design and installation phases — the empirical time data that drives `ProductionPriorityService` capacity planning and the bonus system's `target_days`.",
+            "understand": "Two data sources needed: (1) historical ERP project data for design phase durations — you can pull this solo today; (2) install crew lead interviews for field install times — requires scheduling calls. Today's output is a benchmark table with design column filled from data, install column TBD pending crew calls, plus interview questions ready to send. This unblocks t52 (capacity planning) and feeds the bonus formula.",
+            "approach": [
+              "Export completed projects from ERP — filter by project type, extract design phase start/end dates, compute average and p50 duration per type.",
+              "Build benchmark table: `project_type | design_days_p50 | install_days_p50 | sample_count` — populate design column from data, leave install as TBD.",
+              "Draft 5–7 interview questions for install crew leads: 'How long does a standard kitchen install take? What's the biggest time variable?'",
+              "Block 15-min calls with at least 2 install crew leads this week — put them on the calendar now while you have the context."
+            ],
+            "resources": ["ERP project history export", "KB 9.1 (time standard notes)", "`ProductionPriorityService` (how `target_days` is consumed)", "Install crew lead contacts"]
+          }
+        },
+        {
+          "id": "t59",
+          "title": "CK1 / CK2 / CK3 / CK4 inspection item lists",
+          "phase": "Phase 66 · 100% · Bonus, Analytics, Data-gathering & Polish (consolidated)",
+          "estimate": "m",
+          "priority": "high",
+          "status": "todo",
+          "notes": "KB 12.3. CK1 already seeded with placeholder; expand. CK2 (fabrication) + CK3 (cosmetic) need Eric. CK4 (install) needs install crew lead.",
+          "block": { "start": "15:15", "end": "16:15" },
+          "prep": {
+            "what": "Write the full pass/fail checklist items for all 4 QC stages (CK1 receipt, CK2 fabrication, CK3 cosmetic, CK4 install) — draft everything from domain knowledge today, then route each section to the right reviewer.",
+            "understand": "CK2 pass is the production bonus eligibility gate — items must be crisp, binary pass/fail. CK1 has existing placeholders (expand them). CK2/CK3 require Eric (fabrication). CK4 requires an install crew lead. Don't wait on Eric before drafting CK2 — get a complete first draft out and send it for review. The checklists gate the bonus system (t38) and the QC module.",
+            "approach": [
+              "Open the ERP `ChecklistTemplate` seeder — read existing CK1 items to understand the format and schema.",
+              "Draft CK2 (fabrication): dimensions match spec, correct species/thickness, joinery tight, surfaces sanded to spec grit, no tearout or defects, hardware pre-drilled correctly.",
+              "Draft CK3 (cosmetic/finish): finish coat uniform, color matches approved sample, no runs/drips/fish-eyes, hardware aligned and flush.",
+              "Draft CK4 (installation): cabinets level and plumb within tolerance, doors/drawers operate smoothly, all hardware torqued, client walkthrough sign-off.",
+              "Email CK2/CK3 to Eric asking for corrections + missed items. Email CK4 to install crew lead."
+            ],
+            "resources": ["ERP `ChecklistTemplate` seeder (`database/seeders/`)", "KB 12.3 (QC framework notes)", "Eric (fabrication — CK2/CK3 reviewer)", "Install crew lead contact (CK4 reviewer)", "Bonus system notes (CK2 pass = production bonus gate)"]
+          }
+        },
+        {
+          "id": "t60",
+          "title": "QB integration mapping documentation",
+          "phase": "Phase 66 · 100% · Bonus, Analytics, Data-gathering & Polish (consolidated)",
+          "estimate": "s",
+          "priority": "medium",
+          "status": "todo",
+          "notes": "Document the GS QuickBooks field mapping — which ERP entities map to which QB entities — for bookkeeper handoff and team reference.",
+          "block": { "start": "16:30", "end": "17:00" },
+          "prep": {
+            "what": "Write a concise QB field-mapping doc — ERP entity → QB entity → direction — so the bookkeeper knows exactly what syncs automatically and what lives in ERP only.",
+            "understand": "The QB integration is built and live, but the field mapping exists only in code. The bookkeeper handoff and future QB debugging both require a plain reference table. This is a code-read + doc-write task: open each Sync class, extract the mappings, commit the doc.",
+            "approach": [
+              "Open QBCustomerSync, QBEstimateSync, QBInvoiceSync, QBExpenseSync, QBVendorSync — for each, note ERP field → QB field and direction (push/pull/bidirectional).",
+              "Build the table: ERP Entity | QB Entity | ERP Field | QB Field | Direction | Notes.",
+              "Add a 'Not synced' section listing things that intentionally stay ERP-only (e.g., internal notes, labor details).",
+              "Commit to `docs/integrations/quickbooks-mapping.md` and share the link with the bookkeeper."
+            ],
+            "resources": ["QBCustomerSync, QBEstimateSync, QBInvoiceSync, QBExpenseSync, QBVendorSync classes", "QB API field reference (developer.intuit.com)", "`docs/` directory", "Bookkeeper contact (doc recipient)"]
+          }
+        },
+        {
+          "id": "t661",
+          "title": "Apply owner's 2026-06-24 RBAC decisions + fix 500s",
+          "phase": "Phase 80 · RBAC permission verification suite",
+          "estimate": "m",
+          "priority": "high",
+          "status": "todo",
+          "notes": "Apply the owner's 2026-06-24 RBAC permission matrix decisions and fix the associated 500 errors. Unblocks t654/t655/t656.",
+          "block": { "start": "17:00", "end": "18:00" },
+          "prep": {
+            "what": "Implement the RBAC permission decisions made by the owner on June 24 and fix the 500 errors — so the permission verification suite (t654, t655, t656) can run cleanly.",
+            "understand": "This is execution against decisions already made. The June 24 RBAC session produced a list of role/action/resource decisions. The 500 errors come from permission gates that throw uncaught exceptions instead of graceful 403s when a role lacks access. Fix the permission bindings first, then fix error handling — t654/t655/t656 (the regression test suites) cannot run until this is clean.",
+            "approach": [
+              "Read the owner's 2026-06-24 RBAC decisions document (ClickUp or session notes) — list every role/action/resource decision to implement.",
+              "Apply permission assignments: update the Spatie permissions seeder to reflect each decision. Run `php artisan db:seed --class=PermissionSeeder` on a fresh DB.",
+              "Identify 500 errors: run through the app as each role (or `php artisan test --filter Rbac`) and find unauthorized-access paths that throw 500 instead of 403.",
+              "Fix each 500: replace uncaught exceptions with `$this->authorize()` or explicit `abort(403)`. Run the full test suite to confirm."
+            ],
+            "resources": ["Owner's 2026-06-24 RBAC decisions document (ClickUp / session notes)", "Spatie permissions seeder", "`php artisan route:list` (find ungated routes)", "`php artisan test --filter Rbac`", "Phase 80 task notes (t654/t655/t656 context)"]
+          }
+        }
+      ]
+    },
+    {
+      "slug": "module-project",
+      "project": "Module",
+      "client": "Internal",
+      "tasks_total": 63,
+      "tasks_done": 18,
+      "on_deck": true,
+      "tasks": []
+    },
+    {
+      "slug": "procounters-erp",
+      "project": "procounters_erp",
+      "client": "ProCounters Inc.",
+      "tasks_total": 87,
+      "tasks_done": 78,
+      "on_deck": true,
+      "tasks": []
+    },
+    {
+      "slug": "takeoff-engine",
+      "project": "Takeoff Engine",
+      "client": "AZ Team AI",
+      "tasks_total": 27,
+      "tasks_done": 15,
+      "on_deck": true,
+      "tasks": []
+    }
+  ],
+  "waiting_on": [
+    {
+      "project": "GS-ERP",
+      "task_id": "t57",
+      "title": "Bonus formula definition (production + paint shop)",
+      "reason": "Needs a dedicated session with Guilherme and Mayara to define target-day thresholds and payout formula — cannot be drafted without their input."
+    },
+    {
+      "project": "GS-ERP",
+      "task_id": "t38",
+      "title": "Production bonus system (target vs actual + quality gate eligibility)",
+      "reason": "Gated on t57 (bonus formula definition), which is itself pending the Guilherme/Mayara session."
+    },
+    {
+      "project": "GS-ERP",
+      "task_id": "t52",
+      "title": "Capacity planning (pipeline load vs team capacity)",
+      "reason": "Blocked on Module 5 production release and time benchmark data (t56 scheduled today starts building that data)."
+    },
+    {
+      "project": "Module",
+      "task_id": "t25",
+      "title": "SMS module (DEFERRED — provider landscape changes too often)",
+      "reason": "Explicitly deferred by decision — do not start until an SMS provider is chosen."
+    },
+    {
+      "project": "procounters_erp",
+      "task_id": "t40",
+      "title": "GPS / ETA for installers (FR-22 — PRD-deferred)",
+      "reason": "V1 sign-off required before starting."
+    },
+    {
+      "project": "procounters_erp",
+      "task_id": "t41",
+      "title": "Native mobile app (PRD §4 non-goal)",
+      "reason": "V1 sign-off and product decision required before starting."
+    }
+  ]
+}
