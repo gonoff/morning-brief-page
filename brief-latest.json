@@ -1,17 +1,18 @@
 {
-  "date": "2026-06-30",
-  "generated_at": "2026-06-30T10:30:00Z",
-  "data_as_of": "2026-06-30T05:15:15+00:00",
-  "greeting": "Morning, Haniel. Tuesday — GS keeps rolling and CT Pros is this close to live. Let's move.",
-  "hype": "CT Pros has a client waiting on 3 tasks. You've run this go-live sequence before — company info, OAuth, catalog. Knock those out by lunch, then GS gets its time benchmarks, inspection lists, and RBAC fixed. Today you earn real client progress on two fronts. Go.",
-  "window": { "start": "09:00", "end": "18:00" },
+  "date": "2026-07-01",
+  "generated_at": "2026-07-01T10:00:00Z",
+  "data_as_of": "2026-07-01T05:00:03+00:00",
+  "greeting": "Morning, Haniel. Wednesday — let's get CT Pros across the finish line.",
+  "hype": "CT Pros goes live today if you execute clean: company info, fresh QB, catalog scrubbed, then a real deploy. That's a client shipped by end of day. And while DNS propagates, you close the Module pre-mockup gate — settings UI done, branding fixed, audit log wired. Two fronts, one relentless push. Go.",
+  "notice": "No meetings today — full clear runway.",
   "difficulty": {
     "rating": "Solid",
-    "planned_minutes": 420,
+    "planned_minutes": 390,
     "available_minutes": 480,
-    "ratio": 0.88,
+    "ratio": 0.81,
     "note": ""
   },
+  "window": { "start": "09:00", "end": "18:00" },
   "schedule": [
     {
       "start": "09:00", "end": "09:30",
@@ -21,49 +22,49 @@
       "estimate": "s", "kind": "task"
     },
     {
-      "start": "09:45", "end": "10:45",
+      "start": "09:45", "end": "10:15",
       "slug": "ct-pros-sys", "project": "CT Pros",
       "task_id": "t25",
       "title": "Connect CT Pros's own QuickBooks (fresh OAuth)",
-      "estimate": "m", "kind": "task"
+      "estimate": "s", "kind": "task"
     },
     {
-      "start": "11:00", "end": "13:00",
+      "start": "10:30", "end": "11:30",
       "slug": "ct-pros-sys", "project": "CT Pros",
       "task_id": "t26",
       "title": "Re-curate material catalog for a GC",
-      "estimate": "l", "kind": "task"
+      "estimate": "m", "kind": "task"
+    },
+    {
+      "start": "11:45", "end": "12:45",
+      "slug": "module-project", "project": "Module",
+      "task_id": "t9",
+      "title": "Per-module settings UI (labels, statuses, options)",
+      "estimate": "m", "kind": "task"
     },
     {
       "start": "13:00", "end": "14:00",
       "kind": "lunch", "title": "Lunch"
     },
     {
-      "start": "14:00", "end": "15:00",
-      "slug": "gs-woodworking-spec", "project": "GS-ERP",
-      "task_id": "t56",
-      "title": "Design + installation time benchmarks per project type",
-      "estimate": "m", "kind": "task"
+      "start": "14:00", "end": "16:00",
+      "slug": "ct-pros-sys", "project": "CT Pros",
+      "task_id": "t27",
+      "title": "Deploy CT Pros to its own host/domain",
+      "estimate": "l", "kind": "task"
     },
     {
-      "start": "15:15", "end": "16:15",
-      "slug": "gs-woodworking-spec", "project": "GS-ERP",
+      "start": "16:15", "end": "16:45",
+      "slug": "module-project", "project": "Module",
       "task_id": "t59",
-      "title": "CK1 / CK2 / CK3 / CK4 inspection item lists",
-      "estimate": "m", "kind": "task"
-    },
-    {
-      "start": "16:30", "end": "17:00",
-      "slug": "gs-woodworking-spec", "project": "GS-ERP",
-      "task_id": "t60",
-      "title": "QB integration mapping documentation",
+      "title": "Fix branding destructive partial-patch + dirty-gate Save",
       "estimate": "s", "kind": "task"
     },
     {
       "start": "17:00", "end": "18:00",
-      "slug": "gs-woodworking-spec", "project": "GS-ERP",
-      "task_id": "t661",
-      "title": "Apply owner's 2026-06-24 RBAC decisions + fix 500s",
+      "slug": "module-project", "project": "Module",
+      "task_id": "t54",
+      "title": "Wire real audit logging for access + config changes",
       "estimate": "m", "kind": "task"
     }
   ],
@@ -86,152 +87,101 @@
           "notes": "config/company.php + .env still hold placeholders inherited from the clone. Set real CT Pros name/address/phone/email BEFORE any client-facing PDF or email goes out.",
           "block": { "start": "09:00", "end": "09:30" },
           "prep": {
-            "what": "Update `config/company.php` and `.env` with CT Pros' real business name, address, phone, and email — every PDF and outgoing email still shows HighTech placeholder data until this is done.",
-            "understand": "The codebase is a clone of HighTech. All client-facing output — proposal letterheads, email footers, PDF headers — pulls company info from `config/company.php`. Until this is correct, every document the client or their customers see looks wrong. It's a 20-minute task but it gates all client-facing testing.",
+            "what": "Replace every HighTech placeholder in `config/company.php` and `.env` with CT Pros's real business name, address, phone, and email.",
+            "understand": "The codebase is a HighTech Tile fork. Every client-facing output — proposal letterheads, estimate PDFs, email footers — pulls company identity from `config/company.php`. Until this is correct, every document a CT Pros client sees carries HighTech branding. Quick task but it gates all client-facing go-live testing.",
             "approach": [
-              "Open `config/company.php` and list every placeholder field: name, legal_name, address, city, state, zip, phone, email.",
-              "Gather CT Pros' real info: legal business name, full street address, main phone, and primary billing/contact email.",
-              "Update `.env` for environment-specific fields; update `config/company.php` for the rest.",
-              "Trigger a test PDF (estimate or proposal preview) and confirm CT Pros' real name + address appear in the document header."
+              "Open `config/company.php` and replace every field: name, legal_name, address, city, state, zip, phone, email",
+              "Check `.env` for MAIL_FROM_NAME, MAIL_FROM_ADDRESS, APP_NAME and update those to CT Pros values",
+              "Grep the repo for 'HighTech' in `config/` and `resources/` to catch any stragglers",
+              "Hit a `/estimates/{id}/pdf` or `/proposals/{id}/pdf` route to visually confirm CT Pros info appears in the document header"
             ],
-            "resources": ["`config/company.php`", "`.env` (local dev)", "CT Pros business registration documents", "Estimate/proposal PDF preview route"]
+            "resources": [
+              "`config/company.php`",
+              "`.env` (MAIL_FROM_NAME, MAIL_FROM_ADDRESS, APP_NAME)",
+              "CT Pros's real business registration info (have it in front of you before you start)",
+              "An estimate or proposal PDF route for the smoke-test"
+            ]
           }
         },
         {
           "id": "t25",
           "title": "Connect CT Pros's own QuickBooks (fresh OAuth)",
           "phase": "Phase 2 · Go-Live (deploy + real config)",
-          "estimate": "m",
+          "estimate": "s",
           "priority": "high",
           "status": "todo",
           "notes": "Inherited tokens were HighTech's and were never carried over. Run a fresh OAuth connect against CT Pros's own QBO company so all syncs hit the right books.",
-          "block": { "start": "09:45", "end": "10:45" },
+          "block": { "start": "09:45", "end": "10:15" },
           "prep": {
-            "what": "Run a fresh QuickBooks OAuth authorization flow for CT Pros's own QBO company — any existing tokens belong to HighTech, so all syncs currently target the wrong books.",
-            "understand": "The full QB OAuth infrastructure is built: QuickBooksAuthController, token exchange, encrypted storage, refresh logic. What's missing is running the flow against the real CT Pros QBO account. You need: (1) an Intuit Developer app with CT Pros' credentials, and (2) the CT Pros QBO company (sandbox is fine initially). The QUICKBOOKS_CLIENT_ID/SECRET in `.env` likely still point to HighTech's app.",
+            "what": "Run a fresh QuickBooks OAuth flow authenticated with CT Pros's own QBO credentials — replacing any stale HighTech tokens.",
+            "understand": "The full QB OAuth infrastructure is built: QuickBooksAuthController, token exchange, encrypted storage, refresh logic — all done. What's missing is running the flow against CT Pros's actual QBO account. Also check `.env`: QUICKBOOKS_CLIENT_ID / SECRET might still be HighTech's Intuit Developer app credentials. Fix that first or the redirect will land on the wrong app.",
             "approach": [
-              "Check `.env` for QUICKBOOKS_CLIENT_ID and QUICKBOOKS_CLIENT_SECRET — if these are HighTech's keys, you need CT Pros' own Intuit Developer app credentials.",
-              "Go to developer.intuit.com → find or create the CT Pros app → copy Client ID + Secret → update `.env`.",
-              "Navigate to Settings → QuickBooks → 'Connect to QuickBooks' → complete the OAuth flow logged in to the CT Pros QBO account.",
-              "Verify: `quickbooks_tokens` table has a valid, non-expired `access_token` for the CT Pros company ID. Run `php artisan quickbooks:sync` and confirm it targets the correct company."
+              "Check `.env` for QUICKBOOKS_CLIENT_ID / QUICKBOOKS_CLIENT_SECRET — if HighTech's, go to developer.intuit.com, create the CT Pros Intuit Developer app, copy the new keys, update `.env`",
+              "Navigate to Settings → QuickBooks and disconnect any stale existing connection",
+              "Hit `/auth/quickbooks/redirect` as super-admin, complete the OAuth dance logged in to the CT Pros QBO account",
+              "Verify the `quickbooks_tokens` table has a fresh `access_token` with the CT Pros company ID; run `php artisan quickbooks:sync` and confirm no errors"
             ],
-            "resources": ["developer.intuit.com (Intuit Developer Portal)", "`.env` QUICKBOOKS_CLIENT_ID / SECRET", "`QuickBooksAuthController` (routes: `auth/quickbooks/redirect` + `callback`)", "`QuickBooksToken` model", "`php artisan quickbooks:sync`"]
+            "resources": [
+              "developer.intuit.com (Intuit Developer Portal — create/find the CT Pros app)",
+              "`.env` QUICKBOOKS_CLIENT_ID / QUICKBOOKS_CLIENT_SECRET",
+              "`/auth/quickbooks/redirect` and `/auth/quickbooks/callback` routes",
+              "`QuickBooksToken` model and `QuickBooksService` in `app/Services/QuickBooks/`",
+              "CT Pros's QBO login credentials (required — have them ready before starting)"
+            ]
           }
         },
         {
           "id": "t26",
           "title": "Re-curate material catalog for a GC",
           "phase": "Phase 2 · Go-Live (deploy + real config)",
-          "estimate": "l",
+          "estimate": "m",
           "priority": "high",
           "status": "todo",
           "notes": "The 148-SKU HighTech TILE catalog still seeds — wrong domain. Replace with a general-contractor-appropriate catalog before takeoff pricing or estimates are trusted.",
-          "block": { "start": "11:00", "end": "13:00" },
+          "block": { "start": "10:30", "end": "11:30" },
           "prep": {
-            "what": "Replace the HighTech tile catalog seed with a GC-appropriate material catalog for CT Pros — so takeoff line items and estimates show real GC categories (concrete, lumber, drywall) instead of tile patterns.",
-            "understand": "The catalog data model is correct — this is a seed/data task. CT Pros is a general contractor; their trades are completely different from HighTech's tile domain. You don't need real pricing yet (CT Pros fills that in); you need the right categories and unit types. Aim for 40–60 SKUs across the trades CT Pros actually bids. The Takeoff module line items and estimate builders both pull from this catalog.",
+            "what": "Replace the 148-item tile catalog seed with a lean GC-appropriate catalog so estimate line items and Takeoff pricing reflect what CT Pros actually bids.",
+            "understand": "The catalog drives the estimate line-item picker and the Takeoff → estimate seam. It currently seeds tile SKUs (grout, adhesive, tile patterns) — completely wrong domain. CT Pros is a GC: their catalog needs framing lumber, concrete, drywall, hardware, labor by trade. You don't need real pricing yet (CT Pros fills that in); you need the right categories and unit types. Target 30–50 SKUs.",
             "approach": [
-              "Open the existing catalog seeder (`database/seeders/`) — understand the schema fields (category, name, unit_type, unit_cost, etc.). Note the HighTech tile categories to replace.",
-              "Draft GC categories: Concrete & Masonry, Framing Lumber, Sheathing & OSB, Drywall & Insulation, Roofing, Rough Electrical, Rough Plumbing, Hardware & Fasteners, Doors & Windows, Labor (by trade).",
-              "Write the new seeder with placeholder unit costs. Run `php artisan db:seed --class=MaterialCatalogSeeder` on a fresh test DB to verify it loads cleanly.",
-              "Open the Takeoff module → create a test takeoff → confirm the line item picker shows GC categories, not tile. Verify estimates generated from takeoffs pull correct unit types."
+              "Find the catalog seeder in `database/seeders/` — open it, read the schema fields (category, name, unit_type, unit_cost, etc.)",
+              "Draft GC categories: Concrete & Masonry, Framing Lumber, Sheathing, Drywall & Insulation, Roofing, Rough Electrical, Rough Plumbing, Hardware & Fasteners, Doors & Windows, Labor by trade",
+              "Write the replacement seeder with placeholder unit costs; run `php artisan db:seed --class=MaterialCatalogSeeder` on dev DB and confirm it loads cleanly",
+              "Open the estimate line-item picker and the Takeoff module → verify new GC items appear, tile categories are gone"
             ],
-            "resources": ["Existing catalog seeder file (`database/seeders/`)", "`php artisan db:seed --class=MaterialCatalogSeeder`", "CT Pros estimate template or past bid sheet (correct category list)", "RS Means or Craftsman GC cost data (category reference only)"]
-          }
-        }
-      ]
-    },
-    {
-      "slug": "gs-woodworking-spec",
-      "project": "GS-ERP",
-      "client": "GS Woodworking LLC",
-      "tasks_total": 673,
-      "tasks_done": 595,
-      "on_deck": false,
-      "tasks": [
-        {
-          "id": "t56",
-          "title": "Design + installation time benchmarks per project type",
-          "phase": "Phase 66 · 100% · Bonus, Analytics, Data-gathering & Polish (consolidated)",
-          "estimate": "m",
-          "priority": "high",
-          "status": "todo",
-          "notes": "KB 9.1: Track next 10 projects for design time. Interview install crew leads for installation times. Required for capacity planning + accurate scheduling.",
-          "block": { "start": "14:00", "end": "15:00" },
-          "prep": {
-            "what": "Build a per-project-type benchmark table for design and installation phases — the empirical time data that drives `ProductionPriorityService` capacity planning and the bonus system's `target_days`.",
-            "understand": "Two data sources needed: (1) historical ERP project data for design phase durations — you can pull this solo today; (2) install crew lead interviews for field install times — requires scheduling calls. Today's output is a table with design column filled from data, install column TBD pending crew calls, plus interview questions ready to send. This unblocks t52 (capacity planning) and the bonus formula.",
-            "approach": [
-              "Export completed projects from ERP — filter by project type, extract design phase start/end dates, compute average and p50 duration per type.",
-              "Build benchmark table: `project_type | design_days_p50 | install_days_p50 | sample_count` — populate design column from data, leave install as TBD.",
-              "Draft 5–7 interview questions for install crew leads: 'How long does a standard kitchen install take? What's the biggest time variable?'",
-              "Block 15-min calls with at least 2 install crew leads this week — put them on the calendar now while you have the context."
-            ],
-            "resources": ["ERP project history export", "KB 9.1 (time standard notes)", "`ProductionPriorityService` (how `target_days` is consumed)", "Install crew lead contacts"]
+            "resources": [
+              "Catalog seeder in `database/seeders/` (find by name — MaterialCatalogSeeder or similar)",
+              "CT Pros's actual scope of work and typical job types (GC — what trades do they manage?)",
+              "Takeoff → estimate seam at `estimates/{estimate}/seed-from-takeoff` — check what catalog fields it expects",
+              "Any existing estimate in the app to see the required line-item schema"
+            ]
           }
         },
         {
-          "id": "t59",
-          "title": "CK1 / CK2 / CK3 / CK4 inspection item lists",
-          "phase": "Phase 66 · 100% · Bonus, Analytics, Data-gathering & Polish (consolidated)",
-          "estimate": "m",
+          "id": "t27",
+          "title": "Deploy CT Pros to its own host/domain",
+          "phase": "Phase 2 · Go-Live (deploy + real config)",
+          "estimate": "l",
           "priority": "high",
           "status": "todo",
-          "notes": "KB 12.3. CK1 already seeded with placeholder; expand. CK2 (fabrication) + CK3 (cosmetic) need Eric. CK4 (install) needs install crew lead.",
-          "block": { "start": "15:15", "end": "16:15" },
+          "notes": "Deploy infra exists and is proven (deploy/*.sh, docker-compose.yml, docs/deployment.md) but is still pointed at the cloned app (sys.hightechtileinc.com / droplet 104.248.228.169). Re-target to a fresh DigitalOcean droplet or Hostinger with a fresh DB and CT Pros's real domain.",
+          "block": { "start": "14:00", "end": "16:00" },
           "prep": {
-            "what": "Write the full pass/fail checklist items for all 4 QC stages (CK1 receipt, CK2 fabrication, CK3 cosmetic, CK4 install) — draft everything from domain knowledge today, then route each section to the right reviewer.",
-            "understand": "CK2 pass is the production bonus eligibility gate — items must be crisp, binary pass/fail. CK1 has existing placeholders (expand them). CK2/CK3 require Eric (fabrication expert). CK4 requires an install crew lead. Don't wait on Eric before drafting CK2 — get a complete first draft and send it for review. The checklists gate the bonus system (t38) and the QC module.",
+            "what": "Provision a new server, point CT Pros's domain to it, and run the proven deploy scripts to stand up a clean CT Pros instance with a fresh database.",
+            "understand": "The deploy infrastructure is battle-tested from the HighTech deploy: `deploy/*.sh`, `docker-compose.yml`, `docs/deployment.md`. This is a re-targeting job — same scripts, new destination. Critical sequence: provision → DNS → .env → deploy → migrate → smoke. The whole go-live collapses if DNS isn't pointing at the new server before certbot runs for SSL. Give DNS at least 15–30 min to propagate before running certbot.",
             "approach": [
-              "Open the ERP `ChecklistTemplate` seeder — read existing CK1 items to understand the format and schema.",
-              "Draft CK2 (fabrication): dimensions match spec, correct species/thickness, joinery tight, surfaces sanded to spec grit, no tearout or defects, hardware pre-drilled correctly.",
-              "Draft CK3 (cosmetic/finish): finish coat uniform, color matches approved sample, no runs/drips/fish-eyes, hardware aligned and flush.",
-              "Draft CK4 (installation): cabinets level and plumb within tolerance, doors/drawers operate smoothly, all hardware torqued, client walkthrough sign-off.",
-              "Email CK2/CK3 to Eric asking for corrections + missed items. Email CK4 to install crew lead."
+              "Provision a fresh Ubuntu 22.04 VPS (DigitalOcean or Hostinger) — note the IP; SSH in; run the server bootstrap portion of `deploy/setup.sh`",
+              "Update CT Pros's domain DNS A record to point at the new IP — do this early, DNS takes time",
+              "Clone the ct-pros repo to `/opt/ct-pros`; copy `.env` from the HighTech template and change EVERY HighTech-specific value: APP_URL, APP_KEY, DB credentials, MAIL config, QB keys, company info",
+              "Once DNS resolves, run `deploy/deploy.sh` — confirm it completes cleanly; then `php artisan migrate --seed` for a fresh DB",
+              "Smoke test: open the domain, log in as super-admin, create a test estimate, verify PDF generation and email delivery work"
             ],
-            "resources": ["ERP `ChecklistTemplate` seeder (`database/seeders/`)", "KB 12.3 (QC framework notes)", "Eric (fabrication — CK2/CK3 reviewer)", "Install crew lead contact (CK4 reviewer)", "Bonus system notes (CK2 pass = production bonus gate)"]
-          }
-        },
-        {
-          "id": "t60",
-          "title": "QB integration mapping documentation",
-          "phase": "Phase 66 · 100% · Bonus, Analytics, Data-gathering & Polish (consolidated)",
-          "estimate": "s",
-          "priority": "medium",
-          "status": "todo",
-          "notes": "Document the GS QuickBooks field mapping — which ERP entities map to which QB entities — for bookkeeper handoff and team reference.",
-          "block": { "start": "16:30", "end": "17:00" },
-          "prep": {
-            "what": "Write a concise QB field-mapping doc — ERP entity → QB entity → direction — so the bookkeeper knows exactly what syncs automatically and what lives in ERP only.",
-            "understand": "The QB integration is built and live, but the field mapping exists only in code. The bookkeeper handoff and any future QB debugging require a plain reference table. This is a code-read + doc-write task: open each Sync class, extract the mappings, commit the doc.",
-            "approach": [
-              "Open QBCustomerSync, QBEstimateSync, QBInvoiceSync, QBExpenseSync, QBVendorSync — for each, note ERP field → QB field and direction (push/pull/bidirectional).",
-              "Build the table: ERP Entity | QB Entity | ERP Field | QB Field | Direction | Notes.",
-              "Add a 'Not synced' section listing things that intentionally stay ERP-only (e.g., internal notes, labor details per design).",
-              "Commit to `docs/integrations/quickbooks-mapping.md` and share the link with the bookkeeper."
-            ],
-            "resources": ["QBCustomerSync, QBEstimateSync, QBInvoiceSync, QBExpenseSync, QBVendorSync classes", "QB API field reference (developer.intuit.com)", "`docs/` directory", "Bookkeeper contact (doc recipient)"]
-          }
-        },
-        {
-          "id": "t661",
-          "title": "Apply owner's 2026-06-24 RBAC decisions + fix 500s",
-          "phase": "Phase 80 · RBAC permission verification suite",
-          "estimate": "m",
-          "priority": "high",
-          "status": "todo",
-          "notes": "Apply the owner's 2026-06-24 RBAC permission matrix decisions and fix the associated 500 errors. Unblocks t654/t655/t656.",
-          "block": { "start": "17:00", "end": "18:00" },
-          "prep": {
-            "what": "Implement the RBAC permission decisions made by the owner on June 24 and fix the 500 errors — so the permission verification suite (t654, t655, t656) can run cleanly.",
-            "understand": "This is execution against decisions already made. The June 24 RBAC session produced a list of role/action/resource decisions. The 500 errors come from permission gates that throw uncaught exceptions instead of graceful 403s when a role lacks access. Fix the permission bindings first, then fix the error handling — t654/t655/t656 (the regression test suites) can't run until this is clean.",
-            "approach": [
-              "Read the owner's 2026-06-24 RBAC decisions document (ClickUp or session notes) — list every role/action/resource decision to implement.",
-              "Apply permission assignments: update the Spatie permissions seeder to reflect each decision. Run `php artisan db:seed --class=PermissionSeeder` on a fresh DB.",
-              "Identify 500 errors: run through the app as each role (or `php artisan test --filter Rbac`) and find unauthorized-access paths that throw 500 instead of 403.",
-              "Fix each 500: replace uncaught exceptions with `$this->authorize()` or explicit `abort(403)`. Run the full test suite to confirm."
-            ],
-            "resources": ["Owner's 2026-06-24 RBAC decisions document (ClickUp / session notes)", "Spatie permissions seeder", "`php artisan route:list` (find ungated routes)", "`php artisan test --filter Rbac`", "Phase 80 task notes (t654/t655/t656 context)"]
+            "resources": [
+              "`deploy/*.sh` and `docker-compose.yml` (proven scripts — read before running)",
+              "`docs/deployment.md` (step-by-step guide written for this exact flow)",
+              "CT Pros's domain registrar credentials (to update the DNS A record)",
+              "New server SSH access",
+              "HighTech `.env` as the template — with a checklist of every value that must change for CT Pros"
+            ]
           }
         }
       ]
@@ -242,6 +192,96 @@
       "client": "Internal",
       "tasks_total": 63,
       "tasks_done": 18,
+      "on_deck": false,
+      "tasks": [
+        {
+          "id": "t9",
+          "title": "Per-module settings UI (labels, statuses, options)",
+          "phase": "Phase 2 · MVP · Super-Admin Module Manager",
+          "estimate": "m",
+          "priority": "high",
+          "status": "todo",
+          "notes": "Config form per module reading the settings layer — rename labels, define statuses/pipeline stages, edit seedable option lists. Zero-hardcode in practice.",
+          "block": { "start": "11:45", "end": "12:45" },
+          "prep": {
+            "what": "Build a per-module config form in the Settings panel — the screen where a super-admin renames labels, defines pipeline statuses, and edits option lists for any module without touching code.",
+            "understand": "The `SettingsManager` (t2) and the Module Manager grid (t8) are both done. The missing piece is the per-module config form — the screen you get when you click into a module's settings and change its labels. This is the zero-hardcode promise made real: a new client rebrands from the UI, not a code fork. It also unblocks t11 (the UX-max pass on the module manager). The UX spec is in `.claude/docs/ux-kb/04-settings.md`.",
+            "approach": [
+              "Read `.claude/docs/ux-kb/04-settings.md` (Labels & Statuses section) — that's your design reference for the form layout",
+              "Create `ModuleSettingsController` with `show()` reading `SettingsManager::getModule($key)` and `update()` calling `setMany()`",
+              "Build `Pages/Settings/ModuleSettings.vue` — Inertia page rendering each setting as the right input type (text input, status-list builder, option picker)",
+              "Add a 'Configure' gear-icon link on each module card in the Module Manager grid routing to `ModuleSettingsController@show` for that module key"
+            ],
+            "resources": [
+              "`app/Settings/SettingsManager.php` — the read/write API to call",
+              "`.claude/docs/ux-kb/04-settings.md` — Settings UX spec (Labels & Statuses section)",
+              "`resources/js/Pages/Settings/` — existing pages to match the layout pattern",
+              "Module Manager page (t8 source) — the navigation entry point to link from",
+              "`ModuleRegistry` — for the full list of module keys to route against"
+            ]
+          }
+        },
+        {
+          "id": "t59",
+          "title": "Fix branding destructive partial-patch + dirty-gate Save",
+          "phase": "Phase 10 · Hardening · Quality & Debt",
+          "estimate": "s",
+          "priority": "high",
+          "status": "todo",
+          "notes": "branding.update is a full-replace masquerading as PATCH: a name-only save silently NULLs tagline/trust/remember_default. Use 'sometimes' update semantics so omitted fields are untouched, and gate Save on dirty state.",
+          "block": { "start": "16:15", "end": "16:45" },
+          "prep": {
+            "what": "Make the branding PATCH non-destructive (omitting a field leaves it unchanged in the DB) and disable Save until something actually changes.",
+            "understand": "The bug: `branding.update` uses `?? '' / ?? false` null-coalescing on all fields. A save with only the name field filled silently NULLs tagline, trust-line, and remember_default in the database. Silent data-loss. The second issue: the Save button fires immediately with no changes — wasteful and confusing. Both are quick fixes but both are real bugs affecting every clone using the branding feature.",
+            "approach": [
+              "Open `BrandingController::update()` — switch optional field validation to `'sometimes'` rules so Laravel only validates and updates fields present in the request",
+              "Or explicitly call `$settings->set($key, $value)` only for keys where `$request->has($key)` is true",
+              "In `Branding.vue`, capture the initial loaded values on mount; compute `isDirty` via a deep-compare against current form state; bind the Save button's `disabled` to `!isDirty`",
+              "Test: load the form, change only the name, save → verify tagline and trust-line retain their previous values in the database"
+            ],
+            "resources": [
+              "`app/Http/Controllers/Settings/BrandingController.php`",
+              "`resources/js/Pages/Settings/Branding.vue`",
+              "Laravel `'sometimes'` validation rule (validate/update only if field is present in request)",
+              "Inertia `useForm()` — check if it has a built-in `isDirty` before writing your own"
+            ]
+          }
+        },
+        {
+          "id": "t54",
+          "title": "Wire real audit logging for access + config changes",
+          "phase": "Phase 9 · Hardening · Foundation Blockers",
+          "estimate": "m",
+          "priority": "high",
+          "status": "todo",
+          "notes": "BLOCKER: syncRoles/syncPermissions write the pivot directly and fire NO model events. is_active toggles and Setting/ModuleState writes also emit zero audit data. Needs explicit activity() logging. The spec mandates a 'who changed which permission / who deactivated whom' trail — mockups assume that data exists.",
+          "block": { "start": "17:00", "end": "18:00" },
+          "prep": {
+            "what": "Add explicit Spatie ActivityLog entries for role/permission sync writes, module enable/disable toggles, and Settings changes — so the system has a real who-changed-what audit trail.",
+            "understand": "`syncRoles()`/`syncPermissions()` write directly to Spatie's pivot table with no Eloquent model events. `LogsActivity` on the Role model never fires for these. Same for module `is_active` toggles (direct `ModuleState::update`) and `SettingsManager::set()`. The UX spec and Phase 9 audit requirements assume this timeline data exists — currently it produces nothing. Mockups cannot be built on top of a feature that leaves no trail.",
+            "approach": [
+              "In `RoleController` (the permission-sync route): snapshot `$role->permissions->pluck('name')` before the sync, call `syncPermissions()`, then log: `activity()->performedOn($role)->causedBy(auth()->user())->withProperties(['before' => $before, 'after' => $role->fresh()->permissions->pluck('name')])->log('permissions.synced')`",
+              "In `ModuleState` enable/disable (wherever `is_active` is toggled): `activity()->performedOn($moduleState)->causedBy(auth()->user())->withProperties(['module' => $moduleState->module_key])->log($enabled ? 'module.enabled' : 'module.disabled')`",
+              "In `SettingsManager::set()` and `setMany()`: log the key(s), old value(s), new value(s), and `auth()->user()` as causer",
+              "Write one Pest test per site asserting an `Activity` row exists with the correct subject, causer, and log name after the action fires"
+            ],
+            "resources": [
+              "Spatie ActivityLog manual logging docs — `activity()->on($model)->causedBy($user)->withProperties([])->log('event')`",
+              "`app/Http/Controllers/RoleController.php` — find the permission-sync route",
+              "`app/Models/ModuleState.php` — find the enable/disable toggle method",
+              "`app/Settings/SettingsManager.php` — `set()` and `setMany()` methods",
+              "Existing `LogsActivity` usage in the codebase for reference patterns"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "slug": "gs-woodworking-spec",
+      "project": "GS-ERP",
+      "client": "GS Woodworking LLC",
+      "tasks_total": 719,
+      "tasks_done": 616,
       "on_deck": true,
       "tasks": []
     },
@@ -269,37 +309,31 @@
       "project": "GS-ERP",
       "task_id": "t57",
       "title": "Bonus formula definition (production + paint shop)",
-      "reason": "Needs a dedicated session with Guilherme and Mayara to define target-day thresholds and payout formula — cannot be drafted without their input."
+      "reason": "Blocked on a private session with Guilherme and Mayara — no formula exists yet. KB 9.1 + 12.13 are still PLACEHOLDER. Until target-day thresholds and payout structure are defined, neither the production bonus (t38) nor paint-shop bonus (t114) can be built."
     },
     {
       "project": "GS-ERP",
       "task_id": "t38",
       "title": "Production bonus system (target vs actual + quality gate eligibility)",
-      "reason": "Gated on t57 (bonus formula definition), which is itself pending the Guilherme/Mayara session."
+      "reason": "Gated on t57 — bonus formula requires the Guilherme/Mayara session before any code can be written."
     },
     {
       "project": "GS-ERP",
       "task_id": "t52",
       "title": "Capacity planning (pipeline load vs team capacity)",
-      "reason": "Blocked on Module 5 production release and time benchmark data (t56 scheduled today starts building that data)."
-    },
-    {
-      "project": "Module",
-      "task_id": "t25",
-      "title": "SMS module (DEFERRED — provider landscape changes too often)",
-      "reason": "Explicitly deferred by decision — do not start until an SMS provider is chosen."
+      "reason": "Blocked on Module 5 production release flow and time benchmark data (t56 data-gathering in progress)."
     },
     {
       "project": "procounters_erp",
       "task_id": "t40",
       "title": "GPS / ETA for installers (FR-22 — PRD-deferred)",
-      "reason": "V1 sign-off required before starting."
+      "reason": "Explicitly deferred to v2 per PRD §6.5. Do not start until v1 sign-off."
     },
     {
       "project": "procounters_erp",
       "task_id": "t41",
       "title": "Native mobile app (PRD §4 non-goal)",
-      "reason": "V1 sign-off and product decision required before starting."
+      "reason": "Out of scope for v1 — PWA only. Needs v1 sign-off and product decision before revisiting."
     }
   ]
 }
