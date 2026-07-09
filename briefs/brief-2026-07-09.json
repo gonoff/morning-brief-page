@@ -121,14 +121,14 @@
               "Start from `.env.example` as the template; copy to `.env.production` on the server.",
               "Stripe dashboard → Developers → API Keys: copy `sk_live_...` + `pk_live_...` and `sk_test_...` + `pk_test_...`.",
               "Chatwoot admin → Settings → Integrations → API Access Token: grab `CHATWOOT_API_URL` and bot token.",
-              "Generate `APP_KEY` with `php artisan key:generate --show` (or `openssl rand -base64 32`). Set `DB_*` to the prod MySQL user credentials.",
+              "Generate `APP_KEY` with `php artisan key:generate --show`. Set `DB_*` to the prod MySQL user credentials.",
               "`chmod 600 .env.production` — then run `artisan config:cache` to lock it in."
             ],
             "resources": [
               "Stripe dashboard — Developers → API Keys (live + test pairs)",
               "Chatwoot admin panel — Settings → Integrations → API Access Token",
               "`.env.example` in the repo — the definitive template",
-              "Password manager — for secure retrieval of any shared secrets"
+              "Password manager — for secure retrieval of shared secrets"
             ]
           }
         },
@@ -139,23 +139,23 @@
           "estimate": "m",
           "priority": "high",
           "status": "pending",
-          "notes": "t38 import (closed projects + invoices + client details) completed at 2:37 AM today. Gate: AR totals + subscription state must match CRM.",
+          "notes": "t38 import (closed projects + invoices + client details) completed at 2:37 AM today. Gate: AR totals + subscription state must match CRM before enabling the scheduler.",
           "block": { "start": "12:00", "end": "13:00" },
           "prep": {
-            "what": "Verify the CRM import (t38, done at 2:37 AM) is correct — AR totals, open invoices, and recurring subscription state in the new system must match azteam_crm. Nothing gets scheduled (t40) until this clears.",
-            "understand": "t38 imported CLOSED projects + versions + invoices + client details from azteam_crm. It excluded leads/meetings/commissions/users. You're checking that the 9 clients' AR totals match, invoice statuses are right, and recurring subscription configs are intact. Any silent mismatch here = billing bugs on day one.",
+            "what": "Verify the CRM import (t38, done at 2:37 AM) is correct — AR totals, open invoices, and recurring subscription state in the new system must match azteam_crm before anything goes live.",
+            "understand": "t38 imported CLOSED projects + versions + invoices + client details from azteam_crm. It excluded leads/meetings/commissions/users. You're checking that all 9 clients' AR totals match, invoice statuses are correct, and recurring subscription configs are intact. Any silent mismatch here = billing bugs on day one.",
             "approach": [
               "Pull up azteam_crm: export or screenshot the full client list with total billed, total paid, and open AR per client — all 9.",
-              "In the new system (deployed via t36): `/clients` + `/invoices` — compare total_billed, total_paid, and open AR balance per client.",
-              "Check recurring subscription state: which clients have active subs, billing cycle, and amount. Confirm it matches CRM.",
+              "In the new system (live after t36): `/clients` + `/invoices` — compare total_billed, total_paid, and open AR balance per client.",
+              "Check recurring subscription state: which clients have active subs, billing cycle, and amount. Confirm it matches CRM exactly.",
               "Spot-check 2–3 clients in invoice detail — open dates, amounts, paid/open status.",
-              "Document result: PASS (proceed to t40) or list discrepancies with the plan to fix them before enabling the scheduler."
+              "Document result: PASS (proceed to t40) or list discrepancies with a fix plan before the scheduler is enabled."
             ],
             "resources": [
               "azteam_crm — client billing dashboard or AR export",
               "New system: `/clients`, `/invoices`, `/projects` pages (live after t36)",
-              "The t38 import script — inspect what it touched if something looks off",
-              "Terminal / spreadsheet — to diff the totals side-by-side"
+              "The t38 import script — inspect if something looks off",
+              "Terminal or spreadsheet — diff the totals side-by-side"
             ]
           }
         },
@@ -169,19 +169,19 @@
           "notes": "Final go-live switch. Scheduler cron ON → first run confirmed → Stripe webhook registered last.",
           "block": { "start": "14:15", "end": "14:45" },
           "prep": {
-            "what": "Enable the Laravel scheduler cron, watch its first run, then register the Stripe webhook — the last switch that starts live billing automation.",
-            "understand": "The scheduler runs `billing:run-recurring`, `billing:dispatch-reminders`, and `stripe:reconcile`. Once the Stripe webhook is registered, real payment events flow in instantly. Do this LAST and only after t39 passes. Stripe may replay queued events on registration — your reconcile handler must be idempotent (it is, per t24).",
+            "what": "Enable the Laravel scheduler cron, confirm its first run, then register the Stripe webhook — the final switch that starts live billing automation.",
+            "understand": "The scheduler runs `billing:run-recurring`, `billing:dispatch-reminders`, and `stripe:reconcile`. Once the Stripe webhook is registered, real payment events flow in. Do this LAST and only after t39 passes. The webhook signing secret from Stripe must go into `.env.production` before the first event hits.",
             "approach": [
-              "SSH to the droplet. Add `* * * * * cd /var/www/azteamai-system && php artisan schedule:run >> /var/log/laravel-schedule.log 2>&1` to the web server crontab.",
-              "Wait one minute; `tail -f /var/log/laravel-schedule.log` — confirm it fires without errors. Check `artisan schedule:list` to see all registered commands.",
-              "Stripe dashboard → Developers → Webhooks → Add endpoint: set `https://[your-domain]/webhooks/stripe`, select `payment_intent.succeeded`, `invoice.paid`, and any other handled events. Copy the signing secret.",
+              "SSH to the droplet. Add `* * * * * cd /var/www/azteamai-system && php artisan schedule:run >> /var/log/laravel-schedule.log 2>&1` to the crontab.",
+              "Wait one minute; `tail -f /var/log/laravel-schedule.log` — confirm it fires without errors. Run `artisan schedule:list` to verify all 3 billing commands are registered.",
+              "Stripe dashboard → Developers → Webhooks → Add endpoint: set `https://[your-domain]/webhooks/stripe`, select handled events (`payment_intent.succeeded`, `invoice.paid`, etc.). Copy the signing secret.",
               "Add `STRIPE_WEBHOOK_SECRET=whsec_...` to `.env.production` → `artisan config:cache`.",
-              "Send a Stripe test event from the dashboard → confirm the webhook log shows it was received and processed. You are now live."
+              "Send a Stripe test event from the dashboard. Confirm the webhook log shows received + processed. You are live."
             ],
             "resources": [
-              "DO server SSH — to add the cron entry",
+              "DO server SSH — add the cron entry",
               "Stripe dashboard — Developers → Webhooks → Add endpoint",
-              "`artisan schedule:list` — verify the 3 billing commands are registered",
+              "`artisan schedule:list` — verify the 3 billing commands",
               "`/var/log/laravel-schedule.log` — first-run proof",
               "STRIPE_WEBHOOK_SECRET from Stripe → `.env.production`"
             ]
@@ -208,19 +208,19 @@
           "block": { "start": "15:00", "end": "15:30" },
           "prep": {
             "what": "Replace HighTech placeholder data in `config/company.php` with CT Pros's real name, address, phone, and email — one wrong PDF to a client and the brand is broken.",
-            "understand": "This is a pure config edit, no migration. Every estimate, proposal PDF, and automated email currently shows HighTech's details. It's a 5-minute fix with outsized impact: wrong company name on a signed proposal is embarrassing and legally sloppy. Do it before any client-facing action.",
+            "understand": "Pure config edit, no migration. Every estimate, proposal PDF, and automated email currently shows HighTech's details. 5-minute fix with outsized impact — wrong company name on a signed proposal is legally sloppy. Do it before any client-facing document is generated.",
             "approach": [
-              "Open `config/company.php` — update `name`, `address`, `city`, `state`, `zip`, `phone`, `email`, `website`. Check the logo path if it's declared here.",
-              "Grep for `COMPANY_` in `.env` — override any that differ (e.g. `COMPANY_NAME=CT Pros`).",
+              "Open `config/company.php` — update `name`, `address`, `city`, `state`, `zip`, `phone`, `email`, `website`. Note the logo path if declared here.",
+              "Grep for `COMPANY_` in `.env` — update any overrides.",
               "`php artisan config:clear && php artisan config:cache` to apply.",
-              "Generate a test estimate PDF (any lead → Create Estimate → Export PDF) and visually confirm the CT Pros header.",
+              "Generate a test estimate PDF (any lead → Create Estimate → Export PDF). Visually confirm the CT Pros header appears.",
               "`git commit -m 'config: set real CT Pros company info'` and push."
             ],
             "resources": [
-              "`config/company.php` in the repo",
-              "CT Pros contact info — from Rafa if not documented (name, address, phone, email)",
+              "`config/company.php` in the ct-pros-sys repo",
+              "CT Pros contact info — from Rafa if not already documented",
               "`artisan config:clear && config:cache` after editing",
-              "Any existing CT Pros branded doc for reference"
+              "Any existing CT Pros branded proposal doc as a reference"
             ]
           }
         },
@@ -231,23 +231,23 @@
           "estimate": "s",
           "priority": "high",
           "status": "todo",
-          "notes": "Inherited tokens were HighTech's. Run a fresh OAuth connect against CT Pros's own QBO company.",
+          "notes": "Inherited tokens were HighTech's. Run fresh OAuth connect against CT Pros's own QBO company.",
           "block": { "start": "15:45", "end": "16:15" },
           "prep": {
             "what": "Run a fresh QuickBooks OAuth connect against CT Pros's own QBO company — without this, all QB syncs either fail or silently write to the wrong books.",
-            "understand": "The QB OAuth flow is fully built and tested. The `quickbooks_tokens` table is empty or has stale HighTech tokens. This needs CT Pros's Intuit login. The OAuth redirect URI in the Intuit Developer Console must match the app domain you're connecting from (local dev URL or prod URL if already deployed).",
+            "understand": "The OAuth flow is built and tested. The `quickbooks_tokens` table is empty or has stale HighTech tokens. You need CT Pros's Intuit login. The OAuth redirect URI in the Intuit Developer Console must match the app domain you're connecting from (local dev or prod). Check the redirect URI first — a mismatch causes a silent auth failure.",
             "approach": [
               "Confirm CT Pros has an active QBO company account — ask Rafa if unsure.",
-              "In the Intuit Developer Console: check the app's Redirect URI list includes your current URL (local or prod).",
-              "In the CT Pros app: Settings → QuickBooks → 'Connect to QuickBooks'. Authorize with CT Pros's Intuit credentials.",
-              "After OAuth callback, check `quickbooks_tokens` table — confirm a new row was inserted and the company name is CT Pros (not HighTech).",
-              "Run a quick test: Settings → QuickBooks → fetch the QB account list, or try syncing one customer. Confirm no auth errors."
+              "Intuit Developer Console: verify the app Redirect URI list includes your current URL.",
+              "CT Pros app: Settings → QuickBooks → 'Connect to QuickBooks'. Authorize with CT Pros's Intuit credentials.",
+              "After OAuth callback: check `quickbooks_tokens` table — new row with CT Pros company name (not HighTech).",
+              "Quick test: Settings → QuickBooks → fetch QB account list. No auth errors = connected."
             ],
             "resources": [
-              "CT Pros QuickBooks Online credentials — get from Rafa",
-              "Intuit Developer Console — check Redirect URI matches current app URL",
+              "CT Pros QuickBooks Online credentials — from Rafa",
+              "Intuit Developer Console — verify Redirect URI matches current URL",
               "Settings → QuickBooks page in the CT Pros app",
-              "`quickbooks_tokens` table — verify row after OAuth"
+              "`quickbooks_tokens` DB table — verify row after OAuth"
             ]
           }
         },
@@ -258,24 +258,24 @@
           "estimate": "m",
           "priority": "high",
           "status": "todo",
-          "notes": "148-SKU HighTech TILE catalog still seeds. Replace with GC-appropriate materials (painting, flooring, construction) before any estimate is trusted.",
+          "notes": "148-SKU HighTech TILE catalog still seeds — wrong domain. Replace with GC-appropriate materials before any estimate is trusted.",
           "block": { "start": "16:30", "end": "17:30" },
           "prep": {
-            "what": "Rewrite `CuratedMaterialSeeder.php` with a GC-appropriate catalog — interior/exterior paint, primers, flooring, trim, adhesives — replacing the HighTech tile SKUs that have nothing to do with CT Pros's work.",
-            "understand": "The seeder drives what shows up in the Materials settings page and, critically, what the `WalkThroughEstimateSeeder` pulls for estimate line items. CT Pros is a painting + flooring GC — the catalog must reflect that. Wrong materials = wrong estimates = Rafa can't trust any auto-seeded pricing. Keep the schema identical (name, unit, category, `supplier_price`, `sell_price`) so no migration is needed.",
+            "what": "Rewrite `CuratedMaterialSeeder.php` with a GC-appropriate catalog — paint, primer, flooring, trim, adhesives — replacing the HighTech tile SKUs entirely.",
+            "understand": "The seeder drives what appears in Materials settings and, critically, what `WalkThroughEstimateSeeder` pulls for estimate line items. CT Pros is a painting + flooring GC — the catalog must reflect that. Wrong materials = Rafa can't trust any auto-seeded pricing. Schema stays identical (name, unit, category, `supplier_price`, `sell_price`) so no migration is needed.",
             "approach": [
-              "Read `database/seeders/CuratedMaterialSeeder.php` — understand the schema (how tiers/categories are referenced).",
-              "Draft a replacement list: Paint (Interior Latex gallon, Exterior gallon, Ceiling Paint gallon, Primer gallon), Flooring (LVP $/sqft, Hardwood $/sqft, Ceramic Tile $/sqft), Underlayment ($/sqft), Subfloor ($/sheet), Wood Trim ($/LF), Baseboard ($/LF), Construction Adhesive ($/tube).",
-              "Delete the HighTech tile SKUs; replace in-place so the file structure stays the same.",
-              "Run `php artisan db:seed --class=CuratedMaterialSeeder` on dev and verify in the app's Materials settings page.",
-              "Quick sanity check: run a walk-through estimate and confirm line items reference actual paint/flooring materials, not tiles."
+              "Read `database/seeders/CuratedMaterialSeeder.php` — understand how tiers/categories are referenced.",
+              "Draft replacement: Paint (Interior Latex/gal, Exterior/gal, Ceiling Paint/gal, Primer/gal), Flooring (LVP $/sqft, Hardwood $/sqft, Ceramic Tile $/sqft), Underlayment ($/sqft), Subfloor ($/sheet), Wood Trim ($/LF), Baseboard ($/LF), Construction Adhesive ($/tube).",
+              "Delete the HighTech tile SKUs; replace in-place, keeping the file structure identical.",
+              "`php artisan db:seed --class=CuratedMaterialSeeder` on dev. Verify in the app Materials settings page.",
+              "Quick sanity: run a walk-through estimate. Confirm line items reference paint/flooring materials, not tiles."
             ],
             "resources": [
               "`database/seeders/CuratedMaterialSeeder.php` — tile catalog to replace",
               "`database/seeders/WalkThroughEstimateSeeder.php` — downstream consumer, verify after",
-              "MaterialTier model — understand how categories/tiers are structured",
+              "MaterialTier model — understand category/tier structure",
               "App Materials Settings page — to verify after seeding",
-              "Rafa's context: CT Pros does painting + flooring in-house; tiles, trim, specialty are subbed"
+              "Rafa's context: painting + flooring in-house; tiles/trim/specialty are subbed out"
             ]
           }
         }
