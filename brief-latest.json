@@ -1,1 +1,375 @@
-ewogICJkYXRlIjogIjIwMjYtMDctMTAiLAogICJnZW5lcmF0ZWRfYXQiOiAiMjAyNi0wNy0xMFQxMDowMDowMFoiLAogICJkYXRhX2FzX29mIjogIjIwMjYtMDctMTBUMDU6MDA6MDIrMDA6MDAiLAogICJncmVldGluZyI6ICJNb3JuaW5nLCBIYW5pZWwuIFRoZSBiaWxsaW5nIHN5c3RlbSBpcyBidWlsdCwgdGhlIENSTSBpbXBvcnQgaXMgZG9uZSDigJQgdG9kYXkgeW91IGZsaXAgdGhlIHN3aXRjaC4iLAogICJoeXBlIjogIlNhbWUgZm91ciB0YXNrcyBhcyB5ZXN0ZXJkYXksIGJ1dCB0b2RheSB0aGV5IGdldCBkb25lLiBETyBkcm9wbGV0LCBzZWNyZXRzLCByZWNvbmNpbGUsIGZsaXAg4oCUIEFaIFRlYW0gQUkgYmlsbGluZyBnb2VzIGxpdmUgYnkgbm9vbi4gVGhlbiBDVCBQcm9zIGdldHMgaXRzIG93biBzZXJ2ZXIgYmVmb3JlIHlvdSBjbG9jayBvdXQuIFR3byBzeXN0ZW1zIGluIHByb2R1Y3Rpb24gaW4gb25lIGRheS4gVGhhdCdzIHdoYXQgdG9kYXkgaXMuIiwKICAibm90aWNlIjogIkNSTSBpbXBvcnQgKHQzOCkgbGFuZGVkIG9uIEp1bHkgOSBhdCAyOjM3IEFNIGFuZCBoYXMgYmVlbiBzaXR0aW5nIHZlcmlmaWVkIGV2ZXIgc2luY2UuIFlvdXIgZmlyc3QgbW92ZSBpcyBzcGlubmluZyB1cCB0aGUgZHJvcGxldCDigJQgZXZlcnl0aGluZyBlbHNlIGZvbGxvd3MuIiwKICAiZGlmZmljdWx0eSI6IHsKICAgICJyYXRpbmciOiAiU29saWQiLAogICAgInBsYW5uZWRfbWludXRlcyI6IDM5MCwKICAgICJhdmFpbGFibGVfbWludXRlcyI6IDQ4MCwKICAgICJyYXRpbyI6IDAuODEsCiAgICAibm90ZSI6ICI5MCBtaW4gb2YgYnVmZmVyIOKAlCBpZiBQaGFzZSA1IHdyYXBzIGVhcmx5LCBncmFiIGN0LXByb3MgUUIgT0F1dGggKHQyNSkgd2l0aCB0aGUgc3BhcmUgdGltZS4iCiAgfSwKICAid2luZG93IjogeyAic3RhcnQiOiAiMDk6MDAiLCAiZW5kIjogIjE4OjAwIiB9LAogICJzY2hlZHVsZSI6IFsKICAgIHsKICAgICAgInN0YXJ0IjogIjA5OjAwIiwgImVuZCI6ICIxMTowMCIsCiAgICAgICJzbHVnIjogImF6dGVhbWFpLXN5c3RlbSIsICJwcm9qZWN0IjogIkFaIFRlYW0gQUkgU3lzdGVtIiwKICAgICAgInRhc2tfaWQiOiAidDM2IiwKICAgICAgInRpdGxlIjogIkRPIGRyb3BsZXQgZGVwbG95IChhcHAvcXVldWUvc2NoZWR1bGVyL1RMUy9NeVNRTDgsIHNjaGVkdWxlciBPRkYpIiwKICAgICAgImVzdGltYXRlIjogImwiLCAia2luZCI6ICJ0YXNrIgogICAgfSwKICAgIHsKICAgICAgInN0YXJ0IjogIjExOjE1IiwgImVuZCI6ICIxMTo0NSIsCiAgICAgICJzbHVnIjogImF6dGVhbWFpLXN5c3RlbSIsICJwcm9qZWN0IjogIkFaIFRlYW0gQUkgU3lzdGVtIiwKICAgICAgInRhc2tfaWQiOiAidDM3IiwKICAgICAgInRpdGxlIjogIlNlY3JldHMgaW4gLmVudi5wcm9kdWN0aW9uIChTdHJpcGUgYm90aCBtb2RlcywgQ2hhdHdvb3QsIG1haWwpIiwKICAgICAgImVzdGltYXRlIjogInMiLCAia2luZCI6ICJ0YXNrIgogICAgfSwKICAgIHsKICAgICAgInN0YXJ0IjogIjEyOjAwIiwgImVuZCI6ICIxMzowMCIsCiAgICAgICJzbHVnIjogImF6dGVhbWFpLXN5c3RlbSIsICJwcm9qZWN0IjogIkFaIFRlYW0gQUkgU3lzdGVtIiwKICAgICAgInRhc2tfaWQiOiAidDM5IiwKICAgICAgInRpdGxlIjogIlJlY29uY2lsaWF0aW9uIGdhdGU6IGltcG9ydGVkIEFSICsgcmVjdXJyaW5nIHN0YXRlIHZzIGF6dGVhbV9jcm0gZ3JvdW5kIHRydXRoIiwKICAgICAgImVzdGltYXRlIjogIm0iLCAia2luZCI6ICJ0YXNrIgogICAgfSwKICAgIHsKICAgICAgInN0YXJ0IjogIjEzOjAwIiwgImVuZCI6ICIxNDowMCIsCiAgICAgICJraW5kIjogImx1bmNoIiwgInRpdGxlIjogIkx1bmNoIgogICAgfSwKICAgIHsKICAgICAgInN0YXJ0IjogIjE0OjE1IiwgImVuZCI6ICIxNDo0NSIsCiAgICAgICJzbHVnIjogImF6dGVhbWFpLXN5c3RlbSIsICJwcm9qZWN0IjogIkFaIFRlYW0gQUkgU3lzdGVtIiwKICAgICAgInRhc2tfaWQiOiAidDQwIiwKICAgICAgInRpdGxlIjogIkVuYWJsZSBzY2hlZHVsZXI7IHdhdGNoIGZpcnN0IHJ1bjsgcmVnaXN0ZXIgU3RyaXBlIHdlYmhvb2sgTEFTVCIsCiAgICAgICJlc3RpbWF0ZSI6ICJzIiwgImtpbmQiOiAidGFzayIKICAgIH0sCiAgICB7CiAgICAgICJzdGFydCI6ICIxNTowMCIsICJlbmQiOiAiMTU6MzAiLAogICAgICAic2x1ZyI6ICJjdC1wcm9zLXN5cyIsICJwcm9qZWN0IjogIkNUIFByb3MiLAogICAgICAidGFza19pZCI6ICJ0MjQiLAogICAgICAidGl0bGUiOiAiRmlsbCByZWFsIENUIFByb3MgY29tcGFueSBjb250YWN0IGluZm8iLAogICAgICAiZXN0aW1hdGUiOiAicyIsICJraW5kIjogInRhc2siCiAgICB9LAogICAgewogICAgICAic3RhcnQiOiAiMTU6NDUiLCAiZW5kIjogIjE3OjQ1IiwKICAgICAgInNsdWciOiAiY3QtcHJvcy1zeXMiLCAicHJvamVjdCI6ICJDVCBQcm9zIiwKICAgICAgInRhc2tfaWQiOiAidDI3IiwKICAgICAgInRpdGxlIjogIkRlcGxveSBDVCBQcm9zIHRvIGl0cyBvd24gaG9zdC9kb21haW4iLAogICAgICAiZXN0aW1hdGUiOiAibCIsICJraW5kIjogInRhc2siCiAgICB9CiAgXSwKICAicHJvamVjdHMiOiBbCiAgICB7CiAgICAgICJzbHVnIjogImF6dGVhbWFpLXN5c3RlbSIsCiAgICAgICJwcm9qZWN0IjogIkFaIFRlYW0gQUkgU3lzdGVtIiwKICAgICAgImNsaWVudCI6ICJBWiBUZWFtIEFJIChpbnRlcm5hbCkiLAogICAgICAidGFza3NfdG90YWwiOiA1MCwKICAgICAgInRhc2tzX2RvbmUiOiA0MywKICAgICAgIm9uX2RlY2siOiBmYWxzZSwKICAgICAgInRhc2tzIjogWwogICAgICAgIHsKICAgICAgICAgICJpZCI6ICJ0MzYiLAogICAgICAgICAgInRpdGxlIjogIkRPIGRyb3BsZXQgZGVwbG95IChhcHAvcXVldWUvc2NoZWR1bGVyL1RMUy9NeVNRTDgsIHNjaGVkdWxlciBPRkYpIiwKICAgICAgICAgICJwaGFzZSI6ICJQaGFzZSA1IMK3IEN1dG92ZXIgKyBkZXBsb3kgKGdvLWxpdmUpIiwKICAgICAgICAgICJlc3RpbWF0ZSI6ICJsIiwKICAgICAgICAgICJwcmlvcml0eSI6ICJoaWdoIiwKICAgICAgICAgICJzdGF0dXMiOiAicGVuZGluZyIsCiAgICAgICAgICAibm90ZXMiOiAiUHJvdmlzaW9uIGEgZnJlc2ggRE8gZHJvcGxldCwgcnVuIGRlcGxveSBzY3JpcHRzLCBzZXQgdXAgbmdpbnggKyBUTFMsIHJlc3RvcmUgdGhlIENSTSBpbXBvcnQgZGF0YS4gU2NoZWR1bGVyIHN0YXlzIE9GRiB1bnRpbCB0aGUgcmVjb25jaWxpYXRpb24gZ2F0ZSAodDM5KSBwYXNzZXMuIiwKICAgICAgICAgICJibG9jayI6IHsgInN0YXJ0IjogIjA5OjAwIiwgImVuZCI6ICIxMTowMCIgfSwKICAgICAgICAgICJwcmVwIjogewogICAgICAgICAgICAid2hhdCI6ICJTdGFuZCB1cCBhIERpZ2l0YWxPY2VhbiBkcm9wbGV0IGFuZCBkZXBsb3kgdGhlIEFaIFRlYW0gQUkgYmlsbGluZyBzeXN0ZW0gZW5kLXRvLWVuZCDigJQgUEhQICsgTmdpbnggKyBNeVNRTCA4ICsgcXVldWUgd29ya2VyICsgVExTLiBTY2hlZHVsZXIgc3RheXMgT0ZGLiIsCiAgICAgICAgICAgICJ1bmRlcnN0YW5kIjogIlRoaXMgaXMgYSBmdWxsIHNlcnZlciBwcm92aXNpb25pbmcgcnVuOiBPUyDihpIgc3RhY2sgKFBIUCA4LjMgRlBNLCBOZ2lueCwgTXlTUUwgOCkg4oaSIGFwcCBkZXBsb3kg4oaSIERCIG1pZ3JhdGlvbnMg4oaSIG5naW54IHZob3N0IOKGkiBjZXJ0Ym90IFRMUyDihpIgcXVldWUgd29ya2VyIGFzIHN5c3RlbWQgc2VydmljZS4gVGhlIENSTSBpbXBvcnQgZGF0YSAodDM4LCBkb25lIGF0IDI6MzcgQU0gSnVsIDkpIGdldHMgcmVzdG9yZWQgaW50byB0aGUgcHJvZCBEQiBoZXJlLiBETyBOT1QgZW5hYmxlIHRoZSBzY2hlZHVsZXIgY3JvbiB5ZXQg4oCUIHRoYXQncyB0NDAsIHdoaWNoIG9ubHkgZmlyZXMgYWZ0ZXIgdDM5IHJlY29uY2lsaWF0aW9uIHBhc3Nlcy4iLAogICAgICAgICAgICAiYXBwcm9hY2giOiBbCiAgICAgICAgICAgICAgIkNyZWF0ZSBhIERPIGRyb3BsZXQgKFVidW50dSAyNC4wNCBMVFMsIDJHQisgUkFNKS4gUG9pbnQgeW91ciBhenRlYW1haSBhcHAgZG9tYWluJ3MgQSByZWNvcmQgYXQgdGhlIG5ldyBkcm9wbGV0IElQLiIsCiAgICAgICAgICAgICAgIlJ1biB0aGUgZGVwbG95IHNraWxsIChgL3Zwcy1kZXBsb3lgIGluc2lkZSB0aGUgcmVwbyBvciBgZGVwbG95Lyouc2hgKTogUEhQIDguMy1GUE0sIE5naW54LCBNeVNRTCA4LCBDb21wb3NlciBpbnN0YWxsLCBgYXJ0aXNhbiBtaWdyYXRlIC0tZm9yY2VgLCBgYXJ0aXNhbiBzdG9yYWdlOmxpbmtgLiIsCiAgICAgICAgICAgICAgIkNvbmZpZ3VyZSB0aGUgTmdpbnggdmhvc3QgZm9yIHlvdXIgYXBwIGRvbWFpbjsgcnVuIGBjZXJ0Ym90IC0tbmdpbnhgIGZvciBMZXQncyBFbmNyeXB0IFRMUy4gVmVyaWZ5IEhUVFBTIGhlYWx0aCByb3V0ZSByZXNwb25kcy4iLAogICAgICAgICAgICAgICJTZXQgdXAgcXVldWUgd29ya2VyIGFzIGEgc3lzdGVtZCBzZXJ2aWNlIChgYXJ0aXNhbiBxdWV1ZTp3b3JrYCkuIENvbmZpcm0gaXQgc3RhcnRzIG9uIGJvb3QuIExlYXZlIHRoZSBzY2hlZHVsZXIgY3JvbiBFTVBUWSBmb3Igbm93LiIsCiAgICAgICAgICAgICAgIlJlc3RvcmUgdGhlIENSTSBpbXBvcnQ6IHJ1biB0aGUgdDM4IGltcG9ydCBzY3JpcHQgKG9yIGxvYWQgdGhlIERCIGR1bXApIGludG8gcHJvZCBNeVNRTC4gVmVyaWZ5IGAvY2xpZW50c2Agc2hvd3MgdGhlIDkgaW1wb3J0ZWQgY2xpZW50cy4iCiAgICAgICAgICAgIF0sCiAgICAgICAgICAgICJyZXNvdXJjZXMiOiBbCiAgICAgICAgICAgICAgIkRpZ2l0YWxPY2VhbiBkYXNoYm9hcmQg4oCUIGNyZWF0ZSBkcm9wbGV0LCBncmFiIElQIiwKICAgICAgICAgICAgICAiYGRlcGxveS8qLnNoYCBvciBgL3Zwcy1kZXBsb3lgIHNraWxsIGluIHRoZSBhenRlYW1haS1zeXN0ZW0gcmVwbyIsCiAgICAgICAgICAgICAgImBkb2NzL2RlcGxveW1lbnQubWRgIGluc2lkZSBhenRlYW1haS1zeXN0ZW0iLAogICAgICAgICAgICAgICJMZXQncyBFbmNyeXB0IC8gY2VydGJvdCBkb2NzIOKAlCBgY2VydGJvdCAtLW5naW54YCIsCiAgICAgICAgICAgICAgInQzOCBpbXBvcnQgc2NyaXB0IOKAlCB0byByZXN0b3JlIENSTSBkYXRhIGludG8gcHJvZCBEQiIKICAgICAgICAgICAgXQogICAgICAgICAgfQogICAgICAgIH0sCiAgICAgICAgewogICAgICAgICAgImlkIjogInQzNyIsCiAgICAgICAgICAidGl0bGUiOiAiU2VjcmV0cyBpbiAuZW52LnByb2R1Y3Rpb24gKFN0cmlwZSBib3RoIG1vZGVzLCBDaGF0d29vdCwgbWFpbCkiLAogICAgICAgICAgInBoYXNlIjogIlBoYXNlIDUgwrcgQ3V0b3ZlciArIGRlcGxveSAoZ28tbGl2ZSkiLAogICAgICAgICAgImVzdGltYXRlIjogInMiLAogICAgICAgICAgInByaW9yaXR5IjogImhpZ2giLAogICAgICAgICAgInN0YXR1cyI6ICJwZW5kaW5nIiwKICAgICAgICAgICJub3RlcyI6ICJQb3B1bGF0ZSAuZW52LnByb2R1Y3Rpb24gd2l0aCBTdHJpcGUgbGl2ZSt0ZXN0IGtleSBwYWlycywgQ2hhdHdvb3QgVVJMK3Rva2VuLCBtYWlsIGNvbmZpZy4gY2htb2QgNjAwLiIsCiAgICAgICAgICAiYmxvY2siOiB7ICJzdGFydCI6ICIxMToxNSIsICJlbmQiOiAiMTE6NDUiIH0sCiAgICAgICAgICAicHJlcCI6IHsKICAgICAgICAgICAgIndoYXQiOiAiV3JpdGUgYWxsIHByb2R1Y3Rpb24gc2VjcmV0cyBpbnRvIGAuZW52LnByb2R1Y3Rpb25gIOKAlCBTdHJpcGUgbGl2ZS90ZXN0IGtleSBwYWlycywgQ2hhdHdvb3QgQVBJIGNyZWRlbnRpYWxzLCBtYWlsIGNvbmZpZywgYW5kIGEgZnJlc2ggYEFQUF9LRVlgLiIsCiAgICAgICAgICAgICJ1bmRlcnN0YW5kIjogIllvdSBuZWVkIFRXTyBTdHJpcGUga2V5IHNldHM6IGBTVFJJUEVfS0VZYC9gU1RSSVBFX1NFQ1JFVGAgKGxpdmUpIEFORCBgU1RSSVBFX1RFU1RfS0VZYC9gU1RSSVBFX1RFU1RfU0VDUkVUYCAodGVzdCkuIENoYXR3b290IGhhbmRsZXMgU01TIHJlbWluZGVycyDigJQgZ3JhYiB0aGUgQVBJIFVSTCArIGJvdCB0b2tlbiBmcm9tIENoYXR3b290IGFkbWluLiBgQVBQX0tFWWAgbXVzdCBiZSB1bmlxdWUgdG8gdGhpcyBzZXJ2ZXIgKG5ldmVyIHJldXNlIGRldikuIEZpbGUgbXVzdCBiZSBjaG1vZCA2MDAgYW5kIGdpdC1pZ25vcmVkLiIsCiAgICAgICAgICAgICJhcHByb2FjaCI6IFsKICAgICAgICAgICAgICAiQ29weSBgLmVudi5leGFtcGxlYCB0byBgLmVudi5wcm9kdWN0aW9uYCBvbiB0aGUgZHJvcGxldC4gRmlsbCBgREJfKmAgd2l0aCB0aGUgcHJvZCBNeVNRTCBjcmVkZW50aWFscy4iLAogICAgICAgICAgICAgICJTdHJpcGUgZGFzaGJvYXJkIOKGkiBEZXZlbG9wZXJzIOKGkiBBUEkgS2V5czogY29weSBgc2tfbGl2ZV8uLi5gL2Bwa19saXZlXy4uLmAgQU5EIGBza190ZXN0Xy4uLmAvYHBrX3Rlc3RfLi4uYCBpbnRvIHRoZSBmaWxlLiIsCiAgICAgICAgICAgICAgIkNoYXR3b290IGFkbWluIOKGkiBTZXR0aW5ncyDihpIgSW50ZWdyYXRpb25zIOKGkiBBUEkgQWNjZXNzIFRva2VuOiBzZXQgYENIQVRXT09UX0FQSV9VUkxgIGFuZCB0aGUgYm90IHRva2VuLiIsCiAgICAgICAgICAgICAgIkdlbmVyYXRlIGBBUFBfS0VZYDogYHBocCBhcnRpc2FuIGtleTpnZW5lcmF0ZSAtLXNob3dgIOKAlCBwYXN0ZSB0aGUgcmVzdWx0IGluLiBTZXQgYE1BSUxfSE9TVC9QT1JUL1VTRVJOQU1FL1BBU1NXT1JEYCBmb3IgeW91ciBtYWlsIHByb3ZpZGVyLiIsCiAgICAgICAgICAgICAgImBjaG1vZCA2MDAgLmVudi5wcm9kdWN0aW9uYCB0aGVuIGBhcnRpc2FuIGNvbmZpZzpjYWNoZWAuIEhpdCBhIHByb3RlY3RlZCByb3V0ZSB0byBjb25maXJtIGF1dGggd29ya3MuIgogICAgICAgICAgICBdLAogICAgICAgICAgICAicmVzb3VyY2VzIjogWwogICAgICAgICAgICAgICJTdHJpcGUgZGFzaGJvYXJkIOKAlCBEZXZlbG9wZXJzIOKGkiBBUEkgS2V5cyAoYm90aCBsaXZlIGFuZCB0ZXN0IHBhaXJzKSIsCiAgICAgICAgICAgICAgIkNoYXR3b290IGFkbWluIOKAlCBTZXR0aW5ncyDihpIgSW50ZWdyYXRpb25zIOKGkiBBUEkgQWNjZXNzIFRva2VuIiwKICAgICAgICAgICAgICAiYC5lbnYuZXhhbXBsZWAgaW4gdGhlIGF6dGVhbWFpLXN5c3RlbSByZXBvIOKAlCB0aGUgZGVmaW5pdGl2ZSBmaWVsZCBsaXN0IiwKICAgICAgICAgICAgICAiUGFzc3dvcmQgbWFuYWdlciDigJQgZm9yIHNoYXJlZCBzZWNyZXRzIChTdHJpcGUsIENoYXR3b290KSIKICAgICAgICAgICAgXQogICAgICAgICAgfQogICAgICAgIH0sCiAgICAgICAgewogICAgICAgICAgImlkIjogInQzOSIsCiAgICAgICAgICAidGl0bGUiOiAiUmVjb25jaWxpYXRpb24gZ2F0ZTogaW1wb3J0ZWQgQVIgKyByZWN1cnJpbmcgc3RhdGUgbWF0Y2hlcyBhenRlYW1fY3JtIGdyb3VuZCB0cnV0aCIsCiAgICAgICAgICAicGhhc2UiOiAiUGhhc2UgNSDCtyBDdXRvdmVyICsgZGVwbG95IChnby1saXZlKSIsCiAgICAgICAgICAiZXN0aW1hdGUiOiAibSIsCiAgICAgICAgICAicHJpb3JpdHkiOiAiaGlnaCIsCiAgICAgICAgICAic3RhdHVzIjogInBlbmRpbmciLAogICAgICAgICAgIm5vdGVzIjogIlZlcmlmeSB0aGUgdDM4IENSTSBpbXBvcnQgKGRvbmUgMjAyNi0wNy0wOSAwMjozNyBBTSkgaXMgY29ycmVjdCBiZWZvcmUgZW5hYmxpbmcgdGhlIHNjaGVkdWxlci4gQVIgdG90YWxzLCBzdWJzY3JpcHRpb24gc3RhdGUsIGNsaWVudCBjb3VudHMgbXVzdCBtYXRjaCBhenRlYW1fY3JtLiIsCiAgICAgICAgICAiYmxvY2siOiB7ICJzdGFydCI6ICIxMjowMCIsICJlbmQiOiAiMTM6MDAiIH0sCiAgICAgICAgICAicHJlcCI6IHsKICAgICAgICAgICAgIndoYXQiOiAiVmVyaWZ5IHRoZSBDUk0gaW1wb3J0IGRhdGEgaXMgY29ycmVjdDogQVIgdG90YWxzLCBvcGVuIGludm9pY2UgY291bnRzLCBhbmQgcmVjdXJyaW5nIHN1YnNjcmlwdGlvbiBzdGF0ZSBpbiB0aGUgbmV3IHN5c3RlbSBtdXN0IG1hdGNoIGF6dGVhbV9jcm0gYmVmb3JlIHlvdSB0b3VjaCB0aGUgc2NoZWR1bGVyLiIsCiAgICAgICAgICAgICJ1bmRlcnN0YW5kIjogInQzOCBpbXBvcnRlZCBDTE9TRUQgcHJvamVjdHMgKyB2ZXJzaW9ucyArIGludm9pY2VzICsgY2xpZW50IGRldGFpbHMgZm9yIGFsbCA5IGNsaWVudHMuIEl0IHNraXBwZWQgbGVhZHMsIG1lZXRpbmdzLCBjb21taXNzaW9ucywgdXNlcnMuIFlvdSdyZSB2ZXJpZnlpbmcgdGhlIGZpbmFuY2lhbCBkYXRhIGlzIGludGFjdC4gQSBzaWxlbnQgbWlzbWF0Y2ggaGVyZSBtZWFucyB3cm9uZyBiaWxsaW5nIGJlaGF2aW9yIG9uIGRheSBvbmUuIFBBU1MgPSBwcm9jZWVkIHRvIHQ0MC4gRkFJTCA9IHN0b3AsIGZpeCB0aGUgaW1wb3J0LCByZS1ydW4uIiwKICAgICAgICAgICAgImFwcHJvYWNoIjogWwogICAgICAgICAgICAgICJPcGVuIGF6dGVhbV9jcm0gYW5kIG5vdGUgcGVyLWNsaWVudDogdG90YWwgYmlsbGVkLCB0b3RhbCBwYWlkLCBvcGVuIEFSIGJhbGFuY2UsIGFuZCBhY3RpdmUgc3Vic2NyaXB0aW9uICh5L24sIGFtb3VudCwgbmV4dCBkYXRlKS4gRG8gdGhpcyBmb3IgYWxsIDkgY2xpZW50cyDigJQgYSBxdWljayBzcHJlYWRzaGVldCByb3cgZWFjaCBpcyBmaW5lLiIsCiAgICAgICAgICAgICAgIkluIHRoZSBuZXcgZGVwbG95ZWQgc3lzdGVtIChgL2NsaWVudHNgKTogY29tcGFyZSBlYWNoIGNsaWVudCdzIHRvdGFscy4gQ2hlY2sgdG90YWxfYmlsbGVkLCB0b3RhbF9wYWlkLCBhbmQgb3BlbiBpbnZvaWNlIHRvdGFscyBtYXRjaC4iLAogICAgICAgICAgICAgICJWZXJpZnkgcmVjdXJyaW5nIHN1YnNjcmlwdGlvbnM6IGNvbmZpcm0gd2hpY2ggY2xpZW50cyBoYXZlIGFjdGl2ZSByZWN1cnJpbmcgY29uZmlncyBhbmQgdGhhdCBiaWxsaW5nIGFtb3VudHMgKyBuZXh0LWJpbGxpbmctZGF0ZSBsb29rIHJpZ2h0LiIsCiAgICAgICAgICAgICAgIlNwb3QtY2hlY2sgMuKAkzMgaW5kaXZpZHVhbCBpbnZvaWNlIHJlY29yZHMgaW4gYC9pbnZvaWNlc2Ag4oCUIHN0YXR1cyAob3Blbi9wYWlkKSwgYW1vdW50LCBkYXRlIHNob3VsZCBtYXRjaCBDUk0uIiwKICAgICAgICAgICAgICAiRG9jdW1lbnQgYXMgUEFTUyBvciBsaXN0IGRpc2NyZXBhbmNpZXMuIE9ubHkgY2FsbCBQQVNTIGlmIGFsbCA5IGNsaWVudHMnIEFSIHRvdGFscyBtYXRjaCB3aXRoaW4gY2VudHMuIgogICAgICAgICAgICBdLAogICAgICAgICAgICAicmVzb3VyY2VzIjogWwogICAgICAgICAgICAgICJhenRlYW1fY3JtIOKAlCBjbGllbnQgYmlsbGluZyBkYXNoYm9hcmQgb3IgQVIgZXhwb3J0IChwdWxsIHBlci1jbGllbnQgdG90YWxzKSIsCiAgICAgICAgICAgICAgIk5ldyBzeXN0ZW0gYC9jbGllbnRzYCBhbmQgYC9pbnZvaWNlc2AgcGFnZXMgKGxpdmUgYWZ0ZXIgdDM2KSIsCiAgICAgICAgICAgICAgInQzOCBpbXBvcnQgc2NyaXB0IOKAlCB0byBpbnNwZWN0IGlmIGFueXRoaW5nIGxvb2tzIG9mZiIsCiAgICAgICAgICAgICAgIkEgcXVpY2sgc3ByZWFkc2hlZXQgb3IgdGV4dCBkb2Mg4oCUIHRvIGRpZmYgdGhlIHR3byBzeXN0ZW1zJyB0b3RhbHMgc2lkZS1ieS1zaWRlIgogICAgICAgICAgICBdCiAgICAgICAgICB9CiAgICAgICAgfSwKICAgICAgICB7CiAgICAgICAgICAiaWQiOiAidDQwIiwKICAgICAgICAgICJ0aXRsZSI6ICJFbmFibGUgc2NoZWR1bGVyOyB3YXRjaCBmaXJzdCBydW47IHJlZ2lzdGVyIFN0cmlwZSB3ZWJob29rIExBU1QiLAogICAgICAgICAgInBoYXNlIjogIlBoYXNlIDUgwrcgQ3V0b3ZlciArIGRlcGxveSAoZ28tbGl2ZSkiLAogICAgICAgICAgImVzdGltYXRlIjogInMiLAogICAgICAgICAgInByaW9yaXR5IjogImhpZ2giLAogICAgICAgICAgInN0YXR1cyI6ICJwZW5kaW5nIiwKICAgICAgICAgICJub3RlcyI6ICJGaW5hbCBnby1saXZlIHN0ZXA6IGNyb24gT04g4oaSIHdhdGNoIGZpcnN0IHJ1biDihpIgU3RyaXBlIHdlYmhvb2sgcmVnaXN0ZXJlZCBsYXN0LiBPbmx5IHByb2NlZWQgaWYgdDM5IHBhc3NlZC4iLAogICAgICAgICAgImJsb2NrIjogeyAic3RhcnQiOiAiMTQ6MTUiLCAiZW5kIjogIjE0OjQ1IiB9LAogICAgICAgICAgInByZXAiOiB7CiAgICAgICAgICAgICJ3aGF0IjogIkZsaXAgdGhlIGZpbmFsIHRocmVlIHN3aXRjaGVzOiBlbmFibGUgdGhlIExhcmF2ZWwgc2NoZWR1bGVyIGNyb24sIHdhdGNoIGl0cyBmaXJzdCBydW4gc3VjY2VlZCwgdGhlbiByZWdpc3RlciB0aGUgU3RyaXBlIHdlYmhvb2suIFRoZSBiaWxsaW5nIHN5c3RlbSBpcyBsaXZlIGFmdGVyIHRoaXMuIiwKICAgICAgICAgICAgInVuZGVyc3RhbmQiOiAiVGhlIHNjaGVkdWxlciBydW5zIGBiaWxsaW5nOnJ1bi1yZWN1cnJpbmdgLCBgYmlsbGluZzpkaXNwYXRjaC1yZW1pbmRlcnNgLCBgYmlsbGluZzpyZWNvbmNpbGUtc3RyaXBlYCBvbiB0aGVpciBjYWRlbmNlcy4gUmVnaXN0ZXIgdGhlIFN0cmlwZSB3ZWJob29rIExBU1Qg4oCUIGl0IHN0YXJ0cyByZWNlaXZpbmcgbGl2ZSBwYXltZW50IGV2ZW50cyB0aGUgbW9tZW50IGl0J3MgcmVnaXN0ZXJlZC4gWW91ciByZWNvbmNpbGUgaGFuZGxlciBpcyBpZGVtcG90ZW50IChTdHJpcGUgbWF5IHJlcGxheSByZWNlbnQgZXZlbnRzIG9uIHJlZ2lzdHJhdGlvbikuIERvbid0IGRvIHRoaXMgaWYgdDM5IGZhaWxlZC4iLAogICAgICAgICAgICAiYXBwcm9hY2giOiBbCiAgICAgICAgICAgICAgIlNTSCB0byBkcm9wbGV0LiBBZGQgdGhlIGNyb246IGAqICogKiAqICogY2QgL3Zhci93d3cvYXp0ZWFtYWktc3lzdGVtICYmIHBocCBhcnRpc2FuIHNjaGVkdWxlOnJ1biA+PiAvdmFyL2xvZy9sYXJhdmVsLXNjaGVkdWxlLmxvZyAyPiYxYCB0byB0aGUgd2ViIHNlcnZlciBjcm9udGFiLiIsCiAgICAgICAgICAgICAgIldhaXQgMSBtaW51dGUuIGB0YWlsIC1mIC92YXIvbG9nL2xhcmF2ZWwtc2NoZWR1bGUubG9nYCDigJQgY29uZmlybSBpdCBmaXJlcyB3aXRob3V0IGVycm9ycy4gYGFydGlzYW4gc2NoZWR1bGU6bGlzdGAgdG8gc2VlIGFsbCAzIGJpbGxpbmcgY29tbWFuZHMuIiwKICAgICAgICAgICAgICAiU3RyaXBlIGRhc2hib2FyZCDihpIgRGV2ZWxvcGVycyDihpIgV2ViaG9va3Mg4oaSIEFkZCBlbmRwb2ludDogc2V0IGBodHRwczovL1t5b3VyLWRvbWFpbl0vd2ViaG9va3Mvc3RyaXBlYCwgc2VsZWN0IGBwYXltZW50X2ludGVudC5zdWNjZWVkZWRgLCBgaW52b2ljZS5wYWlkYCwgYGN1c3RvbWVyLnN1YnNjcmlwdGlvbi4qYC4gQ29weSB0aGUgYHdoc2VjXy4uLmAgc2lnbmluZyBzZWNyZXQuIiwKICAgICAgICAgICAgICAiQWRkIGBTVFJJUEVfV0VCSE9PS19TRUNSRVQ9d2hzZWNfLi4uYCB0byBgLmVudi5wcm9kdWN0aW9uYCDihpIgYGFydGlzYW4gY29uZmlnOmNhY2hlYC4iLAogICAgICAgICAgICAgICJTZW5kIGEgU3RyaXBlIHRlc3QgZXZlbnQgZnJvbSB0aGUgZGFzaGJvYXJkIOKGkiBjb25maXJtIGl0IGFwcGVhcnMgaW4gYC93ZWJob29rcy9sb2dgIG9yIHRoZSBMYXJhdmVsIGxvZy4gWW91IGFyZSBub3cgTElWRS4iCiAgICAgICAgICAgIF0sCiAgICAgICAgICAgICJyZXNvdXJjZXMiOiBbCiAgICAgICAgICAgICAgIkRPIGRyb3BsZXQgU1NIIOKAlCB0byBhZGQgdGhlIGNyb24gbGluZSIsCiAgICAgICAgICAgICAgIlN0cmlwZSBkYXNoYm9hcmQg4oCUIERldmVsb3BlcnMg4oaSIFdlYmhvb2tzIOKGkiBBZGQgZW5kcG9pbnQiLAogICAgICAgICAgICAgICJgYXJ0aXNhbiBzY2hlZHVsZTpsaXN0YCDigJQgdmVyaWZ5IGFsbCAzIGJpbGxpbmcgY29tbWFuZHMgYXJlIHJlZ2lzdGVyZWQiLAogICAgICAgICAgICAgICJgL3Zhci9sb2cvbGFyYXZlbC1zY2hlZHVsZS5sb2dgIOKAlCBmaXJzdC1ydW4gY29uZmlybWF0aW9uIiwKICAgICAgICAgICAgICAiYC5lbnYucHJvZHVjdGlvbmAg4oCUIGFkZCBgU1RSSVBFX1dFQkhPT0tfU0VDUkVUYCBhZnRlciByZWdpc3RlcmluZyIKICAgICAgICAgICAgXQogICAgICAgICAgfQogICAgICAgIH0KICAgICAgXQogICAgfSwKICAgIHsKICAgICAgInNsdWciOiAiY3QtcHJvcy1zeXMiLAogICAgICAicHJvamVjdCI6ICJDVCBQcm9zIiwKICAgICAgImNsaWVudCI6ICJDVCBQcm9zIiwKICAgICAgInRhc2tzX3RvdGFsIjogNTYsCiAgICAgICJ0YXNrc19kb25lIjogMjMsCiAgICAgICJvbl9kZWNrIjogZmFsc2UsCiAgICAgICJ0YXNrcyI6IFsKICAgICAgICB7CiAgICAgICAgICAiaWQiOiAidDI0IiwKICAgICAgICAgICJ0aXRsZSI6ICJGaWxsIHJlYWwgQ1QgUHJvcyBjb21wYW55IGNvbnRhY3QgaW5mbyIsCiAgICAgICAgICAicGhhc2UiOiAiR28tTGl2ZSAoZGVwbG95ICsgcmVhbCBjb25maWcpIiwKICAgICAgICAgICJlc3RpbWF0ZSI6ICJzIiwKICAgICAgICAgICJwcmlvcml0eSI6ICJoaWdoIiwKICAgICAgICAgICJzdGF0dXMiOiAidG9kbyIsCiAgICAgICAgICAibm90ZXMiOiAiYGNvbmZpZy9jb21wYW55LnBocGAgKyBgLmVudmAgc3RpbGwgaG9sZCBIaWdoVGVjaCBUaWxlIHBsYWNlaG9sZGVycy4gTXVzdCBiZSBjb3JyZWN0IGJlZm9yZSBhbnkgY2xpZW50LWZhY2luZyBQREYgb3IgZW1haWwgZ29lcyBvdXQuIiwKICAgICAgICAgICJibG9jayI6IHsgInN0YXJ0IjogIjE1OjAwIiwgImVuZCI6ICIxNTozMCIgfSwKICAgICAgICAgICJwcmVwIjogewogICAgICAgICAgICAid2hhdCI6ICJSZXBsYWNlIEhpZ2hUZWNoIFRpbGUgcGxhY2Vob2xkZXIgZGF0YSBpbiBgY29uZmlnL2NvbXBhbnkucGhwYCB3aXRoIENUIFByb3MncyByZWFsIG5hbWUsIGFkZHJlc3MsIHBob25lLCBhbmQgZW1haWwg4oCUIDUtbWludXRlIGZpeCwgaHVnZSBicmFuZCBpbXBhY3QuIiwKICAgICAgICAgICAgInVuZGVyc3RhbmQiOiAiRXZlcnkgZXN0aW1hdGUgUERGLCBwcm9wb3NhbCwgYW5kIGF1dG9tYXRlZCBlbWFpbCBjdXJyZW50bHkgcHJpbnRzIEhpZ2hUZWNoJ3MgZGV0YWlscy4gVGhpcyBtdXN0IGJlIGZpeGVkIGJlZm9yZSBhIHNpbmdsZSBkb2N1bWVudCBnb2VzIHRvIGEgcmVhbCBDVCBQcm9zIGNsaWVudC4gUHVyZSBjb25maWcgZWRpdCDigJQgbm8gbWlncmF0aW9uIG5lZWRlZC4gRG8gaXQgaW4gZGV2LCBjb21taXQsIGFuZCBpdCBzaGlwcyB3aXRoIHRoZSB0MjcgZGVwbG95LiIsCiAgICAgICAgICAgICJhcHByb2FjaCI6IFsKICAgICAgICAgICAgICAiT3BlbiBgY29uZmlnL2NvbXBhbnkucGhwYCDigJQgdXBkYXRlIGBuYW1lYCwgYGFkZHJlc3NgLCBgY2l0eWAsIGBzdGF0ZWAsIGB6aXBgLCBgcGhvbmVgLCBgZW1haWxgLCBgd2Vic2l0ZWAuIENoZWNrIGlmIGEgbG9nbyBwYXRoIGlzIGRlY2xhcmVkLiIsCiAgICAgICAgICAgICAgIkdyZXAgZm9yIGBDT01QQU5ZX2AgaW4gYC5lbnZgIOKAlCB1cGRhdGUgYW55IHRoYXQgZGlmZmVyIChlLmcuIGBBUFBfTkFNRT1DVCBQcm9zYCkuIiwKICAgICAgICAgICAgICAiR2VuZXJhdGUgYSB0ZXN0IGVzdGltYXRlIFBERiBsb2NhbGx5OiBhbnkgbGVhZCDihpIgQ3JlYXRlIEVzdGltYXRlIOKGkiBFeHBvcnQgUERGLiBWaXN1YWxseSBjb25maXJtIENUIFByb3MgaGVhZGVyLiIsCiAgICAgICAgICAgICAgImBnaXQgY29tbWl0IC1tICdjb25maWc6IHNldCByZWFsIENUIFByb3MgY29tcGFueSBpbmZvJ2Ag4oCUIHRoaXMgY29tbWl0IGdvZXMgb3V0IHdpdGggdGhlIHQyNyBkZXBsb3kuIgogICAgICAgICAgICBdLAogICAgICAgICAgICAicmVzb3VyY2VzIjogWwogICAgICAgICAgICAgICJgY29uZmlnL2NvbXBhbnkucGhwYCDigJQgdGhlIGNvbXBhbnkgaW5mbyBjb25maWcgZmlsZSIsCiAgICAgICAgICAgICAgIkNUIFByb3MgY29udGFjdCBkZXRhaWxzIGZyb20gUmFmYSAobmFtZSwgYWRkcmVzcywgcGhvbmUsIGVtYWlsLCBsb2dvIGlmIGFueSkiLAogICAgICAgICAgICAgICJBbnkgZXhpc3RpbmcgQ1QgUHJvcyBicmFuZGVkIGRvY3VtZW50IOKAlCBmb3IgcmVmZXJlbmNlIG9uIHNwZWxsaW5nL2Zvcm1hdHRpbmciCiAgICAgICAgICAgIF0KICAgICAgICAgIH0KICAgICAgICB9LAogICAgICAgIHsKICAgICAgICAgICJpZCI6ICJ0MjciLAogICAgICAgICAgInRpdGxlIjogIkRlcGxveSBDVCBQcm9zIHRvIGl0cyBvd24gaG9zdC9kb21haW4iLAogICAgICAgICAgInBoYXNlIjogIkdvLUxpdmUgKGRlcGxveSArIHJlYWwgY29uZmlnKSIsCiAgICAgICAgICAiZXN0aW1hdGUiOiAibCIsCiAgICAgICAgICAicHJpb3JpdHkiOiAiaGlnaCIsCiAgICAgICAgICAic3RhdHVzIjogInRvZG8iLAogICAgICAgICAgIm5vdGVzIjogIkRlcGxveSBpbmZyYSBpcyBwcm92ZW4gKGRlcGxveS8qLnNoLCBkb2NrZXItY29tcG9zZS55bWwsIGRvY3MvZGVwbG95bWVudC5tZCkgYnV0IHN0aWxsIHBvaW50ZWQgYXQgSGlnaFRlY2gncyBkcm9wbGV0ICgxMDQuMjQ4LjIyOC4xNjkpLiBSZS10YXJnZXQgdG8gYSBmcmVzaCBETyBkcm9wbGV0IHdpdGggQ1QgUHJvcydzIHJlYWwgZG9tYWluIGFuZCBhIGNsZWFuIERCLiIsCiAgICAgICAgICAiYmxvY2siOiB7ICJzdGFydCI6ICIxNTo0NSIsICJlbmQiOiAiMTc6NDUiIH0sCiAgICAgICAgICAicHJlcCI6IHsKICAgICAgICAgICAgIndoYXQiOiAiUHJvdmlzaW9uIGEgZnJlc2ggRGlnaXRhbE9jZWFuIGRyb3BsZXQgZm9yIENUIFByb3MsIHJ1biB0aGUgcHJvdmVuIGRlcGxveSBzY3JpcHRzLCBhbmQgcG9pbnQgQ1QgUHJvcydzIHJlYWwgZG9tYWluIGF0IGl0IHdpdGggVExTIOKAlCBjbGVhbiBEQiwgbm8gSGlnaFRlY2ggZGF0YS4iLAogICAgICAgICAgICAidW5kZXJzdGFuZCI6ICJUaGUgaW5mcmEgaXMgZnVsbHkgYnVpbHQgYW5kIGFscmVhZHkgcHJvdmVuIG9uIHRoZSBIaWdoVGVjaCBUaWxlIGRlcGxveS4gWW91J3JlIG5vdCBpbnZlbnRpbmcgYW55dGhpbmcg4oCUIGp1c3QgcmUtcnVubmluZyB3aXRoIGEgbmV3IHRhcmdldCAobmV3IGRyb3BsZXQsIG5ldyBkb21haW4sIGNsZWFuIERCKS4gS2V5IGRpZmZlcmVuY2U6IHlvdSdyZSBzdGFydGluZyB3aXRoIGEgRlJFU0ggZGF0YWJhc2UgKG5vIEhpZ2hUZWNoIGRhdGEgbWlncmF0aW9uIG5lZWRlZCkuIFRoZSBRQiB0b2tlbnMgYW5kIGNhdGFsb2cgd2lsbCBiZSBzZXQgdXAgYWZ0ZXJ3YXJkICh0MjUsIHQyNikuIiwKICAgICAgICAgICAgImFwcHJvYWNoIjogWwogICAgICAgICAgICAgICJDcmVhdGUgYSBmcmVzaCBETyBkcm9wbGV0IChVYnVudHUgMjQuMDQsIHNhbWUgc3BlYyBhcyBIaWdoVGVjaCkuIFJlZ2lzdGVyIENUIFByb3MncyBhcHAgZG9tYWluIEROUyBBIHJlY29yZCDihpIgbmV3IGRyb3BsZXQgSVAuIiwKICAgICAgICAgICAgICAiUnVuIGBkZXBsb3kvKi5zaGAgdGFyZ2V0aW5nIHRoZSBuZXcgc2VydmVyICh1cGRhdGUgdGhlIHRhcmdldCBob3N0IGluIGRlcGxveSBjb25maWcpLiBJbnN0YWxsIFBIUCA4LjMsIE5naW54LCBNeVNRTCA4LCBDb21wb3Nlci4iLAogICAgICAgICAgICAgICJDbG9uZSB0aGUgcmVwbywgc3ltbGluayBgLmVudmAgKGNvcHkgYC5lbnYuZXhhbXBsZWAsIHNldCByZWFsIGBEQl8qYCwgYEFQUF9VUkxgLCBgQVBQX0tFWWApLiBSdW4gYGFydGlzYW4gbWlncmF0ZSAtLWZyZXNoIC0tc2VlZGAgKENMRUFOIERCLCBubyBIaWdoVGVjaCBkYXRhKS4iLAogICAgICAgICAgICAgICJDb25maWd1cmUgTmdpbnggdmhvc3QgZm9yIENUIFByb3MgZG9tYWluICsgYGNlcnRib3QgLS1uZ2lueGAgZm9yIFRMUy4gVmVyaWZ5IEhUVFBTICsgZmlyc3QgbG9naW4uIiwKICAgICAgICAgICAgICAiU21va2UgdGVzdDogbG9nIGluIGFzIGFkbWluLCB2ZXJpZnkgY29tcGFueSBpbmZvIHNob3dzIENUIFByb3MgKGZyb20gdDI0KSwgY3JlYXRlIGEgdGVzdCBsZWFkLCBjb25maXJtIHRoZSBkYXNoYm9hcmQgbG9hZHMuIgogICAgICAgICAgICBdLAogICAgICAgICAgICAicmVzb3VyY2VzIjogWwogICAgICAgICAgICAgICJEaWdpdGFsT2NlYW4gZGFzaGJvYXJkIOKAlCBjcmVhdGUgZHJvcGxldCwgZ2V0IElQIiwKICAgICAgICAgICAgICAiYGRlcGxveS8qLnNoYCBhbmQgYGRvY2tlci1jb21wb3NlLnltbGAgaW4gdGhlIGN0LXByb3Mtc3lzIHJlcG8iLAogICAgICAgICAgICAgICJgZG9jcy9kZXBsb3ltZW50Lm1kYCDigJQgdGhlIHN0ZXAtYnktc3RlcCBndWlkZSAocHJvdmVuIG9uIEhpZ2hUZWNoKSIsCiAgICAgICAgICAgICAgIkNUIFByb3MgZG9tYWluIHJlZ2lzdHJhciDigJQgdG8gc2V0IHRoZSBBIHJlY29yZCIsCiAgICAgICAgICAgICAgImNlcnRib3Qg4oCUIGBjZXJ0Ym90IC0tbmdpbnhgIGZvciBUTFMiCiAgICAgICAgICAgIF0KICAgICAgICAgIH0KICAgICAgICB9CiAgICAgIF0KICAgIH0sCiAgICB7CiAgICAgICJzbHVnIjogImdzLXdvb2R3b3JraW5nLXNwZWMiLAogICAgICAicHJvamVjdCI6ICJHUy1FUlAiLAogICAgICAiY2xpZW50IjogIkdTIFdvb2R3b3JraW5nIExMQyIsCiAgICAgICJ0YXNrc190b3RhbCI6IDc2NCwKICAgICAgInRhc2tzX2RvbmUiOiA2OTcsCiAgICAgICJvbl9kZWNrIjogdHJ1ZSwKICAgICAgInRhc2tzIjogW10KICAgIH0sCiAgICB7CiAgICAgICJzbHVnIjogIm1vZHVsZS1wcm9qZWN0IiwKICAgICAgInByb2plY3QiOiAiTW9kdWxlIiwKICAgICAgImNsaWVudCI6ICJJbnRlcm5hbCIsCiAgICAgICJ0YXNrc190b3RhbCI6IDYzLAogICAgICAidGFza3NfZG9uZSI6IDE4LAogICAgICAib25fZGVjayI6IHRydWUsCiAgICAgICJ0YXNrcyI6IFtdCiAgICB9LAogICAgewogICAgICAic2x1ZyI6ICJoYW5pZWwtZmluYW5jZXMiLAogICAgICAicHJvamVjdCI6ICJIYW5pZWwgRmluYW5jZXMiLAogICAgICAiY2xpZW50IjogIlBlcnNvbmFsIiwKICAgICAgInRhc2tzX3RvdGFsIjogMjUsCiAgICAgICJ0YXNrc19kb25lIjogMywKICAgICAgIm9uX2RlY2siOiB0cnVlLAogICAgICAidGFza3MiOiBbXQogICAgfSwKICAgIHsKICAgICAgInNsdWciOiAiaGlnaHRlY2gtY3JtIiwKICAgICAgInByb2plY3QiOiAiSGlnaCBUZWNoIFRpbGUgQ1JNIiwKICAgICAgImNsaWVudCI6ICJIaWdoIFRlY2ggVGlsZSIsCiAgICAgICJ0YXNrc190b3RhbCI6IDc2LAogICAgICAidGFza3NfZG9uZSI6IDcwLAogICAgICAib25fZGVjayI6IHRydWUsCiAgICAgICJ0YXNrcyI6IFtdCiAgICB9LAogICAgewogICAgICAic2x1ZyI6ICJwcm9jb3VudGVycy1lcnAiLAogICAgICAicHJvamVjdCI6ICJwcm9jb3VudGVyc19lcnAiLAogICAgICAiY2xpZW50IjogIlByb0NvdW50ZXJzIEluYy4iLAogICAgICAidGFza3NfdG90YWwiOiAxMDgsCiAgICAgICJ0YXNrc19kb25lIjogOTQsCiAgICAgICJvbl9kZWNrIjogdHJ1ZSwKICAgICAgInRhc2tzIjogW10KICAgIH0sCiAgICB7CiAgICAgICJzbHVnIjogInRha2VvZmYtZW5naW5lIiwKICAgICAgInByb2plY3QiOiAiVGFrZW9mZiBFbmdpbmUiLAogICAgICAiY2xpZW50IjogIkFaIFRlYW0gQUkiLAogICAgICAidGFza3NfdG90YWwiOiAzNCwKICAgICAgInRhc2tzX2RvbmUiOiAyMywKICAgICAgIm9uX2RlY2siOiB0cnVlLAogICAgICAidGFza3MiOiBbXQogICAgfQogIF0sCiAgIndhaXRpbmdfb24iOiBbXQp9Cg==
+{
+  "date": "2026-07-13",
+  "generated_at": "2026-07-13T10:05:00Z",
+  "data_as_of": "2026-07-13T05:00:01+00:00",
+  "greeting": "Morning, Haniel. Two systems fully built and waiting — today you make them live.",
+  "hype": "The engineering is done. Phase 5 and Go-Live are just pulling triggers. Ship two products today and walk away with two live client systems.",
+  "notice": "Have Stripe live keys (both modes), Chatwoot channel token, and CT Pros QB credentials ready before 9 AM — today's blocks gate on them.",
+  "difficulty": {
+    "rating": "Solid",
+    "planned_minutes": 390,
+    "available_minutes": 480,
+    "ratio": 0.81,
+    "note": ""
+  },
+  "window": { "start": "09:00", "end": "18:00" },
+  "schedule": [
+    {
+      "start": "09:00",
+      "end": "11:00",
+      "slug": "azteamai-system",
+      "project": "AZ Team AI System",
+      "task_id": "t36",
+      "title": "DO droplet deploy (app/queue/scheduler/TLS/MySQL8, scheduler OFF)",
+      "estimate": "l",
+      "kind": "task"
+    },
+    {
+      "start": "11:15",
+      "end": "11:45",
+      "slug": "azteamai-system",
+      "project": "AZ Team AI System",
+      "task_id": "t37",
+      "title": "Secrets in .env.production (Stripe both modes, Chatwoot, mail)",
+      "estimate": "s",
+      "kind": "task"
+    },
+    {
+      "start": "12:00",
+      "end": "13:00",
+      "slug": "azteamai-system",
+      "project": "AZ Team AI System",
+      "task_id": "t39",
+      "title": "Reconciliation gate: imported AR + recurring state matches azteam_crm",
+      "estimate": "m",
+      "kind": "task"
+    },
+    {
+      "start": "13:00",
+      "end": "14:00",
+      "kind": "lunch",
+      "title": "Lunch"
+    },
+    {
+      "start": "14:00",
+      "end": "14:30",
+      "slug": "azteamai-system",
+      "project": "AZ Team AI System",
+      "task_id": "t40",
+      "title": "Enable scheduler; watch first run; register Stripe webhook LAST",
+      "estimate": "s",
+      "kind": "task"
+    },
+    {
+      "start": "14:45",
+      "end": "15:15",
+      "slug": "ct-pros-sys",
+      "project": "CT Pros",
+      "task_id": "t24",
+      "title": "Fill real CT Pros company contact info",
+      "estimate": "s",
+      "kind": "task"
+    },
+    {
+      "start": "15:30",
+      "end": "16:30",
+      "slug": "ct-pros-sys",
+      "project": "CT Pros",
+      "task_id": "t25",
+      "title": "Connect CT Pros's own QuickBooks (fresh OAuth)",
+      "estimate": "m",
+      "kind": "task"
+    },
+    {
+      "start": "16:45",
+      "end": "17:45",
+      "slug": "ct-pros-sys",
+      "project": "CT Pros",
+      "task_id": "t27",
+      "title": "Deploy CT Pros to its own host/domain",
+      "estimate": "m",
+      "kind": "task"
+    }
+  ],
+  "projects": [
+    {
+      "slug": "azteamai-system",
+      "project": "AZ Team AI System",
+      "client": "AZ Team AI (internal)",
+      "tasks_total": 50,
+      "tasks_done": 43,
+      "on_deck": false,
+      "tasks": [
+        {
+          "id": "t36",
+          "title": "DO droplet deploy (app/queue/scheduler/TLS/MySQL8, scheduler OFF)",
+          "phase": "Phase 5 · Cutover + deploy (go-live)",
+          "estimate": "l",
+          "priority": "high",
+          "status": "pending",
+          "notes": "DO droplet, hand-enter 9 clients, reconcile, enable, webhooks last",
+          "block": { "start": "09:00", "end": "11:00" },
+          "prep": {
+            "what": "Stand up a fresh DigitalOcean droplet running the full AZ Team AI System — app server, queue worker, TLS, MySQL 8 — with the scheduler kept OFF until the reconciliation gate passes.",
+            "understand": "The stack is Laravel + Inertia with a queue worker for billing jobs (invoice minting, Stripe charges, Chatwoot SMS notifications) and a scheduler for recurring billing runs. Keep the scheduler OFF on first boot — it will auto-mint invoices the moment it runs, and you want to verify imported data against azteam_crm first (t39). The CT Pros deploy scripts are the proven template.",
+            "approach": [
+              "Provision a fresh DO droplet (Ubuntu 22.04 LTS, 2–4 GB RAM) and point the AZ Team AI domain DNS A record to its IP",
+              "SSH in, clone the `azteamai-system` repo, run `deploy/*.sh` to install PHP, nginx, MySQL 8",
+              "Run `php artisan migrate --force` then seed billing/company settings; confirm the app boots cleanly at the domain",
+              "Start the queue worker via supervisor or `php artisan queue:work`; leave the scheduler OFF in crontab for now"
+            ],
+            "resources": [
+              "`deploy/*.sh` and `docker-compose.yml` in the azteamai-system repo",
+              "`docs/deployment.md` — step-by-step deploy guide (modeled on CT Pros deploy)",
+              "DigitalOcean dashboard for droplet provisioning",
+              "MySQL 8 root credentials and DB config from `.env.example`"
+            ]
+          }
+        },
+        {
+          "id": "t37",
+          "title": "Secrets in .env.production (Stripe both modes, Chatwoot, mail)",
+          "phase": "Phase 5 · Cutover + deploy (go-live)",
+          "estimate": "s",
+          "priority": "high",
+          "status": "pending",
+          "notes": "Stripe both modes, Chatwoot, mail",
+          "block": { "start": "11:15", "end": "11:45" },
+          "prep": {
+            "what": "Fill `.env.production` on the droplet with real Stripe live + test keys, Chatwoot channel token, and mail credentials before any live traffic arrives.",
+            "understand": "You need Stripe wired in BOTH modes: live secret key for production billing, test mode secret key for any sandbox checks. Chatwoot needs a channel-level API token (not a user token) — that is what `NotificationChannel::chatwoot()` posts with. `STRIPE_WEBHOOK_SECRET` comes from t40 after you register the webhook endpoint, not here.",
+            "approach": [
+              "Open Stripe Dashboard → Developers → API Keys → copy live publishable + secret key; also copy the test-mode secret key",
+              "Open Chatwoot admin → Settings → API Access Tokens → create or copy the channel-level token",
+              "Set `MAIL_MAILER`, `MAIL_HOST`, `MAIL_FROM_ADDRESS` for the production mail provider (SES, Mailgun, or SMTP)",
+              "Drop all secrets into `.env.production` on the droplet (chmod 600), then run `php artisan config:cache`"
+            ],
+            "resources": [
+              "Stripe Dashboard → Developers → API Keys (live mode)",
+              "Chatwoot admin panel → Settings → API Access Tokens",
+              "`.env.example` in the azteamai-system repo as the full field checklist",
+              "Mail provider credentials (AWS SES Console or SMTP)"
+            ]
+          }
+        },
+        {
+          "id": "t39",
+          "title": "Reconciliation gate: imported AR + recurring state matches azteam_crm ground truth",
+          "phase": "Phase 5 · Cutover + deploy (go-live)",
+          "estimate": "m",
+          "priority": "high",
+          "status": "pending",
+          "notes": "Reconciliation gate: imported AR + recurring state matches azteam_crm ground truth",
+          "block": { "start": "12:00", "end": "13:00" },
+          "prep": {
+            "what": "Verify that the scripted data import (t38, already done) faithfully matches azteam_crm — AR balances, project versions, recurring subscription state, and client details all line up before you flip the scheduler on.",
+            "understand": "t38 imported CLOSED projects, versions, invoices, and client details from azteam_crm. This is the QA gate: if anything was double-imported, miscounted, or missing, the scheduler will compound the error on its first run by minting incorrect invoices. Catch it here, not after live billing starts.",
+            "approach": [
+              "Pull an AR aging summary from azteam_crm — list every client with outstanding balance and amount",
+              "Open the new AZ Team AI System → Dashboard → AR cluster — compare total outstanding and per-client balances",
+              "Spot-check 3–5 clients: verify project versions, invoice line items, payment records, and subscription state match the source",
+              "If totals match → mark gate passed and proceed to t40; if discrepancies → investigate the import script before enabling the scheduler"
+            ],
+            "resources": [
+              "azteam_crm admin panel (the existing system, for ground truth)",
+              "New AZ Team AI System on the DO droplet — Dashboard + Clients + AR Aging report",
+              "Import script output / log from t38 (in the repo or server logs)",
+              "AR Aging report in both systems side-by-side (browser split-screen)"
+            ]
+          }
+        },
+        {
+          "id": "t40",
+          "title": "Enable scheduler; watch first run; register Stripe webhook LAST",
+          "phase": "Phase 5 · Cutover + deploy (go-live)",
+          "estimate": "s",
+          "priority": "high",
+          "status": "pending",
+          "notes": "Enable scheduler; watch first run; register Stripe webhook LAST",
+          "block": { "start": "14:00", "end": "14:30" },
+          "prep": {
+            "what": "Flip the Laravel scheduler ON, watch the first recurring-billing sweep complete without errors, then register the Stripe webhook — in that exact order.",
+            "understand": "Order is non-negotiable: scheduler first, webhook second. The scheduler runs `billing:run-recurring`, `dispatch-reminders`, `reconcile-stripe`. The Stripe webhook fires immediately on registration — you need `reconcile-stripe` running and ready to process incoming events. Register the webhook before the scheduler is up and that first batch of events lands with no consumer.",
+            "approach": [
+              "SSH to droplet → enable the scheduler: add `* * * * * cd /path/to/app && php artisan schedule:run >> /dev/null 2>&1` to root crontab (or start the supervisor scheduler process)",
+              "Tail `storage/logs/laravel.log` for the first `billing:run-recurring` run — confirm it completes with no exceptions",
+              "Go to Stripe Dashboard → Developers → Webhooks → Add endpoint → paste `https://your-domain/stripe/webhook`, select `payment_intent.succeeded` and `payment_intent.payment_failed`",
+              "Send a Stripe test webhook event → confirm it arrives, logs to the `stripe_events` table, and processes idempotently (no duplicate invoice)"
+            ],
+            "resources": [
+              "SSH access to the DO droplet",
+              "Stripe Dashboard → Developers → Webhooks",
+              "`storage/logs/laravel.log` on the server",
+              "`stripe_events` table in MySQL — verify idempotent event processing"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "slug": "ct-pros-sys",
+      "project": "CT Pros",
+      "client": "CT Pros",
+      "tasks_total": 56,
+      "tasks_done": 23,
+      "on_deck": false,
+      "tasks": [
+        {
+          "id": "t24",
+          "title": "Fill real CT Pros company contact info",
+          "phase": "Go-Live (deploy + real config)",
+          "estimate": "s",
+          "priority": "high",
+          "status": "todo",
+          "notes": "config/company.php + .env still hold placeholders inherited from the clone. Set real CT Pros name/address/phone/email BEFORE any client-facing PDF or email goes out.",
+          "block": { "start": "14:45", "end": "15:15" },
+          "prep": {
+            "what": "Replace all inherited HighTech Tile placeholder company info with real CT Pros data in `config/company.php` and `.env` — must be committed before t27 deploy runs.",
+            "understand": "The clone carried HighTech's company config. That data appears on every estimate PDF, proposal letterhead, invoice, and outbound email. A single deploy or client-facing action before this fix sends Rafa's clients documents with the wrong company name, address, and contact info.",
+            "approach": [
+              "Open `config/company.php` in the ct-pros-sys repo — update name, address, phone, email with real CT Pros values (confirm with Rafa if needed)",
+              "Search `.env` and `.env.example` for `MAIL_FROM_NAME`, `MAIL_FROM_ADDRESS`, or any `COMPANY_` vars still referencing HighTech",
+              "Boot the app locally → open any lead → generate a sample estimate PDF → confirm CT Pros name and address appear in the header",
+              "Commit the changes to ct-pros-sys and push — this commit must land before t27 deploy"
+            ],
+            "resources": [
+              "CT Pros real company info (name, address, phone, email) — confirm with Rafa",
+              "`config/company.php` in the ct-pros-sys repo",
+              "`.env.example` as the env var reference",
+              "Estimate PDF preview: Leads → any lead → Estimates → print/download"
+            ]
+          }
+        },
+        {
+          "id": "t25",
+          "title": "Connect CT Pros's own QuickBooks (fresh OAuth)",
+          "phase": "Go-Live (deploy + real config)",
+          "estimate": "m",
+          "priority": "high",
+          "status": "todo",
+          "notes": "Inherited tokens were HighTech's and were never carried over. Run a fresh OAuth connect against CT Pros's own QBO company so all syncs hit the right books.",
+          "block": { "start": "15:30", "end": "16:30" },
+          "prep": {
+            "what": "Run a fresh QuickBooks OAuth connect in the CT Pros app against CT Pros's own QBO company, replacing the inherited (now invalid) HighTech tokens.",
+            "understand": "The QB tokens from HighTech were never transferred and are scoped to HighTech's QBO company. CT Pros has its own QBO account and the connection must point there. Set `QUICKBOOKS_ENVIRONMENT=production` (not `sandbox`) so syncs hit the live books. The connect flow is: Settings → QuickBooks → Connect → Intuit OAuth → callback stores the token.",
+            "approach": [
+              "Open `.env` on the CT Pros app server → confirm `QUICKBOOKS_ENVIRONMENT=production` and correct `QUICKBOOKS_CLIENT_ID` + `QUICKBOOKS_CLIENT_SECRET` are set",
+              "Open the app → Settings → QuickBooks → click 'Connect to QuickBooks'",
+              "Complete the Intuit OAuth flow, logging in with CT Pros's actual QBO account credentials (get from Rafa)",
+              "After connect completes, run `php artisan quickbooks:sync` → confirm it connects and hits CT Pros's books without errors"
+            ],
+            "resources": [
+              "CT Pros QBO account credentials — Rafa provides the login",
+              "App Settings → QuickBooks page in the ct-pros-sys app",
+              "`.env` vars: `QUICKBOOKS_CLIENT_ID`, `QUICKBOOKS_CLIENT_SECRET`, `QUICKBOOKS_ENVIRONMENT`",
+              "`QuickBooksAuthControllerTest` in the repo — reference for the OAuth flow steps"
+            ]
+          }
+        },
+        {
+          "id": "t27",
+          "title": "Deploy CT Pros to its own host/domain",
+          "phase": "Go-Live (deploy + real config)",
+          "estimate": "m",
+          "priority": "high",
+          "status": "todo",
+          "notes": "Deploy infra exists and is proven (deploy/*.sh, docker-compose.yml, docs/deployment.md) but still pointed at the cloned app. Re-target to a fresh DigitalOcean droplet with a fresh DB and CT Pros's real domain.",
+          "block": { "start": "16:45", "end": "17:45" },
+          "prep": {
+            "what": "Spin up a fresh DigitalOcean droplet for CT Pros with its real domain and run the proven deploy scripts — the infra work is done, this is pure execution.",
+            "understand": "The exact same deploy scripts and docker-compose used for HighTech work here — only the target IP, domain, and database change. The `config/company.php` update from t24 must be committed before this runs, or production will still show HighTech branding. CT Pros gets its own isolated droplet and DB, completely separate from HighTech.",
+            "approach": [
+              "Provision a new DO droplet for CT Pros (Ubuntu 22.04) and point CT Pros's domain DNS A record to the new IP (allow up to 30 min for propagation)",
+              "SSH in, clone the ct-pros-sys repo (with t24 changes committed), run `deploy/*.sh` to install PHP, nginx, MySQL",
+              "Run `php artisan migrate --force && php artisan db:seed` to initialize the fresh database with CT Pros config",
+              "Open CT Pros's domain in the browser → confirm TLS is active, login page shows CT Pros branding, and the app is fully functional"
+            ],
+            "resources": [
+              "DigitalOcean dashboard — create new droplet (~$24/mo basic tier)",
+              "CT Pros domain DNS settings (registrar control panel) — point A record to new IP",
+              "`deploy/*.sh` + `docker-compose.yml` in the ct-pros-sys repo",
+              "`docs/deployment.md` — the step-by-step deploy guide"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "slug": "gs-woodworking-spec",
+      "project": "GS-ERP",
+      "client": "GS Woodworking LLC",
+      "tasks_total": 819,
+      "tasks_done": 707,
+      "on_deck": true,
+      "tasks": []
+    },
+    {
+      "slug": "module-project",
+      "project": "Module",
+      "client": "Internal",
+      "tasks_total": 63,
+      "tasks_done": 18,
+      "on_deck": true,
+      "tasks": []
+    },
+    {
+      "slug": "haniel-finances",
+      "project": "Haniel Finances",
+      "client": "Personal",
+      "tasks_total": 25,
+      "tasks_done": 3,
+      "on_deck": true,
+      "tasks": []
+    },
+    {
+      "slug": "hightech-crm",
+      "project": "High Tech Tile CRM",
+      "client": "High Tech Tile",
+      "tasks_total": 76,
+      "tasks_done": 70,
+      "on_deck": true,
+      "tasks": []
+    },
+    {
+      "slug": "influencer-agent",
+      "project": "influencer-agent",
+      "client": "AZ Team AI (own SaaS product)",
+      "tasks_total": 24,
+      "tasks_done": 8,
+      "on_deck": true,
+      "tasks": []
+    },
+    {
+      "slug": "procounters-erp",
+      "project": "procounters_erp",
+      "client": "ProCounters Inc.",
+      "tasks_total": 108,
+      "tasks_done": 94,
+      "on_deck": true,
+      "tasks": []
+    },
+    {
+      "slug": "takeoff-engine",
+      "project": "Takeoff Engine",
+      "client": "AZ Team AI",
+      "tasks_total": 34,
+      "tasks_done": 23,
+      "on_deck": true,
+      "tasks": []
+    }
+  ],
+  "waiting_on": [
+    {
+      "project": "GS-ERP",
+      "task_id": "t57",
+      "title": "Bonus formula definition (production + paint shop)",
+      "reason": "No bonus formula exists yet — blocked on private session with Guilherme/Mayara to produce production target-days, quality gate values, and the paint team labor-split rule."
+    },
+    {
+      "project": "Module",
+      "task_id": "t25",
+      "title": "SMS module",
+      "reason": "Explicitly deferred by decision — do not start until an SMS provider is chosen."
+    }
+  ]
+}
