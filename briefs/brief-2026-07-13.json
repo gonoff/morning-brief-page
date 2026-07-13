@@ -1,0 +1,375 @@
+{
+  "date": "2026-07-13",
+  "generated_at": "2026-07-13T10:05:00Z",
+  "data_as_of": "2026-07-13T05:00:01+00:00",
+  "greeting": "Morning, Haniel. Two systems fully built and waiting — today you make them live.",
+  "hype": "The engineering is done. Phase 5 and Go-Live are just pulling triggers. Ship two products today and walk away with two live client systems.",
+  "notice": "Have Stripe live keys (both modes), Chatwoot channel token, and CT Pros QB credentials ready before 9 AM — today's blocks gate on them.",
+  "difficulty": {
+    "rating": "Solid",
+    "planned_minutes": 390,
+    "available_minutes": 480,
+    "ratio": 0.81,
+    "note": ""
+  },
+  "window": { "start": "09:00", "end": "18:00" },
+  "schedule": [
+    {
+      "start": "09:00",
+      "end": "11:00",
+      "slug": "azteamai-system",
+      "project": "AZ Team AI System",
+      "task_id": "t36",
+      "title": "DO droplet deploy (app/queue/scheduler/TLS/MySQL8, scheduler OFF)",
+      "estimate": "l",
+      "kind": "task"
+    },
+    {
+      "start": "11:15",
+      "end": "11:45",
+      "slug": "azteamai-system",
+      "project": "AZ Team AI System",
+      "task_id": "t37",
+      "title": "Secrets in .env.production (Stripe both modes, Chatwoot, mail)",
+      "estimate": "s",
+      "kind": "task"
+    },
+    {
+      "start": "12:00",
+      "end": "13:00",
+      "slug": "azteamai-system",
+      "project": "AZ Team AI System",
+      "task_id": "t39",
+      "title": "Reconciliation gate: imported AR + recurring state matches azteam_crm",
+      "estimate": "m",
+      "kind": "task"
+    },
+    {
+      "start": "13:00",
+      "end": "14:00",
+      "kind": "lunch",
+      "title": "Lunch"
+    },
+    {
+      "start": "14:00",
+      "end": "14:30",
+      "slug": "azteamai-system",
+      "project": "AZ Team AI System",
+      "task_id": "t40",
+      "title": "Enable scheduler; watch first run; register Stripe webhook LAST",
+      "estimate": "s",
+      "kind": "task"
+    },
+    {
+      "start": "14:45",
+      "end": "15:15",
+      "slug": "ct-pros-sys",
+      "project": "CT Pros",
+      "task_id": "t24",
+      "title": "Fill real CT Pros company contact info",
+      "estimate": "s",
+      "kind": "task"
+    },
+    {
+      "start": "15:30",
+      "end": "16:30",
+      "slug": "ct-pros-sys",
+      "project": "CT Pros",
+      "task_id": "t25",
+      "title": "Connect CT Pros's own QuickBooks (fresh OAuth)",
+      "estimate": "m",
+      "kind": "task"
+    },
+    {
+      "start": "16:45",
+      "end": "17:45",
+      "slug": "ct-pros-sys",
+      "project": "CT Pros",
+      "task_id": "t27",
+      "title": "Deploy CT Pros to its own host/domain",
+      "estimate": "m",
+      "kind": "task"
+    }
+  ],
+  "projects": [
+    {
+      "slug": "azteamai-system",
+      "project": "AZ Team AI System",
+      "client": "AZ Team AI (internal)",
+      "tasks_total": 50,
+      "tasks_done": 43,
+      "on_deck": false,
+      "tasks": [
+        {
+          "id": "t36",
+          "title": "DO droplet deploy (app/queue/scheduler/TLS/MySQL8, scheduler OFF)",
+          "phase": "Phase 5 · Cutover + deploy (go-live)",
+          "estimate": "l",
+          "priority": "high",
+          "status": "pending",
+          "notes": "DO droplet, hand-enter 9 clients, reconcile, enable, webhooks last",
+          "block": { "start": "09:00", "end": "11:00" },
+          "prep": {
+            "what": "Stand up a fresh DigitalOcean droplet running the full AZ Team AI System — app server, queue worker, TLS, MySQL 8 — with the scheduler kept OFF until the reconciliation gate passes.",
+            "understand": "The stack is Laravel + Inertia with a queue worker for billing jobs (invoice minting, Stripe charges, Chatwoot SMS notifications) and a scheduler for recurring billing runs. Keep the scheduler OFF on first boot — it will auto-mint invoices the moment it runs, and you want to verify imported data against azteam_crm first (t39). The CT Pros deploy scripts are the proven template.",
+            "approach": [
+              "Provision a fresh DO droplet (Ubuntu 22.04 LTS, 2–4 GB RAM) and point the AZ Team AI domain DNS A record to its IP",
+              "SSH in, clone the `azteamai-system` repo, run `deploy/*.sh` to install PHP, nginx, MySQL 8",
+              "Run `php artisan migrate --force` then seed billing/company settings; confirm the app boots cleanly at the domain",
+              "Start the queue worker via supervisor or `php artisan queue:work`; leave the scheduler OFF in crontab for now"
+            ],
+            "resources": [
+              "`deploy/*.sh` and `docker-compose.yml` in the azteamai-system repo",
+              "`docs/deployment.md` — step-by-step deploy guide (modeled on CT Pros deploy)",
+              "DigitalOcean dashboard for droplet provisioning",
+              "MySQL 8 root credentials and DB config from `.env.example`"
+            ]
+          }
+        },
+        {
+          "id": "t37",
+          "title": "Secrets in .env.production (Stripe both modes, Chatwoot, mail)",
+          "phase": "Phase 5 · Cutover + deploy (go-live)",
+          "estimate": "s",
+          "priority": "high",
+          "status": "pending",
+          "notes": "Stripe both modes, Chatwoot, mail",
+          "block": { "start": "11:15", "end": "11:45" },
+          "prep": {
+            "what": "Fill `.env.production` on the droplet with real Stripe live + test keys, Chatwoot channel token, and mail credentials before any live traffic arrives.",
+            "understand": "You need Stripe wired in BOTH modes: live secret key for production billing, test mode secret key for any sandbox checks. Chatwoot needs a channel-level API token (not a user token) — that is what `NotificationChannel::chatwoot()` posts with. `STRIPE_WEBHOOK_SECRET` comes from t40 after you register the webhook endpoint, not here.",
+            "approach": [
+              "Open Stripe Dashboard → Developers → API Keys → copy live publishable + secret key; also copy the test-mode secret key",
+              "Open Chatwoot admin → Settings → API Access Tokens → create or copy the channel-level token",
+              "Set `MAIL_MAILER`, `MAIL_HOST`, `MAIL_FROM_ADDRESS` for the production mail provider (SES, Mailgun, or SMTP)",
+              "Drop all secrets into `.env.production` on the droplet (chmod 600), then run `php artisan config:cache`"
+            ],
+            "resources": [
+              "Stripe Dashboard → Developers → API Keys (live mode)",
+              "Chatwoot admin panel → Settings → API Access Tokens",
+              "`.env.example` in the azteamai-system repo as the full field checklist",
+              "Mail provider credentials (AWS SES Console or SMTP)"
+            ]
+          }
+        },
+        {
+          "id": "t39",
+          "title": "Reconciliation gate: imported AR + recurring state matches azteam_crm ground truth",
+          "phase": "Phase 5 · Cutover + deploy (go-live)",
+          "estimate": "m",
+          "priority": "high",
+          "status": "pending",
+          "notes": "Reconciliation gate: imported AR + recurring state matches azteam_crm ground truth",
+          "block": { "start": "12:00", "end": "13:00" },
+          "prep": {
+            "what": "Verify that the scripted data import (t38, already done) faithfully matches azteam_crm — AR balances, project versions, recurring subscription state, and client details all line up before you flip the scheduler on.",
+            "understand": "t38 imported CLOSED projects, versions, invoices, and client details from azteam_crm. This is the QA gate: if anything was double-imported, miscounted, or missing, the scheduler will compound the error on its first run by minting incorrect invoices. Catch it here, not after live billing starts.",
+            "approach": [
+              "Pull an AR aging summary from azteam_crm — list every client with outstanding balance and amount",
+              "Open the new AZ Team AI System → Dashboard → AR cluster — compare total outstanding and per-client balances",
+              "Spot-check 3–5 clients: verify project versions, invoice line items, payment records, and subscription state match the source",
+              "If totals match → mark gate passed and proceed to t40; if discrepancies → investigate the import script before enabling the scheduler"
+            ],
+            "resources": [
+              "azteam_crm admin panel (the existing system, for ground truth)",
+              "New AZ Team AI System on the DO droplet — Dashboard + Clients + AR Aging report",
+              "Import script output / log from t38 (in the repo or server logs)",
+              "AR Aging report in both systems side-by-side (browser split-screen)"
+            ]
+          }
+        },
+        {
+          "id": "t40",
+          "title": "Enable scheduler; watch first run; register Stripe webhook LAST",
+          "phase": "Phase 5 · Cutover + deploy (go-live)",
+          "estimate": "s",
+          "priority": "high",
+          "status": "pending",
+          "notes": "Enable scheduler; watch first run; register Stripe webhook LAST",
+          "block": { "start": "14:00", "end": "14:30" },
+          "prep": {
+            "what": "Flip the Laravel scheduler ON, watch the first recurring-billing sweep complete without errors, then register the Stripe webhook — in that exact order.",
+            "understand": "Order is non-negotiable: scheduler first, webhook second. The scheduler runs `billing:run-recurring`, `dispatch-reminders`, `reconcile-stripe`. The Stripe webhook fires immediately on registration — you need `reconcile-stripe` running and ready to process incoming events. Register the webhook before the scheduler is up and that first batch of events lands with no consumer.",
+            "approach": [
+              "SSH to droplet → enable the scheduler: add `* * * * * cd /path/to/app && php artisan schedule:run >> /dev/null 2>&1` to root crontab (or start the supervisor scheduler process)",
+              "Tail `storage/logs/laravel.log` for the first `billing:run-recurring` run — confirm it completes with no exceptions",
+              "Go to Stripe Dashboard → Developers → Webhooks → Add endpoint → paste `https://your-domain/stripe/webhook`, select `payment_intent.succeeded` and `payment_intent.payment_failed`",
+              "Send a Stripe test webhook event → confirm it arrives, logs to the `stripe_events` table, and processes idempotently (no duplicate invoice)"
+            ],
+            "resources": [
+              "SSH access to the DO droplet",
+              "Stripe Dashboard → Developers → Webhooks",
+              "`storage/logs/laravel.log` on the server",
+              "`stripe_events` table in MySQL — verify idempotent event processing"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "slug": "ct-pros-sys",
+      "project": "CT Pros",
+      "client": "CT Pros",
+      "tasks_total": 56,
+      "tasks_done": 23,
+      "on_deck": false,
+      "tasks": [
+        {
+          "id": "t24",
+          "title": "Fill real CT Pros company contact info",
+          "phase": "Go-Live (deploy + real config)",
+          "estimate": "s",
+          "priority": "high",
+          "status": "todo",
+          "notes": "config/company.php + .env still hold placeholders inherited from the clone. Set real CT Pros name/address/phone/email BEFORE any client-facing PDF or email goes out.",
+          "block": { "start": "14:45", "end": "15:15" },
+          "prep": {
+            "what": "Replace all inherited HighTech Tile placeholder company info with real CT Pros data in `config/company.php` and `.env` — must be committed before t27 deploy runs.",
+            "understand": "The clone carried HighTech's company config. That data appears on every estimate PDF, proposal letterhead, invoice, and outbound email. A single deploy or client-facing action before this fix sends Rafa's clients documents with the wrong company name, address, and contact info.",
+            "approach": [
+              "Open `config/company.php` in the ct-pros-sys repo — update name, address, phone, email with real CT Pros values (confirm with Rafa if needed)",
+              "Search `.env` and `.env.example` for `MAIL_FROM_NAME`, `MAIL_FROM_ADDRESS`, or any `COMPANY_` vars still referencing HighTech",
+              "Boot the app locally → open any lead → generate a sample estimate PDF → confirm CT Pros name and address appear in the header",
+              "Commit the changes to ct-pros-sys and push — this commit must land before t27 deploy"
+            ],
+            "resources": [
+              "CT Pros real company info (name, address, phone, email) — confirm with Rafa",
+              "`config/company.php` in the ct-pros-sys repo",
+              "`.env.example` as the env var reference",
+              "Estimate PDF preview: Leads → any lead → Estimates → print/download"
+            ]
+          }
+        },
+        {
+          "id": "t25",
+          "title": "Connect CT Pros's own QuickBooks (fresh OAuth)",
+          "phase": "Go-Live (deploy + real config)",
+          "estimate": "m",
+          "priority": "high",
+          "status": "todo",
+          "notes": "Inherited tokens were HighTech's and were never carried over. Run a fresh OAuth connect against CT Pros's own QBO company so all syncs hit the right books.",
+          "block": { "start": "15:30", "end": "16:30" },
+          "prep": {
+            "what": "Run a fresh QuickBooks OAuth connect in the CT Pros app against CT Pros's own QBO company, replacing the inherited (now invalid) HighTech tokens.",
+            "understand": "The QB tokens from HighTech were never transferred and are scoped to HighTech's QBO company. CT Pros has its own QBO account and the connection must point there. Set `QUICKBOOKS_ENVIRONMENT=production` (not `sandbox`) so syncs hit the live books. The connect flow is: Settings → QuickBooks → Connect → Intuit OAuth → callback stores the token.",
+            "approach": [
+              "Open `.env` on the CT Pros app server → confirm `QUICKBOOKS_ENVIRONMENT=production` and correct `QUICKBOOKS_CLIENT_ID` + `QUICKBOOKS_CLIENT_SECRET` are set",
+              "Open the app → Settings → QuickBooks → click 'Connect to QuickBooks'",
+              "Complete the Intuit OAuth flow, logging in with CT Pros's actual QBO account credentials (get from Rafa)",
+              "After connect completes, run `php artisan quickbooks:sync` → confirm it connects and hits CT Pros's books without errors"
+            ],
+            "resources": [
+              "CT Pros QBO account credentials — Rafa provides the login",
+              "App Settings → QuickBooks page in the ct-pros-sys app",
+              "`.env` vars: `QUICKBOOKS_CLIENT_ID`, `QUICKBOOKS_CLIENT_SECRET`, `QUICKBOOKS_ENVIRONMENT`",
+              "`QuickBooksAuthControllerTest` in the repo — reference for the OAuth flow steps"
+            ]
+          }
+        },
+        {
+          "id": "t27",
+          "title": "Deploy CT Pros to its own host/domain",
+          "phase": "Go-Live (deploy + real config)",
+          "estimate": "m",
+          "priority": "high",
+          "status": "todo",
+          "notes": "Deploy infra exists and is proven (deploy/*.sh, docker-compose.yml, docs/deployment.md) but still pointed at the cloned app. Re-target to a fresh DigitalOcean droplet with a fresh DB and CT Pros's real domain.",
+          "block": { "start": "16:45", "end": "17:45" },
+          "prep": {
+            "what": "Spin up a fresh DigitalOcean droplet for CT Pros with its real domain and run the proven deploy scripts — the infra work is done, this is pure execution.",
+            "understand": "The exact same deploy scripts and docker-compose used for HighTech work here — only the target IP, domain, and database change. The `config/company.php` update from t24 must be committed before this runs, or production will still show HighTech branding. CT Pros gets its own isolated droplet and DB, completely separate from HighTech.",
+            "approach": [
+              "Provision a new DO droplet for CT Pros (Ubuntu 22.04) and point CT Pros's domain DNS A record to the new IP (allow up to 30 min for propagation)",
+              "SSH in, clone the ct-pros-sys repo (with t24 changes committed), run `deploy/*.sh` to install PHP, nginx, MySQL",
+              "Run `php artisan migrate --force && php artisan db:seed` to initialize the fresh database with CT Pros config",
+              "Open CT Pros's domain in the browser → confirm TLS is active, login page shows CT Pros branding, and the app is fully functional"
+            ],
+            "resources": [
+              "DigitalOcean dashboard — create new droplet (~$24/mo basic tier)",
+              "CT Pros domain DNS settings (registrar control panel) — point A record to new IP",
+              "`deploy/*.sh` + `docker-compose.yml` in the ct-pros-sys repo",
+              "`docs/deployment.md` — the step-by-step deploy guide"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "slug": "gs-woodworking-spec",
+      "project": "GS-ERP",
+      "client": "GS Woodworking LLC",
+      "tasks_total": 819,
+      "tasks_done": 707,
+      "on_deck": true,
+      "tasks": []
+    },
+    {
+      "slug": "module-project",
+      "project": "Module",
+      "client": "Internal",
+      "tasks_total": 63,
+      "tasks_done": 18,
+      "on_deck": true,
+      "tasks": []
+    },
+    {
+      "slug": "haniel-finances",
+      "project": "Haniel Finances",
+      "client": "Personal",
+      "tasks_total": 25,
+      "tasks_done": 3,
+      "on_deck": true,
+      "tasks": []
+    },
+    {
+      "slug": "hightech-crm",
+      "project": "High Tech Tile CRM",
+      "client": "High Tech Tile",
+      "tasks_total": 76,
+      "tasks_done": 70,
+      "on_deck": true,
+      "tasks": []
+    },
+    {
+      "slug": "influencer-agent",
+      "project": "influencer-agent",
+      "client": "AZ Team AI (own SaaS product)",
+      "tasks_total": 24,
+      "tasks_done": 8,
+      "on_deck": true,
+      "tasks": []
+    },
+    {
+      "slug": "procounters-erp",
+      "project": "procounters_erp",
+      "client": "ProCounters Inc.",
+      "tasks_total": 108,
+      "tasks_done": 94,
+      "on_deck": true,
+      "tasks": []
+    },
+    {
+      "slug": "takeoff-engine",
+      "project": "Takeoff Engine",
+      "client": "AZ Team AI",
+      "tasks_total": 34,
+      "tasks_done": 23,
+      "on_deck": true,
+      "tasks": []
+    }
+  ],
+  "waiting_on": [
+    {
+      "project": "GS-ERP",
+      "task_id": "t57",
+      "title": "Bonus formula definition (production + paint shop)",
+      "reason": "No bonus formula exists yet — blocked on private session with Guilherme/Mayara to produce production target-days, quality gate values, and the paint team labor-split rule."
+    },
+    {
+      "project": "Module",
+      "task_id": "t25",
+      "title": "SMS module",
+      "reason": "Explicitly deferred by decision — do not start until an SMS provider is chosen."
+    }
+  ]
+}
