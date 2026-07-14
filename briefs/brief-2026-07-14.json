@@ -137,7 +137,7 @@
           "block": { "start": "11:15", "end": "11:45" },
           "prep": {
             "what": "Fill `.env.production` on the droplet with real Stripe live + test keys, Chatwoot channel token, and mail credentials — before any live traffic arrives.",
-            "understand": "You need Stripe in BOTH modes: live secret key for production billing, test-mode key for sandbox checks. Chatwoot needs a channel-level API token (not a user token) — that's what `NotificationChannel::chatwoot()` posts with. `STRIPE_WEBHOOK_SECRET` comes after t40 when you register the endpoint — don't try to set it here.",
+            "understand": "You need Stripe in BOTH modes: live secret key for production billing, test-mode key for sandbox checks. Chatwoot needs a channel-level API token (not a user token) — that's what `NotificationChannel::chatwoot()` posts with. `STRIPE_WEBHOOK_SECRET` comes after t40 when you register the endpoint — don't set it here.",
             "approach": [
               "Stripe Dashboard → Developers → API Keys → copy live publishable + secret key; also copy the test-mode secret key",
               "Chatwoot admin → Settings → API Access Tokens → create or copy the channel-level token",
@@ -162,8 +162,8 @@
           "notes": "Reconciliation gate: imported AR + recurring state matches azteam_crm ground truth",
           "block": { "start": "12:00", "end": "13:00" },
           "prep": {
-            "what": "Verify the import script (t38, already done) is accurate — AR balances, project versions, subscription state, and client details must match azteam_crm before the scheduler goes live.",
-            "understand": "t38 already imported CLOSED projects, versions, invoices, and client details from azteam_crm. This is the QA gate: the scheduler will compound any import error on its first run by minting incorrect invoices. Catch mismatches here, not in live billing. The comparison is a side-by-side of the AR aging in both systems.",
+            "what": "Verify the import (t38, already done) is accurate — AR balances, project versions, subscription state, and client details must match azteam_crm before the scheduler goes live.",
+            "understand": "t38 already imported CLOSED projects, versions, invoices, and client details from azteam_crm. This gate exists because the scheduler will compound any import error on its first run — it mints new invoices based on what it sees. Catch mismatches here, not in live billing.",
             "approach": [
               "Pull an AR aging summary from azteam_crm — list every client with outstanding balance and amount",
               "Open the new AZ Team AI System → Dashboard → AR cluster — compare total outstanding and per-client balances",
@@ -189,7 +189,7 @@
           "block": { "start": "14:00", "end": "14:30" },
           "prep": {
             "what": "Enable the Laravel scheduler, watch the first billing sweep complete clean, then register the Stripe webhook endpoint — in exactly that order.",
-            "understand": "Order is non-negotiable: scheduler first, webhook second. The scheduler runs `billing:run-recurring`, `dispatch-reminders`, `reconcile-stripe`. Stripe fires events the instant you register a webhook endpoint. If `reconcile-stripe` isn't running first, that first batch of Stripe events lands with no consumer and could double-mint on retry.",
+            "understand": "Order is non-negotiable: scheduler first, webhook second. The scheduler runs `billing:run-recurring`, `dispatch-reminders`, `reconcile-stripe`. Stripe fires events the instant you register a webhook. If `reconcile-stripe` isn't running first, that first batch of Stripe events lands with no consumer and could double-mint on retry.",
             "approach": [
               "SSH to droplet → add the scheduler to root crontab: `* * * * * cd /path/to/app && php artisan schedule:run >> /dev/null 2>&1`",
               "Tail `storage/logs/laravel.log` and watch the first `billing:run-recurring` sweep complete without exceptions",
@@ -225,9 +225,9 @@
           "block": { "start": "14:45", "end": "15:15" },
           "prep": {
             "what": "Replace all inherited HighTech Tile placeholder data in `config/company.php` and `.env` with real CT Pros company info — commit this before the t27 deploy runs.",
-            "understand": "The clone carried HighTech's company config verbatim. That data appears on every estimate PDF, proposal letterhead, invoice, and outbound email. One deploy before this fix and Rafa's clients see the wrong company name, address, and contact info on every document.",
+            "understand": "The clone carried HighTech's company config verbatim. That data appears on every estimate PDF, proposal letterhead, invoice, and outbound email. One deploy before this fix and Rafa's clients receive documents with the wrong company name, address, and contact info on every document.",
             "approach": [
-              "Open `config/company.php` in the ct-pros-sys repo — update name, address, phone, email with real CT Pros values (confirm with Rafa if any field is uncertain)",
+              "Open `config/company.php` in the ct-pros-sys repo — update name, address, phone, email with real CT Pros values (confirm with Rafa if anything is uncertain)",
               "Search `.env` and `.env.example` for `MAIL_FROM_NAME`, `MAIL_FROM_ADDRESS`, and any `COMPANY_` vars still referencing HighTech",
               "Boot the app locally → Leads → any lead → generate a sample estimate PDF → confirm CT Pros branding in the header",
               "Commit and push to ct-pros-sys — this commit MUST land before t27 deploy"
@@ -251,7 +251,7 @@
           "block": { "start": "15:30", "end": "16:30" },
           "prep": {
             "what": "Connect CT Pros's own QuickBooks Online company to the app via a fresh OAuth flow, replacing the now-invalid inherited HighTech tokens.",
-            "understand": "The QB tokens from HighTech were never transferred and are scoped to HighTech's QBO. CT Pros has its own QBO account; the connect must point there. Set `QUICKBOOKS_ENVIRONMENT=production` so syncs hit the live books. Note: if the domain changes in t27, the Intuit OAuth redirect URI will need updating in the Intuit Developer Console to match the new domain before this flow can complete.",
+            "understand": "The QB tokens from HighTech were never carried over and are scoped to HighTech's QBO. CT Pros has its own QBO account; the connection must point there. Set `QUICKBOOKS_ENVIRONMENT=production` so syncs hit live books. If the domain changes in t27, update the Intuit OAuth redirect URI in the Developer Console to match before running this flow.",
             "approach": [
               "Open `.env` → confirm `QUICKBOOKS_ENVIRONMENT=production` and correct `QUICKBOOKS_CLIENT_ID` + `QUICKBOOKS_CLIENT_SECRET` (Intuit app credentials for CT Pros)",
               "Open the app → Settings → QuickBooks → click 'Connect to QuickBooks'",
@@ -277,7 +277,7 @@
           "block": { "start": "16:45", "end": "17:45" },
           "prep": {
             "what": "Spin up a fresh DigitalOcean droplet for CT Pros with its real domain and run the proven deploy scripts — the infra is ready, this is pure execution.",
-            "understand": "The same deploy scripts that run HighTech work here; only the target IP, domain, and database differ. The t24 company info commit MUST be included in the clone before running — or production ships HighTech branding. CT Pros gets its own isolated droplet and DB, completely separate from HighTech's environment. Allow up to 30 min for DNS propagation after pointing the A record.",
+            "understand": "The same deploy scripts that run HighTech work here; only target IP, domain, and database differ. The t24 company info commit MUST be included before running this deploy, or production ships HighTech branding. CT Pros gets its own isolated droplet and DB, completely separate from HighTech's environment. DNS propagation can take up to 30 min.",
             "approach": [
               "Provision a new DO droplet for CT Pros (Ubuntu 22.04, match HighTech's tier) — point CT Pros's domain DNS A record to the new IP",
               "SSH in, clone the ct-pros-sys repo (confirm the t24 commit is included), run `deploy/*.sh` to install PHP, nginx, MySQL",
@@ -286,7 +286,7 @@
             ],
             "resources": [
               "DigitalOcean dashboard — create new droplet (~$24/mo basic tier)",
-              "CT Pros domain DNS registrar — point A record to the new droplet IP",
+              "CT Pros domain DNS registrar — point A record to new droplet IP",
               "`deploy/*.sh` + `docker-compose.yml` in the ct-pros-sys repo",
               "`docs/deployment.md` — the proven step-by-step deploy guide"
             ]
