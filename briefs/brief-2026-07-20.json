@@ -1,0 +1,199 @@
+{
+  "date": "2026-07-20",
+  "generated_at": "2026-07-20T10:07:00Z",
+  "data_as_of": "2026-07-20T05:00:05Z",
+  "greeting": "Morning, Haniel. Monday — fresh week, let's make it count.",
+  "hype": "CT Pros is one domain purchase away from looking real, and the todos sweeper queue is YOUR hands today — close both and you've moved two critical projects forward before the week even gets going.",
+  "notice": "CT Pros staging app + VPS todos-skill should be running before you start — you'll need both today.",
+  "difficulty": {
+    "rating": "Solid",
+    "planned_minutes": 330,
+    "available_minutes": 360,
+    "ratio": 0.92,
+    "note": ""
+  },
+  "window": { "start": "09:00", "end": "18:00" },
+  "schedule": [
+    { "start": "09:00", "end": "09:30", "slug": "ct-pros-sys", "project": "CT Pros", "task_id": "t62", "title": "Buy CT Pros domain + wire real website/email", "estimate": "s", "kind": "task" },
+    { "start": "09:45", "end": "11:45", "slug": "claude-todos-skill", "project": "Tasks Platform (claude-todos-skill rebuild)", "task_id": "t20", "title": "Durable job queue (lease/heartbeat/reclaim, window-aware, priority, cap)", "estimate": "l", "kind": "task" },
+    { "start": "12:00", "end": "13:00", "kind": "lunch", "title": "Lunch" },
+    { "start": "13:00", "end": "14:00", "kind": "meeting", "title": "Call: Javier Gonzalez – DTF 1200 ink / tech support" },
+    { "start": "14:15", "end": "15:15", "slug": "ct-pros-sys", "project": "CT Pros", "task_id": "t24", "title": "Fill real CT Pros company contact info", "estimate": "m", "kind": "task" },
+    { "start": "15:30", "end": "16:30", "slug": "claude-todos-skill", "project": "Tasks Platform (claude-todos-skill rebuild)", "task_id": "t29", "title": "Daemon-side cross-process refresh lock (prereq for live SWEEPER_REPOS)", "estimate": "m", "kind": "task" },
+    { "start": "16:45", "end": "17:45", "slug": "claude-todos-skill", "project": "Tasks Platform (claude-todos-skill rebuild)", "task_id": "t22", "title": "Unprivileged CI lane + sensitive-path human gate", "estimate": "m", "kind": "task" }
+  ],
+  "projects": [
+    {
+      "slug": "ct-pros-sys",
+      "project": "CT Pros",
+      "client": "CT Pros",
+      "tasks_total": 72,
+      "tasks_done": 50,
+      "on_deck": false,
+      "tasks": [
+        {
+          "id": "t62",
+          "title": "Buy CT Pros domain + wire real website/email",
+          "phase": "Deployment - Infra & go-live",
+          "estimate": "s",
+          "priority": "high",
+          "status": "todo",
+          "notes": "CT Pros has no website/domain yet. Buy a domain, then replace COMPANY_WEBSITE + COMPANY_EMAIL placeholders.",
+          "block": { "start": "09:00", "end": "09:30" },
+          "prep": {
+            "what": "Purchase a domain for CT Pros and update the app's website/email placeholders so client PDFs and emails show real contact info.",
+            "understand": "The app currently has blank or placeholder values for COMPANY_WEBSITE and COMPANY_EMAIL that appear on every invoice and proposal PDF. CT Pros LLC is registered in CT — the domain should match the brand. Once bought, you'll need a real email address and to update the app settings.",
+            "approach": [
+              "Buy a domain (e.g. ctpros.com or ctprospaint.com) via Namecheap or Google Domains matching CT Pros' brand.",
+              "Set up a business email (e.g. info@ctpros.com) via Zoho Mail or Google Workspace — free tier is fine for now.",
+              "Update COMPANY_WEBSITE and COMPANY_EMAIL in the app's Settings or `.env` with the real values.",
+              "Generate a test invoice PDF and verify the domain/email appear correctly before calling it done."
+            ],
+            "resources": [
+              "Namecheap or Google Domains for domain purchase ($12-15/yr .com)",
+              "CT Pros LLC legal name from CT SoS registration (BER:2586266) for accurate domain labeling",
+              "App Company Profile Settings page or `.env` for COMPANY_WEBSITE / COMPANY_EMAIL",
+              "Zoho Mail free plan for a quick business email setup"
+            ]
+          }
+        },
+        {
+          "id": "t24",
+          "title": "Fill real CT Pros company contact info",
+          "phase": "Deployment - Infra & go-live",
+          "estimate": "m",
+          "priority": "high",
+          "status": "in_progress",
+          "notes": "Set real CT Pros identity (prints on client PDFs/emails). Legal entity: CT Pros LLC (CT SoS US-CT.BER:2586266, ACTIVE).",
+          "block": { "start": "14:15", "end": "15:15" },
+          "prep": {
+            "what": "Enter the complete CT Pros legal identity into the system so all generated documents (invoices, proposals, PDFs) reflect the real business.",
+            "understand": "The Company Profile section in the app's Settings controls what prints on every client-facing document. CT Pros LLC is the legal entity. If the domain is bought this morning (t62), fold the real website and email in here. Getting this right is a prerequisite for go-live — clients can't receive docs with blank or placeholder contact info.",
+            "approach": [
+              "Open Company Profile / Settings in the CT Pros app.",
+              "Fill in: legal name (CT Pros LLC), Connecticut business address, phone, email (from t62), website (new domain from t62).",
+              "Generate a sample invoice PDF with a real or test client and verify all contact fields render correctly.",
+              "Check the proposal/estimate PDF as well — same template, same fields."
+            ],
+            "resources": [
+              "CT Pros LLC CT SoS filing for official registered address",
+              "The new domain and email from t62 (done this morning)",
+              "CT Pros app running locally or on staging to verify PDF output",
+              "app/settings/company or equivalent settings page path"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "slug": "claude-todos-skill",
+      "project": "Tasks Platform (claude-todos-skill rebuild)",
+      "client": "",
+      "tasks_total": 31,
+      "tasks_done": 21,
+      "on_deck": false,
+      "tasks": [
+        {
+          "id": "t20",
+          "title": "Durable job queue (lease/heartbeat/reclaim, window-aware, priority, cap)",
+          "phase": "M3 · Phase 6 — Sweeper + CI/deploy",
+          "estimate": "l",
+          "priority": "high",
+          "status": "todo",
+          "notes": "Core job queue for the sweeper with lease/heartbeat/reclaim, work-window awareness, priority ordering, and a concurrency cap.",
+          "block": { "start": "09:45", "end": "11:45" },
+          "prep": {
+            "what": "Build the Postgres-backed job queue that the AI sweeper runs on — with lease-based claiming, heartbeat keep-alive, stale-lease reaper, work-window awareness, priority ordering, and a per-repo concurrency cap.",
+            "understand": "This is the foundation for Phase 6. Without a durable queue, the sweeper can't run safely across VPS restarts or concurrent workers. Key pattern: a job has a `lease_expires_at`; a worker claims it atomically (`UPDATE WHERE status='queued' ... FOR UPDATE SKIP LOCKED`), sends heartbeats to extend the lease, and a background reaper resets expired leases back to queued. Window-awareness: jobs that can't run outside the 5h work window check current time before claiming. Priority + cap ensures high-priority agent fixes don't get blocked by a pile of low-priority linting jobs.",
+            "approach": [
+              "Add a `sweeper_jobs` table migration: id, task_id (FK), status (queued/running/done/failed), priority (int), window_eligible (bool), worker_id, lease_expires_at, heartbeat_at, attempts, max_attempts, created_at, updated_at.",
+              "Implement `claimNextJob(workerId, windowNow)`: atomic `UPDATE ... WHERE status='queued' AND (window_eligible=false OR windowNow) ORDER BY priority DESC LIMIT 1` — returns the claimed job or null (no work / outside window).",
+              "Implement `heartbeat(jobId, workerId)`: extends `lease_expires_at` by config interval; rejected if worker_id doesn't match (safety).",
+              "Implement `reclaimStaleLease()`: scheduled every 30s — resets rows where `status='running' AND lease_expires_at < now() AND attempts < max_attempts` back to `queued`; sets `failed` on exhausted ones.",
+              "Write unit tests: claim returns highest-priority job; heartbeat extends lease; stale lease reclaimed; window gate blocks outside hours."
+            ],
+            "resources": [
+              "VPS Postgres `todos_platform` DB (existing Phase 3 connection via `lib/pg-board-repository.ts`)",
+              "`db/migrate.ts` migration runner for the new table",
+              "Phase 5 triage queue as a reference for the existing job patterns",
+              "Postgres `FOR UPDATE SKIP LOCKED` docs for the atomic claim pattern",
+              "Work-window config: 09:00-18:00"
+            ]
+          }
+        },
+        {
+          "id": "t29",
+          "title": "Daemon-side cross-process refresh lock (prereq for live SWEEPER_REPOS)",
+          "phase": "M3 · Phase 6 — Sweeper + CI/deploy",
+          "estimate": "m",
+          "priority": "high",
+          "status": "todo",
+          "notes": "The refresh CLI uses a per-repo O_EXCL lockfile. The daemon must honor the SAME lock. Until done: run refresh ONLY while the sweeper is stopped.",
+          "block": { "start": "15:30", "end": "16:30" },
+          "prep": {
+            "what": "Make the sweeper daemon acquire the same per-repo file lock the refresh CLI uses, so the two processes can't race and corrupt a repo mid-refresh.",
+            "understand": "Right now the CLI refresh takes a per-repo `O_EXCL` lockfile at `SWEEPER_STATE_DIR/repos/<slug>.lock`. The daemon uses an in-process lock — invisible to the CLI. If both run at the same time, the sweeper starts a job on code that the CLI is currently pulling/rebuilding. The fix: before the daemon starts a job for repo X, it must try to acquire the SAME file-based lock. If it can't (CLI is refreshing), it defers the job — not fails, just waits. Release it when the job lifecycle for that repo ends.",
+            "approach": [
+              "Find the lock file path in the CLI refresh code (likely `path.join(SWEEPER_STATE_DIR, 'repos', slug + '.lock')`).",
+              "In the daemon's job-start path, before spawning a worktree or any per-repo work: `fs.openSync(lockPath, fs.constants.O_CREAT | fs.constants.O_EXCL | fs.constants.O_WRONLY)` — if EEXIST, defer the job (re-queue or skip this cycle).",
+              "In the daemon's job-complete/fail cleanup: `fs.unlinkSync(lockPath)` to release.",
+              "Add an integration test: open the lockfile, attempt a daemon job claim for that repo, assert it defers correctly.",
+              "Update the notes on t29 — the 'run refresh only while sweeper is stopped' caveat can be removed once this lands."
+            ],
+            "resources": [
+              "CLI refresh lock implementation (look for `O_EXCL` or `.lock` in the sweeper source)",
+              "`SWEEPER_STATE_DIR` env var / config",
+              "Node.js `fs.constants.O_EXCL` docs for cross-process exclusive lock",
+              "The daemon's job lifecycle code (find where it starts per-repo work)"
+            ]
+          }
+        },
+        {
+          "id": "t22",
+          "title": "Unprivileged CI lane + sensitive-path human gate",
+          "phase": "M3 · Phase 6 — Sweeper + CI/deploy",
+          "estimate": "m",
+          "priority": "high",
+          "status": "todo",
+          "notes": "No secrets, no pull_request_target. Sensitive-path changes (auth, payments, CI config) need human approval even if the quality gate passes.",
+          "block": { "start": "16:45", "end": "17:45" },
+          "prep": {
+            "what": "Build the CI lane that runs the quality gate with zero-secret access, plus a hard gate that blocks auto-merge for any change touching sensitive paths.",
+            "understand": "The sweeper auto-ships code. Two security invariants must hold: (1) the CI runner has no secrets — no production tokens, no deployment creds, and especially no `pull_request_target` (GitHub's supply-chain exploit vector). (2) Even if tests pass, certain paths MUST have a human in the loop before merge — anything touching auth, payments, database migrations, CI config, or `.env` files. The Phase 5 decision inbox already handles human approval flows; you're wiring the trigger into the CI gate.",
+            "approach": [
+              "Define the CI job: runs `npm test`, `npm run lint`, `npm run build` with a read-only `GITHUB_TOKEN` and NO additional secrets injected.",
+              "Implement `isSensitivePath(filePaths: string[]): boolean` — return true if any path matches: `**/*auth*`, `**/stripe*`, `**/migrations/**`, `**/.env*`, `**/ci/**`, `**/deploy/**`, `**/security*`.",
+              "After quality gate passes: if `isSensitivePath(changedFiles)` → set job status to `needs_human_review` and push a decision card to the Phase 5 inbox.",
+              "Only the inbox `approve` action triggers the actual merge/deploy step — the sweeper is never trusted to bypass this.",
+              "Write tests: a change to `auth/login.ts` must pause for human gate; a change to `lib/utils.ts` must auto-proceed after green CI."
+            ],
+            "resources": [
+              "Phase 5 decision inbox code (createDecisionCard, answer→fire-agent flow from t19)",
+              "GitHub Actions workflow syntax + `GITHUB_TOKEN` permissions docs",
+              "Sensitive path glob list — expand as you audit the real repo structure",
+              "Existing sweeper quality gate code (t21 stub)",
+              "GitHub docs on `pull_request_target` attack vector"
+            ]
+          }
+        }
+      ]
+    },
+    { "slug": "gs-woodworking-spec", "project": "GS-ERP", "client": "GS Woodworking LLC", "tasks_total": 77, "tasks_done": 36, "on_deck": true, "tasks": [] },
+    { "slug": "module-project", "project": "Module", "client": "Internal", "tasks_total": 63, "tasks_done": 18, "on_deck": true, "tasks": [] },
+    { "slug": "azteamai-system", "project": "AZ Team AI System", "client": "AZ Team AI (internal)", "tasks_total": 73, "tasks_done": 43, "on_deck": true, "tasks": [] },
+    { "slug": "gerenciamento-obra-g", "project": "GerenciaObra", "client": "Glaywson", "tasks_total": 48, "tasks_done": 42, "on_deck": true, "tasks": [] },
+    { "slug": "haniel-finances", "project": "Haniel Finances", "client": "Personal", "tasks_total": 34, "tasks_done": 19, "on_deck": true, "tasks": [] },
+    { "slug": "influencer-agent", "project": "influencer-agent", "client": "AZ Team AI (own SaaS product)", "tasks_total": 51, "tasks_done": 8, "on_deck": true, "tasks": [] },
+    { "slug": "procounters-erp", "project": "procounters_erp", "client": "ProCounters Inc.", "tasks_total": 121, "tasks_done": 109, "on_deck": true, "tasks": [] },
+    { "slug": "takeoff-engine", "project": "Takeoff Engine", "client": "AZ Team AI", "tasks_total": 34, "tasks_done": 23, "on_deck": true, "tasks": [] }
+  ],
+  "waiting_on": [
+    { "project": "CT Pros", "task_id": "t25", "title": "Connect CT Pros's own QuickBooks (fresh OAuth)", "reason": "Rafa (CT Pros owner) needs to connect his own QBO company — requires his credentials and his accountant's involvement." },
+    { "project": "CT Pros", "task_id": "t60", "title": "Confirm catalog pricing + paint coverage/coats vs Rafa's real suppliers", "reason": "Seeded prices are market-estimate defaults. Rafa needs to verify against his actual supplier pricing before go-live." },
+    { "project": "CT Pros", "task_id": "t65", "title": "Confirm apples-to-apples estimate margin target with Rafa", "reason": "Margin target basis (contribution/gross margin excluding overhead) needs Rafa's sign-off before estimates go out to clients." },
+    { "project": "GerenciaObra", "task_id": "t38", "title": "Verify manifest + icons all resolutions + splash screen", "reason": "iOS apple-touch-startup-image matrix + real-device install-prompt confirmation pending — needs HTTPS host + a phone." },
+    { "project": "GerenciaObra", "task_id": "t39", "title": "Mobile camera flow end-to-end check (back camera, preview, capture)", "reason": "Pending Haniel's phone test on LAN (192.168.86.46:8000): complete Nova Despesa selects → tap camera → confirm rear camera + preview + OCR." },
+    { "project": "GerenciaObra", "task_id": "t45", "title": "Mapear IDs do lado Makro (CodEmpresa/Fornecedor/CentroCusto)", "reason": "Waiting for Makro to activate the official production bank (CodEmpresa + real FKs for Glaywson's company) — external, post-tests." },
+    { "project": "GerenciaObra", "task_id": "t48", "title": "Validar shape/mapeamento de linha populada (RegEntradas + ControleFornecedores)", "reason": "Waiting for Makro (Deborah) to seed 1 test entrada + 1 título a pagar in the test base — message sent 2026-07-15, awaiting reply." }
+  ]
+}
