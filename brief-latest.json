@@ -1,85 +1,25 @@
 {
-  "date": "2026-07-21",
-  "generated_at": "2026-07-21T10:15:00Z",
-  "data_as_of": "2026-07-21T05:00:02+00:00",
-  "greeting": "Morning, Haniel. Tuesday, July 21st — let's get after it.",
-  "hype": "Today is deploy day for AZ Team AI System. You built the whole billing engine from scratch. Time to flip the switch and get it live.",
-  "notice": "Calendar reminder: pick up Bella from the babysitter today.",
+  "date": "2026-07-22",
+  "generated_at": "2026-07-22T10:15:00Z",
+  "data_as_of": "2026-07-22T05:00:02+00:00",
+  "greeting": "Morning, Haniel. Wednesday, July 22nd — pick it up exactly where you left it.",
+  "hype": "Today you ship AZ Team AI to production and build the job queue that makes the sweeper autonomous — two big moves that both close before dinner.",
   "difficulty": {
     "rating": "Solid",
-    "planned_minutes": 390,
-    "available_minutes": 405,
-    "ratio": 0.96,
+    "planned_minutes": 420,
+    "available_minutes": 420,
+    "ratio": 1.0,
     "note": ""
   },
   "window": { "start": "09:00", "end": "18:00" },
   "schedule": [
-    {
-      "start": "09:00",
-      "end": "09:30",
-      "slug": "azteamai-system",
-      "project": "AZ Team AI System",
-      "task_id": "t37",
-      "title": "Secrets in .env.production (Stripe both modes, Chatwoot, mail)",
-      "estimate": "s",
-      "kind": "task"
-    },
-    {
-      "start": "09:45",
-      "end": "11:45",
-      "slug": "azteamai-system",
-      "project": "AZ Team AI System",
-      "task_id": "t36",
-      "title": "DO droplet deploy (app/queue/scheduler/TLS/MySQL8, scheduler OFF)",
-      "estimate": "l",
-      "kind": "task"
-    },
-    {
-      "start": "12:00",
-      "end": "13:00",
-      "kind": "lunch",
-      "title": "Lunch"
-    },
-    {
-      "start": "13:00",
-      "end": "14:00",
-      "slug": "azteamai-system",
-      "project": "AZ Team AI System",
-      "task_id": "t39",
-      "title": "Reconciliation gate: imported AR + recurring state matches azteam_crm ground truth",
-      "estimate": "m",
-      "kind": "task"
-    },
-    {
-      "start": "14:15",
-      "end": "14:45",
-      "slug": "azteamai-system",
-      "project": "AZ Team AI System",
-      "task_id": "t54",
-      "title": "Verify Stripe webhook CSRF exemption (e2e test)",
-      "estimate": "s",
-      "kind": "task"
-    },
-    {
-      "start": "15:00",
-      "end": "17:00",
-      "slug": "claude-todos-skill",
-      "project": "Tasks Platform",
-      "task_id": "t20",
-      "title": "Durable job queue (lease/heartbeat/reclaim, window-aware, priority, cap)",
-      "estimate": "l",
-      "kind": "task"
-    },
-    {
-      "start": "17:15",
-      "end": "17:45",
-      "slug": "claude-todos-skill",
-      "project": "Tasks Platform",
-      "task_id": "t30",
-      "title": "Writer docker integration test on a real onboarded repo",
-      "estimate": "s",
-      "kind": "task"
-    }
+    { "start": "09:00", "end": "09:30", "slug": "azteamai-system", "project": "AZ Team AI System", "task_id": "t37", "title": "Secrets in .env.production (Stripe both modes, Chatwoot, mail)", "estimate": "s", "kind": "task" },
+    { "start": "09:45", "end": "11:45", "slug": "azteamai-system", "project": "AZ Team AI System", "task_id": "t36", "title": "DO droplet deploy (app/queue/scheduler/TLS/MySQL8, scheduler OFF)", "estimate": "l", "kind": "task" },
+    { "start": "12:00", "end": "13:00", "slug": "azteamai-system", "project": "AZ Team AI System", "task_id": "t39", "title": "Reconciliation gate: imported AR + recurring state matches azteam_crm ground truth", "estimate": "m", "kind": "task" },
+    { "start": "13:00", "end": "14:00", "kind": "lunch", "title": "Lunch" },
+    { "start": "14:00", "end": "14:30", "slug": "azteamai-system", "project": "AZ Team AI System", "task_id": "t54", "title": "Verify Stripe webhook CSRF exemption (e2e test)", "estimate": "s", "kind": "task" },
+    { "start": "14:45", "end": "16:45", "slug": "claude-todos-skill", "project": "Tasks Platform (claude-todos-skill rebuild)", "task_id": "t20", "title": "Durable job queue (lease/heartbeat/reclaim, window-aware, priority, cap)", "estimate": "l", "kind": "task" },
+    { "start": "17:00", "end": "18:00", "slug": "claude-todos-skill", "project": "Tasks Platform (claude-todos-skill rebuild)", "task_id": "t22", "title": "Unprivileged CI lane + sensitive-path human gate", "estimate": "m", "kind": "task" }
   ],
   "projects": [
     {
@@ -100,19 +40,19 @@
           "notes": null,
           "block": { "start": "09:00", "end": "09:30" },
           "prep": {
-            "what": "Create the production `.env.production` file on azteam-vps with all real secrets — Stripe live+test keys, Chatwoot token, SMTP credentials — before the deploy script runs.",
-            "understand": "Without this file the deploy will boot with null secrets or wrong Stripe mode. `CACHE_STORE=database` is required for `onOneServer/ShouldBeUnique` to work. Keep `APP_SCHEDULER_ENABLED=false` (the scheduler must stay OFF until reconciliation passes after deploy). File lives at `/opt/azteamai-system/.env.production`, chmod 600.",
+            "what": "Create `/opt/azteamai-system/.env.production` on azteam-vps with all real secrets — Stripe live+test keys, Chatwoot token, SMTP credentials, `APP_URL`, `CACHE_STORE=database`, scheduler OFF.",
+            "understand": "Dependency zero for the deploy. Two critical flags: `APP_SCHEDULER_ENABLED=false` keeps `billing:run-recurring` dormant until t39 reconciliation passes, and `CACHE_STORE=database` is required for `onOneServer`/`ShouldBeUnique` to work across supervisor workers. `chmod 600` the file — it holds live Stripe keys.",
             "approach": [
-              "SSH into azteam-vps (`ssh azteam-vps`).",
-              "Create/edit `/opt/azteamai-system/.env.production`: set `STRIPE_KEY`, `STRIPE_SECRET`, `STRIPE_WEBHOOK_SECRET` (both test+live modes), `CHATWOOT_API_TOKEN`, `MAIL_HOST/PORT/USERNAME/PASSWORD/FROM_ADDRESS`, `APP_URL=https://fin.azteam.cloud`, `CACHE_STORE=database`, `APP_SCHEDULER_ENABLED=false`.",
-              "Run `php artisan config:cache` after writing the file.",
-              "Spot-check: `php artisan tinker --execute='echo config(\"services.stripe.secret\");'` — should not be null."
+              "SSH azteam-vps: `ssh azteam-vps`.",
+              "Create `/opt/azteamai-system/.env.production` from `.env.example`. Set: `APP_URL=https://fin.azteam.cloud`, `APP_SCHEDULER_ENABLED=false`, `CACHE_STORE=database`, `STRIPE_KEY`, `STRIPE_SECRET`, `STRIPE_WEBHOOK_SECRET` (both modes), `CHATWOOT_API_TOKEN`, `MAIL_HOST/PORT/USERNAME/PASSWORD/FROM_ADDRESS`.",
+              "`chmod 600 /opt/azteamai-system/.env.production`.",
+              "Verify: `php artisan config:cache && php artisan tinker --execute='echo config(\"services.stripe.secret\");'` — must not be null."
             ],
             "resources": [
-              "Stripe dashboard → Developers → API keys (both live and test mode)",
-              "Chatwoot → Settings → API Access Token",
-              "Mail SMTP credentials from your email provider (check `.env.example` for field names)",
-              "SSH alias: azteam-vps"
+              "Stripe Dashboard → Developers → API Keys (test and live mode tabs)",
+              "Chatwoot → Settings → API Access Tokens",
+              "Mail SMTP creds from your email provider — `.env.example` has the exact key names",
+              "azteam-vps SSH alias"
             ]
           }
         },
@@ -123,25 +63,25 @@
           "estimate": "l",
           "priority": "high",
           "status": "todo",
-          "notes": "Deploy TOPOLOGY = bare-metal LEMP on azteam-vps (NOT Docker — docker stack was reverted). Use `./deploy/redeploy.sh` (`vps-deploy.sh` is STALE). CACHE_STORE=database. Scheduler DISABLED until reconciliation passes.",
+          "notes": "Deploy TOPOLOGY = bare-metal LEMP on azteam-vps (NOT Docker — docker stack was reverted commit e6a1f23). Use `./deploy/redeploy.sh` (`vps-deploy.sh` is STALE). CACHE_STORE=database. Scheduler DISABLED until reconciliation passes.",
           "block": { "start": "09:45", "end": "11:45" },
           "prep": {
-            "what": "Deploy the AZ Team AI billing system to production at `https://fin.azteam.cloud` on azteam-vps using bare-metal LEMP (php8.4-fpm + supervisor + MySQL 8).",
-            "understand": "This is NOT a Docker deploy — the Docker stack was added and reverted (commit e6a1f23). The deploy script is `./deploy/redeploy.sh` (not the stale `vps-deploy.sh`). Stack: php8.4-fpm, supervisor for `queue:work` workers, cron for scheduler (off until t39 passes). The nginx + certbot pattern is the same as your `aztakeoff.azteamai.com` deploy. Scheduler must stay OFF — the `cutover_completed` flag (t53) must be set only after reconciliation.",
+            "what": "Deploy AZ Team AI billing to `https://fin.azteam.cloud` on azteam-vps: php8.4-fpm + supervisor queue workers + nginx vhost + Let's Encrypt TLS + MySQL 8. Scheduler stays OFF.",
+            "understand": "NOT Docker — Docker stack was reverted (commit e6a1f23). The correct script is `./deploy/redeploy.sh`, not the stale `vps-deploy.sh`. Nginx vhost pattern is identical to your existing `aztakeoff.azteamai.com` config — copy and swap the domain. `APP_SCHEDULER_ENABLED=false` must stay off until t39 reconciliation passes.",
             "approach": [
-              "On azteam-vps: clone repo to `/opt/azteamai-system` via read-only deploy key (or `git pull` if already there). Run `./deploy/redeploy.sh`.",
-              "Create `azteamai` MySQL database if it doesn't exist: `mysql -u root -p -e 'CREATE DATABASE azteamai CHARACTER SET utf8mb4;'`. Migrations will run via the deploy script.",
-              "Set up nginx virtual host for `fin.azteam.cloud` pointing to `/opt/azteamai-system/public/`. Copy and adapt the `aztakeoff.azteamai.com` nginx config — same shape.",
-              "Run `certbot --nginx -d fin.azteam.cloud` for Let's Encrypt TLS.",
-              "Configure supervisor: add a `azteamai-worker.conf` program block for `php artisan queue:work --sleep=3 --tries=3`. Restart supervisor.",
-              "Smoke-test: `curl https://fin.azteam.cloud/health` → 200. Open the URL in a browser and verify the login page loads."
+              "azteam-vps: `cd /opt && git clone <repo> azteamai-system` (or `git pull` if already present). Run `./deploy/redeploy.sh`.",
+              "Create MySQL DB if absent: `mysql -u root -p -e 'CREATE DATABASE azteamai CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;'`.",
+              "Copy nginx config: `cp /etc/nginx/sites-available/aztakeoff.azteamai.com /etc/nginx/sites-available/fin.azteam.cloud`. Replace domain + root path to `/opt/azteamai-system/public`. Enable + reload: `ln -s ... sites-enabled/ && nginx -t && systemctl reload nginx`.",
+              "Run `certbot --nginx -d fin.azteam.cloud` for TLS.",
+              "Add supervisor worker: `/etc/supervisor/conf.d/azteamai-worker.conf` for `php artisan queue:work --sleep=3 --tries=3`. Run `supervisorctl reread && supervisorctl update && supervisorctl start azteamai-worker:*`.",
+              "Smoke-test: `curl -sI https://fin.azteam.cloud/` → 200. `supervisorctl status azteamai-worker:*` → RUNNING."
             ],
             "resources": [
-              "`./deploy/redeploy.sh` in the repo root",
-              "nginx config for `aztakeoff.azteamai.com` on the VPS — copy and swap domain",
-              "Supervisor config files already on the VPS at `/etc/supervisor/conf.d/`",
-              "azteam-vps SSH alias",
-              "certbot already installed on the box (used for aztakeoff deploy)"
+              "`./deploy/redeploy.sh` in the repo root — the only correct deploy script",
+              "`/etc/nginx/sites-available/aztakeoff.azteamai.com` on the VPS — your copy template",
+              "`/etc/supervisor/conf.d/` on azteam-vps — existing worker conf files for the pattern",
+              "Certbot already installed on the box (used for aztakeoff deploy)",
+              "azteam-vps SSH alias"
             ]
           }
         },
@@ -153,21 +93,21 @@
           "priority": "high",
           "status": "todo",
           "notes": "`CrmImporter::reconcile()` (line ~277) already computes the comparison. Extract to public `ReconciliationGateService` + `billing:reconcile-cutover` artisan command. PASS is the only proceed signal to enable the scheduler.",
-          "block": { "start": "13:00", "end": "14:00" },
+          "block": { "start": "12:00", "end": "13:00" },
           "prep": {
-            "what": "Build the `billing:reconcile-cutover` artisan command that verifies imported AR balances and recurring schedules match the azteam_crm source of truth. PASS = safe to go live.",
-            "understand": "The CRM import (t38) ran and data is now in the new system. `CrmImporter::reconcile()` at ~line 277 already has the comparison logic. You need to (1) extract it into a `ReconciliationGateService`, (2) wrap it in a rerunnable artisan command that prints a per-client breakdown table, and (3) exits 0 on PASS / 1 on FAIL. Two checks: Σ `balance_due` across all clients matches azteam_crm, AND next-charge dates per recurring project are correct.",
+            "what": "Build `billing:reconcile-cutover` artisan command: compare imported AR balances + recurring schedules against azteam_crm ground truth. Exit 0 on PASS — the only green light to proceed to t53 and enable the scheduler.",
+            "understand": "The comparison logic already exists in `CrmImporter::reconcile()` at ~line 277. You are extracting and wrapping it, not rewriting it. Two checks: (1) Σ `balance_due` per client matches azteam_crm totals; (2) next-charge dates per recurring project are correct. Do not touch t53 or t40 until this exits 0.",
             "approach": [
-              "Open `app/CrmImporter.php` and read the `reconcile()` method carefully (line ~277).",
-              "Create `app/Services/ReconciliationGateService.php` with a `check(): ReconcileResult` method containing the reconcile logic.",
-              "Create `app/Console/Commands/ReconcileCutover.php` — calls the service, uses `$this->table()` to render per-client breakdown, exits 0 (PASS) or 1 (FAIL). Make it idempotent (safe to run multiple times).",
-              "Run `php artisan billing:reconcile-cutover` on the deployed system and read the output. Fix any discrepancies before enabling the scheduler."
+              "Open `app/CrmImporter.php`, find and read `reconcile()` at ~line 277.",
+              "Create `app/Services/ReconciliationGateService.php` with `check(): ReconcileResult`. `ReconcileResult` has `passed: bool`, `rows: array`, `summary: string`.",
+              "Create `app/Console/Commands/ReconcileCutover.php` — call the service, render with `$this->table()` (columns: client, CRM balance, imported balance, status). `return $result->passed ? Command::SUCCESS : Command::FAILURE`.",
+              "SSH azteam-vps, run: `php artisan billing:reconcile-cutover`. Read every row. Fix any MISMATCH before proceeding to t53 + t40."
             ],
             "resources": [
-              "`app/CrmImporter.php` — find the `reconcile()` method (~line 277) for the existing logic",
-              "azteam_crm database connection (check `.env.production` for a second DB or connect directly)",
-              "Laravel artisan command docs: `$this->table()` for tabular output, `$this->error()` + `return 1` for fail",
-              "Existing import data from t38 is already in the deployed DB"
+              "`app/CrmImporter.php` — find `reconcile()` at ~line 277",
+              "azteam_crm DB connection — check `.env.production` for a secondary `DB_*` set, or connect via `mysql` CLI",
+              "Laravel artisan: `$this->table(['Client', 'CRM', 'Imported', 'Status'], $rows)`, `Command::SUCCESS`, `Command::FAILURE`",
+              "azteam-vps SSH alias"
             ]
           }
         },
@@ -178,23 +118,22 @@
           "estimate": "s",
           "priority": "med",
           "status": "todo",
-          "notes": "Exemption already coded in `bootstrap/app.php`. Need a test: POST `/webhooks/stripe` with signed payload + NO CSRF token → 200 not 419. Exact path match, no trailing slash.",
-          "block": { "start": "14:15", "end": "14:45" },
+          "notes": "Exemption already coded in `bootstrap/app.php`. POST `/webhooks/stripe` with signed payload + NO CSRF token → 200 not 419. Exact path match, no trailing slash.",
+          "block": { "start": "14:00", "end": "14:30" },
           "prep": {
-            "what": "Write a Pest test that locks the Stripe webhook CSRF exemption — POST to `/webhooks/stripe` with a valid signature but no CSRF token must return 200, not 419.",
-            "understand": "The CSRF exemption is already coded in `bootstrap/app.php` (`validateCsrfTokens except ['webhooks/stripe']`). Without this test, someone could accidentally remove the exemption and break all live Stripe webhook delivery in silence. Exact path match matters — no trailing slash. The test uses Stripe's own signature generation so it's a realistic payload.",
+            "what": "Write a Pest test proving POST to `/webhooks/stripe` with a valid Stripe signature and no CSRF token returns non-419 — locking the exemption against regressions.",
+            "understand": "The exemption lives in `bootstrap/app.php` (`validateCsrfTokens except ['webhooks/stripe']`). Without this test an accidental removal kills live Stripe webhook delivery silently. Path must match exactly — no trailing slash. You are testing the exemption exists, not the handler logic, so any non-419 response (200, 400, 403) passes.",
             "approach": [
-              "Look at existing webhook tests in `tests/Feature/` for how Stripe payloads are built in this codebase.",
-              "Create `tests/Feature/Stripe/WebhookCsrfExemptionTest.php`.",
-              "Build a signed payload: use `\\Stripe\\WebhookSignature::generateHeader()` (or `\\Stripe\\Webhook::generateSignature()`) with `STRIPE_WEBHOOK_SECRET`.",
-              "POST to `/webhooks/stripe` (exact, no trailing slash) WITHOUT a CSRF token (no `withCsrf()` call). Assert the response is NOT 419 — accept 200 or any other non-CSRF error to be signature-agnostic.",
-              "Run `php artisan test tests/Feature/Stripe/WebhookCsrfExemptionTest.php` — should pass."
+              "Scan `tests/Feature/` for any existing webhook test to see how payloads are built in this codebase.",
+              "Create `tests/Feature/Stripe/WebhookCsrfExemptionTest.php`. Build signed payload: `$payload = json_encode(['type' => 'invoice.paid']); $header = \\Stripe\\WebhookSignature::generateHeader($payload, config('services.stripe.webhook_secret'), time());`",
+              "POST WITHOUT CSRF: `$this->withHeaders(['Stripe-Signature' => $header])->postJson('/webhooks/stripe', json_decode($payload, true))`. Assert `$response->status() !== 419`.",
+              "Run: `php artisan test --filter WebhookCsrfExemption` — green."
             ],
             "resources": [
               "`bootstrap/app.php` — the `validateCsrfTokens except [...]` block",
-              "Stripe PHP SDK: `\\Stripe\\WebhookSignature` or `\\Stripe\\Webhook` for test header generation",
-              "Existing `tests/Feature/` — find any test that hits a webhook route for the pattern",
-              "`STRIPE_WEBHOOK_SECRET` from `.env`"
+              "Stripe PHP SDK: `\\Stripe\\WebhookSignature::generateHeader(payload, secret, timestamp)`",
+              "`STRIPE_WEBHOOK_SECRET` from `.env`",
+              "Pest docs: `withHeaders()`, `postJson()`, `->status()`"
             ]
           }
         }
@@ -216,49 +155,48 @@
           "priority": "high",
           "status": "todo",
           "notes": null,
-          "block": { "start": "15:00", "end": "17:00" },
+          "block": { "start": "14:45", "end": "16:45" },
           "prep": {
-            "what": "Build a Postgres-backed durable job queue with atomic claim (`FOR UPDATE SKIP LOCKED`), heartbeat keep-alive, orphan reclaim, 5h window awareness, priority ordering, and concurrency cap — the engine the sweeper sits on.",
-            "understand": "Sweeper jobs run for minutes. If the worker dies, the job must be reclaimed and retried — only a DB-backed queue gives you that. `FOR UPDATE SKIP LOCKED` in Postgres is the race-safe way to claim exactly one job per worker. The 5h window means: don't start a job that would overrun the end of the activity window. Priority lets high-priority jobs jump the queue. Concurrency cap prevents all workers from stampeding on the same batch.",
+            "what": "Build the Postgres-backed durable job queue the sweeper sits on: `FOR UPDATE SKIP LOCKED` atomic claim, heartbeat keep-alive, orphan reclaim, 5h window-awareness, priority ordering, and concurrency cap.",
+            "understand": "Sweeper jobs run for minutes. A worker crash must not lose the job — only a DB-backed queue gives you that guarantee. `FOR UPDATE SKIP LOCKED` is the Postgres-native race-safe pattern: two workers race for the same queued row, one locks it and the other skips. Heartbeat proves the worker is alive — missing heartbeat means orphaned, so reclaim resets it to queued. `canStart(estimatedMs)` prevents starting a job that would overrun the 5h window close.",
             "approach": [
-              "Write the migration: `jobs` table with `id` (uuid), `type` (varchar), `payload` (jsonb), `status` (enum: queued/claimed/done/failed), `priority` (int, lower = higher priority), `leased_at` (timestamptz, nullable), `heartbeat_at` (timestamptz, nullable), `attempts` (int default 0), `created_at`.",
-              "Build `lib/queue/Queue.ts`: `enqueue(type, payload, priority?)`, `claim(workerId, timeoutMs)` using `FOR UPDATE SKIP LOCKED`, `heartbeat(id)`, `release(id, success|failure)`, `reclaim()` (finds `status=claimed AND leased_at < now() - timeoutMs` → resets to queued).",
-              "Add `canStart(estimatedDurationMs): boolean` — checks `now() + estimatedDurationMs < windowEnd`.",
-              "Write tests: two concurrent workers claiming the same queued job → only one wins; orphan job reclaimed after heartbeat timeout; priority ordering; window gate rejects when time remaining < estimatedDuration.",
-              "Run `bun test` — all green."
+              "Write the migration: `jobs` table with `id` (uuid), `type` (varchar), `payload` (jsonb), `status` (queued/claimed/done/failed enum), `priority` (int — lower number = higher priority), `leased_at` (timestamptz nullable), `heartbeat_at` (timestamptz nullable), `attempts` (int default 0), `created_at`.",
+              "Build `lib/queue/Queue.ts`: `enqueue(type, payload, priority?)`, `claim(workerId, timeoutMs)` using `SELECT ... FOR UPDATE SKIP LOCKED LIMIT 1`, `heartbeat(id)`, `release(id, 'done'|'failed')`, `reclaim()` (finds claimed jobs with stale `heartbeat_at` → resets to queued).",
+              "Add `canStart(estimatedDurationMs: number, windowEndMs: number): boolean` — returns `Date.now() + estimatedDurationMs < windowEndMs`.",
+              "Write tests: two concurrent `claim()` calls on the same job → exactly one wins; orphan reclaimed after heartbeat timeout; lower priority number claimed first; `canStart` false when `now + estimate > windowEnd`.",
+              "Run: `bun test lib/queue/` — all green."
             ],
             "resources": [
-              "Postgres `FOR UPDATE SKIP LOCKED` — the canonical pattern for pg-backed queues (search 'postgres job queue FOR UPDATE SKIP LOCKED')",
-              "`lib/pg-board-repository.ts` in this project — how the Postgres client is used here",
+              "Search 'postgres job queue FOR UPDATE SKIP LOCKED' for the canonical pattern with code examples",
+              "`lib/pg-board-repository.ts` in this project — shows how the Postgres client / `sql` tagged template is used here",
               "Bun test runner: `bun test` or `bun test lib/queue/`",
-              "`VPS_POSTGRES_URL` in `.env` for the `todos_platform` DB connection"
+              "`VPS_POSTGRES_URL` (or equivalent) in `.env` for the `todos_platform` DB connection"
             ]
           }
         },
         {
-          "id": "t30",
-          "title": "Writer docker integration test on a real onboarded repo",
+          "id": "t22",
+          "title": "Unprivileged CI lane + sensitive-path human gate",
           "phase": "M3 · Phase 6 — Sweeper + CI/deploy",
-          "estimate": "s",
-          "priority": "med",
+          "estimate": "m",
+          "priority": "high",
           "status": "todo",
-          "notes": "`refreshRepo` orchestration is unit-proven with mocked runners. Add ONE real in-image prep run against an onboarded repo to prove the docker transport end-to-end. The injected `RefreshRunners` seam makes this a ~30-min job once a repo is onboarded.",
-          "block": { "start": "17:15", "end": "17:45" },
+          "notes": "no secrets, no pull_request_target",
+          "block": { "start": "17:00", "end": "18:00" },
           "prep": {
-            "what": "Add one Docker integration test that runs `refreshRepo()` against a real onboarded repo using `DockerRefreshRunners` — not mocks — and verifies the prep outputs actually exist.",
-            "understand": "All existing sweeper tests mock the `RefreshRunners`. This test plugs in the real Docker runner to prove the transport end-to-end: repo is pulled, `prepareCommands` run inside the container, `prepareOutputs` exist after. The `RefreshRunners` injection seam (already in the code) makes this trivial. Pick Module-project — it already has a proven `prepareCommands/prepareOutputs` recipe in `SWEEPER_REPOS`.",
+            "what": "Create a GitHub Actions CI workflow that runs tests with zero secrets access, plus a CODEOWNERS file requiring human review before any PR touching auth, deploy, or queue code can merge.",
+            "understand": "`pull_request_target` runs with write permissions and full secret access — never use it in CI (well-known supply-chain attack vector). Unprivileged CI means `permissions: read-all` and no secrets referenced anywhere in the workflow. CODEOWNERS on sensitive paths (`lib/queue/`, `lib/sweeper/`, `.github/workflows/`, `deploy/`) means GitHub requires your explicit review before those PRs can merge.",
             "approach": [
-              "Open `SWEEPER_REPOS` config and find the Module-project entry — note its `prepareCommands` and `prepareOutputs`.",
-              "Create `tests/integration/writer-docker.test.ts`. Import `refreshRepo` and `DockerRefreshRunners`.",
-              "Call `await refreshRepo(moduleProjRepoMapping, new DockerRefreshRunners())` in the test.",
-              "Assert: each path in `prepareOutputs` exists on disk, the freshness marker file is written, no exception thrown.",
-              "Run: `bun test tests/integration/writer-docker.test.ts` — green means docker transport proven."
+              "Create `.github/workflows/ci.yml`: trigger on `pull_request` (NOT `pull_request_target`). Top-level: `permissions: read-all`. Steps: `bun install --frozen-lockfile`, `bun test`, `bun run typecheck`, `bun run lint`. Zero secrets referenced.",
+              "Create `.github/CODEOWNERS`: map sensitive paths to `@gonoff` — e.g. `lib/queue/* @gonoff`, `lib/sweeper/* @gonoff`, `.github/workflows/* @gonoff`, `deploy/* @gonoff`.",
+              "Enable branch protection on `main`: require `ci` status check to pass + require code owner review for files matching CODEOWNERS entries.",
+              "Test: open a draft PR touching `lib/queue/Queue.ts` — verify `ci` runs without errors and GitHub shows 'Review required from code owners'."
             ],
             "resources": [
-              "`lib/sweeper/refresh.ts` — the `refreshRepo` function and its `RefreshRunners` interface",
-              "`SWEEPER_REPOS` config — Module-project entry with `prepareCommands` and `prepareOutputs`",
-              "`DockerRefreshRunners` implementation (find it in `lib/sweeper/`)",
-              "Docker must be running locally or on the VPS where you're running tests"
+              "GitHub Actions docs: `permissions: read-all`, difference between `on: pull_request` and `on: pull_request_target`",
+              "GitHub CODEOWNERS syntax: `path/* @username` — file goes in `.github/CODEOWNERS`",
+              "Branch protection: repo Settings → Branches → Add rule for `main`",
+              "Check `.github/` in the repo for any existing workflows to reuse the runner/Node setup"
             ]
           }
         }
@@ -268,8 +206,8 @@
       "slug": "gs-woodworking-spec",
       "project": "GS-ERP",
       "client": "GS Woodworking LLC",
-      "tasks_total": 77,
-      "tasks_done": 36,
+      "tasks_total": 75,
+      "tasks_done": 39,
       "on_deck": true,
       "tasks": []
     },
@@ -360,7 +298,7 @@
       "project": "GerenciaObra",
       "task_id": "t48",
       "title": "Validar shape/mapeamento de linha populada (RegEntradas + ControleFornecedores)",
-      "reason": "Awaiting Makro (Deborah) to seed test movement data in the base — requested 2026-07-15, no response yet"
+      "reason": "Awaiting Makro (Deborah) to seed test movement data — requested 2026-07-15, no response yet"
     }
   ]
 }
