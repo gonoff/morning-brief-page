@@ -1,49 +1,46 @@
 {
-  "date": "2026-07-29",
-  "generated_at": "2026-07-29T10:00:00Z",
-  "data_as_of": "2026-07-29T05:00:03+00:00",
-  "greeting": "Morning, Haniel. The AZ Takeoff blueprint chain is right there — five tasks that unlock each other, ending with a one-click estimate button. GerenciaObra gets its Makro direction call in 30 minutes. Solid day, clean slate.",
-  "hype": "Today you close the most important takeoff feature gap since launch: wall paint measurements, trade routing, linear-foot pricing, and the button that turns a blueprint scan into a real estimate. These five tasks are a chain — each one makes the next one possible. By 17:30 Rafa can tap 'Create Estimate' and get a priced breakdown by trade. That's the demo. Let's build it.",
-  "notice": "t44 (blueprint engine profiles, in_progress) is waiting on the takeoff-engine team to ship the GET /profiles endpoint with CT Pros categories. Not on today's schedule — ping the AZ team for an ETA.",
+  "date": "2026-07-30",
+  "generated_at": "2026-07-30T10:00:00Z",
+  "data_as_of": "2026-07-30T05:00:05+00:00",
+  "greeting": "Morning, Haniel. Two engines today — sharpen the Takeoff Engine in the morning, then drive the AZ chain in the afternoon.",
+  "hype": "The morning builds the measurement layer the afternoon depends on: t18 (wall math in the engine) feeds t45 (wall paint in the app). Six blocks, two projects, one coherent chain. By end of day the blueprint-to-estimate path is visibly closer to one button. Let's go.",
+  "notice": "t44 (engine profiles rebuild, in_progress) — check if the AZ Team's GET /profiles endpoint shipped overnight before you dive in at 14:00. If it did, the category list is already there.",
   "difficulty": {
     "rating": "Solid",
-    "planned_minutes": 360,
+    "planned_minutes": 420,
     "available_minutes": 480,
-    "ratio": 0.75,
+    "ratio": 0.875,
     "note": ""
   },
-  "window": {
-    "start": "09:00",
-    "end": "18:00"
-  },
+  "window": { "start": "09:00", "end": "18:00" },
   "schedule": [
     {
       "start": "09:00",
       "end": "09:30",
-      "slug": "gerenciamento-obra-g",
-      "project": "GerenciaObra",
-      "task_id": "t46",
-      "title": "Definir direcao da integracao: pull (fiscal -> Despesas) vs push (Despesas -> Makro)",
+      "slug": "az-takeoff",
+      "project": "AZ Takeoff SaaS",
+      "task_id": "t62",
+      "title": "Buy CT Pros domain + wire real website/email",
       "estimate": "s",
       "kind": "task"
     },
     {
       "start": "09:45",
-      "end": "10:15",
-      "slug": "az-takeoff",
-      "project": "AZ Takeoff SaaS",
-      "task_id": "t47",
-      "title": "Add PerLinearFt RateType (prerequisite for pricing trim/wall-linear)",
-      "estimate": "s",
+      "end": "10:45",
+      "slug": "takeoff-engine",
+      "project": "Takeoff Engine",
+      "task_id": "t26",
+      "title": "Label lane v2: M3 vision for outlined-text firms + callout-vs-room filtering",
+      "estimate": "m",
       "kind": "task"
     },
     {
-      "start": "10:30",
-      "end": "12:30",
-      "slug": "az-takeoff",
-      "project": "AZ Takeoff SaaS",
-      "task_id": "t45",
-      "title": "Derive wall PAINT area (perimeter x height) — the missing painting measurement",
+      "start": "11:00",
+      "end": "13:00",
+      "slug": "takeoff-engine",
+      "project": "Takeoff Engine",
+      "task_id": "t18",
+      "title": "Assemblies-per-room → paint/drywall/flooring quantities + wall heights",
       "estimate": "l",
       "kind": "task"
     },
@@ -58,29 +55,29 @@
       "end": "15:00",
       "slug": "az-takeoff",
       "project": "AZ Takeoff SaaS",
-      "task_id": "t46",
-      "title": "Route takeoff measurements to trades at the seam",
+      "task_id": "t44",
+      "title": "Replace foreign-firm engine profiles with CT Pros blueprint CATEGORIES",
       "estimate": "m",
       "kind": "task"
     },
     {
       "start": "15:15",
-      "end": "16:15",
+      "end": "17:15",
       "slug": "az-takeoff",
       "project": "AZ Takeoff SaaS",
-      "task_id": "t48",
-      "title": "Price seeded takeoff lines by kind/trade -> LaborRate+MaterialTier (re-key t30)",
-      "estimate": "m",
+      "task_id": "t45",
+      "title": "Derive wall PAINT area (perimeter x height) — the missing painting measurement",
+      "estimate": "l",
       "kind": "task"
     },
     {
-      "start": "16:30",
-      "end": "17:30",
+      "start": "17:30",
+      "end": "18:00",
       "slug": "az-takeoff",
       "project": "AZ Takeoff SaaS",
-      "task_id": "t49",
-      "title": "One-click 'Create estimate from this takeoff' from Review",
-      "estimate": "m",
+      "task_id": "t47",
+      "title": "Add PerLinearFt RateType (prerequisite for pricing trim/wall-linear)",
+      "estimate": "s",
       "kind": "task"
     }
   ],
@@ -94,25 +91,100 @@
       "on_deck": false,
       "tasks": [
         {
+          "id": "t62",
+          "title": "Buy CT Pros domain + wire real website/email",
+          "phase": "Phase 3 · Deployment & Go-Live",
+          "estimate": "s",
+          "priority": "high",
+          "status": "todo",
+          "notes": "Production go-live is blocked without a real domain. Register the domain Rafa wants, point DNS to the production server, and set up business email. 30-minute infrastructure block that unblocks the final go-live gate.",
+          "block": { "start": "09:00", "end": "09:30" },
+          "prep": {
+            "what": "Register the CT Pros production domain, point it to the server, and set up a professional email address — the missing piece before go-live.",
+            "understand": "CT Pros’s AZ Takeoff instance is ready but has no production domain — it’s still on a dev URL. This 30-minute block is pure infrastructure: buy the domain Rafa picked, set DNS, configure email. No code. Once done it unblocks the go-live checklist and the QB OAuth callback registration with the real domain.",
+            "approach": [
+              "Confirm the domain name with Rafa (or check any previous Slack/messages for the CT Pros domain decision).",
+              "Register at Namecheap or Cloudflare Registrar; point the A record to the production server IP (same host as the AZ Takeoff production deployment).",
+              "Set up business email: Google Workspace (easiest) or Zoho Mail (free tier). Add MX records after domain purchase.",
+              "Update the QB OAuth callback URL in the QB Developer Portal to use the new domain, then verify DNS propagation at dnschecker.org."
+            ],
+            "resources": [
+              "Rafa (AZ Team) — confirm the domain name decision if not already locked",
+              "Production server IP — from the hosting provider dashboard (same server as AZ Takeoff)",
+              "QB Developer Portal — update OAuth callback URL after DNS is live",
+              "dnschecker.org — verify A + MX record propagation"
+            ]
+          }
+        },
+        {
+          "id": "t44",
+          "title": "Replace foreign-firm engine profiles with CT Pros blueprint CATEGORIES",
+          "phase": "Post-Deploy · Blueprint Takeoff",
+          "estimate": "m",
+          "priority": "medium",
+          "status": "in_progress",
+          "notes": "The engine uses generic/foreign-firm category profiles that don’t match CT Pros’s trade structure. Rebuild the profile seeder with CT Pros’s real categories (flooring, painting, trim, etc.) so blueprint scans output estimate-ready line items that match what CT Pros actually puts in their estimates.",
+          "block": { "start": "14:00", "end": "15:00" },
+          "prep": {
+            "what": "Swap the engine’s blueprint category profiles from generic foreign-firm defaults to CT Pros’s actual trade structure — so every blueprint scan outputs line items that match CT Pros’s estimates.",
+            "understand": "The AZ Takeoff engine classifies blueprint elements using ‘profiles’ that define which trade each measurement belongs to. The current profiles were copied from a generic template and don’t match CT Pros’s categories. This is a seeder/config rebuild — no deep engine logic, just ensuring category names, trade types, and unit assignments match what CT Pros actually puts in their estimates. The takeoff-engine team is also building a `GET /profiles` API endpoint — check if it shipped before you start; if so, the category list may already be there.",
+            "approach": [
+              "Check if the AZ Team’s `GET /profiles` endpoint is live (ping them or check the takeoff-engine repo) — if it is, use its response as the category reference.",
+              "Find the current profile seeder or config: search `database/seeders/` or `app/` for `profile`, `category`, or `blueprint_category`.",
+              "Get the CT Pros category list: look at existing seeded CT Pros estimates in the AZ Takeoff DB (or ask Rafa) — what exact trade names does CT Pros use?",
+              "Replace the foreign-firm entries with CT Pros entries; ensure each category has: name, trade type, measurement unit (SF/LF/EA), and core-vs-subbed flag. Run the seeder and verify a test blueprint scan outputs CT Pros-named line items."
+            ],
+            "resources": [
+              "AZ Team Slack / takeoff-engine repo — check if `GET /profiles` shipped (the integration point for this task)",
+              "Profile seeder — `database/seeders/` or search `app/` for `profile` or `category`",
+              "CT Pros estimate templates — the reference for what trade names and category labels to use",
+              "t45 and t46 notes — both depend on category names being consistent (`derived_wall_sf` kind flows through here)"
+            ]
+          }
+        },
+        {
+          "id": "t45",
+          "title": "Derive wall PAINT area (perimeter x height) — the missing painting measurement",
+          "phase": "Post-Deploy · Blueprint Takeoff",
+          "estimate": "l",
+          "priority": "high",
+          "status": "todo",
+          "notes": "A 2D plan has no wall height so painting gets ZERO auto-sqft today. Add a wall/ceiling height input (project default + optional per-room override); wall paint SF/room = perimeter x height (perimeter from geometry.rings / meta.perimeter; the seeder currently DROPS geometry — preserve it). Emit a ‘Wall paint area’ line per room. Add estimates.wall_height. Files: TakeoffEstimateSeeder.php, Takeoff Vue, migration",
+          "block": { "start": "15:15", "end": "17:15" },
+          "prep": {
+            "what": "Add a wall height field to takeoff projects (default + per-room override), preserve room perimeter from blueprint geometry, and compute wall paint SF = perimeter × height — emitting a ‘Wall paint area’ line per room.",
+            "understand": "A 2D blueprint gives floor area and perimeter but no vertical dimension. Painting bids need wall SF = perimeter × height. Today `TakeoffEstimateSeeder.php` silently DROPS geometry (rings / meta.perimeter), so painting always gets zero area. Two things must happen: (1) stop dropping geometry — store the perimeter per room so the seeder can multiply it; (2) add a `wall_height` input on the project (9ft default covers most residential) with optional per-room override. Note: takeoff-engine’s t18 (done this morning) should have computed `wall_sf` per room — check if you can pull it from the engine output instead of recomputing in the seeder.",
+            "approach": [
+              "Write a migration to add `wall_height` (decimal, nullable, default 9.0) to the `estimates` or `takeoff_projects` table.",
+              "In the Takeoff Vue component (`resources/js/Pages/Takeoff/Index.vue`), add a wall height input field (number, feet, default 9) plus an optional per-room height override in the room editor.",
+              "In `TakeoffEstimateSeeder.php`, stop dropping geometry: preserve `geometry.rings` or `meta.perimeter` per room; compute `wall_paint_sf = perimeter * wall_height` for each room.",
+              "Emit a new `‘Wall paint area’` line item per room using `kind = ‘derived_wall_sf’` so t46 can route it to the painting trade. Smoke-test: seed a sample blueprint and verify non-zero Wall paint area lines."
+            ],
+            "resources": [
+              "`TakeoffEstimateSeeder.php` — the seeder that currently drops geometry; the main file to change",
+              "`resources/js/Pages/Takeoff/Index.vue` — Takeoff Vue component for the wall height input",
+              "Existing migrations in `database/migrations/` — find the estimates/takeoff_projects table to add `wall_height`",
+              "takeoff-engine t18 output (done this morning) — if the engine now emits `wall_sf` per room, you may be able to consume it directly"
+            ]
+          }
+        },
+        {
           "id": "t47",
           "title": "Add PerLinearFt RateType (prerequisite for pricing trim/wall-linear)",
-          "phase": "Post-Deploy - Blueprint takeoff",
+          "phase": "Post-Deploy · Blueprint Takeoff",
           "estimate": "s",
           "priority": "medium",
           "status": "todo",
-          "notes": "RateType has no per-linear-foot. Add PerLinearFt='per_linear_ft' (+ label), wire LineItemFactory::unitFromRateType->'lf', seed a per-LF trim LaborRate. Must land before takeoff pricing. Files: app/Enums/RateType.php, LineItemFactory.php, LaborRateSeeder.php",
-          "block": {
-            "start": "09:45",
-            "end": "10:15"
-          },
+          "notes": "RateType has no per-linear-foot. Add PerLinearFt=‘per_linear_ft’ (+ label), wire LineItemFactory::unitFromRateType->‘lf’, seed a per-LF trim LaborRate. Must land before takeoff pricing. Files: app/Enums/RateType.php, LineItemFactory.php, LaborRateSeeder.php",
+          "block": { "start": "17:30", "end": "18:00" },
           "prep": {
-            "what": "Add a PerLinearFt enum case to RateType, wire it through LineItemFactory, and seed one trim LaborRate using it — unlocking per-LF pricing for trim and wall-linear takeoff lines.",
-            "understand": "RateType drives how LineItemFactory computes unit costs. Today it has SF and EA variants but nothing for linear feet. Trim and wall-linear measurements from the blueprint seeder are measured in LF — without a PerLinearFt rate type, they price at $0 or default to the wrong unit. This is the smallest blocker in the chain: 30 minutes of enum + factory + seeder work that unlocks t48's pricing logic.",
+            "what": "Add a `PerLinearFt` enum case to `RateType`, wire it through `LineItemFactory`, and seed one trim `LaborRate` — unlocking per-LF pricing for trim and wall-linear takeoff lines.",
+            "understand": "`RateType` drives how `LineItemFactory` computes unit costs. Today it has SF and EA variants but nothing for linear feet. Trim and wall-linear measurements from the blueprint seeder are measured in LF — without a `PerLinearFt` rate type, they price at $0 or fall back to the wrong unit. This is the smallest blocker in the chain: 30 minutes of enum + factory + seeder work that unlocks t48’s pricing logic.",
             "approach": [
-              "Open `app/Enums/RateType.php` — add `PerLinearFt = 'per_linear_ft'` with a human label (e.g. 'Per Linear Foot').",
-              "In `LineItemFactory.php`, find `unitFromRateType` and add a case for `PerLinearFt` that returns `'lf'`.",
-              "In `LaborRateSeeder.php`, add at least one trim LaborRate row using the new PerLinearFt rate type with a realistic per-LF dollar amount.",
-              "Run `php artisan test` (or the relevant test subset) to verify nothing breaks; check the seeder runs clean with `php artisan db:seed --class=LaborRateSeeder`."
+              "Open `app/Enums/RateType.php` — add `PerLinearFt = ‘per_linear_ft’` with a human label (e.g. ‘Per Linear Foot’).",
+              "In `LineItemFactory.php`, find `unitFromRateType` and add a case for `PerLinearFt` that returns `‘lf’`.",
+              "In `LaborRateSeeder.php`, add at least one trim `LaborRate` row using the new `PerLinearFt` rate type with a realistic per-LF dollar amount.",
+              "Run `php artisan test` to verify nothing breaks; check the seeder runs clean with `php artisan db:seed --class=LaborRateSeeder`."
             ],
             "resources": [
               "`app/Enums/RateType.php` — the enum to extend",
@@ -121,123 +193,66 @@
               "t48 notes — confirm which trades need LF pricing so the seeder covers them all"
             ]
           }
+        }
+      ]
+    },
+    {
+      "slug": "takeoff-engine",
+      "project": "Takeoff Engine",
+      "client": "AZ Team AI",
+      "tasks_total": 34,
+      "tasks_done": 23,
+      "on_deck": false,
+      "tasks": [
+        {
+          "id": "t26",
+          "title": "Label lane v2: M3 vision for outlined-text firms + callout-vs-room filtering",
+          "phase": "Phase 5 · M3 Blueprint Intelligence",
+          "estimate": "m",
+          "priority": "high",
+          "status": "todo",
+          "notes": "M2 label detection conflates firm-name outlines in title blocks, callout annotations, and room labels. M3 needs a classification pass: title-block exclusion zone (border region = firm name noise), leader-line proximity detection (callouts), and refined room-label scope. Reduces false positives in the room-detection pipeline and improves the quantity output that feeds az-takeoff.",
+          "block": { "start": "09:45", "end": "10:45" },
+          "prep": {
+            "what": "Upgrade the takeoff engine’s text classification to distinguish outlined firm names, callout annotations, and room labels — the M3 label lane that reduces false rooms and cleans up quantity output.",
+            "understand": "The M2 label pass treats all text elements similarly, so the engine often picks up firm names in the title block and callout leaders as room labels. This creates false positives: ‘JONES FLOORING’ and ‘2x4 @ 16” O.C.’ show up as rooms. M3 needs three new discriminators: (1) a title-block exclusion zone (text in the border/corner region is a firm name, not a room), (2) leader-line proximity detection (callout labels attach to a leader, not float in open space), (3) refined room-label classification (room labels sit inside a room polygon). Clean label lanes = fewer false rooms = better quantity output from t18.",
+            "approach": [
+              "Find the M2 label detection code — search for `classify`, `label`, or `text_element` in the takeoff-engine repo; this is the module to extend.",
+              "Implement title-block exclusion: detect the drawing border rectangle (typically at the page edge/corner); any text inside the border margin zone is a firm name — exclude it from room label candidates.",
+              "Implement callout detection: check if a text element is within N pixels of a leader line (diagonal line segment); if so, tag it as a callout, not a room label.",
+              "Run the v2 classifier against the existing M2 test blueprints; compare false-positive room count vs M2 baseline and adjust thresholds."
+            ],
+            "resources": [
+              "M2 label detection module — search `classify`, `label`, or `text_element` in the takeoff-engine repo",
+              "M2 test blueprint fixtures — the same set used to validate M2; reuse for regression comparison",
+              "M3 spec or roadmap doc in `docs/` (if it exists) — the vision target this task builds toward",
+              "Blueprint title-block geometry — understand how the border/title block is structured in the SVG or rasterized format the engine processes"
+            ]
+          }
         },
         {
-          "id": "t45",
-          "title": "Derive wall PAINT area (perimeter x height) — the missing painting measurement",
-          "phase": "Post-Deploy - Blueprint takeoff",
+          "id": "t18",
+          "title": "Assemblies-per-room → paint/drywall/flooring quantities + wall heights",
+          "phase": "Phase 5 · M3 Blueprint Intelligence",
           "estimate": "l",
           "priority": "high",
-          "status": "todo",
-          "notes": "A 2D plan has no wall height so painting gets ZERO auto-sqft today. Add a wall/ceiling height input (project default + optional per-room override); wall paint SF/room = perimeter x height (perimeter from geometry.rings / meta.perimeter; the seeder currently DROPS geometry — preserve it). Emit a 'Wall paint area' line per room. Add estimates.wall_height. Files: TakeoffEstimateSeeder.php, Takeoff Vue, migration",
-          "block": {
-            "start": "10:30",
-            "end": "12:30"
-          },
+          "status": "in_progress",
+          "notes": "Extend the per-room assembly output with the three main interior trade quantities: floor_sf (area), wall_sf (perimeter × wall_height), ceiling_sf (area). Wall height is a configurable default (9ft) with optional per-room override from blueprint annotations or project config. Output feeds az-takeoff’s t45 (wall paint area) and t46 (trade routing) — coordinate field names.",
+          "block": { "start": "11:00", "end": "13:00" },
           "prep": {
-            "what": "Add a wall height field to takeoff projects (default + per-room override), preserve room perimeter from the blueprint geometry, and compute wall paint SF = perimeter x height — emitting a 'Wall paint area' line per room.",
-            "understand": "A 2D blueprint gives floor area and perimeter but no vertical dimension. Painting bids need wall SF = perimeter x height. Today `TakeoffEstimateSeeder.php` silently DROPS the geometry (rings / meta.perimeter), so painting always gets zero area. Two things must happen: (1) stop dropping geometry — store the perimeter per room so the seeder can multiply it; (2) add a wall_height input on the project (a 9ft default covers most residential) with optional per-room override. The 'Wall paint area' line this emits feeds t46's trade routing and t48's pricing.",
+            "what": "Extend the takeoff engine’s per-room assembly output with paint, drywall, and flooring quantities derived from room geometry plus wall height — the measurement layer az-takeoff’s trade pricing depends on.",
+            "understand": "Currently the engine outputs `floor_sf` (area) per room. That’s it. Painting and drywall need `wall_sf = perimeter × wall_height`. Ceiling work needs `ceiling_sf = area`. Wall height doesn’t exist in a 2D blueprint — it must be a configurable default (9ft residential standard) with optional per-room override via blueprint annotation parsing if the drawing marks ceiling height, otherwise manual in the project config. The output of this task is the assembly object per room that az-takeoff’s t45 will consume this afternoon. Coordinate the field names now: az-takeoff expects something like `wall_paint_sf` or `wall_sf` — confirm before you emit.",
             "approach": [
-              "Write a migration to add `wall_height` (decimal, nullable, default 9.0) to the `estimates` or `takeoff_projects` table (check which model owns project-level config).",
-              "In the Takeoff Vue component (`resources/js/Pages/Takeoff/Index.vue`), add a wall height input field (number, feet, default 9) plus an optional per-room height override in the room editor.",
-              "In `TakeoffEstimateSeeder.php`, stop dropping geometry: preserve `geometry.rings` or `meta.perimeter` per room; compute `wall_paint_sf = perimeter * wall_height` for each room.",
-              "Emit a new `'Wall paint area'` line item per room in the seeded estimate output — use `kind = 'derived_wall_sf'` so t46 can route it to the painting trade.",
-              "Smoke-test: seed a takeoff for a sample blueprint and verify each room has a non-zero Wall paint area line with a plausible SF value."
+              "Find the current per-room assembly computation — search for `floor_sf`, `area`, or `assembly` in the takeoff-engine codebase; this is the object to extend.",
+              "Add `wall_height` to the engine’s project/room config: default 9.0, overridable per room. Check if any blueprint annotation (e.g. ‘CLG HT: 9-0’) can be parsed from the label pass (t26 just cleaned up); if so, wire it.",
+              "Compute and emit: `floor_sf = room.area`, `wall_sf = room.perimeter * wall_height`, `ceiling_sf = room.area`. Add these to the assembly object output.",
+              "Update the `GET /assemblies` (or equivalent) API response to include the new fields. Write a quick test: 10×10 room, height=9 → floor=100, wall=360, ceiling=100."
             ],
             "resources": [
-              "`TakeoffEstimateSeeder.php` — the seeder that currently drops geometry; this is the main file",
-              "`resources/js/Pages/Takeoff/Index.vue` — Takeoff Vue component for the wall height input",
-              "Existing migrations in `database/migrations/` — find the one that created estimates or takeoff_projects to add the new column alongside",
-              "t46 notes — uses `kind = 'derived_wall_sf'` to route wall paint area to the painting trade"
-            ]
-          }
-        },
-        {
-          "id": "t46",
-          "title": "Route takeoff measurements to trades at the seam",
-          "phase": "Post-Deploy - Blueprint takeoff",
-          "estimate": "m",
-          "priority": "high",
-          "status": "todo",
-          "notes": "Every measurement collapses into one anonymous kind=custom $0 line, dropping kind+geometry (TakeoffEstimateSeeder). Preserve+switch on kind: area(SF)->flooring, derived wall SF->painting, line(LF)->wall-linear/trim, count(EA)->doors/tile. Tag each line with a trade via the core-vs-subbed helper. Rafa: 'quanto de tile, quanto de trim, quanto de tudo'. Files: TakeoffEstimateSeeder.php",
-          "block": {
-            "start": "14:00",
-            "end": "15:00"
-          },
-          "prep": {
-            "what": "Fix TakeoffEstimateSeeder to route each measurement to the right trade by kind: area SF -> flooring, derived wall SF -> painting, line LF -> trim/wall-linear, count EA -> doors/tile — and tag each with a trade label.",
-            "understand": "Right now every blueprint measurement collapses into one anonymous `kind=custom` $0 line — all geometry and kind information is discarded. Rafa's ask is 'quanto de tile, quanto de trim, quanto de tudo' — a per-trade quantity breakdown. The fix is a routing switch on `kind` inside TakeoffEstimateSeeder, using the measurement kind to pick the right trade and rate. The 'core-vs-subbed helper' determines whether that trade is CT Pros crew vs subcontracted. This task assumes t45's derived_wall_sf line is already emitted.",
-            "approach": [
-              "In `TakeoffEstimateSeeder.php`, stop collapsing all measurements into `kind=custom`. Instead, switch on the measurement `kind` field: `area` -> flooring, `derived_wall_sf` (from t45) -> painting, `line` -> wall-linear/trim (use PerLinearFt from t47), `count` -> doors/tile.",
-              "For each routed line, call the core-vs-subbed helper (find it in `app/Services/` or `app/Helpers/`) to set the trade classification: whether CT Pros does it in-house or subs it out.",
-              "Verify geometry is not dropped — `kind` and quantity must flow through from the takeoff payload to the seeded estimate line.",
-              "Smoke-test: seed a takeoff project with rooms that have area + line + count measurements; verify the output has separate lines for flooring, painting (from t45), trim, and doors — each with a trade tag."
-            ],
-            "resources": [
-              "`TakeoffEstimateSeeder.php` — the only file touched in this task",
-              "The core-vs-subbed helper — search `app/Services/` for 'trade' or 'subbed' to find it",
-              "t45 output: `derived_wall_sf` kind — this is a new kind you'll need to handle in the switch",
-              "t47 output: `PerLinearFt` rate type — needed for the trim/wall-linear lines to have valid unit pricing"
-            ]
-          }
-        },
-        {
-          "id": "t48",
-          "title": "Price seeded takeoff lines by kind/trade -> LaborRate+MaterialTier (re-key t30)",
-          "phase": "Post-Deploy - Blueprint takeoff",
-          "estimate": "m",
-          "priority": "medium",
-          "status": "todo",
-          "notes": "Key pricing on measurement kind+trade (area->flooring rate, derived-wall->painting rate, LF->per-LF trim), NOT fragile per-project classification strings (keep those as optional room labels). Depends on painting LaborRate rows + PerLinearFt. Corrects open task t30. Files: TakeoffEstimateSeeder.php",
-          "block": {
-            "start": "15:15",
-            "end": "16:15"
-          },
-          "prep": {
-            "what": "Price each seeded takeoff line using its kind+trade to look up the right LaborRate row — replacing the brittle per-project string-matching pricing from t30.",
-            "understand": "After t46 routes measurements to trades, each line knows its kind (area/line/count/derived_wall_sf) and trade (flooring/painting/trim/doors). This task uses that to look up a `LaborRate` row and multiply: `quantity x LaborRate.unit_cost` + optional MaterialTier markup. The old pricing (t30) keyed on fragile room type strings that change or break. The new pricing keys on stable kind+trade enums. Depends on: painting LaborRate rows existing in the DB, and PerLinearFt (t47) so trim LF lines can price correctly.",
-            "approach": [
-              "Read t30's notes to understand the original pricing intent — what model was designed but not yet cleanly implemented.",
-              "In `TakeoffEstimateSeeder.php`, after trade routing (t46), for each line: look up `LaborRate WHERE trade = line.trade AND rate_type = matching_rate_type` (SF for area/paint, LF for trim, EA for count).",
-              "Set `line.unit_price = LaborRate.unit_cost` and `line.total = quantity * unit_price`; if a MaterialTier model exists, add the markup on top.",
-              "Add a guard for missing LaborRate rows: log a warning and set price to 0 rather than throwing — so a missing seeder row doesn't crash the whole takeoff seed.",
-              "Verify with a seed run: every routed line from t46 should now have a non-zero price (assuming t47's seeder added trim rates)."
-            ],
-            "resources": [
-              "`TakeoffEstimateSeeder.php` — pricing logic goes here, after the kind+trade routing from t46",
-              "t30 notes — original pricing spec this corrects; understand what the intent was",
-              "`LaborRate` model + `LaborRateSeeder.php` — the rate rows being looked up; t47 adds the PerLinearFt trim row",
-              "`MaterialTier` model (if it exists) — check `app/Models/` for it; add material markup if present"
-            ]
-          }
-        },
-        {
-          "id": "t49",
-          "title": "One-click 'Create estimate from this takeoff' from Review",
-          "phase": "Post-Deploy - Blueprint takeoff",
-          "estimate": "m",
-          "priority": "medium",
-          "status": "todo",
-          "notes": "Today seeding needs an existing estimate + hand-typing takeoff_project_id into estimates/{id}/seed-from-takeoff. Add a button on the Review page/Takeoff Index row that creates a draft estimate + seeds it from the current takeoff project in one action, landing on estimate edit. Files: Takeoff Vue, EstimateController.php",
-          "block": {
-            "start": "16:30",
-            "end": "17:30"
-          },
-          "prep": {
-            "what": "Add a 'Create Estimate' button to the Takeoff Review/Index page that atomically creates a draft estimate, seeds it from the current takeoff project, and redirects to the estimate edit page — replacing the current manual URL hack.",
-            "understand": "The current seeding flow requires: find an existing estimate ID, hand-type a URL (`estimates/{id}/seed-from-takeoff`), and manually enter the takeoff_project_id. That's a dead-end for real usage. The fix: one button -> one POST -> one redirect. The controller creates the draft estimate and triggers the seeder in a single action. This is the UX capstone that makes the entire blueprint takeoff feature usable without developer intervention.",
-            "approach": [
-              "In `EstimateController.php`, add a `createFromTakeoff(TakeoffProject $takeoffProject)` action: wrap in a DB transaction — create a draft Estimate, call TakeoffEstimateSeeder with the new estimate ID, return the estimate.",
-              "Add the button to the Takeoff Index row or Review page (`resources/js/Pages/Takeoff/Index.vue`) — look for the existing row actions pattern (likely a dropdown or icon row) and add 'Create Estimate' that POSTs to the new route.",
-              "Register the route in `routes/web.php` (e.g. `POST /takeoff-projects/{takeoffProject}/create-estimate`).",
-              "On success, redirect to `estimates/{id}/edit` with a flash success message ('Draft estimate created and seeded from takeoff.').",
-              "Add a feature test: POST to the new endpoint with a valid takeoff project, assert a new Estimate row exists, assert the seeder was called (check for seeded line items), assert the redirect points to estimate edit."
-            ],
-            "resources": [
-              "`EstimateController.php` — add the new `createFromTakeoff` action here",
-              "`resources/js/Pages/Takeoff/Index.vue` — find the row actions pattern; add the button",
-              "`routes/web.php` — register the new POST route",
-              "`TakeoffEstimateSeeder.php` — the seeder being called; already set up by t45-t48 to produce priced, trade-routed lines"
+              "Per-room assembly code — search `floor_sf`, `area`, or `assembly` in the takeoff-engine repo",
+              "`GET /assemblies` or `GET /rooms` endpoint — where the output is exposed; check any OpenAPI spec if it exists",
+              "az-takeoff t45 notes — the consumer of this output this afternoon; confirm the exact field names expected",
+              "Blueprint annotation patterns — check the label pass for ceiling height notations (e.g. ‘CLG HT’, ‘CEILING HEIGHT’) in test blueprints"
             ]
           }
         }
@@ -249,45 +264,6 @@
       "client": "Glaywson",
       "tasks_total": 48,
       "tasks_done": 42,
-      "on_deck": false,
-      "tasks": [
-        {
-          "id": "t46",
-          "title": "Definir direcao da integracao: pull (fiscal -> Despesas) vs push (Despesas -> Makro)",
-          "phase": "Phase 9: Integração Makro (WebService fiscal)",
-          "estimate": "s",
-          "priority": "high",
-          "status": "todo",
-          "notes": "Recomendacao: pull-first — RegEntradas/CadFornecedores/ControleFornecedores -> conciliar/preencher Despesas (read-only, menor risco, so depende de creds+CodEmpresa). Push (PcSalvaControleFornecedores) fica como fase posterior (exige escrita + IDs). Aguardando decisao do cliente/Haniel.",
-          "block": {
-            "start": "09:00",
-            "end": "09:30"
-          },
-          "prep": {
-            "what": "Make the architectural decision for the Makro integration: pull (read NF/supplier data FROM Makro into GerenciaObra) or push (write despesas TO Makro) — then document it and break t47 into subtasks.",
-            "understand": "The MakroClient SOAP foundation is fully built (t42 done: envelope, auth header, parser, 8 tests green). The test base is live — you got a real 200 response from RegEstados. You've mapped 72 of Makro's WS consultas (docs/makro-consultas.md). Now you need to decide the integration DIRECTION before any business logic is built. Pull-first is the clear recommendation: use RegEntradas + CadFornecedores + ControleFornecedores to fetch fiscal entries and auto-fill/reconcile Despesas — read-only, no write permissions needed, unblocked as soon as Glaywson's production bank is activated. Push (PcSalvaControleFornecedores) is higher-risk and can be Phase 2.",
-            "approach": [
-              "Open `docs/makro-consultas.md` and review the 72 mapped consultas — specifically look at RegEntradas (fiscal entries), CadFornecedores (supplier lookup), and ControleFornecedores (payables) to understand what pull data is available.",
-              "Review the existing MakroClient code (`app/Services/Makro/MakroClient.php`) and confirm `consulta()` already returns parsed array data ready for business logic.",
-              "Make the call: pull-first (recommended). Document the decision in a short ADR or note — which WS calls anchor the pull path, what fields map to Despesa fields.",
-              "Update the t47 task notes with the decided direction + break it into concrete subtasks (e.g. 'Build RegEntradas sync job', 'UI to show pending fiscal entries for reconciliation', etc.)."
-            ],
-            "resources": [
-              "`docs/makro-consultas.md` — the full 72-consulta API surface map from the sweep",
-              "`app/Services/Makro/MakroClient.php` — SOAP client with `consulta()` returning `array<int, array<string, string>>`",
-              "`scripts/makro-sweep.php` — the probe script; re-run against specific consultas if you need to verify a response shape",
-              "t47 notes — 'Construir fluxo de sync escolhido + superficie de UI. Deve ser quebrada em subtarefas quando a direcao (t46) for definida.' — this is your output deliverable"
-            ]
-          }
-        }
-      ]
-    },
-    {
-      "slug": "azteamai-system",
-      "project": "AZ Team AI System",
-      "client": "AZ Team AI (internal)",
-      "tasks_total": 74,
-      "tasks_done": 44,
       "on_deck": true,
       "tasks": []
     },
@@ -328,20 +304,11 @@
       "tasks": []
     },
     {
-      "slug": "takeoff-engine",
-      "project": "Takeoff Engine",
-      "client": "AZ Team AI",
-      "tasks_total": 34,
-      "tasks_done": 23,
-      "on_deck": true,
-      "tasks": []
-    },
-    {
-      "slug": "gs-woodworking-spec",
-      "project": "GS-ERP",
-      "client": "GS Woodworking LLC",
-      "tasks_total": 75,
-      "tasks_done": 37,
+      "slug": "azteamai-system",
+      "project": "AZ Team AI System",
+      "client": "AZ Team AI (internal)",
+      "tasks_total": 74,
+      "tasks_done": 44,
       "on_deck": true,
       "tasks": []
     },
@@ -351,6 +318,15 @@
       "client": "Internal",
       "tasks_total": 63,
       "tasks_done": 18,
+      "on_deck": true,
+      "tasks": []
+    },
+    {
+      "slug": "gs-woodworking-spec",
+      "project": "GS-ERP",
+      "client": "GS Woodworking LLC",
+      "tasks_total": 75,
+      "tasks_done": 37,
       "on_deck": true,
       "tasks": []
     },
@@ -367,27 +343,21 @@
   "waiting_on": [
     {
       "project": "AZ Takeoff SaaS",
-      "task_id": "t62",
-      "title": "Buy CT Pros domain + wire real website/email",
-      "reason": "Needs Haniel to purchase the production domain before go-live can proceed."
-    },
-    {
-      "project": "AZ Takeoff SaaS",
       "task_id": "t25",
-      "title": "Connect CT Pros's own QuickBooks (fresh OAuth)",
-      "reason": "Needs Rafa to provide QuickBooks credentials and complete the OAuth flow — blocks QB sandbox validation (t28, t29) and go-live."
+      "title": "Connect CT Pros’s own QuickBooks (fresh OAuth)",
+      "reason": "Needs Rafa to provide QuickBooks credentials and complete the OAuth flow — blocks QB sandbox validation and go-live."
     },
     {
       "project": "AZ Takeoff SaaS",
       "task_id": "t60",
-      "title": "Confirm catalog pricing + paint coverage/coats vs Rafa's real suppliers",
+      "title": "Confirm catalog pricing + paint coverage/coats vs Rafa’s real suppliers",
       "reason": "Waiting on Rafa to confirm real supplier pricing so catalog labor/material rates can be finalized before go-live."
     },
     {
       "project": "AZ Takeoff SaaS",
       "task_id": "t65",
       "title": "Confirm apples-to-apples estimate margin target with Rafa",
-      "reason": "Needs Rafa to confirm what margin basis to use for estimates — required before authorizing production go-live (t27)."
+      "reason": "Needs Rafa to confirm what margin basis to use for estimates — required before authorizing production go-live."
     },
     {
       "project": "GerenciaObra",
@@ -399,13 +369,13 @@
       "project": "GerenciaObra",
       "task_id": "t39",
       "title": "Mobile camera flow end-to-end check (back camera, preview, capture)",
-      "reason": "Needs Haniel's phone for a physical rear-camera tap-test at the LAN address (192.168.86.46:8000). Full Nova Despesa flow: selects -> camera -> OCR."
+      "reason": "Needs Haniel’s phone for a physical rear-camera tap-test at the LAN address. Full Nova Despesa flow: selects → camera → OCR."
     },
     {
       "project": "GerenciaObra",
       "task_id": "t45",
       "title": "Mapear IDs do lado Makro (CodEmpresa/Fornecedor/CentroCusto)",
-      "reason": "Waiting on Makro to activate Glaywson's production bank — CodEmpresa + real FK IDs (Fornecedor/CentroCusto/PlanoContas) needed before integration can proceed."
+      "reason": "Waiting on Makro to activate Glaywson’s production bank — CodEmpresa + real FK IDs needed before integration can proceed."
     },
     {
       "project": "GerenciaObra",
