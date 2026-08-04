@@ -1,30 +1,30 @@
 {
-  "date": "2026-08-03",
-  "generated_at": "2026-08-03T10:21:59+00:00",
-  "data_as_of": "2026-08-03T05:00:01+00:00",
-  "greeting": "Good morning, Haniel! Today the Tasks Platform gets its durable job queue — the spine of Phase 6. Then Takeoff Engine kills the ‘unnamed rooms’ demo bug and ships assemblies-per-room, closing the last pillar before estimator-grade Excel. Four high-leverage tasks in a clean window.",
-  "hype": "t20 is the load-bearing piece: every sweeper job hangs on that queue. Land it first, then cross into Takeoff — label lane v2 (t26) fixes the Harborview demo bug, and assemblies-per-room (t18) is the last pillar between you and the real Excel. Afternoon closes the loop: t29’s cross-process refresh lock and t22’s CI lane are the two gates before you can flip SWEEPER_REPOS to live. Solid ratio (0.88) — tight but doable. Let’s go.",
+  "date": "2026-08-04",
+  "generated_at": "2026-08-04T10:25:50+00:00",
+  "data_as_of": "2026-08-04T05:00:05+00:00",
+  "greeting": "Good morning, Haniel! Today Takeoff Engine closes the assemblies chapter — t18 is in progress and needs to land by lunch. Label lane v2 kills the Harborview 'unnamed rooms' demo bug. Afternoon belongs to the Tasks Platform: t20 (durable queue, the sweeper's backbone) and t22 (the CI gate before you can trust it). Solid ratio, clean window.",
+  "hype": "t18 is already running — finish it. Assemblies-per-room is the last pillar standing between you and an estimator-grade Excel workbook; once it lands the whole CT Pros pitch changes. Then t26 fixes the outlined-text PDFTron bug for good: Harborview demo rooms stop showing 'unnamed'. Afternoon: t20 is the queue that makes the sweeper fault-tolerant across restarts and concurrency caps; t22 is the CI safety net that lets you actually flip SWEEPER_REPOS live. Land these four and both projects are in execute mode.",
   "notice": null,
   "difficulty": "Solid",
   "window": {
     "start": "09:00",
     "end": "18:00",
     "available_minutes": 480,
-    "planned_minutes": 420,
-    "ratio": 0.88
+    "planned_minutes": 360,
+    "ratio": 0.75
   },
   "schedule": [
     {
       "time": "09:00",
       "end_time": "11:00",
       "type": "task",
-      "project": "claude-todos-skill",
-      "task_id": "t20",
-      "title": "Durable job queue (lease/heartbeat/reclaim, window-aware, priority, cap)",
+      "project": "takeoff-engine",
+      "task_id": "t18",
+      "title": "Assemblies-per-room → paint/drywall/flooring quantities + wall heights",
       "duration_min": 120,
       "size": "l",
       "priority": "high",
-      "prep": "Open the task queue module. Implement lease/heartbeat/reclaim: a job row with lease_expires_at; the daemon heartbeats every N seconds; a reclaimer re-queues expired leases. Must be window-aware (won’t start a job after the work window closes) and enforce a concurrency cap. Exit criteria: a job survives a daemon restart mid-lease and gets reclaimed; two concurrent jobs can’t exceed the cap."
+      "prep": "Open engine/assemblies.py. This task is in progress — pick up where you left off. Implement room type → assembly formulas: paint (net wall area minus openings), drywall (gross wall + ceiling), flooring (floor area). Heights come from wall_height_ft. Output drives the 5-tab Excel export. Exit criteria: a real CT Pros PDF produces per-room assembly quantities in the Excel workbook — this closes the last pillar before the estimator-grade deliverable."
     },
     {
       "time": "11:00",
@@ -43,7 +43,7 @@
       "duration_min": 60,
       "size": "m",
       "priority": "high",
-      "prep": "Open engine/labels.py (and the run_labels_m3tiles.py spike). Bug: rooms show ‘unnamed’ because PDFTron outlines all text — the free live-text lane finds nothing. v2 = (a) productize the M3 tiles lane as an opt-in ‘read labels (AI)’ action (MINIMAX_AI key must reach the VPS — that’s a secrets decision); (b) callout-vs-room filtering to exclude general-note paragraphs, UP arrows, FEC callouts. Exit criteria: Harborview demo PDF shows named rooms in the lane panel."
+      "prep": "Open engine/labels.py (and the run_labels_m3tiles.py spike). Bug: rooms show 'unnamed' because PDFTron outlines all text — the free live-text lane finds nothing. v2 = (a) productize the M3 tiles lane as an opt-in 'read labels (AI)' action (MINIMAX_AI key must reach the VPS — that's a secrets decision); (b) callout-vs-room filtering to exclude general-note paragraphs, UP arrows, FEC callouts. Exit criteria: Harborview demo PDF shows named rooms in the lane panel."
     },
     {
       "time": "12:15",
@@ -63,13 +63,13 @@
       "time": "13:30",
       "end_time": "15:30",
       "type": "task",
-      "project": "takeoff-engine",
-      "task_id": "t18",
-      "title": "Assemblies-per-room → paint/drywall/flooring quantities + wall heights",
+      "project": "claude-todos-skill",
+      "task_id": "t20",
+      "title": "Durable job queue (lease/heartbeat/reclaim, window-aware, priority, cap)",
       "duration_min": 120,
       "size": "l",
       "priority": "high",
-      "prep": "Open engine/assemblies.py. Implement room type → assembly formulas: paint (net wall area minus openings), drywall (gross wall + ceiling), flooring (floor area). Heights come from wall_height_ft. Output drives the 5-tab Excel export. Exit criteria: a real CT Pros PDF produces per-room assembly quantities in the Excel workbook — this closes the last pillar before the estimator-grade deliverable."
+      "prep": "Open the task queue module. Implement lease/heartbeat/reclaim: a job row with lease_expires_at; the daemon heartbeats every N seconds; a reclaimer re-queues expired leases. Must be window-aware (won't start a job after the work window closes) and enforce a concurrency cap. Exit criteria: a job survives a daemon restart mid-lease and gets reclaimed; two concurrent jobs can't exceed the cap."
     },
     {
       "time": "15:30",
@@ -83,54 +83,15 @@
       "end_time": "16:45",
       "type": "task",
       "project": "claude-todos-skill",
-      "task_id": "t29",
-      "title": "Daemon-side cross-process refresh lock (prereq for live SWEEPER_REPOS)",
-      "duration_min": 60,
-      "size": "m",
-      "priority": "high",
-      "prep": "Open the daemon’s job lifecycle code. The refresh CLI already uses a per-repo O_EXCL single-flight lockfile (CLI-vs-CLI). The daemon must honor the SAME per-repo lock across a job’s whole lifecycle — its current per-job lock is in-process and cannot see the CLI’s file. Implement: daemon acquires the per-repo lock before any repo-touching work, holds through completion. Exit criteria: refresh CLI while daemon holds the lock blocks or fails cleanly; no silent conflict. Until this ships, run refresh ONLY while the sweeper is stopped."
-    },
-    {
-      "time": "16:45",
-      "end_time": "17:00",
-      "type": "buffer",
-      "title": "Buffer — stretch / review",
-      "duration_min": 15
-    },
-    {
-      "time": "17:00",
-      "end_time": "18:00",
-      "type": "task",
-      "project": "claude-todos-skill",
       "task_id": "t22",
       "title": "Unprivileged CI lane + sensitive-path human gate",
       "duration_min": 60,
       "size": "m",
       "priority": "high",
-      "prep": "Design the CI pipeline so the sweeper’s test runner has NO access to secrets and never runs under pull_request_target. Separate the privileged deploy job (needs secrets, runs only on main after CI passes) from the unprivileged test job (runs on all branches). Add the sensitive-path gate: if a job touches auth/deploy/config paths, escalate to the decision inbox before shipping. Exit criteria: a test run with no secrets env reveals no leaked credentials; a PR touching a gated path routes to the human inbox."
+      "prep": "Design the CI pipeline so the sweeper's test runner has NO access to secrets and never runs under pull_request_target. Separate the privileged deploy job (needs secrets, runs only on main after CI passes) from the unprivileged test job (runs on all branches). Add the sensitive-path gate: if a job touches auth/deploy/config paths, escalate to the decision inbox before shipping. Exit criteria: a test run with no secrets env reveals no leaked credentials; a PR touching a gated path routes to the human inbox."
     }
   ],
   "projects": [
-    {
-      "id": "claude-todos-skill",
-      "name": "Tasks Platform (claude-todos-skill rebuild)",
-      "phase": "M3 · Phase 6 — Sweeper + CI/deploy",
-      "on_deck": false,
-      "tasks_total": 31,
-      "tasks_done": 21,
-      "tasks": [
-        {"id": "t20", "title": "Durable job queue (lease/heartbeat/reclaim, window-aware, priority, cap)", "size": "l", "priority": "high", "status": "todo", "scheduled": true},
-        {"id": "t21", "title": "Sweeper (per-repo sandbox, quality gate incl render+screenshot)", "size": "l", "priority": "high", "status": "todo", "scheduled": false},
-        {"id": "t22", "title": "Unprivileged CI lane + sensitive-path human gate", "size": "m", "priority": "high", "status": "todo", "scheduled": true},
-        {"id": "t23", "title": "Per-client deploy (auto/manual), reuse project deploy skills", "size": "m", "priority": "med", "status": "todo", "scheduled": false},
-        {"id": "t29", "title": "Daemon-side cross-process refresh lock (prereq for live SWEEPER_REPOS)", "size": "m", "priority": "high", "status": "todo", "scheduled": true},
-        {"id": "t30", "title": "Writer docker-integration test on a real onboarded repo", "size": "s", "priority": "med", "status": "todo", "scheduled": false, "note": "spill — ~30 min once a repo is onboarded"},
-        {"id": "t31", "title": "Pin sandbox image by digest (image axis: mutable tags evade freshness)", "size": "s", "priority": "med", "status": "todo", "scheduled": false},
-        {"id": "t24", "title": "Report tracker + branded PDF PT/EN (per-client done-unreported)", "size": "l", "priority": "high", "status": "todo", "scheduled": false},
-        {"id": "t25", "title": "ntfy notifications (decision/PR/critical/failure/window)", "size": "s", "priority": "med", "status": "todo", "scheduled": false},
-        {"id": "t26", "title": "Agent activity view + phone ‘what needs me’ home", "size": "m", "priority": "med", "status": "todo", "scheduled": false}
-      ]
-    },
     {
       "id": "takeoff-engine",
       "name": "Takeoff Engine",
@@ -139,10 +100,10 @@
       "tasks_total": 34,
       "tasks_done": 23,
       "tasks": [
-        {"id": "t26", "title": "Label lane v2: M3 vision for outlined-text firms + callout-vs-room filtering", "size": "m", "priority": "high", "status": "todo", "scheduled": true},
         {"id": "t18", "title": "Assemblies-per-room → paint/drywall/flooring quantities + wall heights", "size": "l", "priority": "high", "status": "in_progress", "scheduled": true},
+        {"id": "t26", "title": "Label lane v2: M3 vision for outlined-text firms + callout-vs-room filtering", "size": "m", "priority": "high", "status": "todo", "scheduled": true},
         {"id": "t16", "title": "Door recall round 2 + bi-fold / cased-opening recall", "size": "m", "priority": "med", "status": "todo", "scheduled": false},
-        {"id": "t17", "title": "Fixtures / counts v1 — matchShapes ‘pick one, find all’", "size": "m", "priority": "med", "status": "todo", "scheduled": false},
+        {"id": "t17", "title": "Fixtures / counts v1 — matchShapes 'pick one, find all'", "size": "m", "priority": "med", "status": "todo", "scheduled": false},
         {"id": "t19", "title": "Set-wide aggregation across sheets", "size": "m", "priority": "med", "status": "todo", "scheduled": false},
         {"id": "t20", "title": "ML wall-segmentation lane (CUDA trainer + PC handoff + auto-labeler + ML→Seal&Fill bridge)", "size": "l", "priority": "med", "status": "in_progress", "scheduled": false},
         {"id": "t21", "title": "Symbol/count detector for raster (open-vocab → fine-tune only if usage proves it)", "size": "l", "priority": "low", "status": "todo", "scheduled": false},
@@ -153,30 +114,32 @@
       ]
     },
     {
+      "id": "claude-todos-skill",
+      "name": "Tasks Platform (claude-todos-skill rebuild)",
+      "phase": "M3 · Phase 7 — Sweeper + CI/deploy",
+      "on_deck": false,
+      "tasks_total": 31,
+      "tasks_done": 21,
+      "tasks": [
+        {"id": "t20", "title": "Durable job queue (lease/heartbeat/reclaim, window-aware, priority, cap)", "size": "l", "priority": "high", "status": "todo", "scheduled": true},
+        {"id": "t22", "title": "Unprivileged CI lane + sensitive-path human gate", "size": "m", "priority": "high", "status": "todo", "scheduled": true},
+        {"id": "t21", "title": "Sweeper (per-repo sandbox, quality gate incl render+screenshot)", "size": "l", "priority": "high", "status": "todo", "scheduled": false},
+        {"id": "t29", "title": "Daemon-side cross-process refresh lock (prereq for live SWEEPER_REPOS)", "size": "m", "priority": "high", "status": "todo", "scheduled": false},
+        {"id": "t23", "title": "Per-client deploy (auto/manual), reuse project deploy skills", "size": "m", "priority": "med", "status": "todo", "scheduled": false},
+        {"id": "t30", "title": "Writer docker-integration test on a real onboarded repo", "size": "s", "priority": "med", "status": "todo", "scheduled": false},
+        {"id": "t31", "title": "Pin sandbox image by digest (image axis: mutable tags evade freshness)", "size": "s", "priority": "med", "status": "todo", "scheduled": false},
+        {"id": "t24", "title": "Report tracker + branded PDF PT/EN (per-client done-unreported)", "size": "l", "priority": "high", "status": "todo", "scheduled": false},
+        {"id": "t25", "title": "ntfy notifications (decision/PR/critical/failure/window)", "size": "s", "priority": "med", "status": "todo", "scheduled": false},
+        {"id": "t26", "title": "Agent activity view + phone 'what needs me' home", "size": "m", "priority": "med", "status": "todo", "scheduled": false}
+      ]
+    },
+    {
       "id": "azteamai-system",
       "name": "AZ Team AI System",
       "phase": "Phase 5 — GO-LIVE",
       "on_deck": true,
       "tasks_total": 74,
       "tasks_done": 44,
-      "tasks": []
-    },
-    {
-      "id": "haniel-finances",
-      "name": "Haniel Finances",
-      "phase": "Phase 2–5",
-      "on_deck": true,
-      "tasks_total": 34,
-      "tasks_done": 19,
-      "tasks": []
-    },
-    {
-      "id": "influencer-agent",
-      "name": "Influencer Agent",
-      "phase": "Phase 0–1",
-      "on_deck": true,
-      "tasks_total": 51,
-      "tasks_done": 8,
       "tasks": []
     },
     {
@@ -198,9 +161,27 @@
       "tasks": []
     },
     {
+      "id": "influencer-agent",
+      "name": "Influencer Agent",
+      "phase": "Phase 0–1 — Foundation",
+      "on_deck": true,
+      "tasks_total": 51,
+      "tasks_done": 8,
+      "tasks": []
+    },
+    {
+      "id": "haniel-finances",
+      "name": "Haniel Finances",
+      "phase": "Phase 4 — Cash flow",
+      "on_deck": true,
+      "tasks_total": 34,
+      "tasks_done": 19,
+      "tasks": []
+    },
+    {
       "id": "module-project",
       "name": "Module Project",
-      "phase": "Phase 2+",
+      "phase": "Phase 9–10 — Hardening",
       "on_deck": true,
       "tasks_total": 63,
       "tasks_done": 18,
@@ -223,38 +204,23 @@
       "tasks_total": 125,
       "tasks_done": 110,
       "tasks": []
-    },
-    {
-      "id": "gerenciamento-obra-g",
-      "name": "Gerenciamento Obra G",
-      "phase": "Phase 3–4 (externally blocked)",
-      "on_deck": true,
-      "tasks_total": 48,
-      "tasks_done": 42,
-      "tasks": []
     }
   ],
   "waiting_on": [
     {
-      "project": "gerenciamento-obra-g",
+      "project": "az-takeoff",
       "blockers": [
-        "Real phone number needed for WhatsApp integration (t38, t39) — blocked on client",
-        "Makro / Deborah response on Phase 3 pricing (t45, t48) — waiting on external party",
-        "Client decision on Phase 4 scope before work can begin (t46 → t47)"
+        "Haniel: Buy CT Pros domain (t62) — required to unblock Phase 3 go-live and t24 company contact info",
+        "Rafa: Confirm catalog pricing + paint coverage/coats vs real suppliers (t60)",
+        "Rafa: Confirm apples-to-apples estimate margin target (t65)",
+        "Rafa: Connect CT Pros QuickBooks OAuth credentials (t25) — unblocks t28/t29 sandbox validation"
       ]
     },
     {
       "project": "ct-pros-sys",
       "blockers": [
-        "Domain purchase (Haniel action) required to unblock Phase 3 deployment",
-        "Rafa: QuickBooks credentials, pricing data, and margin decision needed"
-      ]
-    },
-    {
-      "project": "az-takeoff",
-      "blockers": [
-        "Domain purchase (Haniel action) required to unblock Phase 3 go-live",
-        "Rafa: QB creds, pricing data, and margin decision needed"
+        "Haniel: Buy CT Pros domain (t62) — required to unblock Phase 3 deployment",
+        "Rafa: QuickBooks credentials, catalog pricing, and margin decision (same as az-takeoff blockers)"
       ]
     }
   ]
