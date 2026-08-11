@@ -69,7 +69,7 @@
           "block": { "start": "11:15", "end": "12:15" },
           "prep": {
             "what": "Swap the takeoff engine's firm profiles (Holabird, Mitchell, etc.) for CT Pros-native blueprint classification categories so room labels in the output match CT Pros terminology.",
-            "understand": "The engine uses profiles to tune wall detection and room classification per architectural firm. The `auto` profile (engine/probe.py stroke probe → stroked_generic) was added in t28 as a fallback. The goal is CT Pros-native categories: the classification labels in the room table and Excel should match CT Pros's scope, not foreign-firm defaults.",
+            "understand": "The engine uses profiles to tune wall detection and room classification per architectural firm. The `auto` profile (engine/probe.py stroke probe → stroked_generic) was added in t28 as a fallback. The goal is CT Pros-native categories: classification labels in the room table and Excel should match CT Pros's scope, not foreign-firm defaults.",
             "approach": [
               "Review what's already done (this is in_progress) — check the ct-pros-sys repo or any active branch for partial changes to profiles or classification configs.",
               "Identify the CT Pros category list to use (look for a CATEGORY mapping doc, or check notes from the ct-pros integration session).",
@@ -122,7 +122,7 @@
             "what": "Wire the engine's measurement output (floor SF, wall paint area SF, perimeter LF, room classification) to the CT Pros trade system so each measured room automatically seeds the correct trade estimate lines.",
             "understand": "After a measurement is confirmed, the engine knows: floor SF, `wall_paint_area_sqft` (from t45 today), perimeter LF, and room classification (from t44 today). CT Pros trades (painting, flooring, trim) each need line items. This task builds the routing seam: classification → which trades → what quantities. t45 and t47 done this morning are its two data sources.",
             "approach": [
-              "Define the classification → trade routing map: which CT Pros room categories route to which trades (e.g. all rooms → painting using `wall_paint_area_sqft`; categories with flooring → flooring using `floor_area_sqft`; all rooms → trim using `perimeter_ft` at `per_linear_ft` rate).",
+              "Define the classification → trade routing map: which CT Pros room categories route to which trades (e.g. all rooms → painting using `wall_paint_area_sqft`; flooring categories → flooring using `floor_area_sqft`; all rooms → trim using `perimeter_ft` at `per_linear_ft` rate).",
               "Implement a `routeToTrades(measurement)` function that takes room quantities + classification and returns an array of `{trade, quantity, rate_type}` tuples.",
               "Wire it into the takeoff review flow: after measurement confirmation, call the router and insert seeded estimate lines flagged `seeded: true` so the estimator can override them.",
               "End-to-end test: upload a CT Pros sample sheet, confirm seeded lines appear in the estimate with correct quantities and trade assignments."
@@ -131,7 +131,7 @@
               "ct-pros-sys: trade taxonomy and room-classification definitions (output of t44)",
               "`wall_paint_area_sqft` field (from t45, implemented this morning)",
               "`per_linear_ft` RateType (from t47, implemented this morning)",
-              "Any existing estimate-seeding code in ct-pros-sys to follow the pattern (e.g. how QB sync seeds lines)"
+              "Any existing estimate-seeding code in ct-pros-sys to follow the pattern"
             ]
           }
         }
