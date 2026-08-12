@@ -54,7 +54,7 @@
           "SSH to VPS, open/create /opt/azteamai-system/.env.production.",
           "Set: APP_KEY, STRIPE_KEY + STRIPE_SECRET (both test_ and live_ keys), STRIPE_WEBHOOK_SECRET, CHATWOOT_API_TOKEN + CHATWOOT_BASE_URL, MAIL_* driver, ADMIN_INITIAL_PASSWORD.",
           "Run `php artisan config:cache && php artisan route:cache`.",
-          "Verify with `php artisan tinker` → `config('services.stripe.secret')`." 
+          "Verify with `php artisan tinker` → `config('services.stripe.secret`)`." 
         ],
         "resources": [
           "Stripe Dashboard → API Keys (test + live)",
