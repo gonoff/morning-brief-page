@@ -157,12 +157,12 @@
           "block": { "start": "14:00", "end": "15:00" },
           "prep": {
             "what": "Confirm and fix the engine's GET /profiles response so it shows CT-Pros building-vocabulary categories and hides the 'mitchell' internal holdout.",
-            "understand": "The app side is done — `Takeoff/Index.vue` already fetches `/profiles` dynamically (commit 4a8ef57). What's left is purely engine-side: the labels must use building vocabulary (Residential/multifamily, School/institutional, etc.) and must not expose 'mitchell' (blind eval holdout that should never be client-visible). Hit the live endpoint first before touching any code.",
+            "understand": "The app side is done — `Takeoff/Index.vue` already fetches `/profiles` dynamically (commit 4a8ef57). What's left is purely engine-side: labels must use building vocabulary (Residential/multifamily, School/institutional, etc.) and must not expose 'mitchell' (blind eval holdout). Hit the live endpoint first before touching any code.",
             "approach": [
               "Hit the live endpoint: `curl -H 'X-API-Key: <your_key>' https://aztakeoff.azteamai.com/profiles` — see exactly what labels currently come back.",
               "In the `takeoff-engine` codebase, find the profiles list builder (likely `service/routes.py` or `engine/profiles/`) and update labels to building vocabulary + filter out 'mitchell'.",
               "Confirm 'Auto (recommended)' — the stroke-width probe — is listed with a clear description.",
-              "Redeploy on VPS: `cd /opt/takeoff-engine && git pull && docker compose -f docker-compose.lean.yml --env-file .env up -d --build` — then hit the endpoint again to verify."
+              "Redeploy: `cd /opt/takeoff-engine && git pull && docker compose -f docker-compose.lean.yml --env-file .env up -d --build` — then verify the endpoint again."
             ],
             "resources": [
               "aztakeoff.azteamai.com — GET /profiles (use your TAKEOFF_API_KEY)",
@@ -193,18 +193,18 @@
           "block": { "start": "15:15", "end": "17:15" },
           "prep": {
             "what": "Build the persistent job queue that all sweeper agents pull from — the backbone the entire Phase 7 depends on.",
-            "understand": "Without this, the sweeper is fire-and-forget: crashed workers leave jobs stranded forever and there's no backpressure. Key invariants: (1) atomic lease so only one worker holds a job at a time, (2) heartbeat so stale leases get reclaimed automatically, (3) window-awareness so jobs don't fire outside business hours, (4) priority ordering so blocking jobs jump the queue, (5) concurrency cap so repos aren't flooded. Build on PG (`todos_platform`), following the existing atomic OCC pattern in `lib/pg-board-repository.ts`.",
+            "understand": "Without this, the sweeper is fire-and-forget: crashed workers leave jobs stranded forever and there's no backpressure. Key invariants: (1) atomic lease so only one worker holds a job at a time, (2) heartbeat so stale leases get reclaimed automatically, (3) window-awareness so jobs don't fire outside business hours, (4) priority ordering so blocking jobs jump the line, (5) concurrency cap so repos aren't flooded. Build on PG (`todos_platform`), following the atomic OCC pattern in `lib/pg-board-repository.ts`.",
             "approach": [
               "Write a `db/migrate` for a `jobs` table: `id`, `repo_id`, `type`, `priority`, `payload` (jsonb), `status` (queued/leased/done/failed), `lease_expires_at`, `heartbeat_at`, `attempt_count`, `created_at`.",
-              "Implement `lib/queue.ts`: `enqueue(job)`, `lease(workerId, ttlMs)` (atomic `UPDATE … WHERE status='queued' … RETURNING`), `heartbeat(jobId)`, `reclaim()` (marks leased+expired jobs back to queued), `complete(jobId)`, `fail(jobId, err)`.",
+              "Implement `lib/queue.ts`: `enqueue(job)`, `lease(workerId, ttlMs)` (atomic `UPDATE … WHERE status='queued' … RETURNING`), `heartbeat(jobId)`, `reclaim()` (marks leased+expired back to queued), `complete(jobId)`, `fail(jobId, err)`.",
               "Add window-awareness in `lease()`: return null if current time is outside the configured `[window.start, window.end]` — don't dequeue, just wait.",
               "Write tests: concurrent lease race (two workers, only one wins), stale reclaim after simulated timeout, priority ordering, window blocks a job outside hours."
             ],
             "resources": [
               "`db/migrate.ts` — existing migration runner to model your new migration on",
-              "`lib/pg-board-repository.ts` — existing atomic OCC + PG client pattern",
+              "`lib/pg-board-repository.ts` — atomic OCC + PG client pattern",
               "VPS PG: `todos_platform` database (Bun PG client or `psql` on azteam-vps)",
-              "`lib/repository.contract.ts` — test structure to model your queue tests on"
+              "`lib/repository.contract.ts` — test structure to model queue tests on"
             ]
           }
         },
@@ -218,19 +218,19 @@
           "notes": "refreshRepo orchestration is unit-proven with mocked runners; add ONE real in-image prep run against an onboarded repo to prove the docker transport end-to-end. ~30-min job once a repo is onboarded.",
           "block": { "start": "17:30", "end": "18:00" },
           "prep": {
-            "what": "Add one integration test that runs `refreshRepo` against a real onboarded repo via the actual Docker transport — proving the pipeline beyond mocked runners.",
-            "understand": "The `RefreshRunners` seam makes this quick: swap the mock for the real `DockerRefreshRunner`, point it at a real repo config, and assert the freshness marker is written. Tag it as an integration test so it doesn't pollute the unit suite. This is the last safety check before going live with `SWEEPER_REPOS`.",
+            "what": "Add one integration test that runs `refreshRepo` against a real onboarded repo via actual Docker — proving the pipeline beyond mocked runners.",
+            "understand": "The `RefreshRunners` seam makes this quick: swap the mock for the real `DockerRefreshRunner`, point it at a real repo config, assert the freshness marker is written. Tag it as an integration test so it doesn't pollute the unit suite. Last safety check before live `SWEEPER_REPOS`.",
             "approach": [
-              "Pick the simplest already-onboarded repo in `SWEEPER_REPOS` config (or onboard a small one now — a static site works).",
-              "Write `refreshRepo.integration.test.ts`: inject real `DockerRefreshRunner`, run `refreshRepo(repoConfig)`, assert prep command exited 0 and freshness marker was written.",
-              "Tag with a pattern like `.integration.test.ts` so `bun test` skips it; run explicitly with `bun test --filter integration`.",
+              "Pick the simplest onboarded repo in `SWEEPER_REPOS` config (or onboard a small one — a static site works).",
+              "Write `refreshRepo.integration.test.ts`: inject real `DockerRefreshRunner`, run `refreshRepo(repoConfig)`, assert prep command exited 0 and freshness marker written.",
+              "Tag with `.integration.test.ts` pattern so `bun test` (unit) skips it; run with `bun test --filter integration`.",
               "If no repo is onboarded yet, add its `RepoMapping` to config first (2 min), then write the test."
             ],
             "resources": [
-              "Sweeper source: `RefreshRunners` interface + `DockerRefreshRunner` implementation",
-              "Existing `refreshRepo` unit test (use as structural template)",
-              "`SWEEPER_REPOS` config (existing onboarded repo list)",
-              "Docker CLI available on VPS"
+              "Sweeper source: `RefreshRunners` interface + `DockerRefreshRunner`",
+              "Existing `refreshRepo` unit test (structural template)",
+              "`SWEEPER_REPOS` config",
+              "Docker CLI on azteam-vps"
             ]
           }
         }
@@ -338,7 +338,7 @@
       "project": "AZ Takeoff SaaS",
       "task_id": "t65",
       "title": "Confirm apples-to-apples estimate margin target with Rafa",
-      "reason": "Rafa must decide which margin metric (contribution vs. net) and target percentage should gate bids before the pass/fail color can be added to the editor."
+      "reason": "Rafa must decide which margin metric (contribution vs. net) and target percentage should gate bids before pass/fail coloring can be added to the editor."
     },
     {
       "project": "AZ Takeoff SaaS",
