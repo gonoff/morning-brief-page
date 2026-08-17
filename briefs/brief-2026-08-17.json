@@ -109,7 +109,7 @@
             "understand": "QBVendorSync is mock-tested against a MockHandler; it has never hit a real Intuit API. Key behaviors: adopt-by-DisplayName (finds existing vendor by name instead of creating a dup), 6240 error recovery, and Vendor1099 flag from `w9_on_file`. Set QUICKBOOKS_ENVIRONMENT=sandbox — never sandbox-test against production QB.",
             "approach": [
               "Set QUICKBOOKS_ENVIRONMENT=sandbox in staging .env; rebuild config cache + restart app.",
-              "Create a test subcontractor in the app. Trigger sync via the manual route `/quickbooks/subcontractors/{id}/sync` or `php artisan quickbooks:sync`.",
+              "Create a test subcontractor in the app. Trigger sync via `/quickbooks/subcontractors/{id}/sync` or `php artisan quickbooks:sync`.",
               "Open the Intuit Developer sandbox dashboard and verify: Vendor created with correct DisplayName + Vendor1099=true (if w9_on_file=true on the sub).",
               "Test adopt-by-DisplayName: manually create a Vendor in the sandbox with the same name, then sync the subcontractor again — should ADOPT (no duplicate)."
             ],
@@ -134,9 +134,9 @@
             "understand": "COMPANY_NAME, COMPANY_ADDRESS, COMPANY_PHONE, COMPANY_TAGLINE are already wired. Only COMPANY_EMAIL='office@ctpros.example' (non-deliverable) and COMPANY_WEBSITE='' remain. These print on every client-facing PDF and proposal email — can't go live with RFC-reserved placeholder addresses.",
             "approach": [
               "Update staging .env: COMPANY_EMAIL='office@[new-domain]', COMPANY_WEBSITE='https://[new-domain]' (straight from t62).",
-              "Run `php artisan config:cache` and restart the app container (same procedure as t62).",
-              "Render a test proposal PDF and confirm the correct email + website appear in the footer/header.",
-              "Check the public Sign pages (Sign/Show, Sign/Expired, Sign/Success) to verify no placeholder text leaks."
+              "Run `php artisan config:cache` and restart the app container.",
+              "Render a test proposal PDF and confirm the correct email + website appear.",
+              "Check public Sign pages (Sign/Show, Sign/Expired, Sign/Success) to verify no placeholder text leaks."
             ],
             "resources": [
               "config/company.php (the single runtime identity source)",
@@ -156,18 +156,18 @@
           "block": { "start": "15:30", "end": "16:30" },
           "prep": {
             "what": "Run the QuickBooks OAuth flow to connect CT Pros's own QBO company, replacing HighTech's stale inherited tokens.",
-            "understand": "The QB integration is code-complete and mock-tested. Zero live QB calls have ever been made for CT Pros — the `quickbooks_tokens` table is empty or holds HighTech tokens. The OAuth flow: Settings → Connect QuickBooks → Intuit redirect → authenticate → callback stores tokens encrypted in `quickbooks_tokens`. You need CT Pros's QBO credentials (get from Rafa if you don't have admin access).",
+            "understand": "The QB integration is code-complete and mock-tested. Zero live QB calls have ever been made for CT Pros — `quickbooks_tokens` is empty or holds HighTech tokens. OAuth flow: Settings → Connect QuickBooks → Intuit redirect → authenticate → callback stores tokens encrypted in `quickbooks_tokens`. You need CT Pros's QBO credentials (get from Rafa).",
             "approach": [
-              "Log in to the staging app as admin (ADMIN_INITIAL_PASSWORD from staging .env). Navigate to Settings → QuickBooks.",
-              "Click 'Connect QuickBooks' — you'll be redirected to Intuit. Use CT Pros's QBO credentials (coordinate with Rafa).",
+              "Log in to staging as admin (ADMIN_INITIAL_PASSWORD from staging .env). Navigate to Settings → QuickBooks.",
+              "Click 'Connect QuickBooks' — authenticate with CT Pros's QBO credentials (coordinate with Rafa if needed).",
               "After callback: verify Settings shows 'Connected'. Check `quickbooks_tokens` table has a row with a non-null `access_token`.",
-              "Run `php artisan quickbooks:sync` — check logs for no auth errors. If you get a 401, the token didn't save; re-run the OAuth flow."
+              "Run `php artisan quickbooks:sync` — check logs for no auth errors. 401 means the token didn't save; re-run the OAuth flow."
             ],
             "resources": [
               "Staging app: Settings → QuickBooks (auth/quickbooks routes in routes/web.php)",
-              "QuickBooksAuthController.php + QuickBooksService.php (token exchange logic)",
+              "QuickBooksAuthController.php + QuickBooksService.php",
               "CT Pros QBO admin credentials (from Rafa)",
-              "Intuit app credentials in staging .env: QUICKBOOKS_CLIENT_ID, QUICKBOOKS_CLIENT_SECRET"
+              "Staging .env: QUICKBOOKS_CLIENT_ID, QUICKBOOKS_CLIENT_SECRET"
             ]
           }
         },
@@ -182,17 +182,17 @@
           "block": { "start": "16:45", "end": "17:45" },
           "prep": {
             "what": "End-to-end live test of all 6 QB entity syncs against the Intuit sandbox — Customer, Vendor, Item, Estimate, Invoice, Payment.",
-            "understand": "Every sync (QBCustomerSync, QBVendorSync, QBItemSync, QBEstimateSync, QBInvoiceSync, QBPaymentSyncer) is mock-tested only. Critical thing to prove: the IPPLinkedTxn that links an Invoice back to its Estimate — Intuit rejects malformed LinkedTxn silently and the payment won't reconcile. Run with QUICKBOOKS_ENVIRONMENT=sandbox to protect real data. This session produces the docs/ validation artifact required before go-live.",
+            "understand": "Every sync is mock-tested only. Critical: the IPPLinkedTxn that links Invoice back to Estimate — Intuit rejects malformed LinkedTxn silently and payment won't reconcile. Run with QUICKBOOKS_ENVIRONMENT=sandbox. This session produces the docs/ validation artifact required before go-live.",
             "approach": [
-              "Set QUICKBOOKS_ENVIRONMENT=sandbox in staging .env; connect sandbox QB via OAuth (same Settings flow as t25).",
-              "Run the full CRM flow: Create lead → build estimate with 2-3 line items → approve → verify auto deposit invoice pushed to QB with TxnStatus=Accepted and IPPLinkedTxn to the estimate.",
-              "Simulate payment in sandbox (Intuit dev dashboard → Invoice → Receive Payment). Run `php artisan quickbooks:sync` — verify CRM shows the payment received.",
-              "Document results in docs/quickbooks-sandbox-validation.md: timestamp, each entity's QB ID, pass/fail for all 6 syncs, and the LinkedTxn verification."
+              "Set QUICKBOOKS_ENVIRONMENT=sandbox in staging .env; connect sandbox QB via OAuth (Settings flow as t25).",
+              "Run full CRM flow: Create lead → build estimate → approve → verify auto deposit invoice pushed to QB with TxnStatus=Accepted and IPPLinkedTxn.",
+              "Simulate payment in sandbox (dev dashboard → Invoice → Receive Payment). Run `php artisan quickbooks:sync` — verify CRM shows payment received.",
+              "Document in docs/quickbooks-sandbox-validation.md: timestamp, each entity's QB ID, pass/fail for all 6 syncs, LinkedTxn verification."
             ],
             "resources": [
               "Intuit Developer sandbox at developer.intuit.com/app/developer/playground",
-              "EndToEndQuickBooksFlowTest.php (use as the step-by-step sequence guide)",
-              "Intuit QBO API reference: Estimate, Invoice, Payment entities (developer.intuit.com/app/developer/qbo/docs)",
+              "EndToEndQuickBooksFlowTest.php (step-by-step sequence guide)",
+              "Intuit QBO API reference: Estimate, Invoice, Payment entities",
               "docs/ folder for the validation artifact"
             ]
           }
@@ -218,18 +218,18 @@
           "block": { "start": "09:45", "end": "10:45" },
           "prep": {
             "what": "Add an opt-in AI label endpoint using the MiniMax tiles lane for firms that outline all text, and filter out callout noise from real room names.",
-            "understand": "The free live-text lane works on standard PDFs (Holabird: 92/109 named) but fails on outlined-text firms (PDFTron outlines all text as paths — 55 live words found, zero room labels). The spike `docs/spike/run_labels_m3tiles.py` already proves MiniMax M3 tiles work (~4.3 min/sheet, costs credits). Two sub-problems: (a) productize as an opt-in endpoint, (b) filter noise — Holabird shows general-note paragraphs, UP stair arrows, FEC callouts matching as room names.",
+            "understand": "The free live-text lane works on standard PDFs (Holabird: 92/109 named) but fails on outlined-text firms (PDFTron outlines all text as paths — 55 live words found, zero room labels). The spike `docs/spike/run_labels_m3tiles.py` proves MiniMax M3 tiles work (~4.3 min/sheet, costs credits). Two sub-problems: (a) productize as an opt-in endpoint, (b) filter noise — Holabird shows UP arrows, FEC callouts, note paragraphs matching as room names.",
             "approach": [
-              "Read docs/spike/run_labels_m3tiles.py to understand the tile rendering + MiniMax vision call pattern. Identify the reusable pieces vs spike scaffolding.",
-              "Add route POST /sheets/{sheet}/labels-ai that triggers the M3 tiles lane as an opt-in action. Emit a §7a `metered_credits` event per the existing billing pattern in service/routes.py.",
-              "Wire MINIMAX_AI key to the VPS: add it to /opt/takeoff-engine/.env (never hardcode); verify it reaches the service via config/settings.",
-              "Add callout-vs-room filtering: exclude labels matching stair markers (UP/DN), fire extinguisher (FEC), multi-word note paragraphs, and labels outside any room boundary polygon — check R13 docs for the full documented noise list."
+              "Read docs/spike/run_labels_m3tiles.py to understand the tile rendering + MiniMax vision call pattern. Identify what's reusable vs spike scaffolding.",
+              "Add route POST /sheets/{sheet}/labels-ai that triggers the M3 tiles lane as an opt-in action, emitting a §7a `metered_credits` event per the pattern in service/routes.py.",
+              "Wire MINIMAX_AI key to the VPS: add to /opt/takeoff-engine/.env; verify it reaches the service via config/settings.",
+              "Add callout-vs-room filtering: exclude stair markers (UP/DN), fire equipment (FEC), multi-word note paragraphs, and labels outside room boundary polygons. Check R13 docs for the full noise list."
             ],
             "resources": [
-              "docs/spike/run_labels_m3tiles.py (the M3 tiles spike to productize)",
+              "docs/spike/run_labels_m3tiles.py (the M3 tiles spike)",
               "service/routes.py (§7a metered_credits event pattern)",
-              "MiniMax Vision API docs (the model used in the spike)",
-              "R13 docs for the documented callout noise patterns",
+              "MiniMax Vision API docs",
+              "R13 docs for callout noise patterns",
               "VPS .env at /opt/takeoff-engine/.env"
             ]
           }
@@ -245,19 +245,19 @@
           "block": { "start": "11:00", "end": "13:00" },
           "prep": {
             "what": "Build the full assemblies-per-room pipeline: room classification + geometry + wall height → up to 8 estimator quantities → Excel workbook.",
-            "understand": "The scaffold `engine/assemblies.py` exists from B1 (assemblies-lite). The full version: given a classified room (bedroom, bathroom, corridor, etc.) + floor area + perimeter + `wall_height_ft` → compute quantities: wall paint SF (perimeter × height), ceiling paint SF (= floor area), flooring SF (= floor area), drywall SF (= wall SF), LF of trim (= perimeter). These feed `build_sheet_takeoff` in service/worker.py and appear in the 5-tab Excel as new quantity rows. This is what makes the Excel estimator-grade.",
+            "understand": "The scaffold `engine/assemblies.py` exists from B1 (assemblies-lite). Full version: given a classified room + floor area + perimeter + `wall_height_ft` → compute quantities: wall paint SF (perimeter × height), ceiling paint SF (= floor area), flooring SF (= floor area), drywall SF (= wall SF), trim LF (= perimeter). These feed `build_sheet_takeoff` in service/worker.py and appear in the 5-tab Excel as new quantity rows. This is the last pillar before estimator-grade Excel.",
             "approach": [
-              "Open engine/assemblies.py — review the existing scaffold: what’s wired vs placeholder. Understand what `build_sheet_takeoff` in service/worker.py currently calls.",
-              "Define the room classification → assembly mapping: at minimum bedroom, bathroom, kitchen, corridor, living_room → their standard assembly sets (wall paint, ceiling paint, floor type, drywall, trim LF). Reference CSI MasterFormat Div 09 Finishes.",
-              "Wire `wall_height_ft`: read it from the Measurement row (set via PATCH /room-table corrections from t8); fall back to a project-level default (e.g. 9 ft). Compute wall_sf = perimeter × wall_height_ft.",
-              "Plug the assembly output into `build_sheet_takeoff` in service/worker.py: emit one assembly quantity row per assembly per room in the 5-tab Excel. Run `pytest service/ -v` — verify the existing 17+ tests still pass, then add a test covering the new assembly rows."
+              "Open engine/assemblies.py — review the existing scaffold: what's wired vs placeholder. Understand what `build_sheet_takeoff` in service/worker.py currently calls.",
+              "Define the room classification → assembly mapping table: bedroom, bathroom, kitchen, corridor, living_room → their assembly sets (wall paint, ceiling paint, floor type, drywall, trim LF). Reference CSI MasterFormat Div 09 Finishes.",
+              "Wire `wall_height_ft`: read from the Measurement row (set via PATCH /room-table from t8); fall back to project default (e.g. 9 ft). Compute wall_sf = perimeter × wall_height_ft.",
+              "Plug assembly output into `build_sheet_takeoff` in service/worker.py: emit one assembly quantity row per assembly per room in the Excel. Run `pytest service/ -v` — verify 17+ existing tests still pass, then add a test for the new assembly rows."
             ],
             "resources": [
               "engine/assemblies.py (the scaffold to extend)",
-              "service/worker.py → build_sheet_takeoff (the orchestrator that drives the Excel)",
+              "service/worker.py → build_sheet_takeoff (the Excel orchestrator)",
               "PATCH /room-table correction routes (t8 notes: wall_height_ft via model_fields_set)",
-              "CSI MasterFormat Div 09 Finishes reference (for trade categories)",
-              "service/ pytest suite (run: pytest service/ -v from repo root)"
+              "CSI MasterFormat Div 09 Finishes reference",
+              "service/ pytest suite (run: pytest service/ -v)"
             ]
           }
         }
