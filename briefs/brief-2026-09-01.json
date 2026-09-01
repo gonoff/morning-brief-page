@@ -276,7 +276,7 @@
             "approach": [
               "Read `spec-C.md` in full (especially §C1) — understand the exact new gate name, what triggers entry, and what resolves it.",
               "Add `AwaitingCkPreprod` to the project stage/status enum in the correct position in the workflow sequence.",
-              "Update workflow transition logic in `ProjectWorkflowSubscriber` (or state machine config): define the event that moves a project INTO `AwaitingCkPreprod` (completing ProductionScheduled) and what resolves it (CK2 inspection pass → InProduction).",
+              "Update workflow transition logic in `ProjectWorkflowSubscriber` (or state machine config): define the event that moves a project INTO `AwaitingCkPreprod` and what resolves it (CK2 inspection pass → InProduction).",
               "Update all UI components that display stage labels — workbench cards, activity feed items, project list rows — to show the shifted CK labels per spec.",
               "Run the test suite; walk a test project through the new gate in a browser to confirm the transition works and all surfaces update correctly."
             ],
@@ -285,7 +285,7 @@
               "Project stage/status enum file",
               "`ProjectWorkflowSubscriber` or equivalent state machine handler",
               "Workbench, activity feed, and project list components (Vue or Blade) that render stage labels",
-              "t874 (Help-center guide for CK2 gate) — companion task that documents the user-facing explanation of this change"
+              "t874 (Help-center guide for CK2 gate) — companion task explaining the user-facing impact"
             ]
           }
         }
