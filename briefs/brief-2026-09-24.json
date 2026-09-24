@@ -1,0 +1,339 @@
+{
+  "date": "2026-09-24",
+  "generated_at": "2026-09-24T10:03:00Z",
+  "data_as_of": "2026-09-24T05:00:05+00:00",
+  "greeting": "Morning, Haniel. Thursday — one webinar at midday, the rest of the day is clean and yours.",
+  "hype": "The AZ Takeoff pricing chain closes today: PerLinearFt in, wall paint derived, measurements routed to trades. Three tasks, one chain, ships as a unit. Get t47 done by 9:30 and everything after it unlocks.",
+  "notice": "Webinar 12:30–13:15 on calendar (ChatGPT Ads — OpenAI/Goldcast). Good natural break before the afternoon push.",
+  "difficulty": {
+    "rating": "Solid",
+    "planned_minutes": 330,
+    "available_minutes": 435,
+    "ratio": 0.759,
+    "note": ""
+  },
+  "window": { "start": "09:00", "end": "18:00" },
+  "schedule": [
+    {
+      "start": "09:00",
+      "end": "09:30",
+      "slug": "az-takeoff",
+      "project": "AZ Takeoff SaaS",
+      "task_id": "t47",
+      "title": "Add PerLinearFt RateType (prerequisite for pricing trim/wall-linear)",
+      "estimate": "s",
+      "kind": "task"
+    },
+    {
+      "start": "09:45",
+      "end": "11:45",
+      "slug": "az-takeoff",
+      "project": "AZ Takeoff SaaS",
+      "task_id": "t45",
+      "title": "Derive wall PAINT area (perimeter x height) — the missing painting measurement",
+      "estimate": "l",
+      "kind": "task"
+    },
+    {
+      "start": "12:30",
+      "end": "13:15",
+      "kind": "meeting",
+      "title": "ChatGPT Ads webinar (OpenAI/Goldcast)"
+    },
+    {
+      "start": "13:15",
+      "end": "14:15",
+      "kind": "lunch",
+      "title": "Lunch"
+    },
+    {
+      "start": "14:15",
+      "end": "15:15",
+      "slug": "az-takeoff",
+      "project": "AZ Takeoff SaaS",
+      "task_id": "t46",
+      "title": "Route takeoff measurements to trades at the seam",
+      "estimate": "m",
+      "kind": "task"
+    },
+    {
+      "start": "15:30",
+      "end": "17:30",
+      "slug": "claude-todos-skill",
+      "project": "Tasks Platform (claude-todos-skill rebuild)",
+      "task_id": "t20",
+      "title": "Durable job queue (lease/heartbeat/reclaim, window-aware, priority, cap)",
+      "estimate": "l",
+      "kind": "task"
+    }
+  ],
+  "projects": [
+    {
+      "slug": "az-takeoff",
+      "project": "AZ Takeoff SaaS",
+      "client": "AZ Team",
+      "tasks_total": 73,
+      "tasks_done": 51,
+      "on_deck": false,
+      "tasks": [
+        {
+          "id": "t47",
+          "title": "Add PerLinearFt RateType (prerequisite for pricing trim/wall-linear)",
+          "phase": "Post-Deploy · Blueprint takeoff",
+          "estimate": "s",
+          "priority": "medium",
+          "status": "todo",
+          "notes": "RateType has no per-linear-foot. Add PerLinearFt=per_linear_ft (+ label), wire LineItemFactory::unitFromRateType->lf, seed a per-LF trim LaborRate. Must land before takeoff pricing.",
+          "block": { "start": "09:00", "end": "09:30" },
+          "prep": {
+            "what": "Add the `PerLinearFt` value to `RateType` and wire it end-to-end so linear-foot measurements produce a priced line item.",
+            "understand": "`RateType` drives `LineItemFactory::unitFromRateType()`, which maps each rate type to a unit string (`sf`, `ea`, etc.). There is no `lf` unit today — any linear-foot measurement creates a broken line item with no unit. You also need a seeded `LaborRate` row so the takeoff seeder can look up a trim rate by the new type.",
+            "approach": [
+              "Add `PerLinearFt = 'per_linear_ft'` to the `RateType` enum (+ human-readable label).",
+              "Add a `'lf'` return case to `LineItemFactory::unitFromRateType()`.",
+              "Add a per-LF trim `LaborRate` seed row (a reasonable default $/LF).",
+              "Run the seeder locally and verify a trim measurement produces `unit=lf` with a non-zero price."
+            ],
+            "resources": [
+              "`RateType` enum — add the new case here",
+              "`LineItemFactory.php` — wire `unitFromRateType`",
+              "`LaborRateSeeder.php` — add the per-LF trim row",
+              "Existing `PerSqFt` implementation as the parallel pattern to follow"
+            ]
+          }
+        },
+        {
+          "id": "t45",
+          "title": "Derive wall PAINT area (perimeter x height) — the missing painting measurement",
+          "phase": "Post-Deploy · Blueprint takeoff",
+          "estimate": "l",
+          "priority": "high",
+          "status": "todo",
+          "notes": "A 2D plan has no wall height so painting gets ZERO auto-sqft today. Add a wall/ceiling height input (project default + optional per-room override); wall paint SF/room = perimeter x height. The seeder currently DROPS geometry — preserve it.",
+          "block": { "start": "09:45", "end": "11:45" },
+          "prep": {
+            "what": "Compute wall-paint SF per room as `perimeter × ceiling height` — the measurement the paint trade has always needed that 2D blueprints don't provide.",
+            "understand": "A blueprint gives `perimeter` and `area` per room but NO wall height. The seeder currently drops all geometry at import, so the paint trade receives zero area. Three-part fix: (1) add `wall_height_ft` (default 9 ft) to the project + optional per-room override, (2) stop the seeder from discarding `perimeter`, and (3) derive `wall_paint_sf = perimeter × height` and emit it as a named measurement kind for t46 to route.",
+            "approach": [
+              "Add `wall_height_ft` (default 9) to the project model + migration; add an optional per-room override.",
+              "Find the geometry-drop point in `TakeoffEstimateSeeder` and preserve `perimeter` through the import pipeline.",
+              "Write `deriveWallPaintArea(room, projectHeightFt)` → `perimeter × height` (no door/window subtractions for v1).",
+              "Emit the result as a `wall_paint_sf` measurement kind on each room and verify it appears in the seeder output."
+            ],
+            "resources": [
+              "Project model + migration for `wall_height_ft`",
+              "`TakeoffEstimateSeeder.php` — the geometry-drop point to fix",
+              "Blueprint room payload — where `perimeter` lives in the raw input",
+              "Existing floor-area derivation as the structural pattern to mirror"
+            ]
+          }
+        },
+        {
+          "id": "t46",
+          "title": "Route takeoff measurements to trades at the seam",
+          "phase": "Post-Deploy · Blueprint takeoff",
+          "estimate": "m",
+          "priority": "high",
+          "status": "todo",
+          "notes": "Every measurement collapses into one anonymous kind=custom line, dropping kind+geometry (TakeoffEstimateSeeder). Preserve+switch on kind: area(SF)->flooring, derived wall SF->painting, line(LF)->wall-linear/trim, count(EA)->doors/tile. Tag each line with a trade via the core-vs-subbed helper.",
+          "block": { "start": "14:15", "end": "15:15" },
+          "prep": {
+            "what": "Rewrite the seeder to switch on measurement kind and emit trade-tagged line items — replacing the single anonymous `kind=custom` line with real flooring / paint / trim / door entries.",
+            "understand": "`TakeoffEstimateSeeder` collapses all room measurements into one worthless line today, dropping `kind` and geometry. The fix: switch on `measurement.kind`, key pricing lookups on `RateType` (using `PerLinearFt` from t47 and `wall_paint_sf` from t45 — both done before this runs), and tag each line with a trade via the core-vs-subbed helper.",
+            "approach": [
+              "Replace the seeder's single fallthrough with a `switch` on `measurement.kind`: `area_sf` → flooring rate, `wall_paint_sf` → painting rate, `linear_ft` → per-LF trim rate, `count_ea` → doors/tile.",
+              "Tag each generated line with a trade using `coreOrSubcontracted(measurement.kind)`.",
+              "Key all `LaborRate` lookups on the appropriate `RateType` (`PerLinearFt` for trim, `PerSqFt` for area/paint).",
+              "Smoke-test: seed a sample blueprint and verify each trade shows the correct quantity and a non-zero price."
+            ],
+            "resources": [
+              "`TakeoffEstimateSeeder.php` — the file to rewrite",
+              "Measurement kind enum/constants",
+              "`coreOrSubcontracted` helper — for trade tagging",
+              "`LaborRate` model — pricing lookups by `RateType`"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "slug": "claude-todos-skill",
+      "project": "Tasks Platform (claude-todos-skill rebuild)",
+      "client": "",
+      "tasks_total": 31,
+      "tasks_done": 21,
+      "on_deck": false,
+      "tasks": [
+        {
+          "id": "t20",
+          "title": "Durable job queue (lease/heartbeat/reclaim, window-aware, priority, cap)",
+          "phase": "M3 · Phase 6 — Sweeper + CI/deploy",
+          "estimate": "l",
+          "priority": "high",
+          "status": "todo",
+          "notes": null,
+          "block": { "start": "15:30", "end": "17:30" },
+          "prep": {
+            "what": "Build the PG-backed durable job queue the Sweeper (t21) will consume — lease/heartbeat/reclaim so jobs survive restarts and can't double-run.",
+            "understand": "The queue needs at-least-once delivery: a worker atomically claims a job (writes `worker_id` + `leased_until`), heartbeats while running, and a daemon reclaim pass resets stale leases back to `pending`. It must also enforce the active window (don't dequeue outside the 5h work window), cap concurrent workers, and respect priority. Postgres + `SELECT ... FOR UPDATE SKIP LOCKED` is the right primitive — no Redis, no external services. The Sweeper (t21) will be the first consumer.",
+            "approach": [
+              "Create the jobs table: `id`, `kind`, `payload`, `status` (pending/running/done/failed), `priority`, `worker_id`, `leased_until`, `created_at`, `run_at` (window gate).",
+              "Write `enqueue(kind, payload, priority, runAt?)` and `dequeue(workerId, windowStart, windowEnd, maxConcurrent)` using `SELECT ... FOR UPDATE SKIP LOCKED` for atomic single-flight claim.",
+              "Write `heartbeat(jobId, workerId)` (extends `leased_until`) and `reclaimStale(timeoutMs)` (resets timed-out running jobs to pending up to `maxRetries`).",
+              "Write tests: enqueue → dequeue → done; heartbeat keeps lease alive; reclaimStale fires after simulated timeout; window gate: job not dequeued outside active hours; cap: no more than N concurrent workers."
+            ],
+            "resources": [
+              "PG driver in use — check `bun.lockb` or package config",
+              "`SELECT ... FOR UPDATE SKIP LOCKED` — Postgres docs for atomic lease claim",
+              "t21 task notes — describes expected Sweeper job kinds and payloads",
+              "t29 task notes — cross-process lock context this queue must coordinate with"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "slug": "gs-woodworking-spec",
+      "project": "GS-ERP",
+      "client": "GS Woodworking LLC",
+      "tasks_total": 75,
+      "tasks_done": 39,
+      "on_deck": true,
+      "tasks": []
+    },
+    {
+      "slug": "gs-erp-invoice-accounting-fix",
+      "project": "GS-ERP",
+      "client": "GS Woodworking LLC",
+      "tasks_total": 75,
+      "tasks_done": 39,
+      "on_deck": true,
+      "tasks": []
+    },
+    {
+      "slug": "module-project",
+      "project": "Module",
+      "client": "Internal",
+      "tasks_total": 63,
+      "tasks_done": 18,
+      "on_deck": true,
+      "tasks": []
+    },
+    {
+      "slug": "azteamai-system",
+      "project": "AZ Team AI System",
+      "client": "AZ Team AI (internal)",
+      "tasks_total": 74,
+      "tasks_done": 44,
+      "on_deck": true,
+      "tasks": []
+    },
+    {
+      "slug": "bench3-gs",
+      "project": "GS-ERP",
+      "client": "GS Woodworking LLC",
+      "tasks_total": 75,
+      "tasks_done": 39,
+      "on_deck": true,
+      "tasks": []
+    },
+    {
+      "slug": "ct-pros-sys",
+      "project": "CT Pros",
+      "client": "CT Pros",
+      "tasks_total": 72,
+      "tasks_done": 50,
+      "on_deck": true,
+      "tasks": []
+    },
+    {
+      "slug": "dallo-usa",
+      "project": "dallo-usa",
+      "client": "Dallo USA",
+      "tasks_total": 49,
+      "tasks_done": 24,
+      "on_deck": true,
+      "tasks": []
+    },
+    {
+      "slug": "gs-design-wt",
+      "project": "GS-ERP",
+      "client": "GS Woodworking LLC",
+      "tasks_total": 75,
+      "tasks_done": 39,
+      "on_deck": true,
+      "tasks": []
+    },
+    {
+      "slug": "gs-sheet-payment-reconciliation",
+      "project": "GS-ERP",
+      "client": "GS Woodworking LLC",
+      "tasks_total": 75,
+      "tasks_done": 39,
+      "on_deck": true,
+      "tasks": []
+    },
+    {
+      "slug": "haniel-finances",
+      "project": "Haniel Finances",
+      "client": "Personal",
+      "tasks_total": 34,
+      "tasks_done": 19,
+      "on_deck": true,
+      "tasks": []
+    },
+    {
+      "slug": "influencer-agent",
+      "project": "influencer-agent",
+      "client": "AZ Team AI (own SaaS product)",
+      "tasks_total": 51,
+      "tasks_done": 8,
+      "on_deck": true,
+      "tasks": []
+    },
+    {
+      "slug": "procounters-erp",
+      "project": "procounters_erp",
+      "client": "ProCounters Inc.",
+      "tasks_total": 125,
+      "tasks_done": 110,
+      "on_deck": true,
+      "tasks": []
+    },
+    {
+      "slug": "takeoff-engine",
+      "project": "Takeoff Engine",
+      "client": "AZ Team AI",
+      "tasks_total": 34,
+      "tasks_done": 23,
+      "on_deck": true,
+      "tasks": []
+    }
+  ],
+  "waiting_on": [
+    {
+      "project": "AZ Takeoff SaaS",
+      "task_id": "t62",
+      "title": "Buy CT Pros domain + wire real website/email",
+      "reason": "Domain purchase requires Haniel's decision. No code can replace the placeholder COMPANY_WEBSITE/COMPANY_EMAIL until a real domain is bought and wired."
+    },
+    {
+      "project": "AZ Takeoff SaaS",
+      "task_id": "t25",
+      "title": "Connect CT Pros's own QuickBooks (fresh OAuth)",
+      "reason": "Inherited tokens were HighTech's. Requires Rafa to run a fresh OAuth connect with CT Pros's own QBO company credentials."
+    },
+    {
+      "project": "AZ Takeoff SaaS",
+      "task_id": "t60",
+      "title": "Confirm catalog pricing + paint coverage/coats vs Rafa's real suppliers",
+      "reason": "Seeder prices are market-estimate defaults. Rafa must confirm real supplier costs and standard coat count before estimates can be trusted."
+    },
+    {
+      "project": "AZ Takeoff SaaS",
+      "task_id": "t65",
+      "title": "Confirm apples-to-apples estimate margin target with Rafa",
+      "reason": "The editor reports contribution margin but business-rules.md records a 35% NET margin goal on a different basis. Rafa must decide which metric and target % to use for bid-coloring."
+    }
+  ]
+}
