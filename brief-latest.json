@@ -1,21 +1,18 @@
 {
-  "date": "2026-09-23",
-  "generated_at": "2026-09-23T10:22:40Z",
-  "data_as_of": "2026-09-23T05:00:04+00:00",
-  "greeting": "Morning, Haniel. Wednesday — clean slate, no meetings, two fronts fully unblocked.",
-  "hype": "AZ Takeoff blueprint math gets locked today, and the Tasks Platform gets its durable queue. Six blocks, all unblocked, fits the day clean. Nothing's in the way — let's go.",
-  "notice": "4 items in waiting_on need Rafa or you before AZ Takeoff Phase 3 can close — worth a quick nudge today.",
+  "date": "2026-09-24",
+  "generated_at": "2026-09-24T10:03:00Z",
+  "data_as_of": "2026-09-24T05:00:05+00:00",
+  "greeting": "Morning, Haniel. Thursday — one webinar at midday, the rest of the day is clean and yours.",
+  "hype": "The AZ Takeoff pricing chain closes today: PerLinearFt in, wall paint derived, measurements routed to trades. Three tasks, one chain, ships as a unit. Get t47 done by 9:30 and everything after it unlocks.",
+  "notice": "Webinar 12:30–13:15 on calendar (ChatGPT Ads — OpenAI/Goldcast). Good natural break before the afternoon push.",
   "difficulty": {
     "rating": "Solid",
-    "planned_minutes": 420,
-    "available_minutes": 480,
-    "ratio": 0.875,
+    "planned_minutes": 330,
+    "available_minutes": 435,
+    "ratio": 0.759,
     "note": ""
   },
-  "window": {
-    "start": "09:00",
-    "end": "18:00"
-  },
+  "window": { "start": "09:00", "end": "18:00" },
   "schedule": [
     {
       "start": "09:00",
@@ -38,8 +35,20 @@
       "kind": "task"
     },
     {
-      "start": "12:00",
-      "end": "13:00",
+      "start": "12:30",
+      "end": "13:15",
+      "kind": "meeting",
+      "title": "ChatGPT Ads webinar (OpenAI/Goldcast)"
+    },
+    {
+      "start": "13:15",
+      "end": "14:15",
+      "kind": "lunch",
+      "title": "Lunch"
+    },
+    {
+      "start": "14:15",
+      "end": "15:15",
       "slug": "az-takeoff",
       "project": "AZ Takeoff SaaS",
       "task_id": "t46",
@@ -48,39 +57,13 @@
       "kind": "task"
     },
     {
-      "start": "13:00",
-      "end": "14:00",
-      "kind": "lunch",
-      "title": "Lunch"
-    },
-    {
-      "start": "14:00",
-      "end": "16:00",
+      "start": "15:30",
+      "end": "17:30",
       "slug": "claude-todos-skill",
       "project": "Tasks Platform (claude-todos-skill rebuild)",
       "task_id": "t20",
       "title": "Durable job queue (lease/heartbeat/reclaim, window-aware, priority, cap)",
       "estimate": "l",
-      "kind": "task"
-    },
-    {
-      "start": "16:15",
-      "end": "17:15",
-      "slug": "claude-todos-skill",
-      "project": "Tasks Platform (claude-todos-skill rebuild)",
-      "task_id": "t22",
-      "title": "Unprivileged CI lane + sensitive-path human gate",
-      "estimate": "m",
-      "kind": "task"
-    },
-    {
-      "start": "17:30",
-      "end": "18:00",
-      "slug": "claude-todos-skill",
-      "project": "Tasks Platform (claude-todos-skill rebuild)",
-      "task_id": "t30",
-      "title": "Writer docker-integration test on a real onboarded repo",
-      "estimate": "s",
       "kind": "task"
     }
   ],
@@ -101,24 +84,21 @@
           "priority": "medium",
           "status": "todo",
           "notes": "RateType has no per-linear-foot. Add PerLinearFt=per_linear_ft (+ label), wire LineItemFactory::unitFromRateType->lf, seed a per-LF trim LaborRate. Must land before takeoff pricing.",
-          "block": {
-            "start": "09:00",
-            "end": "09:30"
-          },
+          "block": { "start": "09:00", "end": "09:30" },
           "prep": {
-            "what": "Add  to the  enum and wire it end-to-end — the one missing pricing primitive that unblocks trim and wall-linear measurement costs.",
-            "understand": " is an enum that drives  — it maps a rate type to a unit string (, , etc.). There is no  unit today, so any linear-foot measurement produces a broken  line item. You also need a seeded  row using the new type so the takeoff seeder can look it up at pricing time.",
+            "what": "Add the `PerLinearFt` value to `RateType` and wire it end-to-end so linear-foot measurements produce a priced line item.",
+            "understand": "`RateType` drives `LineItemFactory::unitFromRateType()`, which maps each rate type to a unit string (`sf`, `ea`, etc.). There is no `lf` unit today — any linear-foot measurement creates a broken line item with no unit. You also need a seeded `LaborRate` row so the takeoff seeder can look up a trim rate by the new type.",
             "approach": [
-              "Add  (+ human-readable label) to .",
-              "Add a  case in .",
-              "Add a per-LF trim row (reasonable default rate) to .",
-              "Run  locally and verify a trim line prices with unit ."
+              "Add `PerLinearFt = 'per_linear_ft'` to the `RateType` enum (+ human-readable label).",
+              "Add a `'lf'` return case to `LineItemFactory::unitFromRateType()`.",
+              "Add a per-LF trim `LaborRate` seed row (a reasonable default $/LF).",
+              "Run the seeder locally and verify a trim measurement produces `unit=lf` with a non-zero price."
             ],
             "resources": [
-              " — add the enum case here",
-              " — wire ",
-              " — add the LF seed row",
-              "Existing  implementation as a parallel pattern"
+              "`RateType` enum — add the new case here",
+              "`LineItemFactory.php` — wire `unitFromRateType`",
+              "`LaborRateSeeder.php` — add the per-LF trim row",
+              "Existing `PerSqFt` implementation as the parallel pattern to follow"
             ]
           }
         },
@@ -130,24 +110,21 @@
           "priority": "high",
           "status": "todo",
           "notes": "A 2D plan has no wall height so painting gets ZERO auto-sqft today. Add a wall/ceiling height input (project default + optional per-room override); wall paint SF/room = perimeter x height. The seeder currently DROPS geometry — preserve it.",
-          "block": {
-            "start": "09:45",
-            "end": "11:45"
-          },
+          "block": { "start": "09:45", "end": "11:45" },
           "prep": {
-            "what": "Compute wall-paint square footage per room from perimeter × ceiling height — the measurement that painting has always needed but 2D blueprints never provided automatically.",
-            "understand": "2D blueprint plans give  and  but NO wall height. The seeder currently discards geometry entirely, so the paint trade receives zero area. The fix has four parts: (1) a wall-height field on the project (default 9 ft) with optional per-room override, (2) preserve geometry through the seeder pipeline, (3) derive  per room, (4) emit it as a recognizable measurement kind so the t46 routing step can assign it to the paint trade.",
+            "what": "Compute wall-paint SF per room as `perimeter × ceiling height` — the measurement the paint trade has always needed that 2D blueprints don't provide.",
+            "understand": "A blueprint gives `perimeter` and `area` per room but NO wall height. The seeder currently drops all geometry at import, so the paint trade receives zero area. Three-part fix: (1) add `wall_height_ft` (default 9 ft) to the project + optional per-room override, (2) stop the seeder from discarding `perimeter`, and (3) derive `wall_paint_sf = perimeter × height` and emit it as a named measurement kind for t46 to route.",
             "approach": [
-              "Add a  field to the project model (default: 9 ft) and an optional per-room override.",
-              "Fix  to PRESERVE  /  instead of dropping them — right now these are lost before derivation can happen.",
-              "Write : returns  (v1 — no door/window subtractions needed yet).",
-              "Emit the result as a  measurement entry on the room so t46 can route it to the paint trade."
+              "Add `wall_height_ft` (default 9) to the project model + migration; add an optional per-room override.",
+              "Find the geometry-drop point in `TakeoffEstimateSeeder` and preserve `perimeter` through the import pipeline.",
+              "Write `deriveWallPaintArea(room, projectHeightFt)` → `perimeter × height` (no door/window subtractions for v1).",
+              "Emit the result as a `wall_paint_sf` measurement kind on each room and verify it appears in the seeder output."
             ],
             "resources": [
-              "Seeder:  — the geometry drop point",
-              "Blueprint room data model — find  and  in the takeoff project payload",
-              "Existing floor-area derivation (if present) as a structural pattern to mirror",
-              "t46 task notes for how this derived measurement gets consumed next"
+              "Project model + migration for `wall_height_ft`",
+              "`TakeoffEstimateSeeder.php` — the geometry-drop point to fix",
+              "Blueprint room payload — where `perimeter` lives in the raw input",
+              "Existing floor-area derivation as the structural pattern to mirror"
             ]
           }
         },
@@ -158,25 +135,22 @@
           "estimate": "m",
           "priority": "high",
           "status": "todo",
-          "notes": "Every measurement collapses into one anonymous kind=custom /bin/bash line, dropping kind+geometry (TakeoffEstimateSeeder). Preserve+switch on kind: area(SF)->flooring, derived wall SF->painting, line(LF)->wall-linear/trim, count(EA)->doors/tile. Tag each line with a trade via the core-vs-subbed helper.",
-          "block": {
-            "start": "12:00",
-            "end": "13:00"
-          },
+          "notes": "Every measurement collapses into one anonymous kind=custom line, dropping kind+geometry (TakeoffEstimateSeeder). Preserve+switch on kind: area(SF)->flooring, derived wall SF->painting, line(LF)->wall-linear/trim, count(EA)->doors/tile. Tag each line with a trade via the core-vs-subbed helper.",
+          "block": { "start": "14:15", "end": "15:15" },
           "prep": {
-            "what": "Rewrite the takeoff seeder to route each measurement kind to the right trade — replacing the current single anonymous  custom line with properly-typed, priced trade lines.",
-            "understand": " today drops both  and geometry, collapsing every room measurement into one worthless line. The fix is to switch on  and the new  type, tag each line with a trade via the  helper, and key pricing lookups on . This step REQUIRES  (t47) and  (t45) — both ship earlier today.",
+            "what": "Rewrite the seeder to switch on measurement kind and emit trade-tagged line items — replacing the single anonymous `kind=custom` line with real flooring / paint / trim / door entries.",
+            "understand": "`TakeoffEstimateSeeder` collapses all room measurements into one worthless line today, dropping `kind` and geometry. The fix: switch on `measurement.kind`, key pricing lookups on `RateType` (using `PerLinearFt` from t47 and `wall_paint_sf` from t45 — both done before this runs), and tag each line with a trade via the core-vs-subbed helper.",
             "approach": [
-              "In , switch on measurement :  → flooring rate,  → painting rate,  → per-LF trim rate,  → doors/tile.",
-              "Tag each seeded line item with a trade using the core-vs-subbed helper — not fragile room-label classification strings.",
-              "Key pricing lookups on .",
-              "Smoke-test with a sample blueprint: verify each trade line shows the right measurement quantity and a non-zero dollar amount."
+              "Replace the seeder's single fallthrough with a `switch` on `measurement.kind`: `area_sf` → flooring rate, `wall_paint_sf` → painting rate, `linear_ft` → per-LF trim rate, `count_ea` → doors/tile.",
+              "Tag each generated line with a trade using `coreOrSubcontracted(measurement.kind)`.",
+              "Key all `LaborRate` lookups on the appropriate `RateType` (`PerLinearFt` for trim, `PerSqFt` for area/paint).",
+              "Smoke-test: seed a sample blueprint and verify each trade shows the correct quantity and a non-zero price."
             ],
             "resources": [
-              "Seeder: ",
-              "Core-vs-subbed trade tagging helper",
-              "Measurement kinds enum/type definitions (, , , )",
-              " from t47 and  from t45 — both land before this runs"
+              "`TakeoffEstimateSeeder.php` — the file to rewrite",
+              "Measurement kind enum/constants",
+              "`coreOrSubcontracted` helper — for trade tagging",
+              "`LaborRate` model — pricing lookups by `RateType`"
             ]
           }
         }
@@ -197,83 +171,22 @@
           "estimate": "l",
           "priority": "high",
           "status": "todo",
-          "notes": "Lease/heartbeat/reclaim mechanics. Must be window-aware (5h active window) and cap concurrent workers.",
-          "block": {
-            "start": "14:00",
-            "end": "16:00"
-          },
+          "notes": null,
+          "block": { "start": "15:30", "end": "17:30" },
           "prep": {
-            "what": "Build the durable, persistent job queue the Sweeper will consume — lease/heartbeat/reclaim so jobs survive restarts and cannot be double-run.",
-            "understand": "The queue needs at-least-once delivery with a lease model: a worker claims a job (writes  + ), heartbeats while it works, and a daemon reclaim pass resets stale leases to pending. The queue must also enforce  (don't dequeue outside the active window), cap concurrent workers, and respect priority. A PG or SQLite table is the right backend — no Redis, no external services.",
+            "what": "Build the PG-backed durable job queue the Sweeper (t21) will consume — lease/heartbeat/reclaim so jobs survive restarts and can't double-run.",
+            "understand": "The queue needs at-least-once delivery: a worker atomically claims a job (writes `worker_id` + `leased_until`), heartbeats while running, and a daemon reclaim pass resets stale leases back to `pending`. It must also enforce the active window (don't dequeue outside the 5h work window), cap concurrent workers, and respect priority. Postgres + `SELECT ... FOR UPDATE SKIP LOCKED` is the right primitive — no Redis, no external services. The Sweeper (t21) will be the first consumer.",
             "approach": [
-              "Design the job table schema: .",
-              "Write  and  using  for atomic single-flight claim.",
-              "Write  (extends ) and  (resets timed-out running jobs to pending, up to ).",
-              "Write tests: enqueue → dequeue → done; heartbeat keeps lease alive; reclaimStale fires after simulated timeout; window-aware: job not dequeued outside active hours."
+              "Create the jobs table: `id`, `kind`, `payload`, `status` (pending/running/done/failed), `priority`, `worker_id`, `leased_until`, `created_at`, `run_at` (window gate).",
+              "Write `enqueue(kind, payload, priority, runAt?)` and `dequeue(workerId, windowStart, windowEnd, maxConcurrent)` using `SELECT ... FOR UPDATE SKIP LOCKED` for atomic single-flight claim.",
+              "Write `heartbeat(jobId, workerId)` (extends `leased_until`) and `reclaimStale(timeoutMs)` (resets timed-out running jobs to pending up to `maxRetries`).",
+              "Write tests: enqueue → dequeue → done; heartbeat keeps lease alive; reclaimStale fires after simulated timeout; window gate: job not dequeued outside active hours; cap: no more than N concurrent workers."
             ],
             "resources": [
-              "t21 task (Sweeper) — describes what job kinds and payloads will look like",
-              "PG or SQLite driver in use — check  / ",
-              " (referenced in t2 notes) for the async loop design",
-              "Any existing in-memory queue or worker interface as a shape reference"
-            ]
-          }
-        },
-        {
-          "id": "t22",
-          "title": "Unprivileged CI lane + sensitive-path human gate",
-          "phase": "M3 · Phase 6 — Sweeper + CI/deploy",
-          "estimate": "m",
-          "priority": "high",
-          "status": "todo",
-          "notes": "No secrets, no pull_request_target. Sensitive-path PRs (SWEEPER_REPOS, CI config, deploy) require a human ok-to-test label before running.",
-          "block": {
-            "start": "16:15",
-            "end": "17:15"
-          },
-          "prep": {
-            "what": "Set up a CI lane that runs unit and integration tests without  Docker access — so the platform can pass CI on a standard GitHub Actions runner.",
-            "understand": "The sweeper sandbox likely requires Docker-in-Docker (needs ) today. The goal is a split: (1) an UNPRIVILEGED lane for unit + integration tests (no Docker spawn, no secrets, NOT ), and (2) an optional privileged lane for docker-integration tests gated behind a human  label. The sensitive-path gate is the security piece: PRs touching  config, CI workflows, or deploy scripts must not auto-run.",
-            "approach": [
-              "Audit  — grep for , , ,  to find all privileged dependencies.",
-              "Create an unprivileged workflow job: unit + integration tests using mocked/injected  only; no Docker spawn, no secrets, NO .",
-              "Add the sensitive-path human gate: PRs touching  config, CI workflow files, or deploy scripts require an  label before the job runs.",
-              "Validate on a test branch: push → unprivileged job turns green on a standard  runner."
-            ],
-            "resources": [
-              " — current CI config to audit",
-              "GitHub Actions docs: security difference between  and  triggers",
-              "t30 notes — the  injection seam already makes docker tests isolatable",
-              "t29 for the full live  plan (context on where this lane fits)"
-            ]
-          }
-        },
-        {
-          "id": "t30",
-          "title": "Writer docker-integration test on a real onboarded repo",
-          "phase": "M3 · Phase 6 — Sweeper + CI/deploy",
-          "estimate": "s",
-          "priority": "medium",
-          "status": "todo",
-          "notes": "refreshRepo orchestration is unit-proven with mocked runners; add ONE real in-image prep run against an onboarded repo to prove the docker transport end-to-end. ~30-min job once a repo is onboarded.",
-          "block": {
-            "start": "17:30",
-            "end": "18:00"
-          },
-          "prep": {
-            "what": "Write ONE real docker-integration test for  — prove the Docker transport end-to-end against an onboarded repo, not just against mocked runners.",
-            "understand": " is already proven with injected  mocks. The  seam is what makes this a ~30-min job: swap in the real Docker runner, point it at an already-onboarded repo, and assert the prep outputs exist and the freshness marker is written. Module-project has a proven recipe from t28 — that's your test fixture.",
-            "approach": [
-              "Read t28's advisor log first:  — it documents the seam and the Module-project recipe.",
-              "Write a test: inject the REAL  (not mocked), call , assert all  exist and the freshness marker () is written.",
-              "Add container + marker cleanup in  so the test is repeatable.",
-              "Run with bun test v1.3.11 (af24e281) locally to confirm it passes before pushing."
-            ],
-            "resources": [
-              "t28 advisor log: ",
-              " config — find in  env or config file",
-              "Module-project  /  recipe (proven in t28)",
-              "Injected  seam — find in sweeper source, it's the interface you swap out"
+              "PG driver in use — check `bun.lockb` or package config",
+              "`SELECT ... FOR UPDATE SKIP LOCKED` — Postgres docs for atomic lease claim",
+              "t21 task notes — describes expected Sweeper job kinds and payloads",
+              "t29 task notes — cross-process lock context this queue must coordinate with"
             ]
           }
         }
@@ -337,7 +250,7 @@
       "slug": "dallo-usa",
       "project": "dallo-usa",
       "client": "Dallo USA",
-      "tasks_total": 48,
+      "tasks_total": 49,
       "tasks_done": 24,
       "on_deck": true,
       "tasks": []
@@ -383,7 +296,7 @@
       "project": "procounters_erp",
       "client": "ProCounters Inc.",
       "tasks_total": 125,
-      "tasks_done": 109,
+      "tasks_done": 110,
       "on_deck": true,
       "tasks": []
     },
@@ -402,25 +315,25 @@
       "project": "AZ Takeoff SaaS",
       "task_id": "t62",
       "title": "Buy CT Pros domain + wire real website/email",
-      "reason": "Domain purchase requires Haniel's decision — tagged needs-haniel. No code can replace the placeholder COMPANY_WEBSITE/COMPANY_EMAIL until a real domain is bought and wired."
+      "reason": "Domain purchase requires Haniel's decision. No code can replace the placeholder COMPANY_WEBSITE/COMPANY_EMAIL until a real domain is bought and wired."
     },
     {
       "project": "AZ Takeoff SaaS",
       "task_id": "t25",
       "title": "Connect CT Pros's own QuickBooks (fresh OAuth)",
-      "reason": "Inherited tokens were HighTech's and were never carried over. Requires Rafa to run a fresh OAuth connect with CT Pros's own QBO company credentials."
+      "reason": "Inherited tokens were HighTech's. Requires Rafa to run a fresh OAuth connect with CT Pros's own QBO company credentials."
     },
     {
       "project": "AZ Takeoff SaaS",
       "task_id": "t60",
       "title": "Confirm catalog pricing + paint coverage/coats vs Rafa's real suppliers",
-      "reason": "CuratedMaterialSeeder prices are market-estimate defaults and the standard number of paint coats is unresolved. Rafa must confirm real supplier costs and coat count before estimates can be trusted (tagged needs-rafa)."
+      "reason": "Seeder prices are market-estimate defaults. Rafa must confirm real supplier costs and standard coat count before estimates can be trusted."
     },
     {
       "project": "AZ Takeoff SaaS",
       "task_id": "t65",
       "title": "Confirm apples-to-apples estimate margin target with Rafa",
-      "reason": "The editor reports contribution margin but docs/business-rules.md records a 35% NET margin goal on a different basis. Rafa must decide which metric and target % to use for bid-coloring (tagged needs-rafa, decision-gate)."
+      "reason": "The editor reports contribution margin but business-rules.md records a 35% NET margin goal on a different basis. Rafa must decide which metric and target % to use for bid-coloring."
     }
   ]
 }
