@@ -1,0 +1,438 @@
+{
+  "date": "2026-10-12",
+  "generated_at": "2026-10-12T10:20:06Z",
+  "data_as_of": "2026-10-10T05:00:05+00:00",
+  "greeting": "Morning, Haniel. Today azteamai ships — and influencer-agent's foundation gets tighter. Let's go.",
+  "hype": "fin.azteam.cloud goes live today if you stay locked in. Phase 5 is a clean five-task sprint. Run it in order, don't skip the reconciliation gate, and you'll flip the scheduler before afternoon coffee. Then strengthen influencer-agent's security core. Big day. You've got this.",
+  "notice": "azteamai Phase 5 is a strict sequence: t37 → t53 → t39 → t36 → t40. Do NOT enable the scheduler (t40) before reconciliation (t39) passes.",
+  "difficulty": {
+    "rating": "Solid",
+    "planned_minutes": 390,
+    "available_minutes": 390,
+    "ratio": 1.0,
+    "note": "Day is packed to capacity — no slack. If t36 (deploy) hits unexpected snags, defer t26 to tomorrow."
+  },
+  "window": {
+    "start": "09:00",
+    "end": "18:00"
+  },
+  "schedule": [
+    {
+      "start": "09:00",
+      "end": "09:30",
+      "slug": "azteamai-system",
+      "project": "AZ Team AI System",
+      "task_id": "t37",
+      "title": "Secrets in .env.production (Stripe both modes, Chatwoot, mail)",
+      "estimate": "s",
+      "kind": "task"
+    },
+    {
+      "start": "09:45",
+      "end": "10:15",
+      "slug": "azteamai-system",
+      "project": "AZ Team AI System",
+      "task_id": "t53",
+      "title": "Scheduler safety guard: cutover_completed flag blocks minting pre-reconcile",
+      "estimate": "s",
+      "kind": "task"
+    },
+    {
+      "start": "10:30",
+      "end": "11:30",
+      "slug": "azteamai-system",
+      "project": "AZ Team AI System",
+      "task_id": "t39",
+      "title": "Reconciliation gate: imported AR + recurring state matches azteam_crm ground truth",
+      "estimate": "m",
+      "kind": "task"
+    },
+    {
+      "start": "11:45",
+      "end": "13:45",
+      "slug": "azteamai-system",
+      "project": "AZ Team AI System",
+      "task_id": "t36",
+      "title": "DO droplet deploy (app/queue/scheduler/TLS/MySQL8, scheduler OFF)",
+      "estimate": "l",
+      "kind": "task"
+    },
+    {
+      "start": "13:45",
+      "end": "14:45",
+      "kind": "lunch",
+      "title": "Lunch"
+    },
+    {
+      "start": "15:00",
+      "end": "15:30",
+      "slug": "azteamai-system",
+      "project": "AZ Team AI System",
+      "task_id": "t40",
+      "title": "Enable scheduler; watch first run; register Stripe webhook LAST",
+      "estimate": "s",
+      "kind": "task"
+    },
+    {
+      "start": "15:45",
+      "end": "16:45",
+      "slug": "influencer-agent",
+      "project": "influencer-agent",
+      "task_id": "t8",
+      "title": "pending_outbound approval state machine + DB guard",
+      "estimate": "m",
+      "kind": "task"
+    },
+    {
+      "start": "17:00",
+      "end": "18:00",
+      "slug": "influencer-agent",
+      "project": "influencer-agent",
+      "task_id": "t26",
+      "title": "Append-only audit log for privileged agent actions",
+      "estimate": "m",
+      "kind": "task"
+    }
+  ],
+  "projects": [
+    {
+      "slug": "azteamai-system",
+      "project": "AZ Team AI System",
+      "client": "AZ Team AI (internal)",
+      "tasks_total": 74,
+      "tasks_done": 44,
+      "on_deck": false,
+      "tasks": [
+        {
+          "id": "t37",
+          "title": "Secrets in .env.production (Stripe both modes, Chatwoot, mail)",
+          "phase": "Phase 5 · Cutover + deploy (go-live)",
+          "estimate": "s",
+          "priority": "high",
+          "status": "todo",
+          "notes": "",
+          "block": {
+            "start": "09:00",
+            "end": "09:30"
+          },
+          "prep": {
+            "what": "Populate .env.production on the server with all runtime secrets: Stripe test+live keys, Chatwoot API token, and SMTP mail credentials.",
+            "understand": "`.env.production` is never committed to git. It needs four Stripe keys (test publishable + secret, live publishable + secret), the Chatwoot base URL + API token, and your SMTP host/user/password. Missing or wrong keys will cause hard failures at runtime. Run `php artisan config:cache` after to bake them in and verify nothing is missing.",
+            "approach": [
+              "SSH into azteam-vps; locate or create `.env.production` (copy from `.env.example` as a scaffold).",
+              "Fill Stripe keys from the Stripe Dashboard (both test and live modes).",
+              "Fill Chatwoot API token from the Chatwoot settings panel; fill mail creds from your SMTP provider.",
+              "Run `php artisan config:cache` and check for any missing-key errors before moving on."
+            ],
+            "resources": [
+              ".env.example (reference scaffold)",
+              "Stripe Dashboard → API keys",
+              "Chatwoot → Settings → API Access Tokens",
+              "SMTP provider credentials doc"
+            ]
+          }
+        },
+        {
+          "id": "t53",
+          "title": "Scheduler safety guard: cutover_completed flag blocks minting pre-reconcile",
+          "phase": "Phase 5 · Cutover + deploy (go-live)",
+          "estimate": "s",
+          "priority": "high",
+          "status": "todo",
+          "notes": "spec §7 step 2. Add settings.cutover_completed (bool, default false); RunRecurringBilling::handle() bails+logs if false.",
+          "block": {
+            "start": "09:45",
+            "end": "10:15"
+          },
+          "prep": {
+            "what": "Add a `cutover_completed` boolean to the DB settings table (default `false`); make `RunRecurringBilling::handle()` bail with a log entry if the flag is false.",
+            "understand": "This is a one-time safety gate: the scheduler must not mint any recurring billing before reconciliation (t39) is confirmed. The flag must live in the DB (not `.env`) so it survives `config:cache`. A bail is not a silent skip — it must log a warning so you can see it happened.",
+            "approach": [
+              "Add `cutover_completed` (boolean, default false) to the `settings` table via a migration.",
+              "At the top of `RunRecurringBilling::handle()`, read the flag; if false, `Log::warning('RunRecurringBilling: skipped, cutover not completed')` and return.",
+              "Write a unit test: instantiate the job with `cutover_completed = false`, assert it returns without minting and logs the warning.",
+              "Confirm the flag survives `php artisan config:cache` (it reads from DB at runtime, not config files)."
+            ],
+            "resources": [
+              "spec §7 step 2",
+              "RunRecurringBilling job class",
+              "`settings` table migration",
+              "Laravel `Log::warning()` docs"
+            ]
+          }
+        },
+        {
+          "id": "t39",
+          "title": "Reconciliation gate: imported AR + recurring state matches azteam_crm ground truth",
+          "phase": "Phase 5 · Cutover + deploy (go-live)",
+          "estimate": "m",
+          "priority": "high",
+          "status": "todo",
+          "notes": "Reconciliation gate BLOCKS go-live. CrmImporter::reconcile() (~line 277) computes per-client + TOTAL open-AR. Extract to ReconciliationGateService + artisan command billing:reconcile-cutover.",
+          "block": {
+            "start": "10:30",
+            "end": "11:30"
+          },
+          "prep": {
+            "what": "Extract `CrmImporter::reconcile()` into a standalone `ReconciliationGateService`, add an artisan command `billing:reconcile-cutover`, run it against production data, and confirm zero delta before deploying.",
+            "understand": "Reconciliation compares your new billing system's open-AR totals against the legacy `azteam_crm` DB as ground truth. Any mismatch = abort go-live. The gate must be reproducible (a named artisan command) and produce a clear pass/fail + delta report. It's read-only — zero writes during this step.",
+            "approach": [
+              "Extract the logic from `CrmImporter::reconcile()` (~line 277) into `App\\Services\\ReconciliationGateService` with a `run(): ReconciliationResult` method.",
+              "Add `php artisan billing:reconcile-cutover` that calls the service and prints per-client deltas + a PASS/FAIL summary.",
+              "Run it against production data (read-only connection); review any deltas.",
+              "Only proceed to t36 deploy if the command exits PASS — zero delta on every client and TOTAL."
+            ],
+            "resources": [
+              "CrmImporter.php (~line 277)",
+              "spec §7 step 4",
+              "azteam_crm DB connection config",
+              "Reconciliation spec doc"
+            ]
+          }
+        },
+        {
+          "id": "t36",
+          "title": "DO droplet deploy (app/queue/scheduler/TLS/MySQL8, scheduler OFF)",
+          "phase": "Phase 5 · Cutover + deploy (go-live)",
+          "estimate": "l",
+          "priority": "high",
+          "status": "todo",
+          "notes": "LEMP on azteam-vps → https://fin.azteam.cloud. php8.4-fpm + supervisor queue:work + cron. Docker stack was reverted. Scheduler must remain OFF.",
+          "block": {
+            "start": "11:45",
+            "end": "13:45"
+          },
+          "prep": {
+            "what": "Deploy the full LEMP stack to azteam-vps: git pull + build, MySQL8 migration, supervisor queue worker, nginx + TLS cert for fin.azteam.cloud — with the scheduler intentionally OFF.",
+            "understand": "This is bare-metal LEMP (php8.4-fpm + nginx + MySQL8 + supervisor). Docker was tried and reverted — do NOT reintroduce it. Deploy order matters: DB first (migrate), then app build, then supervisor for queue:work, then nginx+TLS. Scheduler cron must NOT be added yet — that's t40 after reconciliation.",
+            "approach": [
+              "SSH into azteam-vps; `git pull origin main && composer install --no-dev --optimize-autoloader && npm run build`.",
+              "Run `php artisan migrate --force` to apply the DB schema; verify tables look correct.",
+              "Configure supervisor (`/etc/supervisor/conf.d/azteamai-worker.conf`) for `php artisan queue:work --sleep=3 --tries=3`; `supervisorctl reread && supervisorctl update && supervisorctl start azteamai-worker`.",
+              "Configure nginx server block for `fin.azteam.cloud`; run `certbot --nginx -d fin.azteam.cloud` for TLS; verify HTTPS loads the app.",
+              "Confirm `php artisan schedule:run` is NOT in crontab yet (scheduler OFF). Check `.env.production` `APP_URL=https://fin.azteam.cloud`."
+            ],
+            "resources": [
+              "azteam-vps SSH alias",
+              "nginx server block template",
+              "certbot/Let's Encrypt docs",
+              "supervisor config docs",
+              "spec §7 deploy checklist"
+            ]
+          }
+        },
+        {
+          "id": "t40",
+          "title": "Enable scheduler; watch first run; register Stripe webhook LAST",
+          "phase": "Phase 5 · Cutover + deploy (go-live)",
+          "estimate": "s",
+          "priority": "high",
+          "status": "todo",
+          "notes": "Enable scheduler AFTER reconciliation passes; flip cutover_completed flag; register Stripe webhook LAST (URL must match APP_URL, HTTPS only).",
+          "block": {
+            "start": "15:00",
+            "end": "15:30"
+          },
+          "prep": {
+            "what": "Flip `cutover_completed = true`, add the Laravel scheduler to crontab, watch the first run in logs, then register the Stripe webhook as the final step.",
+            "understand": "Order is critical: set flag first → enable cron → watch logs → register webhook. The webhook URL MUST be HTTPS and match `APP_URL` exactly (fin.azteam.cloud). Registering the webhook before the app is stable could trigger billing events you're not ready to handle.",
+            "approach": [
+              "`php artisan tinker` → `\\App\\Models\\Setting::set('cutover_completed', true)` (or however your settings model works).",
+              "Add cron entry: `* * * * * cd /var/www/azteamai && php artisan schedule:run >> /dev/null 2>&1`.",
+              "Watch `storage/logs/laravel.log` for the first scheduler run; confirm `RunRecurringBilling` fires and logs a run (not a bail).",
+              "Register the Stripe webhook in the Stripe Dashboard: URL = `https://fin.azteam.cloud/webhooks/stripe`, events = `invoice.paid`, `invoice.payment_failed`, `customer.subscription.*`."
+            ],
+            "resources": [
+              "Laravel scheduler cron docs",
+              "Stripe Dashboard → Webhooks",
+              "`storage/logs/laravel.log`",
+              "t53 flag implementation (just built)"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "slug": "influencer-agent",
+      "project": "influencer-agent",
+      "client": "AZ Team AI (own SaaS product)",
+      "tasks_total": 51,
+      "tasks_done": 8,
+      "on_deck": false,
+      "tasks": [
+        {
+          "id": "t8",
+          "title": "pending_outbound approval state machine + DB guard",
+          "phase": "Phase 0: Foundation + safety scaffolding",
+          "estimate": "m",
+          "priority": "high",
+          "status": "in_progress",
+          "notes": "Guard foundation done (PendingOutbound model + DB checks). Net-new: full state transition logic (pending→approved/rejected/expired) + approval endpoint.",
+          "block": {
+            "start": "15:45",
+            "end": "16:45"
+          },
+          "prep": {
+            "what": "Complete the `PendingOutbound` approval state machine: implement the state transitions (pending → approved / rejected / expired), an expiry job, and the API endpoint that processes approvals.",
+            "understand": "The DB foundation is already done (commit `f8740ce`): the model, `approvalTokenHash`, `expiresAt`, `consumedAt`, `approvedByUserId` FK, and DB CHECK constraints exist. What's missing is the behavior layer: who can transition which states, the guard that prevents double-consume, expiry cleanup, and the endpoint. This is security-critical — only authorized users may approve agent-generated outbound messages.",
+            "approach": [
+              "Define state transitions in an `ApprovalService`: `approve(token, user)` — verify token hash + not expired + not consumed, check user has approval permission, set status+consumedAt+approvedByUserId; `reject(token, user)` — same guards, set rejected status; `expire()` — bulk-set expired on overdue rows.",
+              "Add a scheduled job (or artisan command) that calls `ApprovalService::expire()` on rows past `expiresAt`.",
+              "Add a `POST /api/outbound/{id}/approve` endpoint with auth middleware; call `ApprovalService::approve()`; return 200 or 422 with reason.",
+              "Add feature tests: approve with valid token → 200; double-approve → 422; expired token → 422; unauthorized user → 403."
+            ],
+            "resources": [
+              "commit `f8740ce` (PendingOutbound model)",
+              "PRD §5 (approval flow spec)",
+              "existing auth/permissions layer",
+              "`approvalTokenHash` / `expiresAt` schema"
+            ]
+          }
+        },
+        {
+          "id": "t26",
+          "title": "Append-only audit log for privileged agent actions",
+          "phase": "Phase 0: Foundation + safety scaffolding",
+          "estimate": "m",
+          "priority": "high",
+          "status": "todo",
+          "notes": "ActivityLog model + lib/activity-log.ts exist (generic, tenant-scoped). Net-new: agent-specific fields, append-only enforcement, breach-detector pattern hooks.",
+          "block": {
+            "start": "17:00",
+            "end": "18:00"
+          },
+          "prep": {
+            "what": "Extend the existing `ActivityLog` into a true append-only audit trail for privileged agent actions — adding agent-specific fields, enforcing no-delete/no-update at the DB level, and wiring it into the breach-detector query path.",
+            "understand": "The foundation exists (`ActivityLog` model + `lib/activity-log.ts` — generic, tenant-scoped). Net-new: recording `agentId`, `actionType`, `policyDecision`, and `affectedResourceIds` per privileged action; DB-level append-only constraint (trigger or policy that blocks DELETE/UPDATE on committed rows); and a query helper the breach detector can use to find anomalous patterns (e.g. high-volume agent actions, repeated policy rejections).",
+            "approach": [
+              "Add agent-specific columns to `activity_logs` via migration: `agent_id` (FK nullable), `action_type` (enum/string), `policy_decision` (enum: allowed/denied/flagged), `resource_ids` (JSON array).",
+              "Add a DB trigger (or application-level guard) that raises an error on DELETE or UPDATE of any `activity_logs` row — making it append-only.",
+              "Update `lib/activity-log.ts` to accept and persist the new fields when recording privileged agent actions; wire it into the agent action dispatch path.",
+              "Add a `AuditLogQuery` helper with methods like `suspiciousActions(tenantId, window)` that returns anomalous patterns for the breach detector."
+            ],
+            "resources": [
+              "`lib/activity-log.ts`",
+              "`ActivityLog` model",
+              "PRD §7 / §10",
+              "P&S §3.5 (breach detector spec)",
+              "DB trigger / row-level security docs"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "slug": "az-takeoff",
+      "project": "AZ Takeoff SaaS",
+      "client": "AZ Team",
+      "tasks_total": 73,
+      "tasks_done": 51,
+      "on_deck": true,
+      "tasks": []
+    },
+    {
+      "slug": "gs-woodworking-spec",
+      "project": "GS-ERP",
+      "client": "GS Woodworking LLC",
+      "tasks_total": 75,
+      "tasks_done": 37,
+      "on_deck": true,
+      "tasks": []
+    },
+    {
+      "slug": "module-project",
+      "project": "Module",
+      "client": "Internal",
+      "tasks_total": 63,
+      "tasks_done": 18,
+      "on_deck": true,
+      "tasks": []
+    },
+    {
+      "slug": "claude-todos-skill",
+      "project": "Tasks Platform (claude-todos-skill rebuild)",
+      "client": "",
+      "tasks_total": 31,
+      "tasks_done": 21,
+      "on_deck": true,
+      "tasks": []
+    },
+    {
+      "slug": "ct-pros-sys",
+      "project": "CT Pros",
+      "client": "CT Pros",
+      "tasks_total": 72,
+      "tasks_done": 50,
+      "on_deck": true,
+      "tasks": []
+    },
+    {
+      "slug": "dallo-usa",
+      "project": "dallo-usa",
+      "client": "Dallo USA",
+      "tasks_total": 48,
+      "tasks_done": 23,
+      "on_deck": true,
+      "tasks": []
+    },
+    {
+      "slug": "gs-datatable-w0",
+      "project": "GS-ERP",
+      "client": "GS Woodworking LLC",
+      "tasks_total": 75,
+      "tasks_done": 37,
+      "on_deck": true,
+      "tasks": []
+    },
+    {
+      "slug": "gs-truth-t158x",
+      "project": "GS-ERP",
+      "client": "GS Woodworking LLC",
+      "tasks_total": 75,
+      "tasks_done": 37,
+      "on_deck": true,
+      "tasks": []
+    },
+    {
+      "slug": "haniel-finances",
+      "project": "Haniel Finances",
+      "client": "Personal",
+      "tasks_total": 34,
+      "tasks_done": 19,
+      "on_deck": true,
+      "tasks": []
+    },
+    {
+      "slug": "procounters-erp",
+      "project": "procounters_erp",
+      "client": "ProCounters Inc.",
+      "tasks_total": 125,
+      "tasks_done": 110,
+      "on_deck": true,
+      "tasks": []
+    },
+    {
+      "slug": "takeoff-engine",
+      "project": "Takeoff Engine",
+      "client": "AZ Team AI",
+      "tasks_total": 34,
+      "tasks_done": 23,
+      "on_deck": true,
+      "tasks": []
+    }
+  ],
+  "waiting_on": [
+    {
+      "project": "influencer-agent",
+      "task_id": "t10",
+      "title": "Pix-first Stripe webhook (provision on invoice.paid)",
+      "reason": "Decision pending: Pix Automatico acquirer path — choose between Stripe BR or a Brazilian PSP (Pagar.me / Mercado Pago / Asaas / Iugu) before implementation can begin."
+    },
+    {
+      "project": "influencer-agent",
+      "task_id": "t12",
+      "title": "Kick off CASA Tier 2 + Meta review + LGPD legal",
+      "reason": "External compliance timelines: CASA Tier 2 lab assessment, Meta app review, and LGPD legal review are weeks-long external processes with no code-side unblock."
+    }
+  ]
+}
