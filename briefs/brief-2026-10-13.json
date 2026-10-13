@@ -1,0 +1,346 @@
+{
+  "date": "2026-10-13",
+  "generated_at": "2026-10-13T10:05:00Z",
+  "data_as_of": "2026-10-13T05:00:04+00:00",
+  "greeting": "Morning, Haniel. Day's loaded and ready — let's close some loops.",
+  "hype": "The blueprint pipeline is THIS close: wall paint area, trade routing, label lane v2, and door recall all land today. Two machines moving in parallel. You're finishing the seam.",
+  "notice": "4 az-takeoff go-live tasks are waiting on input from you (domain) or Rafa (QB, catalog pricing, margin target) — see waiting_on.",
+  "difficulty": {
+    "rating": "Solid",
+    "planned_minutes": 390,
+    "available_minutes": 435,
+    "ratio": 0.90,
+    "note": ""
+  },
+  "window": { "start": "09:00", "end": "18:00" },
+  "schedule": [
+    { "start": "09:00", "end": "09:30", "slug": "az-takeoff", "project": "AZ Takeoff SaaS", "task_id": "t47", "title": "Add PerLinearFt RateType (prereq for trim pricing)", "estimate": "s", "kind": "task" },
+    { "start": "09:45", "end": "10:45", "slug": "takeoff-engine", "project": "Takeoff Engine", "task_id": "t26", "title": "Label lane v2: M3 vision for outlined-text firms + callout filtering", "estimate": "m", "kind": "task" },
+    { "start": "11:00", "end": "12:00", "slug": "takeoff-engine", "project": "Takeoff Engine", "task_id": "t16", "title": "Door recall round 2 + bi-fold / cased-opening recall", "estimate": "m", "kind": "task" },
+    { "start": "12:00", "end": "13:00", "slug": "az-takeoff", "project": "AZ Takeoff SaaS", "task_id": "t49", "title": "One-click 'Create estimate from this takeoff'", "estimate": "m", "kind": "task" },
+    { "start": "13:00", "end": "14:00", "kind": "lunch", "title": "Lunch" },
+    { "start": "14:00", "end": "16:00", "slug": "az-takeoff", "project": "AZ Takeoff SaaS", "task_id": "t45", "title": "Derive wall PAINT area (perimeter × height) — the missing painting measurement", "estimate": "l", "kind": "task" },
+    { "start": "16:15", "end": "17:15", "slug": "az-takeoff", "project": "AZ Takeoff SaaS", "task_id": "t46", "title": "Route takeoff measurements to trades at the seam", "estimate": "m", "kind": "task" }
+  ],
+  "projects": [
+    {
+      "slug": "az-takeoff",
+      "project": "AZ Takeoff SaaS",
+      "client": "AZ Team",
+      "tasks_total": 73,
+      "tasks_done": 51,
+      "on_deck": false,
+      "tasks": [
+        {
+          "id": "t47",
+          "title": "Add PerLinearFt RateType (prerequisite for pricing trim/wall-linear)",
+          "phase": "p4 · Post-Deploy - Blueprint takeoff",
+          "estimate": "s",
+          "priority": "medium",
+          "status": "todo",
+          "notes": "RateType has no per-linear-foot. Add PerLinearFt='per_linear_ft' + label, wire LineItemFactory::unitFromRateType->'lf', seed a per-LF trim LaborRate. Must land before takeoff pricing (t48).",
+          "block": { "start": "09:00", "end": "09:30" },
+          "prep": {
+            "what": "Add a new `PerLinearFt='per_linear_ft'` case to the `RateType` enum, wire it into `unitFromRateType` in `LineItemFactory`, and seed a per-LF trim `LaborRate` row.",
+            "understand": "`RateType` controls how estimate line items are priced and what unit label they get. No per-linear-foot rate exists yet. This is the prerequisite for t48 (pricing seeded takeoff trim/wall-linear lines) — if you don't land this first, t48 has nothing to key on for LF measurements.",
+            "approach": [
+              "Add `PerLinearFt = 'per_linear_ft'` case with a label to `app/Enums/RateType.php`",
+              "Wire it in `LineItemFactory::unitFromRateType()` to return `'lf'` as the unit string",
+              "Add a per-LF trim `LaborRate` seed row in `database/seeders/LaborRateSeeder.php`",
+              "Run `php artisan test --filter=LaborRate` to confirm no regressions, then migrate + seed fresh"
+            ],
+            "resources": [
+              "app/Enums/RateType.php",
+              "app/Services/LineItemFactory.php",
+              "database/seeders/LaborRateSeeder.php",
+              "php artisan migrate:fresh --seed (dev only)"
+            ]
+          }
+        },
+        {
+          "id": "t49",
+          "title": "One-click 'Create estimate from this takeoff' from Review",
+          "phase": "p4 · Post-Deploy - Blueprint takeoff",
+          "estimate": "m",
+          "priority": "medium",
+          "status": "todo",
+          "notes": "Today seeding needs an existing estimate + hand-typing takeoff_project_id. Add a button that creates a draft estimate + seeds it from the current takeoff in one action, landing on estimate edit.",
+          "block": { "start": "12:00", "end": "13:00" },
+          "prep": {
+            "what": "Add a button on the Takeoff Review/Index page that creates a draft estimate and seeds it from the current takeoff project in one click, landing on the estimate edit page.",
+            "understand": "The `seedFromTakeoff($takeoffProjectId)` seam already exists on `EstimateController`. Currently using it requires manually creating an estimate then calling the route by hand — too much friction for Rafa in real jobs. You need a single HTTP POST that: creates a draft `Estimate` linked to the current Lead, calls `seedFromTakeoff`, then redirects to estimate edit. The Takeoff page already has the `takeoff_project_id` in scope.",
+            "approach": [
+              "Add a POST route in `routes/web.php`: `takeoff/{takeoffProject}/create-estimate` with `auth` middleware",
+              "In `EstimateController`, implement the action: create a draft `Estimate` (linked to takeoff's lead), call `seedFromTakeoff($takeoffProject->id)`, redirect to estimate edit",
+              "Add a 'Create estimate →' button to `resources/js/Pages/Takeoff/Index.vue` for each takeoff row",
+              "Write a feature test: POST → estimate created and seeded → redirects to edit"
+            ],
+            "resources": [
+              "routes/web.php (existing `estimates/{estimate}/seed-from-takeoff` as reference)",
+              "app/Http/Controllers/EstimateController.php (seedFromTakeoff method)",
+              "resources/js/Pages/Takeoff/Index.vue",
+              "tests/Feature/ (nearest existing takeoff feature test for context)"
+            ]
+          }
+        },
+        {
+          "id": "t45",
+          "title": "Derive wall PAINT area (perimeter × height) — the missing painting measurement",
+          "phase": "p4 · Post-Deploy - Blueprint takeoff",
+          "estimate": "l",
+          "priority": "high",
+          "status": "todo",
+          "notes": "A 2D plan has no wall height so painting gets ZERO auto-sqft today. Add wall/ceiling height input (project default + optional per-room override); wall paint SF/room = perimeter × height. Seeder currently DROPS geometry — preserve it.",
+          "block": { "start": "14:00", "end": "16:00" },
+          "prep": {
+            "what": "Add a `wall_height_ft` column to estimates, preserve `geometry.rings` + `meta.perimeter` from the engine response in `TakeoffEstimateSeeder`, and emit a 'Wall paint area' line item per room using `perimeter × wall_height`.",
+            "understand": "The engine returns per-room data including `meta.perimeter` (room perimeter in feet) and `geometry.rings` (polygon data). `TakeoffEstimateSeeder.php` currently drops geometry entirely — that's the bug. The missing piece is height: a 2D plan doesn't encode wall height, so you need a user-supplied default (e.g. 8ft) stored on the estimate with optional per-room override. `wall_area_sqft = perimeter × height`. The painting labor rate seeder row already exists (t39 done). This unlocks real painting estimates for CT Pros' primary trade.",
+            "approach": [
+              "Create a migration: add `wall_height_ft` (float, nullable, default 8.0) to the `estimates` table; add fillable + accessor to `Estimate.php`",
+              "In `TakeoffEstimateSeeder.php`, stop dropping engine geometry: preserve `meta.perimeter` and `geometry.rings` on each room measurement",
+              "Derive wall area per room: `wall_area_sqft = $room['meta']['perimeter'] * ($estimate->wall_height_ft ?? 8.0)`, then call `LineItemFactory` to emit a painting area line item using the painting `LaborRate`",
+              "Add `wall_height` input to the Takeoff page or Estimate edit form (a numeric field, defaults to 8ft), wire it to the `estimates.wall_height_ft` column",
+              "Add a test: seed a takeoff with a known-perimeter room + 8ft height → verify wall_area = perimeter × 8"
+            ],
+            "resources": [
+              "app/Services/TakeoffEstimateSeeder.php (start here — find where geometry is dropped)",
+              "app/Models/Estimate.php",
+              "database/seeders/LaborRateSeeder.php (painting rate rows from t39)",
+              "app/Services/LineItemFactory.php (fromMaterial / fromLaborRate)",
+              "database/migrations/ (reference a recent migration for format)"
+            ]
+          }
+        },
+        {
+          "id": "t46",
+          "title": "Route takeoff measurements to trades at the seam",
+          "phase": "p4 · Post-Deploy - Blueprint takeoff",
+          "estimate": "m",
+          "priority": "high",
+          "status": "todo",
+          "notes": "Every measurement collapses into one anonymous kind=custom $0 line, dropping kind+geometry. Preserve+switch on kind: area(SF)->flooring, derived wall SF->painting, line(LF)->wall-linear/trim, count(EA)->doors/tile.",
+          "block": { "start": "16:15", "end": "17:15" },
+          "prep": {
+            "what": "Modify `TakeoffEstimateSeeder.php` to route each measurement kind to the correct trade instead of collapsing everything into anonymous `kind=custom $0` lines.",
+            "understand": "The engine returns each room measurement with a `kind` field: `area` (SF floors), `line` (LF trim/wall-linear), `count` (EA doors/fixtures). Right now all of them get dumped into a single custom line losing that info entirely. After t45 adds wall-area derivation, you now have: `area(SF)` → flooring labor rate, derived wall SF → painting labor rate, `line(LF)` → per-LF trim rate (needs t47 done ✓), `count(EA)` → doors/tile. Use `ProjectType::isCoreTrade()` (t36, done) to tag each line with the right trade. This makes the seeded estimate actually meaningful for Rafa.",
+            "approach": [
+              "In `TakeoffEstimateSeeder.php`, add a switch on measurement `kind`: case `'area'` → `LineItemFactory::fromLaborRate()` with flooring rate; case `'line'` → `LineItemFactory` with `PerLinearFt` rate; case derived wall SF (from t45) → painting rate",
+              "Tag each line item with the appropriate trade using `ProjectType::group()` / `isCoreTrade()` from `app/Enums/ProjectType.php`",
+              "Set `is_subcontracted = true` for non-core trades (tile, trim) per `isCoreTrade()` — flooring and painting stay own-team",
+              "Add/update a seeder test: a fixture with area+line+count measurements produces correctly typed and trade-tagged line items"
+            ],
+            "resources": [
+              "app/Services/TakeoffEstimateSeeder.php",
+              "app/Enums/ProjectType.php (isCoreTrade, group — from t36)",
+              "app/Services/LineItemFactory.php (fromLaborRate, fromSubcontract)",
+              "app/Enums/RateType.php (PerLinearFt from t47)"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "slug": "takeoff-engine",
+      "project": "Takeoff Engine",
+      "client": "AZ Team AI",
+      "tasks_total": 34,
+      "tasks_done": 23,
+      "on_deck": false,
+      "tasks": [
+        {
+          "id": "t26",
+          "title": "Label lane v2: M3 vision for outlined-text firms + callout-vs-room filtering",
+          "phase": "p5 · 95% · Engine Upgrade Waves",
+          "estimate": "m",
+          "priority": "high",
+          "status": "todo",
+          "notes": "Caught live on the Harborview demo: rooms show 'unnamed' because PDFTron outlines ALL text. v2 = (a) productize M3 tiles lane as opt-in 'read labels (AI)' action; (b) callout-vs-room filtering (general-note paragraphs, UP arrows, FEC callouts).",
+          "block": { "start": "09:45", "end": "10:45" },
+          "prep": {
+            "what": "Add an opt-in 'Read labels (AI)' endpoint using the M3 tiles lane, and add callout-vs-room filtering to stop general notes/arrows from being misread as room names.",
+            "understand": "PDFTron-generated PDFs outline ALL text as paths — the free live-text lane finds zero room names on them. The M3 tiles lane (spike: `run_labels_m3tiles.py`) CAN read outlined text but it's expensive (~4.3 min/sheet, costs money via MINIMAX_AI). Two-part fix: (a) expose it as an OPT-IN action (not auto-run — avoids unexpected charges, maps to the §7a metered-credits event in the PRD); (b) clean up the noise on firms where the text lane already works: Holabird shows general paragraphs, 'UP' stair arrows, FEC callouts getting matched as room names.",
+            "approach": [
+              "Review `docs/spike/run_labels_m3tiles.py` to understand the M3 tiles pipeline and what the service would need to call it",
+              "Add a `POST /sheets/{sheet_id}/read-labels` endpoint as an opt-in action: calls the M3 tiles lane, stores labels back to `Measurement` rows, requires `MINIMAX_AI` key in env (the VPS already has a MiniMax key — confirm if it's the right one or add `MINIMAX_AI_LABEL_KEY`)",
+              "For callout filtering: in the existing live-text label lane, add heuristics to filter before storing — general paragraphs (long text, >40 chars), single-word directional tokens (`UP`, `DN`), alphanumeric callout patterns (`FEC`, `AHU-1`) using regex",
+              "Run `pytest service/` and verify the existing 19 tests stay green; add a test for the callout filter with at least one false-positive example"
+            ],
+            "resources": [
+              "docs/spike/run_labels_m3tiles.py (M3 tiles lane implementation)",
+              "service/routes.py (existing label route patterns to follow)",
+              "service/workers.py (label assignment logic)",
+              "STATE.md (VPS secrets section — MiniMax key placement)",
+              "PRD §7a metered-credits event spec"
+            ]
+          }
+        },
+        {
+          "id": "t16",
+          "title": "Door recall round 2 + bi-fold / cased-opening recall",
+          "phase": "p5 · 95% · Engine Upgrade Waves",
+          "estimate": "m",
+          "priority": "medium",
+          "status": "todo",
+          "notes": "Door recall is THE constraint blocking global seal relax. Bi-fold scallop-ink detection shipped; push recall higher via raster-gap detection (symbol-based detectors failed on furniture noise). UNBLOCKED by t15.",
+          "block": { "start": "11:00", "end": "12:00" },
+          "prep": {
+            "what": "Improve door chord recall by adding raster-gap detection: identify wall-line endpoints that nearly meet (within door-width range) and treat them as chorded door openings.",
+            "understand": "t15 (localseal coverage guard) made added chords SAFE — a mistaken chord now auto-reverts via the guard instead of merging two rooms. That safety net means it's OK to be aggressive with chord detection. The bottleneck: chord coverage is near 0% on most sheets (holabird/mitchell/washington/merrimack). Symbol-based ML door detectors failed because furniture noise matches door symbols too closely. The raster-gap approach is simpler: find pairs of nearby wall-line segment endpoints at door-width distances (typically 2.5–4 ft in plan scale), and chord them. The localseal guard handles any false positives automatically.",
+            "approach": [
+              "Review current chord/door detection in `engine/sealfill.py` — understand how bi-fold scallop detection works as a reference model",
+              "Implement `detect_raster_gaps(binary_wall_image, scale_pxft)`: scan for near-parallel wall endpoint pairs within door-width range (2–4 ft at plan scale) using distance transforms or endpoint-pair scanning",
+              "Add the detected gap midpoints as chord seeds (same interface as existing chord detection) so the localseal guard protects against false positives automatically",
+              "Run `python -m gt.harness` on the full corpus and verify: (a) chord coverage metric increases on previously 0%-chord sheets, (b) mean_IoU doesn't drop, (c) gauntlet stays 81/81 green"
+            ],
+            "resources": [
+              "engine/sealfill.py (current door/chord logic, bi-fold reference)",
+              "docs/spike/w13_localseal_guard.py (chord coverage measurements per sheet — your baseline)",
+              "gt/ corpus (ground truth for regression testing)",
+              "STATE.md (Wave 12 D block for context on what ships)"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "slug": "gs-woodworking-spec",
+      "project": "GS-ERP",
+      "client": "GS Woodworking LLC",
+      "tasks_total": 96,
+      "tasks_done": 58,
+      "on_deck": true,
+      "tasks": []
+    },
+    {
+      "slug": "module-project",
+      "project": "Module",
+      "client": "Internal",
+      "tasks_total": 67,
+      "tasks_done": 22,
+      "on_deck": true,
+      "tasks": []
+    },
+    {
+      "slug": "azteamai-system",
+      "project": "AZ Team AI System",
+      "client": "AZ Team AI (internal)",
+      "tasks_total": 55,
+      "tasks_done": 25,
+      "on_deck": true,
+      "tasks": []
+    },
+    {
+      "slug": "bench3-gs",
+      "project": "GS-ERP",
+      "client": "GS Woodworking LLC",
+      "tasks_total": 96,
+      "tasks_done": 58,
+      "on_deck": true,
+      "tasks": []
+    },
+    {
+      "slug": "claude-todos-skill",
+      "project": "Tasks Platform (claude-todos-skill rebuild)",
+      "client": "",
+      "tasks_total": 31,
+      "tasks_done": 21,
+      "on_deck": true,
+      "tasks": []
+    },
+    {
+      "slug": "ct-pros-sys",
+      "project": "CT Pros",
+      "client": "CT Pros",
+      "tasks_total": 67,
+      "tasks_done": 45,
+      "on_deck": true,
+      "tasks": []
+    },
+    {
+      "slug": "dallo-usa",
+      "project": "dallo-usa",
+      "client": "Dallo USA",
+      "tasks_total": 43,
+      "tasks_done": 18,
+      "on_deck": true,
+      "tasks": []
+    },
+    {
+      "slug": "gs-datatable-w0",
+      "project": "GS-ERP",
+      "client": "GS Woodworking LLC",
+      "tasks_total": 96,
+      "tasks_done": 58,
+      "on_deck": true,
+      "tasks": []
+    },
+    {
+      "slug": "gs-truth-t158x",
+      "project": "GS-ERP",
+      "client": "GS Woodworking LLC",
+      "tasks_total": 96,
+      "tasks_done": 58,
+      "on_deck": true,
+      "tasks": []
+    },
+    {
+      "slug": "haniel-finances",
+      "project": "Haniel Finances",
+      "client": "Personal",
+      "tasks_total": 34,
+      "tasks_done": 19,
+      "on_deck": true,
+      "tasks": []
+    },
+    {
+      "slug": "influencer-agent",
+      "project": "influencer-agent",
+      "client": "AZ Team AI (own SaaS product)",
+      "tasks_total": 43,
+      "tasks_done": 0,
+      "on_deck": true,
+      "tasks": []
+    },
+    {
+      "slug": "procounters-erp",
+      "project": "procounters_erp",
+      "client": "ProCounters Inc.",
+      "tasks_total": 146,
+      "tasks_done": 131,
+      "on_deck": true,
+      "tasks": []
+    }
+  ],
+  "waiting_on": [
+    {
+      "project": "AZ Takeoff SaaS",
+      "task_id": "t62",
+      "title": "Buy CT Pros domain + wire real website/email",
+      "reason": "Needs Haniel to purchase the domain — blocks the company email placeholder and the go-live authorization (t27)"
+    },
+    {
+      "project": "AZ Takeoff SaaS",
+      "task_id": "t25",
+      "title": "Connect CT Pros's own QuickBooks (fresh OAuth)",
+      "reason": "Needs Rafa to authenticate CT Pros's own QBO account — inherited HighTech tokens were never carried over"
+    },
+    {
+      "project": "AZ Takeoff SaaS",
+      "task_id": "t60",
+      "title": "Confirm catalog pricing + paint coverage/coats vs Rafa's real suppliers",
+      "reason": "Needs Rafa's actual supplier costs and coat-count confirmation before estimates can be trusted for real bids"
+    },
+    {
+      "project": "AZ Takeoff SaaS",
+      "task_id": "t65",
+      "title": "Confirm apples-to-apples estimate margin target with Rafa",
+      "reason": "Needs Rafa to decide which margin metric (contribution vs net) and percentage should gate bids — currently undocumented"
+    },
+    {
+      "project": "AZ Takeoff SaaS",
+      "task_id": "t44",
+      "title": "Replace foreign-firm engine profiles with CT Pros blueprint CATEGORIES",
+      "reason": "Engine-side work still needed: GET /profiles must return building-language categories and exclude 'mitchell' — no open takeoff-engine task currently tracks this"
+    }
+  ]
+}
