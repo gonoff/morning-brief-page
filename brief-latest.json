@@ -1,119 +1,28 @@
 {
-  "date": "2026-10-14",
-  "generated_at": "2026-10-14T10:24:49Z",
-  "data_as_of": "2026-10-14T05:00:04+00:00",
-  "greeting": "Morning, Haniel. Fresh day — let's close the seams we opened.",
-  "hype": "Assemblies is in-progress and it's the last pillar before estimator-grade Excel — you finish that this morning. Then wall paint + trade routing on az-takeoff. Two machines, five hard tasks, full Solid day.",
-  "notice": "6 az-takeoff go-live tasks waiting on you or Rafa (domain, QB, catalog, margin) — see waiting_on.",
+  "date": "2026-10-15",
+  "generated_at": "2026-10-15T10:16:00Z",
+  "data_as_of": "2026-10-15T05:00:04+00:00",
+  "greeting": "Morning, Haniel. Clean calendar, full runway — let's move.",
+  "hype": "Two engines ready to ship. Label lane and assemblies close real product gaps on the takeoff engine. Domain buy + blueprint paint measurements unblock CT Pros go-live. No meetings, no hard blockers — everything you need is already in your hands today. Let's close it.",
+  "notice": "No calendar events today — full uninterrupted focus blocks.",
   "difficulty": {
     "rating": "Solid",
-    "planned_minutes": 390,
-    "available_minutes": 480,
-    "ratio": 0.81,
+    "planned_minutes": 420,
+    "available_minutes": 420,
+    "ratio": 1.0,
     "note": ""
   },
   "window": { "start": "09:00", "end": "18:00" },
   "schedule": [
-    {
-      "start": "09:00", "end": "11:00",
-      "slug": "takeoff-engine", "project": "Takeoff Engine",
-      "task_id": "t18", "title": "Assemblies-per-room: full room→assemblies system (last pillar for estimator-grade Excel)",
-      "estimate": "l", "kind": "task"
-    },
-    {
-      "start": "11:15", "end": "12:15",
-      "slug": "takeoff-engine", "project": "Takeoff Engine",
-      "task_id": "t26", "title": "Label lane v2: M3 vision for outlined-text firms + callout-vs-room filtering",
-      "estimate": "m", "kind": "task"
-    },
-    {
-      "start": "12:30", "end": "13:30",
-      "kind": "lunch", "title": "Lunch"
-    },
-    {
-      "start": "13:45", "end": "15:45",
-      "slug": "az-takeoff", "project": "AZ Takeoff SaaS",
-      "task_id": "t45", "title": "Derive wall PAINT area (perimeter × height) — the missing painting measurement",
-      "estimate": "l", "kind": "task"
-    },
-    {
-      "start": "16:00", "end": "17:00",
-      "slug": "az-takeoff", "project": "AZ Takeoff SaaS",
-      "task_id": "t46", "title": "Route takeoff measurements to trades at the seam",
-      "estimate": "m", "kind": "task"
-    },
-    {
-      "start": "17:15", "end": "17:45",
-      "slug": "az-takeoff", "project": "AZ Takeoff SaaS",
-      "task_id": "t47", "title": "Add PerLinearFt RateType (prereq for trim pricing)",
-      "estimate": "s", "kind": "task"
-    }
+    { "start": "09:00", "end": "10:00", "slug": "takeoff-engine", "project": "Takeoff Engine", "task_id": "t26", "title": "Label lane v2: M3 vision for outlined-text firms + callout-vs-room filtering", "estimate": "m", "kind": "task" },
+    { "start": "10:15", "end": "12:15", "slug": "takeoff-engine", "project": "Takeoff Engine", "task_id": "t18", "title": "Assemblies-per-room — paint/drywall/flooring quantities + wall heights", "estimate": "l", "kind": "task" },
+    { "start": "12:30", "end": "13:00", "slug": "az-takeoff", "project": "AZ Takeoff SaaS", "task_id": "t62", "title": "Buy CT Pros domain + wire real website/email", "estimate": "s", "kind": "task" },
+    { "start": "13:00", "end": "14:00", "kind": "lunch", "title": "Lunch" },
+    { "start": "14:00", "end": "15:00", "slug": "az-takeoff", "project": "AZ Takeoff SaaS", "task_id": "t24", "title": "Fill real CT Pros company contact info", "estimate": "m", "kind": "task" },
+    { "start": "15:15", "end": "15:45", "slug": "az-takeoff", "project": "AZ Takeoff SaaS", "task_id": "t47", "title": "Add PerLinearFt RateType (prerequisite for pricing trim/wall-linear)", "estimate": "s", "kind": "task" },
+    { "start": "16:00", "end": "18:00", "slug": "az-takeoff", "project": "AZ Takeoff SaaS", "task_id": "t45", "title": "Derive wall PAINT area (perimeter x height) — the missing painting measurement", "estimate": "l", "kind": "task" }
   ],
   "projects": [
-    {
-      "slug": "takeoff-engine",
-      "project": "Takeoff Engine",
-      "client": "AZ Team AI",
-      "tasks_total": 34,
-      "tasks_done": 23,
-      "on_deck": false,
-      "tasks": [
-        {
-          "id": "t18",
-          "title": "Assemblies-per-room: full room-type→assemblies system",
-          "phase": "p6 · Assemblies + Room Quantities",
-          "estimate": "l",
-          "priority": "high",
-          "status": "in_progress",
-          "notes": "assemblies-lite scaffold already in B1. Full version: room_type → up to 8 CSI quantities (paint/drywall/flooring/ceiling) using CSI libraries + wall heights. Last pillar before estimator-grade Excel.",
-          "block": { "start": "09:00", "end": "11:00" },
-          "prep": {
-            "what": "Build the full `room_type→assemblies` system in `engine/assemblies.py`: classification → quantities (paint/drywall/flooring) + wall heights, producing estimator-grade Excel with CSI-formula quantities per room.",
-            "understand": "The `assemblies-lite` scaffold was already folded into B1 as a thin stub. The full version maps each detected `room_type` to up to 8 CSI quantities using `csi_libraries` — paint coverage, drywall area, flooring area, ceiling area, etc. Wall heights are needed for wall-area quantities (not in the 2D plan; use a project-level default). This is Phase 6, actively `in_progress`, and it is the last pillar that unlocks the estimator-grade Excel export. Everything else in the pipeline is ready; this is the missing computation.",
-            "approach": [
-              "Open `engine/assemblies.py` — review the existing scaffold, find what's stubbed vs implemented",
-              "Design (or finalize) the `room_type → assemblies` mapping dict with each assembly type's CSI formula and default wall height",
-              "Implement quantity derivation per room: paint coverage (wall SF = perimeter × height), drywall (same SF), flooring (floor area from polygon), ceiling (floor area)",
-              "Wire the assembled quantities into `build_sheet_takeoff` in `engine/excel.py` and run an end-to-end test with a known-geometry room to verify the Excel output"
-            ],
-            "resources": [
-              "engine/assemblies.py (start here — find the stub)",
-              "engine/excel.py (`build_sheet_takeoff` pipeline)",
-              "service/routes POST /measurements (response shape for room data)",
-              "docs/spike/ (any assembly research notes)",
-              "CSI MasterFormat reference for material category codes"
-            ]
-          }
-        },
-        {
-          "id": "t26",
-          "title": "Label lane v2: M3 vision for outlined-text firms + callout-vs-room filtering",
-          "phase": "p5 · 95% · Engine Upgrade Waves",
-          "estimate": "m",
-          "priority": "high",
-          "status": "todo",
-          "notes": "Caught live on the Harborview demo: rooms show 'unnamed' because PDFTron outlines ALL text. v2 = (a) productize M3 tiles lane as opt-in 'read labels (AI)' action; (b) callout-vs-room filtering (general-note paragraphs, UP arrows, FEC callouts).",
-          "block": { "start": "11:15", "end": "12:15" },
-          "prep": {
-            "what": "Add an opt-in 'Read labels (AI)' endpoint using the M3 tiles lane, and add callout-vs-room filtering to stop general notes/arrows from being misread as room names.",
-            "understand": "PDFTron-generated PDFs outline ALL text as vector paths — the free live-text lane finds zero room names on them. The M3 tiles lane (spike: `run_labels_m3tiles.py`) CAN read outlined text but it's expensive (~4.3 min/sheet, costs money via MINIMAX_AI). Two-part fix: (a) expose it as an OPT-IN action (not auto-run — avoids unexpected charges, maps to the §7a metered-credits event in the PRD); (b) clean up noise on firms where the text lane already works: Holabird shows general paragraphs, 'UP' stair arrows, and FEC callouts getting matched as room names.",
-            "approach": [
-              "Review `docs/spike/run_labels_m3tiles.py` to understand the M3 tiles pipeline and what the service needs to call it",
-              "Add a `POST /sheets/{sheet_id}/read-labels` endpoint as an opt-in action: calls the M3 tiles lane, stores labels back to `Measurement` rows, requires `MINIMAX_AI` key in env",
-              "For callout filtering in the live-text lane: add heuristics before storing — filter general paragraphs (>40 chars), single-word directionals (`UP`, `DN`), alphanumeric callout patterns (`FEC`, `AHU-1`) using regex",
-              "Run `pytest service/` — verify the existing tests stay green; add a test for the callout filter with at least one false-positive example"
-            ],
-            "resources": [
-              "docs/spike/run_labels_m3tiles.py (M3 tiles lane implementation)",
-              "service/routes.py (existing label route patterns)",
-              "service/workers.py (label assignment logic)",
-              "STATE.md (VPS secrets section — MiniMax key placement)",
-              "PRD §7a metered-credits event spec"
-            ]
-          }
-        }
-      ]
-    },
     {
       "slug": "az-takeoff",
       "project": "AZ Takeoff SaaS",
@@ -123,102 +32,187 @@
       "on_deck": false,
       "tasks": [
         {
-          "id": "t45",
-          "title": "Derive wall PAINT area (perimeter × height) — the missing painting measurement",
-          "phase": "p4 · Post-Deploy - Blueprint takeoff",
-          "estimate": "l",
+          "id": "t62",
+          "title": "Buy CT Pros domain + wire real website/email",
+          "phase": "Deployment - Infra & go-live",
+          "estimate": "s",
           "priority": "high",
           "status": "todo",
-          "notes": "A 2D plan has no wall height so painting gets ZERO auto-sqft today. Add wall/ceiling height input (project default + optional per-room override); wall paint SF/room = perimeter × height. Seeder currently DROPS geometry — preserve it.",
-          "block": { "start": "13:45", "end": "15:45" },
+          "notes": "CT Pros has no website/domain. Buy domain, replace placeholders: COMPANY_WEBSITE, COMPANY_EMAIL, MAIL_FROM_ADDRESS, GMAIL_OAUTH_FROM_ADDRESS.",
+          "block": { "start": "12:30", "end": "13:00" },
           "prep": {
-            "what": "Add a `wall_height_ft` column to estimates, preserve `geometry.rings` + `meta.perimeter` from the engine response in `TakeoffEstimateSeeder`, and emit a 'Wall paint area' line item per room using `perimeter × wall_height`.",
-            "understand": "The engine returns per-room data including `meta.perimeter` (room perimeter in feet) and `geometry.rings` (polygon data). `TakeoffEstimateSeeder.php` currently drops geometry entirely — that's the bug. The missing piece is height: a 2D plan doesn't encode wall height, so you need a user-supplied default (e.g. 8ft) stored on the estimate with optional per-room override. `wall_area_sqft = perimeter × height`. The painting labor rate seeder row already exists. This unlocks real painting estimates for CT Pros' primary trade.",
+            "what": "Purchase the CT Pros business domain and update all placeholder email/website config so client PDFs and emails carry real contact info.",
+            "understand": "All client-facing PDFs and signing emails still show `office@ctpros.example` (RFC-reserved, non-deliverable) and empty website. The domain also gates the Gmail OAuth authorized redirect URI. This is a 30-min ops task: registrar + .env edits.",
             "approach": [
-              "Create a migration: add `wall_height_ft` (float, nullable, default 8.0) to the `estimates` table; add fillable + accessor to `Estimate.php`",
-              "In `TakeoffEstimateSeeder.php`, stop dropping engine geometry: preserve `meta.perimeter` and `geometry.rings` on each room measurement",
-              "Derive wall area per room: `wall_area_sqft = $room['meta']['perimeter'] * ($estimate->wall_height_ft ?? 8.0)`, then call `LineItemFactory` to emit a painting area line item",
-              "Add `wall_height` input to the Takeoff or Estimate edit form (numeric, defaults to 8ft), wire it to `estimates.wall_height_ft`",
-              "Add a test: seed a takeoff with a known-perimeter room + 8ft height → verify wall_area = perimeter × 8"
+              "Check availability for ctpros.com / ctpros.co / ctprosllc.com — confirm choice with Rafa if needed.",
+              "Register on Namecheap or Cloudflare and point DNS to the DO staging server (137.184.212.61).",
+              "Update `.env` on staging: `COMPANY_WEBSITE`, `COMPANY_EMAIL`, `MAIL_FROM_ADDRESS`, `GMAIL_OAUTH_FROM_ADDRESS`.",
+              "Update the Gmail OAuth client's authorized redirect domain in Google Cloud Console."
             ],
             "resources": [
-              "app/Services/TakeoffEstimateSeeder.php (start here — find where geometry is dropped)",
-              "app/Models/Estimate.php",
-              "database/seeders/LaborRateSeeder.php (painting rate rows)",
-              "app/Services/LineItemFactory.php (fromMaterial / fromLaborRate)",
-              "database/migrations/ (reference a recent migration for format)"
+              "Namecheap / Cloudflare registrar",
+              "config/company.php",
+              "Staging server: ctpros-7dcc41.137.184.212.61.sslip.io (to verify email after wiring)",
+              "Google Cloud Console — OAuth 2.0 credentials (Gmail OAuth client)",
+              "~/.config/srv/servers.json — ct-pros-staging entry"
             ]
           }
         },
         {
-          "id": "t46",
-          "title": "Route takeoff measurements to trades at the seam",
-          "phase": "p4 · Post-Deploy - Blueprint takeoff",
+          "id": "t24",
+          "title": "Fill real CT Pros company contact info",
+          "phase": "Deployment - Infra & go-live",
           "estimate": "m",
           "priority": "high",
-          "status": "todo",
-          "notes": "Every measurement collapses into one anonymous kind=custom $0 line, dropping kind+geometry. Preserve+switch on kind: area(SF)->flooring, derived wall SF->painting, line(LF)->wall-linear/trim, count(EA)->doors/tile.",
-          "block": { "start": "16:00", "end": "17:00" },
+          "status": "in_progress",
+          "notes": "Most fields done (name/address/phone/logo). Two remaining: COMPANY_EMAIL + COMPANY_WEBSITE — blocked on domain (t62). Once domain is in hand, this is a 5-min .env update + PDF render verify.",
+          "block": { "start": "14:00", "end": "15:00" },
           "prep": {
-            "what": "Modify `TakeoffEstimateSeeder.php` to route each measurement `kind` to the correct trade instead of collapsing everything into anonymous `kind=custom $0` lines.",
-            "understand": "The engine returns each room measurement with a `kind` field: `area` (SF floors), `line` (LF trim/wall-linear), `count` (EA doors/fixtures). Right now all of them get dumped into a single custom line losing the info entirely. After t45 adds wall-area derivation, you have: `area(SF)` → flooring rate, derived wall SF → painting rate, `line(LF)` → per-LF trim rate (t47 done), `count(EA)` → doors/tile. Use `ProjectType::isCoreTrade()` to tag each line with the right trade.",
+            "what": "Complete the in-progress company-identity task: wire the two remaining .env placeholders (email + website) using the domain from t62, then verify PDFs and Sign pages render correctly.",
+            "understand": "Everything else is already wired: `COMPANY_NAME='CT Pros LLC'`, `COMPANY_ADDRESS='Bridgeport, CT'`, `COMPANY_PHONE='(561) 225-5631'`, logo clean on all client-facing surfaces. The two open values are `COMPANY_EMAIL` (currently `office@ctpros.example`) and `COMPANY_WEBSITE` (currently empty). Both depend on owning the domain.",
             "approach": [
-              "In `TakeoffEstimateSeeder.php`, add a switch on measurement `kind`: case `'area'` → `LineItemFactory` with flooring rate; case `'line'` → `LineItemFactory` with `PerLinearFt` rate; case derived wall SF → painting rate",
-              "Tag each line item with the appropriate trade using `ProjectType::group()` / `isCoreTrade()` from `app/Enums/ProjectType.php`",
-              "Set `is_subcontracted = true` for non-core trades (tile, trim) per `isCoreTrade()` — flooring and painting stay own-team",
-              "Add/update a seeder test: fixture with area+line+count measurements produces correctly typed and trade-tagged line items"
+              "Set `COMPANY_EMAIL=office@<domain>` and `COMPANY_WEBSITE=https://<domain>` in staging `.env`.",
+              "Run a disposable-sqlite render of a proposal PDF and verify the email + website appear on the document.",
+              "Check the three public Sign pages (Show/Expired/Success) — they go through `company.logo_url` in HandleInertiaRequests.",
+              "Confirm `MAIL_FROM_ADDRESS` and `GMAIL_OAUTH_FROM_ADDRESS` also point to the new domain."
             ],
             "resources": [
-              "app/Services/TakeoffEstimateSeeder.php",
-              "app/Enums/ProjectType.php (isCoreTrade, group)",
-              "app/Services/LineItemFactory.php (fromLaborRate, fromSubcontract)",
-              "app/Enums/RateType.php (PerLinearFt from t47)"
+              "config/company.php",
+              ".env (gitignored) on staging",
+              "app/Http/Middleware/HandleInertiaRequests.php (company.logo_url)",
+              "tests/Feature/ProposalLogoTest.php + SignFlowTest.php",
+              "resources/js/Pages/Sign/ (Show/Expired/Success)"
             ]
           }
         },
         {
           "id": "t47",
           "title": "Add PerLinearFt RateType (prerequisite for pricing trim/wall-linear)",
-          "phase": "p4 · Post-Deploy - Blueprint takeoff",
+          "phase": "Post-Deploy - Blueprint takeoff",
           "estimate": "s",
           "priority": "medium",
           "status": "todo",
-          "notes": "RateType has no per-linear-foot. Add PerLinearFt='per_linear_ft' + label, wire LineItemFactory::unitFromRateType->'lf', seed a per-LF trim LaborRate. Must land before takeoff pricing (t48).",
-          "block": { "start": "17:15", "end": "17:45" },
+          "notes": "RateType enum missing per_linear_ft. Wire through LineItemFactory + seed a trim LaborRate. Gates t48 (price seeded takeoff lines by kind/trade).",
+          "block": { "start": "15:15", "end": "15:45" },
           "prep": {
-            "what": "Add a new `PerLinearFt='per_linear_ft'` case to the `RateType` enum, wire it into `unitFromRateType` in `LineItemFactory`, and seed a per-LF trim `LaborRate` row.",
-            "understand": "`RateType` controls how estimate line items are priced and what unit label they get. No per-linear-foot rate exists yet. This is the prerequisite for t48 (pricing seeded takeoff trim/wall-linear lines) — if this isn't in before t46 runs, LF measurements have nothing to key on.",
+            "what": "Add a `per_linear_ft` case to the `RateType` enum and wire it through the factory and seeder so trim/wall-linear takeoff measurements can receive a priced LaborRate.",
+            "understand": "`RateType` drives how `LineItemFactory::unitFromRateType()` picks the unit string and how the estimate editor renders rate. Without a linear-foot type, LF measurements from the takeoff (trim runs, wall linear feet) can't price at all. This is additive-only — a small enum extension with clear cascade points.",
             "approach": [
-              "Add `PerLinearFt = 'per_linear_ft'` case with a label to `app/Enums/RateType.php`",
-              "Wire it in `LineItemFactory::unitFromRateType()` to return `'lf'` as the unit string",
-              "Add a per-LF trim `LaborRate` seed row in `database/seeders/LaborRateSeeder.php`",
-              "Run `php artisan test --filter=LaborRate` to confirm no regressions"
+              "Add `PerLinearFt = 'per_linear_ft'` to `app/Enums/RateType.php` with a display label (e.g. 'Per Linear Foot').",
+              "Update `LineItemFactory::unitFromRateType()` to return `'lf'` for `RateType::PerLinearFt`.",
+              "Seed a trim LaborRate in `database/seeders/LaborRateSeeder.php` (e.g. trade='trim', rate_type=PerLinearFt, rate_per_unit~$3.50/lf).",
+              "Run `php artisan test` to confirm nothing breaks — additive only, expect full suite green."
             ],
             "resources": [
               "app/Enums/RateType.php",
-              "app/Services/LineItemFactory.php (unitFromRateType method)",
+              "app/Services/LineItemFactory.php (`unitFromRateType` method)",
               "database/seeders/LaborRateSeeder.php",
-              "php artisan migrate:fresh --seed (dev only)"
+              "php artisan test (full suite, ~912 passing)"
+            ]
+          }
+        },
+        {
+          "id": "t45",
+          "title": "Derive wall PAINT area (perimeter x height) — the missing painting measurement",
+          "phase": "Post-Deploy - Blueprint takeoff",
+          "estimate": "l",
+          "priority": "high",
+          "status": "todo",
+          "notes": "Wall paint SF = perimeter x height. Perimeter is in engine output but TakeoffEstimateSeeder drops geometry. Add wall_height migration + preserve perimeter + emit wall_paint measurement lines.",
+          "block": { "start": "16:00", "end": "18:00" },
+          "prep": {
+            "what": "Add a wall-height field to takeoff projects and compute wall paint SF = perimeter x height per room from the engine's polygon data, so painting measurements auto-populate from blueprints.",
+            "understand": "A 2D plan has no Z-axis — the engine gives floor area and perimeter but no height. Wall paint needs height. The perimeter IS in the engine output (`meta.perimeter` per room) but `TakeoffEstimateSeeder` currently drops all geometry on import. This task adds the height param, stops dropping perimeter, and emits a wall_paint measurement line per room.",
+            "approach": [
+              "Create migration `add_wall_height_ft_to_estimates`: nullable decimal on `estimates` table (default 8.0 ft or null to inherit project config).",
+              "In `TakeoffEstimateSeeder.php`, stop dropping geometry — preserve `meta.perimeter` per room from the engine's room response.",
+              "Compute `wall_paint_sf = perimeter * wall_height_ft` per room; emit as a `kind='wall_paint'` measurement line item.",
+              "Add wall-height input to `resources/js/Pages/Takeoff/Index.vue` (project-level default, optional per-room override in the Review widget)."
+            ],
+            "resources": [
+              "app/Services/TakeoffEstimateSeeder.php",
+              "database/migrations/ (create new migration)",
+              "resources/js/Pages/Takeoff/Index.vue",
+              "Engine room response: `meta.perimeter` field (see SERVICE README or takeoff-engine docs)",
+              "engine/assemblies.py in takeoff-engine (wall-height reference from t18 work today)",
+              "php artisan test"
             ]
           }
         }
       ]
     },
     {
-      "slug": "gs-woodworking-spec",
-      "project": "GS-ERP",
-      "client": "GS Woodworking LLC",
-      "tasks_total": 75,
-      "tasks_done": 39,
-      "on_deck": true,
-      "tasks": []
+      "slug": "takeoff-engine",
+      "project": "Takeoff Engine",
+      "client": "AZ Team AI",
+      "tasks_total": 34,
+      "tasks_done": 23,
+      "on_deck": false,
+      "tasks": [
+        {
+          "id": "t26",
+          "title": "Label lane v2: M3 vision for outlined-text firms + callout-vs-room filtering",
+          "phase": "Phase 5 - 95% - Engine Upgrade Waves",
+          "estimate": "m",
+          "priority": "high",
+          "status": "todo",
+          "notes": "PDFTron firms outline all text (zero readable text for the live lane). M3 tile lane proven in spike (~4.3 min/sheet, costs money). Ship as opt-in 'read labels (AI)' action + callout filtering.",
+          "block": { "start": "09:00", "end": "10:00" },
+          "prep": {
+            "what": "Productize the M3 vision tile lane as an opt-in 'read labels (AI)' action for PDFTron firms where all text is outlined, plus filter callout noise (stair arrows, FEC boxes, general notes) from room name matching.",
+            "understand": "PDFTron exports outline every glyph — the live-text lane reads zero labels on these sheets. The spike (`docs/spike/run_labels_m3tiles.py`) proved M3 tiled vision reads them at ~4.3 min/sheet. Holabird (free-text firm, 92/109 named) confirms the free lane is fine for non-PDFTron plans. The callout noise is confirmed live on Holabird: UP/DN stair arrows, FEC callouts, and multi-sentence note paragraphs all match as room names from the R13 notes.",
+            "approach": [
+              "Review `docs/spike/run_labels_m3tiles.py` — understand tile slicing, M3 API call structure, and how extracted labels are matched back to room polygons.",
+              "Productize as opt-in: add a `read_labels_ai` flag on the sheet job, gate behind a `§7a metered-credits` event, and wire the `MINIMAX_AI` key to the VPS `.env` (secrets decision: add to /opt/takeoff-engine/.env same as other keys).",
+              "Wire the new lane into `engine/labels.py` alongside the existing free-text lane — host chooses: free (fast) or AI (costs credits, for PDFTron firms).",
+              "Build callout-vs-room filter: exclude strings matching confirmed noise patterns (UP/DN arrows, FEC/AHU callout labels, multi-sentence paragraphs) before room-name assignment."
+            ],
+            "resources": [
+              "docs/spike/run_labels_m3tiles.py (the proven spike)",
+              "engine/labels.py (existing free-text label lane to extend alongside)",
+              "MiniMax AI API docs: api.minimax.io (vision tiles, model MiniMax-VL-01)",
+              "service/credits.py (§7a metered-credits event system)",
+              "VPS /opt/takeoff-engine/.env (MINIMAX_AI key to add)",
+              "Holabird sample sheet (callout noise reference, R13 notes)"
+            ]
+          }
+        },
+        {
+          "id": "t18",
+          "title": "Assemblies-per-room — paint/drywall/flooring quantities + wall heights",
+          "phase": "Phase 6 - 95% - Pillar 3 (Counts) + Assemblies",
+          "estimate": "l",
+          "priority": "high",
+          "status": "in_progress",
+          "notes": "assemblies-lite scaffolded in engine/assemblies.py. Full version: room type -> assemblies + formulas + heights (up to 8 quantities, CSI trade libraries). The last pillar before estimator-grade Excel.",
+          "block": { "start": "10:15", "end": "12:15" },
+          "prep": {
+            "what": "Build the full assemblies engine: given a room's classification and polygon geometry, compute flooring, wall paint, drywall, and ceiling quantities using wall height, producing estimator-grade line items for the Excel export.",
+            "understand": "`engine/assemblies.py` is scaffolded from t6 (assemblies-lite, basic SF output only). The full version maps room type to multiple quantity formulas: floor area -> flooring SF; perimeter x height -> wall paint SF + drywall SF; floor area -> ceiling SF; perimeter LF -> optional molding/trim. Wall height is a param (default to a project-level or system default like 9 ft). One classification can produce up to 8 distinct line items for different CSI trade codes.",
+            "approach": [
+              "Read `engine/assemblies.py` fully — map what's scaffolded (stubs) vs. what needs implementing.",
+              "Define the room-type to assembly mapping: floor area (from polygon) -> flooring; perimeter x wall_height_ft -> wall paint + drywall; floor area -> ceiling; perimeter LF -> molding/trim.",
+              "Add `wall_height_ft` as an optional per-room param — fall back to project-level default, then system default (9.0 ft).",
+              "Wire quantities through `build_sheet_takeoff` orchestrator so each trade type appears as its own row/column in the 5-tab Excel export."
+            ],
+            "resources": [
+              "engine/assemblies.py (the scaffolded file to extend)",
+              "engine/excel.py (5-tab workbook builder)",
+              "engine/rooms.py (polygon area, perimeter, rings)",
+              "docs/PRD §8 Phase 1 (assemblies spec — room type to assembly formulas)",
+              "service/rooms.py (DB room rows: classification, geometry)",
+              "`build_sheet_takeoff` in the service orchestrator (entry point to wire into)"
+            ]
+          }
+        }
+      ]
     },
     {
       "slug": "module-project",
       "project": "Module",
       "client": "Internal",
-      "tasks_total": 63,
-      "tasks_done": 18,
+      "tasks_total": 45,
+      "tasks_done": 0,
       "on_deck": true,
       "tasks": []
     },
@@ -226,8 +220,8 @@
       "slug": "azteamai-system",
       "project": "AZ Team AI System",
       "client": "AZ Team AI (internal)",
-      "tasks_total": 74,
-      "tasks_done": 44,
+      "tasks_total": 30,
+      "tasks_done": 0,
       "on_deck": true,
       "tasks": []
     },
@@ -235,8 +229,8 @@
       "slug": "bench3-gs",
       "project": "GS-ERP",
       "client": "GS Woodworking LLC",
-      "tasks_total": 75,
-      "tasks_done": 39,
+      "tasks_total": 38,
+      "tasks_done": 0,
       "on_deck": true,
       "tasks": []
     },
@@ -253,8 +247,8 @@
       "slug": "ct-pros-sys",
       "project": "CT Pros",
       "client": "CT Pros",
-      "tasks_total": 72,
-      "tasks_done": 51,
+      "tasks_total": 22,
+      "tasks_done": 0,
       "on_deck": true,
       "tasks": []
     },
@@ -262,8 +256,8 @@
       "slug": "dallo-usa",
       "project": "dallo-usa",
       "client": "Dallo USA",
-      "tasks_total": 43,
-      "tasks_done": 18,
+      "tasks_total": 25,
+      "tasks_done": 0,
       "on_deck": true,
       "tasks": []
     },
@@ -271,8 +265,8 @@
       "slug": "gs-datatable-w0",
       "project": "GS-ERP",
       "client": "GS Woodworking LLC",
-      "tasks_total": 75,
-      "tasks_done": 39,
+      "tasks_total": 38,
+      "tasks_done": 0,
       "on_deck": true,
       "tasks": []
     },
@@ -280,8 +274,17 @@
       "slug": "gs-truth-t158x",
       "project": "GS-ERP",
       "client": "GS Woodworking LLC",
-      "tasks_total": 75,
-      "tasks_done": 39,
+      "tasks_total": 38,
+      "tasks_done": 0,
+      "on_deck": true,
+      "tasks": []
+    },
+    {
+      "slug": "gs-woodworking-spec",
+      "project": "GS-ERP",
+      "client": "GS Woodworking LLC",
+      "tasks_total": 38,
+      "tasks_done": 0,
       "on_deck": true,
       "tasks": []
     },
@@ -307,8 +310,8 @@
       "slug": "procounters-erp",
       "project": "procounters_erp",
       "client": "ProCounters Inc.",
-      "tasks_total": 125,
-      "tasks_done": 110,
+      "tasks_total": 15,
+      "tasks_done": 0,
       "on_deck": true,
       "tasks": []
     }
@@ -316,45 +319,15 @@
   "waiting_on": [
     {
       "project": "AZ Takeoff SaaS",
-      "task_id": "t62",
-      "title": "Buy CT Pros domain + wire real website/email",
-      "reason": "Needs Haniel to purchase the domain — blocks the company email placeholder and the go-live authorization (t27)"
-    },
-    {
-      "project": "AZ Takeoff SaaS",
-      "task_id": "t25",
-      "title": "Connect CT Pros's own QuickBooks (fresh OAuth)",
-      "reason": "Needs Rafa to authenticate CT Pros's own QBO account — inherited HighTech tokens were never carried over"
-    },
-    {
-      "project": "AZ Takeoff SaaS",
-      "task_id": "t28",
-      "title": "Sandbox-validate full QB round-trip (depends on t25)",
-      "reason": "Blocked on t25 (Rafa's QB OAuth) — can't validate until the real QBO account is connected"
-    },
-    {
-      "project": "AZ Takeoff SaaS",
-      "task_id": "t29",
-      "title": "Sandbox-validate QBVendorSync (depends on t25)",
-      "reason": "Blocked on t25 (Rafa's QB OAuth) — vendor sync validation needs the live QBO credentials"
-    },
-    {
-      "project": "AZ Takeoff SaaS",
       "task_id": "t60",
       "title": "Confirm catalog pricing + paint coverage/coats vs Rafa's real suppliers",
-      "reason": "Needs Rafa's actual supplier costs and coat-count confirmation before estimates can be trusted for real bids"
+      "reason": "Needs Rafa to provide real supplier costs and confirm coat count (1 vs 2 coats) for paint — without this, catalog pricing can't be trusted for go-live estimates."
     },
     {
       "project": "AZ Takeoff SaaS",
       "task_id": "t65",
       "title": "Confirm apples-to-apples estimate margin target with Rafa",
-      "reason": "Needs Rafa to decide which margin metric (contribution vs net) and percentage should gate bids — currently undocumented"
-    },
-    {
-      "project": "AZ Takeoff SaaS",
-      "task_id": "t44",
-      "title": "Replace foreign-firm engine profiles with CT Pros blueprint CATEGORIES",
-      "reason": "App-side UI is done; waiting on engine-side work — GET /profiles must return building-language categories and exclude 'mitchell'. No open takeoff-engine task currently tracks this."
+      "reason": "Needs Rafa to confirm which margin metric and target percentage to use for bid go/no-go coloring — editor reports contribution margin but docs show a 35% net margin goal on a different basis."
     }
   ]
 }
