@@ -1,0 +1,226 @@
+{
+  "date": "2026-10-19",
+  "generated_at": "2026-10-19T10:24:10Z",
+  "data_as_of": "2026-10-19T05:00:03+00:00",
+  "greeting": "Morning, Haniel. Fresh Monday, zero meetings — you've got the whole day to go deep.",
+  "hype": "No meetings. Full runway. The job queue and the assembly formulas are what stand between where the tools are and where they need to be — ship both.",
+  "notice": "Have your MINIMAX_AI key ready to deploy to the VPS before the afternoon label-lane work (t26 needs it live).",
+  "difficulty": {
+    "rating": "Solid",
+    "planned_minutes": 390,
+    "available_minutes": 480,
+    "ratio": 0.81,
+    "note": ""
+  },
+  "window": {
+    "start": "09:00",
+    "end": "18:00"
+  },
+  "schedule": [
+    {
+      "start": "09:00",
+      "end": "11:00",
+      "kind": "task",
+      "project": "claude-todos-skill",
+      "task_id": "t20",
+      "title": "Durable job queue",
+      "size": "l"
+    },
+    {
+      "start": "11:15",
+      "end": "12:15",
+      "kind": "task",
+      "project": "takeoff-engine",
+      "task_id": "t26",
+      "title": "Label lane v2: M3 vision for outlined-text firms + callout-vs-room filtering",
+      "size": "m"
+    },
+    {
+      "start": "12:30",
+      "end": "13:00",
+      "kind": "task",
+      "project": "claude-todos-skill",
+      "task_id": "t30",
+      "title": "Writer docker-integration test on a real onboarded repo",
+      "size": "s"
+    },
+    {
+      "start": "13:00",
+      "end": "14:00",
+      "kind": "lunch"
+    },
+    {
+      "start": "14:15",
+      "end": "15:15",
+      "kind": "task",
+      "project": "claude-todos-skill",
+      "task_id": "t29",
+      "title": "Daemon-side cross-process refresh lock",
+      "size": "m"
+    },
+    {
+      "start": "15:30",
+      "end": "17:30",
+      "kind": "task",
+      "project": "takeoff-engine",
+      "task_id": "t18",
+      "title": "Assemblies-per-room → paint/drywall/flooring quantities + wall heights",
+      "size": "l"
+    }
+  ],
+  "focus_projects": [
+    {
+      "project": "claude-todos-skill",
+      "on_deck": false,
+      "tasks_total": 31,
+      "tasks_done": 21,
+      "tasks": [
+        {
+          "id": "t20",
+          "title": "Durable job queue",
+          "priority": "HIGH",
+          "size": "l",
+          "prep": {
+            "what": "Implement a durable job queue so the sweeper/daemon pipeline survives restarts and can be observed.",
+            "understand": "Phase 6 gating item — t21 (sweeper) and t22 (CI lane) both depend on this landing first. The queue must persist across process crashes and expose enough state for the CI lane to query.",
+            "approach": [
+              "Review how jobs are currently enqueued and what data each job carries",
+              "Pick a persistence backend (SQLite is already in scope for the project — prefer it over a new dep)",
+              "Define the jobs table schema: id, kind, payload JSON, status, created_at, updated_at",
+              "Implement enqueue / dequeue / mark-done / mark-failed helpers",
+              "Wire the new queue into the existing daemon call-sites, replacing in-memory structures"
+            ],
+            "resources": [
+              "claude-todos-skill snapshot — tasks list, current phase notes",
+              "Existing daemon entrypoint file for call-site map"
+            ]
+          }
+        },
+        {
+          "id": "t30",
+          "title": "Writer docker-integration test on a real onboarded repo",
+          "priority": "medium",
+          "size": "s",
+          "prep": {
+            "what": "Prove the writer component works end-to-end inside Docker against a repo that has already gone through onboarding.",
+            "understand": "Fills the gap between unit tests and the full CI lane. A short task (s=30 min) — pick an already-onboarded repo and assert the writer produces valid output.",
+            "approach": [
+              "Identify the smallest onboarded repo available in the test fixtures",
+              "Write a docker-compose or Dockerfile that mounts the repo and runs the writer",
+              "Assert the writer exits 0 and the output files match expected structure",
+              "Add the test to the existing test suite so it runs in CI"
+            ],
+            "resources": [
+              "claude-todos-skill snapshot — writer component description",
+              "Existing docker test infrastructure if any"
+            ]
+          }
+        },
+        {
+          "id": "t29",
+          "title": "Daemon-side cross-process refresh lock",
+          "priority": "HIGH",
+          "size": "m",
+          "prep": {
+            "what": "Add a cross-process lock on the daemon side so concurrent refresh calls from multiple writers/processes can't stomp each other.",
+            "understand": "Prerequisite for safe concurrent use. Without it two processes refreshing simultaneously corrupt shared cache state.",
+            "approach": [
+              "Identify all code paths that trigger a refresh in the daemon",
+              "Choose a lock primitive — SQLite exclusive transaction or a lockfile with fcntl.flock",
+              "Wrap the refresh critical section with acquire / release",
+              "Write a test that spawns two concurrent refreshers and asserts only one runs at a time"
+            ],
+            "resources": [
+              "claude-todos-skill snapshot — daemon architecture notes",
+              "t20 durable job queue (landing earlier today) — may inform lock storage choice"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "project": "takeoff-engine",
+      "on_deck": false,
+      "tasks_total": 34,
+      "tasks_done": 23,
+      "tasks": [
+        {
+          "id": "t26",
+          "title": "Label lane v2: M3 vision for outlined-text firms + callout-vs-room filtering",
+          "priority": "HIGH",
+          "size": "m",
+          "prep": {
+            "what": "Upgrade the label detection lane so it correctly classifies outlined-text firms and filters callout labels from room labels.",
+            "understand": "Currently the label lane conflates callout boxes with room labels. The M3 vision separates them: outlined-text firms get their own detection path, and callout-vs-room filtering happens as a post-classification step.",
+            "approach": [
+              "Review the current label lane pipeline and where firm-type classification happens",
+              "Add an outlined-text detector (check for text with outline strokes vs. solid fills)",
+              "Implement a callout-vs-room heuristic (callouts typically have leader lines or arrow anchors; rooms are enclosed polygons)",
+              "Deploy the MINIMAX_AI key to VPS — t26 may call the vision model for ambiguous cases",
+              "Run the label lane against the existing test set and verify precision/recall improves"
+            ],
+            "resources": [
+              "takeoff-engine snapshot — label lane phase notes, t26 description",
+              "MINIMAX_AI API credentials (deploy to VPS before starting)"
+            ]
+          }
+        },
+        {
+          "id": "t18",
+          "title": "Assemblies-per-room → paint/drywall/flooring quantities + wall heights",
+          "priority": "HIGH",
+          "size": "l",
+          "status": "in_progress",
+          "prep": {
+            "what": "Complete the assemblies-per-room calculation so each room produces paint, drywall, and flooring quantity estimates plus accurate wall heights.",
+            "understand": "Task is already in_progress — review what's landed and what's still open before writing new code. The core formulas map room geometry (perimeter, area, ceiling height) to assembly quantities.",
+            "approach": [
+              "Read the current in_progress branch/code to see what formulas are already implemented",
+              "Identify which of paint / drywall / flooring is missing or incomplete",
+              "Implement wall-height extraction from the room geometry (check if ceiling height is detected or needs a default)",
+              "Wire the assembly outputs into the per-room result object",
+              "Add or extend tests for each assembly type with known-geometry rooms"
+            ],
+            "resources": [
+              "takeoff-engine snapshot — t18 description, phases 5+6 notes",
+              "Existing geometry helpers (perimeter, area calculations already in codebase)"
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "projects": [
+    {"project": "az-takeoff", "tasks_total": 73, "tasks_done": 51},
+    {"project": "azteamai-system", "tasks_total": 74, "tasks_done": 44},
+    {"project": "bench3-gs", "tasks_total": 75, "tasks_done": 37},
+    {"project": "claude-todos-skill", "tasks_total": 31, "tasks_done": 21},
+    {"project": "ct-pros-sys", "tasks_total": 72, "tasks_done": 50},
+    {"project": "dallo-usa", "tasks_total": 48, "tasks_done": 23},
+    {"project": "gs-datatable-w0", "tasks_total": 75, "tasks_done": 37},
+    {"project": "gs-truth-t158x", "tasks_total": 75, "tasks_done": 37},
+    {"project": "gs-woodworking-spec", "tasks_total": 75, "tasks_done": 37},
+    {"project": "haniel-finances", "tasks_total": 34, "tasks_done": 19},
+    {"project": "influencer-agent", "tasks_total": 51, "tasks_done": 8},
+    {"project": "module-project", "tasks_total": 63, "tasks_done": 18},
+    {"project": "procounters-erp", "tasks_total": 125, "tasks_done": 110},
+    {"project": "takeoff-engine", "tasks_total": 34, "tasks_done": 23}
+  ],
+  "waiting_on": [
+    {
+      "project": "dallo-usa",
+      "task_id": "t46",
+      "blocker": "Client (Bruno) must pick Shopify plan and configure payment providers — store currently silently drops all checkouts"
+    },
+    {
+      "project": "dallo-usa",
+      "task_id": "t35",
+      "blocker": "Waiting on client corrections/sign-off on 3 catalog gaps identified 2026-09-14"
+    },
+    {
+      "project": "influencer-agent",
+      "task_id": "t12",
+      "blocker": "CASA Tier 2 + Meta app review + LGPD legal — must be initiated now (weeks-long compliance process)"
+    }
+  ]
+}
