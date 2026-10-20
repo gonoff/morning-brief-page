@@ -1,226 +1,402 @@
 {
-  "date": "2026-10-19",
-  "generated_at": "2026-10-19T10:24:10Z",
-  "data_as_of": "2026-10-19T05:00:03+00:00",
-  "greeting": "Morning, Haniel. Fresh Monday, zero meetings — you've got the whole day to go deep.",
-  "hype": "No meetings. Full runway. The job queue and the assembly formulas are what stand between where the tools are and where they need to be — ship both.",
-  "notice": "Have your MINIMAX_AI key ready to deploy to the VPS before the afternoon label-lane work (t26 needs it live).",
+  "date": "2026-10-20",
+  "generated_at": "2026-10-20T10:10:11Z",
+  "data_as_of": "2026-10-20T05:00:05+00:00",
+  "greeting": "Morning, Haniel. Tuesday's clean — no meetings, just 9 hours of pure runway.",
+  "hype": "Assemblies are in progress and the QB sandbox has been waiting for you — close both today and you unblock the engine upgrade AND the CT Pros go-live in one shot.",
+  "notice": "CT Pros go-live has 4 external gates open (domain, Rafa's QB creds, pricing confirmation, margin target) — today's a good day to ping Rafa and move those forward.",
   "difficulty": {
     "rating": "Solid",
     "planned_minutes": 390,
-    "available_minutes": 480,
-    "ratio": 0.81,
+    "available_minutes": 420,
+    "ratio": 0.93,
     "note": ""
   },
-  "window": {
-    "start": "09:00",
-    "end": "18:00"
-  },
+  "window": { "start": "09:00", "end": "18:00" },
   "schedule": [
     {
       "start": "09:00",
-      "end": "11:00",
-      "kind": "task",
-      "project": "claude-todos-skill",
-      "task_id": "t20",
-      "title": "Durable job queue",
-      "size": "l"
-    },
-    {
-      "start": "11:15",
-      "end": "12:15",
-      "kind": "task",
-      "project": "takeoff-engine",
+      "end": "10:00",
+      "slug": "takeoff-engine",
+      "project": "Takeoff Engine",
       "task_id": "t26",
       "title": "Label lane v2: M3 vision for outlined-text firms + callout-vs-room filtering",
-      "size": "m"
+      "estimate": "m",
+      "kind": "task"
     },
     {
-      "start": "12:30",
-      "end": "13:00",
-      "kind": "task",
-      "project": "claude-todos-skill",
-      "task_id": "t30",
-      "title": "Writer docker-integration test on a real onboarded repo",
-      "size": "s"
+      "start": "10:15",
+      "end": "11:15",
+      "slug": "az-takeoff",
+      "project": "AZ Takeoff SaaS",
+      "task_id": "t28",
+      "title": "Sandbox-validate full QB round-trip against live Intuit",
+      "estimate": "m",
+      "kind": "task"
+    },
+    {
+      "start": "11:30",
+      "end": "12:30",
+      "slug": "az-takeoff",
+      "project": "AZ Takeoff SaaS",
+      "task_id": "t29",
+      "title": "Sandbox-validate QBVendorSync (Subcontractor→Vendor) live",
+      "estimate": "m",
+      "kind": "task"
     },
     {
       "start": "13:00",
       "end": "14:00",
-      "kind": "lunch"
+      "kind": "lunch",
+      "title": "Lunch"
     },
     {
-      "start": "14:15",
-      "end": "15:15",
-      "kind": "task",
-      "project": "claude-todos-skill",
-      "task_id": "t29",
-      "title": "Daemon-side cross-process refresh lock",
-      "size": "m"
+      "start": "14:00",
+      "end": "14:30",
+      "slug": "az-takeoff",
+      "project": "AZ Takeoff SaaS",
+      "task_id": "t24",
+      "title": "Fill real CT Pros company contact info (AppLogo swap)",
+      "estimate": "s",
+      "kind": "task"
     },
     {
-      "start": "15:30",
-      "end": "17:30",
-      "kind": "task",
-      "project": "takeoff-engine",
+      "start": "14:45",
+      "end": "16:45",
+      "slug": "takeoff-engine",
+      "project": "Takeoff Engine",
       "task_id": "t18",
       "title": "Assemblies-per-room → paint/drywall/flooring quantities + wall heights",
-      "size": "l"
-    }
-  ],
-  "focus_projects": [
-    {
-      "project": "claude-todos-skill",
-      "on_deck": false,
-      "tasks_total": 31,
-      "tasks_done": 21,
-      "tasks": [
-        {
-          "id": "t20",
-          "title": "Durable job queue",
-          "priority": "HIGH",
-          "size": "l",
-          "prep": {
-            "what": "Implement a durable job queue so the sweeper/daemon pipeline survives restarts and can be observed.",
-            "understand": "Phase 6 gating item — t21 (sweeper) and t22 (CI lane) both depend on this landing first. The queue must persist across process crashes and expose enough state for the CI lane to query.",
-            "approach": [
-              "Review how jobs are currently enqueued and what data each job carries",
-              "Pick a persistence backend (SQLite is already in scope for the project — prefer it over a new dep)",
-              "Define the jobs table schema: id, kind, payload JSON, status, created_at, updated_at",
-              "Implement enqueue / dequeue / mark-done / mark-failed helpers",
-              "Wire the new queue into the existing daemon call-sites, replacing in-memory structures"
-            ],
-            "resources": [
-              "claude-todos-skill snapshot — tasks list, current phase notes",
-              "Existing daemon entrypoint file for call-site map"
-            ]
-          }
-        },
-        {
-          "id": "t30",
-          "title": "Writer docker-integration test on a real onboarded repo",
-          "priority": "medium",
-          "size": "s",
-          "prep": {
-            "what": "Prove the writer component works end-to-end inside Docker against a repo that has already gone through onboarding.",
-            "understand": "Fills the gap between unit tests and the full CI lane. A short task (s=30 min) — pick an already-onboarded repo and assert the writer produces valid output.",
-            "approach": [
-              "Identify the smallest onboarded repo available in the test fixtures",
-              "Write a docker-compose or Dockerfile that mounts the repo and runs the writer",
-              "Assert the writer exits 0 and the output files match expected structure",
-              "Add the test to the existing test suite so it runs in CI"
-            ],
-            "resources": [
-              "claude-todos-skill snapshot — writer component description",
-              "Existing docker test infrastructure if any"
-            ]
-          }
-        },
-        {
-          "id": "t29",
-          "title": "Daemon-side cross-process refresh lock",
-          "priority": "HIGH",
-          "size": "m",
-          "prep": {
-            "what": "Add a cross-process lock on the daemon side so concurrent refresh calls from multiple writers/processes can't stomp each other.",
-            "understand": "Prerequisite for safe concurrent use. Without it two processes refreshing simultaneously corrupt shared cache state.",
-            "approach": [
-              "Identify all code paths that trigger a refresh in the daemon",
-              "Choose a lock primitive — SQLite exclusive transaction or a lockfile with fcntl.flock",
-              "Wrap the refresh critical section with acquire / release",
-              "Write a test that spawns two concurrent refreshers and asserts only one runs at a time"
-            ],
-            "resources": [
-              "claude-todos-skill snapshot — daemon architecture notes",
-              "t20 durable job queue (landing earlier today) — may inform lock storage choice"
-            ]
-          }
-        }
-      ]
+      "estimate": "l",
+      "kind": "task"
     },
     {
-      "project": "takeoff-engine",
+      "start": "17:00",
+      "end": "18:00",
+      "slug": "takeoff-engine",
+      "project": "Takeoff Engine",
+      "task_id": "t16",
+      "title": "Door recall round 2 + bi-fold / cased-opening recall",
+      "estimate": "m",
+      "kind": "task"
+    }
+  ],
+  "projects": [
+    {
+      "slug": "takeoff-engine",
+      "project": "Takeoff Engine",
+      "client": "AZ Team AI",
+      "tasks_total": 29,
+      "tasks_done": 18,
       "on_deck": false,
-      "tasks_total": 34,
-      "tasks_done": 23,
       "tasks": [
         {
           "id": "t26",
           "title": "Label lane v2: M3 vision for outlined-text firms + callout-vs-room filtering",
-          "priority": "HIGH",
-          "size": "m",
+          "phase": "Phase 5 · 95% · Engine Upgrade Waves (W12 R2+)",
+          "estimate": "m",
+          "priority": "high",
+          "status": "todo",
+          "notes": "Caught live on the Harborview demo: rooms show 'unnamed' because PDFTron outlines ALL text. v2 = (a) productize the M3 tiles lane as opt-in 'read labels (AI)'; (b) callout-vs-room filtering.",
+          "block": { "start": "09:00", "end": "10:00" },
           "prep": {
-            "what": "Upgrade the label detection lane so it correctly classifies outlined-text firms and filters callout labels from room labels.",
-            "understand": "Currently the label lane conflates callout boxes with room labels. The M3 vision separates them: outlined-text firms get their own detection path, and callout-vs-room filtering happens as a post-classification step.",
+            "what": "Add an AI-powered 'read labels' option for firms with outlined text (M3 tile vision), plus filter noise like arrows, callouts, and paragraph notes from room-name results.",
+            "understand": "PDFTron-outlined firms encode text as graphics — the live-text lane finds nothing on them. M3 tiling sends small PNG tiles to a vision model to OCR them. Without callout filtering, general-note paragraphs, 'UP' stair arrows, and 'FEC' callouts all match as room names (the R13 documented noise).",
             "approach": [
-              "Review the current label lane pipeline and where firm-type classification happens",
-              "Add an outlined-text detector (check for text with outline strokes vs. solid fills)",
-              "Implement a callout-vs-room heuristic (callouts typically have leader lines or arrow anchors; rooms are enclosed polygons)",
-              "Deploy the MINIMAX_AI key to VPS — t26 may call the vision model for ambiguous cases",
-              "Run the label lane against the existing test set and verify precision/recall improves"
+              "Productize `run_labels_m3tiles.py` into the engine as an opt-in 'read labels (AI)' action gated behind the §7a metered-credits event.",
+              "Confirm the secrets approach for wiring MINIMAX_AI key to the VPS (`/opt/takeoff-engine/.env`).",
+              "Add callout-vs-room filter: reject strings matching paragraph/directional/callout patterns before they become room-name candidates.",
+              "Test on Harborview (currently 0 named → expect improvement) and Holabird regression (should stay ≥92/109 named)."
             ],
             "resources": [
-              "takeoff-engine snapshot — label lane phase notes, t26 description",
-              "MINIMAX_AI API credentials (deploy to VPS before starting)"
+              "`docs/spike/run_labels_m3tiles.py`",
+              "`engine/labels.py`",
+              "MiniMax vision API docs",
+              "VPS `/opt/takeoff-engine/.env` for secrets",
+              "`docs/STATE.md` R13 section (documented polish items)",
+              "§7a metered-credits event spec in PRD"
             ]
           }
         },
         {
           "id": "t18",
           "title": "Assemblies-per-room → paint/drywall/flooring quantities + wall heights",
-          "priority": "HIGH",
-          "size": "l",
+          "phase": "Phase 6 · 95% · Pillar 3 (Counts) + Assemblies",
+          "estimate": "l",
+          "priority": "high",
           "status": "in_progress",
+          "notes": "assemblies-lite scaffolded in B1. Full version = room type → assemblies + formulas + heights (up to 8 quantities, CSI libraries). The last pillar between here and estimator-grade Excel.",
+          "block": { "start": "14:45", "end": "16:45" },
           "prep": {
-            "what": "Complete the assemblies-per-room calculation so each room produces paint, drywall, and flooring quantity estimates plus accurate wall heights.",
-            "understand": "Task is already in_progress — review what's landed and what's still open before writing new code. The core formulas map room geometry (perimeter, area, ceiling height) to assembly quantities.",
+            "what": "Expand the assembly engine from its scaffolded 'lite' state to produce real trade quantities — paint SF, drywall SF, floor SF, LF trim, ceiling SF — by classification and wall height.",
+            "understand": "`engine/assemblies.py` exists but generates placeholder quantities. The core missing link: `wall_area = perimeter × height`. Plans don't carry wall height, so you need a project-level default (suggest 9 ft) plus optional per-room override. Once wall SF is derivable, one classification maps to up to 8 estimator-grade lines.",
             "approach": [
-              "Read the current in_progress branch/code to see what formulas are already implemented",
-              "Identify which of paint / drywall / flooring is missing or incomplete",
-              "Implement wall-height extraction from the room geometry (check if ceiling height is detected or needs a default)",
-              "Wire the assembly outputs into the per-room result object",
-              "Add or extend tests for each assembly type with known-geometry rooms"
+              "Define the assembly spec map: `room_type → [{quantity_type, formula, unit, csi_code}]` covering Bedroom, Bath, Kitchen, Corridor for CT Pros core trades.",
+              "Implement `wall_area = perimeter × height` in `engine/assemblies.py` using `geometry.rings` (perimeter already persisted by the canvas work).",
+              "Extend the Excel export to add an Assembly quantities tab showing per-room breakdown.",
+              "Validate on a test sheet: e.g. 12×12 room at 9 ft → 48 LF perimeter → 432 SF walls → cross-check against estimator intuition."
             ],
             "resources": [
-              "takeoff-engine snapshot — t18 description, phases 5+6 notes",
-              "Existing geometry helpers (perimeter, area calculations already in codebase)"
+              "`engine/assemblies.py` (the lite scaffold to expand)",
+              "`engine/excel.py` (export to extend with Assembly tab)",
+              "CSI MasterFormat Div 09 (Finishes) reference for unit quantities",
+              "`service/routes.py` — existing `wall_height_ft` PATCH route",
+              "`docs/PHASE-B-CANVAS-PLAN.md` for geometry/rings access",
+              "AZ Takeoff PRD Phase 1 assemblies section"
+            ]
+          }
+        },
+        {
+          "id": "t16",
+          "title": "Door recall round 2 + bi-fold / cased-opening recall",
+          "phase": "Phase 5 · 95% · Engine Upgrade Waves (W12 R2+)",
+          "estimate": "m",
+          "priority": "medium",
+          "status": "todo",
+          "notes": "Door recall is THE bottleneck blocking global SEAL_FT retirement. Localseal guard (t15) made chords safe. Push recall via raster-gap detection. Target >0.6 coverage on lagging sheets.",
+          "block": { "start": "17:00", "end": "18:00" },
+          "prep": {
+            "what": "Improve door/opening recall using raster-gap detection to raise chord coverage above 0.6 on the 4 sheets currently at 0.00, unblocking the global SEAL_FT retirement.",
+            "understand": "t15 (localseal guard) made additional chords safe — a bad chord now self-reverts. The bottleneck is coverage: 0.00 on holabird/mitchell/washington/merrimack; 0.32 dental; 0.64 brook_p4. Symbol-based detectors already failed on furniture noise. Raster-gap detection (finding breaks in wall-layer pixels) is the path forward.",
+            "approach": [
+              "Survey the 4 zero-coverage sheets: identify which opening types are being missed (beyond bi-folds, which already ship).",
+              "Implement raster-gap detection: scan the wall-layer raster for pixel gaps narrower than SEAL_FT between two wall segments.",
+              "Baseline with `docs/spike/w13_localseal_guard.py` before the change, then rerun after to measure coverage gain — targeting >0.6 on ≥2 lagging sheets.",
+              "Gate on full 81-check gauntlet before committing."
+            ],
+            "resources": [
+              "`engine/sealfill.py` (wall-fill core + localseal guard logic)",
+              "`engine/doors.py` (existing door detector code)",
+              "`docs/spike/w13_localseal_guard.py` (chord coverage measurement)",
+              "GT corpus (12 judges / 352 rooms) for per-sheet IoU verification",
+              "`docs/STATE.md` Phase 5 section — SEAL_FT retirement prerequisites"
             ]
           }
         }
       ]
+    },
+    {
+      "slug": "az-takeoff",
+      "project": "AZ Takeoff SaaS",
+      "client": "AZ Team",
+      "tasks_total": 73,
+      "tasks_done": 51,
+      "on_deck": false,
+      "tasks": [
+        {
+          "id": "t28",
+          "title": "Sandbox-validate full QB round-trip against live Intuit",
+          "phase": "Deployment - Infra & go-live",
+          "estimate": "m",
+          "priority": "high",
+          "status": "todo",
+          "notes": "All 6 QB entity mappings are mock-tested only. Run connect→estimate→invoice→paid against real sandbox. Document validation artifact in docs/.",
+          "block": { "start": "10:15", "end": "11:15" },
+          "prep": {
+            "what": "Run the complete QB connect→estimate→invoice→payment flow against the real Intuit sandbox and record a validation artifact proving the end-to-end works.",
+            "understand": "Every single QB entity sync in this codebase is mock-tested only — not a single real Intuit API call has been made in QA. Sandbox validation catches payload shape errors and edge cases (duplicate customer DisplayName 6240, LinkedTxn binding) that mocks cannot reveal. This is a hard go-live gate.",
+            "approach": [
+              "Set `QUICKBOOKS_ENVIRONMENT=sandbox` in .env, then OAuth-connect to a sandbox QBO company at developer.intuit.com.",
+              "Push the full flow: create Lead → approve estimate → `QBEstimateSync::push` → create invoice → `QBInvoiceSync::push` (verify IPPLinkedTxn links back to estimate).",
+              "Simulate payment in the QB sandbox UI, then run `php artisan quickbooks:sync` and verify `QBPaymentSyncer` records the delta in CRM.",
+              "Re-run the push twice (upsert idempotency) and commit a `docs/validation/qb-round-trip-sandbox-YYYYMMDD.md` artifact."
+            ],
+            "resources": [
+              "Intuit developer sandbox: developer.intuit.com",
+              "`app/Services/QuickBooks/` (QBEstimateSync, QBInvoiceSync, QBPaymentSyncer)",
+              "`tests/Unit/Services/QuickBooks/EndToEndQuickBooksFlowTest.php` as reference",
+              "`app/Console/Commands/SyncQuickBooksCommand.php`",
+              "QB OAuth App credentials (Google Cloud Console / Intuit Developer dashboard)"
+            ]
+          }
+        },
+        {
+          "id": "t29",
+          "title": "Sandbox-validate QBVendorSync (Subcontractor→Vendor) live",
+          "phase": "Deployment - Infra & go-live",
+          "estimate": "m",
+          "priority": "high",
+          "status": "todo",
+          "notes": "QBVendorSync is the only QB entity never tested against real Intuit. Validate Subcontractor→Vendor push including adopt-by-DisplayName and 6240 duplicate recovery.",
+          "block": { "start": "11:30", "end": "12:30" },
+          "prep": {
+            "what": "Validate the Subcontractor→QB Vendor push against real Intuit sandbox, specifically proving the 6240 duplicate-DisplayName adopt-by-DisplayName recovery path and the Vendor1099 flag work.",
+            "understand": "QBVendorSync is the only entity that has NEVER been touched by a real Intuit call — not even in sandbox. The 6240 adopt path (if a Vendor with the same DisplayName exists, adopt it rather than create a duplicate) is critical for real-world use and is entirely unproven outside mocks.",
+            "approach": [
+              "Create a test Subcontractor in the app (with W9 on file) and push to sandbox → verify Vendor created with Vendor1099=true.",
+              "Force the 6240 path: manually create a Vendor in the QB sandbox with the same DisplayName first, then re-push — verify adopt-by-DisplayName fires instead of erroring.",
+              "Push a sub without W9 on file → verify Vendor1099=false.",
+              "Document results in `docs/validation/`."
+            ],
+            "resources": [
+              "`app/Services/QuickBooks/QBVendorSync.php`",
+              "`tests/Unit/Services/QuickBooks/QBVendorSyncTest.php` (mock reference)",
+              "Intuit QB API Vendor object docs (DisplayName uniqueness, Vendor1099 field)",
+              "QB sandbox UI for manual Vendor creation to force the 6240 path"
+            ]
+          }
+        },
+        {
+          "id": "t24",
+          "title": "Fill real CT Pros company contact info",
+          "phase": "Deployment - Infra & go-live",
+          "estimate": "s",
+          "priority": "high",
+          "status": "in_progress",
+          "notes": "Name/address/phone wired. Email+website pending domain (t62, Haniel). Remaining non-domain item: swap internal AppLogo.vue from logo.avif wordmark to tagline-less monogram.",
+          "block": { "start": "14:00", "end": "14:30" },
+          "prep": {
+            "what": "Swap `AppLogo.vue` from the old logo.avif wordmark to the tagline-less CT monogram (icon-512.png) — the one remaining identity surface that doesn't need the domain.",
+            "understand": "All client-facing surfaces (PDFs, Sign pages) already use the monogram per t63. The internal authenticated nav (AppLogo.vue) still shows the tagline wordmark. This is purely Haniel's visual call and needs zero infrastructure — no domain, no deploy.",
+            "approach": [
+              "Open `resources/js/Components/AppLogo.vue` — find both `onLight` (`logo.avif`) and the default mark reference.",
+              "Replace both with `icon-512.png` (the tagline-less CT monogram) to match all other surfaces.",
+              "Verify nav renders cleanly in both collapsed (68px icon rail) and expanded (240px) sidebar states.",
+              "Commit to staging — hold domain-dependent items (email, website, mail sender) for after t62."
+            ],
+            "resources": [
+              "`resources/js/Components/AppLogo.vue`",
+              "`public/images/icon-512.png` (the tagline-less CT monogram)",
+              "t63 notes (full logo surface audit)",
+              "`config/company.php` (runtime identity source)"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "slug": "gs-woodworking-spec",
+      "project": "GS-ERP",
+      "client": "GS Woodworking LLC",
+      "tasks_total": 38,
+      "tasks_done": 0,
+      "on_deck": true,
+      "tasks": []
+    },
+    {
+      "slug": "module-project",
+      "project": "Module",
+      "client": "Internal",
+      "tasks_total": 45,
+      "tasks_done": 0,
+      "on_deck": true,
+      "tasks": []
+    },
+    {
+      "slug": "azteamai-system",
+      "project": "AZ Team AI System",
+      "client": "AZ Team AI (internal)",
+      "tasks_total": 30,
+      "tasks_done": 0,
+      "on_deck": true,
+      "tasks": []
+    },
+    {
+      "slug": "bench3-gs",
+      "project": "GS-ERP",
+      "client": "GS Woodworking LLC",
+      "tasks_total": 38,
+      "tasks_done": 0,
+      "on_deck": true,
+      "tasks": []
+    },
+    {
+      "slug": "claude-todos-skill",
+      "project": "Tasks Platform (claude-todos-skill rebuild)",
+      "client": "",
+      "tasks_total": 31,
+      "tasks_done": 21,
+      "on_deck": true,
+      "tasks": []
+    },
+    {
+      "slug": "ct-pros-sys",
+      "project": "CT Pros",
+      "client": "CT Pros",
+      "tasks_total": 22,
+      "tasks_done": 0,
+      "on_deck": true,
+      "tasks": []
+    },
+    {
+      "slug": "dallo-usa",
+      "project": "dallo-usa",
+      "client": "Dallo USA",
+      "tasks_total": 25,
+      "tasks_done": 0,
+      "on_deck": true,
+      "tasks": []
+    },
+    {
+      "slug": "gs-datatable-w0",
+      "project": "GS-ERP",
+      "client": "GS Woodworking LLC",
+      "tasks_total": 38,
+      "tasks_done": 0,
+      "on_deck": true,
+      "tasks": []
+    },
+    {
+      "slug": "gs-truth-t158x",
+      "project": "GS-ERP",
+      "client": "GS Woodworking LLC",
+      "tasks_total": 38,
+      "tasks_done": 0,
+      "on_deck": true,
+      "tasks": []
+    },
+    {
+      "slug": "haniel-finances",
+      "project": "Haniel Finances",
+      "client": "Personal",
+      "tasks_total": 15,
+      "tasks_done": 0,
+      "on_deck": true,
+      "tasks": []
+    },
+    {
+      "slug": "influencer-agent",
+      "project": "influencer-agent",
+      "client": "AZ Team AI (own SaaS product)",
+      "tasks_total": 43,
+      "tasks_done": 0,
+      "on_deck": true,
+      "tasks": []
+    },
+    {
+      "slug": "procounters-erp",
+      "project": "procounters_erp",
+      "client": "ProCounters Inc.",
+      "tasks_total": 15,
+      "tasks_done": 0,
+      "on_deck": true,
+      "tasks": []
     }
-  ],
-  "projects": [
-    {"project": "az-takeoff", "tasks_total": 73, "tasks_done": 51},
-    {"project": "azteamai-system", "tasks_total": 74, "tasks_done": 44},
-    {"project": "bench3-gs", "tasks_total": 75, "tasks_done": 37},
-    {"project": "claude-todos-skill", "tasks_total": 31, "tasks_done": 21},
-    {"project": "ct-pros-sys", "tasks_total": 72, "tasks_done": 50},
-    {"project": "dallo-usa", "tasks_total": 48, "tasks_done": 23},
-    {"project": "gs-datatable-w0", "tasks_total": 75, "tasks_done": 37},
-    {"project": "gs-truth-t158x", "tasks_total": 75, "tasks_done": 37},
-    {"project": "gs-woodworking-spec", "tasks_total": 75, "tasks_done": 37},
-    {"project": "haniel-finances", "tasks_total": 34, "tasks_done": 19},
-    {"project": "influencer-agent", "tasks_total": 51, "tasks_done": 8},
-    {"project": "module-project", "tasks_total": 63, "tasks_done": 18},
-    {"project": "procounters-erp", "tasks_total": 125, "tasks_done": 110},
-    {"project": "takeoff-engine", "tasks_total": 34, "tasks_done": 23}
   ],
   "waiting_on": [
     {
-      "project": "dallo-usa",
-      "task_id": "t46",
-      "blocker": "Client (Bruno) must pick Shopify plan and configure payment providers — store currently silently drops all checkouts"
+      "project": "AZ Takeoff SaaS",
+      "task_id": "t62",
+      "title": "Buy CT Pros domain + wire real website/email",
+      "reason": "Haniel must choose and purchase the domain before email and website placeholders can be replaced"
     },
     {
-      "project": "dallo-usa",
-      "task_id": "t35",
-      "blocker": "Waiting on client corrections/sign-off on 3 catalog gaps identified 2026-09-14"
+      "project": "AZ Takeoff SaaS",
+      "task_id": "t25",
+      "title": "Connect CT Pros's own QuickBooks (fresh OAuth)",
+      "reason": "Rafa needs to provide QB company credentials to complete fresh OAuth connect"
     },
     {
-      "project": "influencer-agent",
-      "task_id": "t12",
-      "blocker": "CASA Tier 2 + Meta app review + LGPD legal — must be initiated now (weeks-long compliance process)"
+      "project": "AZ Takeoff SaaS",
+      "task_id": "t60",
+      "title": "Confirm catalog pricing + paint coverage/coats vs Rafa's real suppliers",
+      "reason": "Rafa must provide real supplier costs and confirm paint coat count before estimates are trusted"
+    },
+    {
+      "project": "AZ Takeoff SaaS",
+      "task_id": "t65",
+      "title": "Confirm apples-to-apples estimate margin target with Rafa",
+      "reason": "Rafa must decide which margin metric and target percentage gate bids (documented 35% is net, not contribution margin)"
     }
   ]
 }
