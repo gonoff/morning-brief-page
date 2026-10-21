@@ -1,0 +1,159 @@
+{
+  "date": "2026-10-21",
+  "generated_at": "2026-10-21T10:18:12Z",
+  "data_as_of": "2026-10-21T05:00:05Z",
+  "greeting": "Good morning, Haniel! Wednesday is blueprint engine day — both machines are warming up.",
+  "hype": "Two projects, one through-line: the takeoff math that makes az-takeoff sing. Start sharp with a high-priority label polish, then dig into assemblies-per-room and wall paint area. Full calendar, zero meetings — this is your deep-work window. Make it count.",
+  "notice": null,
+  "difficulty": {
+    "label": "Solid",
+    "ratio": 0.88,
+    "planned_minutes": 420,
+    "available_minutes": 480
+  },
+  "window": {
+    "start": "09:00",
+    "end": "18:00",
+    "lunch_start": "13:00",
+    "lunch_end": "14:00"
+  },
+  "schedule": [
+    {
+      "type": "work",
+      "start": "09:00",
+      "end": "10:00",
+      "project": "takeoff-engine",
+      "task_id": "t26",
+      "title": "Label lane v2 — outlined-text firms + callout-vs-room filtering",
+      "phase": "p5",
+      "estimate": "m",
+      "priority": "high",
+      "status": "todo",
+      "notes": "M3 vision: outlined-text detection for firm names, smarter callout-vs-room lane assignment"
+    },
+    {
+      "type": "work",
+      "start": "10:15",
+      "end": "12:15",
+      "project": "takeoff-engine",
+      "task_id": "t18",
+      "title": "Assemblies-per-room → paint/drywall/flooring quantities + wall heights",
+      "phase": "p6",
+      "estimate": "l",
+      "priority": "high",
+      "status": "in_progress",
+      "notes": "In-progress. Derive per-room quantities (paint, drywall, flooring) using wall heights from room geometry"
+    },
+    {
+      "type": "work",
+      "start": "12:30",
+      "end": "13:00",
+      "project": "az-takeoff",
+      "task_id": "t47",
+      "title": "Add PerLinearFt RateType enum (unlocks t48)",
+      "phase": "p4",
+      "estimate": "s",
+      "priority": "med",
+      "status": "todo",
+      "notes": "Prerequisite for the PerLinearFt pricing path. Small change — add enum value, update trade rate model."
+    },
+    {
+      "type": "lunch",
+      "start": "13:00",
+      "end": "14:00",
+      "title": "Lunch"
+    },
+    {
+      "type": "work",
+      "start": "14:00",
+      "end": "16:00",
+      "project": "az-takeoff",
+      "task_id": "t45",
+      "title": "Derive wall paint area (perimeter × height) — the missing painting measurement",
+      "phase": "p4",
+      "estimate": "l",
+      "priority": "high",
+      "status": "todo",
+      "notes": "Core blueprint math: sum wall segments per room, multiply by ceiling height, output paintable area per trade"
+    },
+    {
+      "type": "work",
+      "start": "16:15",
+      "end": "17:15",
+      "project": "az-takeoff",
+      "task_id": "t46",
+      "title": "Route takeoff measurements to trades",
+      "phase": "p4",
+      "estimate": "m",
+      "priority": "high",
+      "status": "todo",
+      "notes": "Connect computed measurements (area, perimeter, linear ft) to their respective trade estimate lines"
+    },
+    {
+      "type": "work",
+      "start": "17:30",
+      "end": "18:00",
+      "project": "takeoff-engine",
+      "task_id": "t34",
+      "title": "Viewport-detection polish",
+      "phase": "p5",
+      "estimate": "s",
+      "priority": "low",
+      "status": "todo",
+      "notes": "Wrap-up: tighten viewport detection edge cases before Phase 5 close-out"
+    }
+  ],
+  "projects": [
+    {
+      "slug": "takeoff-engine",
+      "name": "Takeoff Engine",
+      "on_deck": false,
+      "tasks_total": 29,
+      "tasks_done": 18,
+      "tasks": [
+        {"id": "t26", "title": "Label lane v2 — outlined-text firms + callout-vs-room filtering", "phase": "p5", "priority": "high", "estimate": "m", "status": "todo"},
+        {"id": "t18", "title": "Assemblies-per-room → paint/drywall/flooring quantities + wall heights", "phase": "p6", "priority": "high", "estimate": "l", "status": "in_progress"},
+        {"id": "t34", "title": "Viewport-detection polish", "phase": "p5", "priority": "low", "estimate": "s", "status": "todo"},
+        {"id": "t16", "title": "Door recall round 2", "phase": "p5", "priority": "med", "estimate": "m", "status": "todo"},
+        {"id": "t17", "title": "Fixtures/counts v1", "phase": "p6", "priority": "med", "estimate": "m", "status": "todo"},
+        {"id": "t19", "title": "Set-wide aggregation", "phase": "p6", "priority": "med", "estimate": "m", "status": "todo"},
+        {"id": "t20", "title": "ML wall-segmentation", "phase": "p7", "priority": "med", "estimate": "l", "status": "in_progress"}
+      ]
+    },
+    {
+      "slug": "az-takeoff",
+      "name": "AZ Takeoff",
+      "on_deck": false,
+      "tasks_total": 73,
+      "tasks_done": 51,
+      "tasks": [
+        {"id": "t47", "title": "Add PerLinearFt RateType enum", "phase": "p4", "priority": "med", "estimate": "s", "status": "todo"},
+        {"id": "t45", "title": "Derive wall paint area (perimeter × height)", "phase": "p4", "priority": "high", "estimate": "l", "status": "todo"},
+        {"id": "t46", "title": "Route takeoff measurements to trades", "phase": "p4", "priority": "high", "estimate": "m", "status": "todo"},
+        {"id": "t44", "title": "Engine profiles for blueprint trades", "phase": "p4", "priority": "med", "estimate": "m", "status": "in_progress"},
+        {"id": "t49", "title": "Create estimate button (blueprint → estimate flow)", "phase": "p4", "priority": "med", "estimate": "m", "status": "todo"},
+        {"id": "t28", "title": "QB sandbox validate", "phase": "p3", "priority": "high", "estimate": "m", "status": "todo"},
+        {"id": "t29", "title": "QB Vendor sandbox test", "phase": "p3", "priority": "high", "estimate": "m", "status": "todo"},
+        {"id": "t24", "title": "Company contact setup", "phase": "p3", "priority": "med", "estimate": "m", "status": "in_progress"}
+      ]
+    },
+    {"slug": "azteamai-system", "name": "Azteamai System", "on_deck": true, "tasks_total": 74, "tasks_done": 44, "tasks": []},
+    {"slug": "ct-pros-sys", "name": "CT Pros", "on_deck": true, "tasks_total": 72, "tasks_done": 50, "tasks": []},
+    {"slug": "module-project", "name": "Module", "on_deck": true, "tasks_total": 63, "tasks_done": 18, "tasks": []},
+    {"slug": "dallo-usa", "name": "Dallo USA", "on_deck": true, "tasks_total": 48, "tasks_done": 23, "tasks": []},
+    {"slug": "haniel-finances", "name": "Haniel Finances", "on_deck": true, "tasks_total": 34, "tasks_done": 19, "tasks": []},
+    {"slug": "procounters-erp", "name": "ProCounters ERP", "on_deck": true, "tasks_total": 125, "tasks_done": 110, "tasks": []},
+    {"slug": "influencer-agent", "name": "Influencer Agent", "on_deck": true, "tasks_total": 51, "tasks_done": 8, "tasks": []},
+    {"slug": "claude-todos-skill", "name": "Claude Todos Skill", "on_deck": true, "tasks_total": 31, "tasks_done": 21, "tasks": []},
+    {"slug": "gs-woodworking-spec", "name": "GS Woodworking Spec", "on_deck": true, "tasks_total": 75, "tasks_done": 37, "tasks": []},
+    {"slug": "bench3-gs", "name": "Bench 3 GS", "on_deck": true, "tasks_total": 75, "tasks_done": 37, "tasks": []},
+    {"slug": "gs-datatable-w0", "name": "GS Datatable W0", "on_deck": true, "tasks_total": 75, "tasks_done": 37, "tasks": []},
+    {"slug": "gs-truth-t158x", "name": "GS Truth T158x", "on_deck": true, "tasks_total": 75, "tasks_done": 37, "tasks": []}
+  ],
+  "waiting_on": [
+    {"project": "az-takeoff", "task_id": "t62", "title": "Buy CT Pros domain", "blocked_by": "Haniel", "note": "Domain purchase needed to unblock deployment"},
+    {"project": "az-takeoff", "task_id": "t60", "title": "Confirm catalog pricing", "blocked_by": "Rafa", "note": "Pricing confirmation required before catalog can be finalized"},
+    {"project": "az-takeoff", "task_id": "t65", "title": "Confirm margin target", "blocked_by": "Rafa", "note": "Margin target needed to configure pricing rules"},
+    {"project": "az-takeoff", "task_id": "t25", "title": "Connect QuickBooks (sandbox)", "blocked_by": "Rafa", "note": "Rafa's QB credentials needed to complete OAuth connection"}
+  ]
+}
