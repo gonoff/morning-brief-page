@@ -1,159 +1,316 @@
 {
-  "date": "2026-10-21",
-  "generated_at": "2026-10-21T10:18:12Z",
-  "data_as_of": "2026-10-21T05:00:05Z",
-  "greeting": "Good morning, Haniel! Wednesday is blueprint engine day — both machines are warming up.",
-  "hype": "Two projects, one through-line: the takeoff math that makes az-takeoff sing. Start sharp with a high-priority label polish, then dig into assemblies-per-room and wall paint area. Full calendar, zero meetings — this is your deep-work window. Make it count.",
-  "notice": null,
+  "date": "2026-10-26",
+  "generated_at": "2026-10-26T10:15:00Z",
+  "data_as_of": "2026-10-26T05:00:08+00:00",
+  "greeting": "Morning, Haniel. Monday, clean calendar, two sharp projects — let's make it count.",
+  "hype": "Assemblies in motion, a queue that doesn't exist yet — by end of day the Takeoff engine earns its estimator badge and the Tasks Platform gets its production spine. We're finishing both.",
+  "notice": "CT Pros hasn't yet picked up the W22–W24 SDK (crisp strokes + canvas D1/D2/D4) — worth a quick nudge after the assemblies session moves forward.",
   "difficulty": {
-    "label": "Solid",
-    "ratio": 0.88,
+    "rating": "Solid",
     "planned_minutes": 420,
-    "available_minutes": 480
+    "available_minutes": 480,
+    "ratio": 0.875,
+    "note": ""
   },
-  "window": {
-    "start": "09:00",
-    "end": "18:00",
-    "lunch_start": "13:00",
-    "lunch_end": "14:00"
-  },
+  "window": { "start": "09:00", "end": "18:00" },
   "schedule": [
-    {
-      "type": "work",
-      "start": "09:00",
-      "end": "10:00",
-      "project": "takeoff-engine",
-      "task_id": "t26",
-      "title": "Label lane v2 — outlined-text firms + callout-vs-room filtering",
-      "phase": "p5",
-      "estimate": "m",
-      "priority": "high",
-      "status": "todo",
-      "notes": "M3 vision: outlined-text detection for firm names, smarter callout-vs-room lane assignment"
-    },
-    {
-      "type": "work",
-      "start": "10:15",
-      "end": "12:15",
-      "project": "takeoff-engine",
-      "task_id": "t18",
-      "title": "Assemblies-per-room → paint/drywall/flooring quantities + wall heights",
-      "phase": "p6",
-      "estimate": "l",
-      "priority": "high",
-      "status": "in_progress",
-      "notes": "In-progress. Derive per-room quantities (paint, drywall, flooring) using wall heights from room geometry"
-    },
-    {
-      "type": "work",
-      "start": "12:30",
-      "end": "13:00",
-      "project": "az-takeoff",
-      "task_id": "t47",
-      "title": "Add PerLinearFt RateType enum (unlocks t48)",
-      "phase": "p4",
-      "estimate": "s",
-      "priority": "med",
-      "status": "todo",
-      "notes": "Prerequisite for the PerLinearFt pricing path. Small change — add enum value, update trade rate model."
-    },
-    {
-      "type": "lunch",
-      "start": "13:00",
-      "end": "14:00",
-      "title": "Lunch"
-    },
-    {
-      "type": "work",
-      "start": "14:00",
-      "end": "16:00",
-      "project": "az-takeoff",
-      "task_id": "t45",
-      "title": "Derive wall paint area (perimeter × height) — the missing painting measurement",
-      "phase": "p4",
-      "estimate": "l",
-      "priority": "high",
-      "status": "todo",
-      "notes": "Core blueprint math: sum wall segments per room, multiply by ceiling height, output paintable area per trade"
-    },
-    {
-      "type": "work",
-      "start": "16:15",
-      "end": "17:15",
-      "project": "az-takeoff",
-      "task_id": "t46",
-      "title": "Route takeoff measurements to trades",
-      "phase": "p4",
-      "estimate": "m",
-      "priority": "high",
-      "status": "todo",
-      "notes": "Connect computed measurements (area, perimeter, linear ft) to their respective trade estimate lines"
-    },
-    {
-      "type": "work",
-      "start": "17:30",
-      "end": "18:00",
-      "project": "takeoff-engine",
-      "task_id": "t34",
-      "title": "Viewport-detection polish",
-      "phase": "p5",
-      "estimate": "s",
-      "priority": "low",
-      "status": "todo",
-      "notes": "Wrap-up: tighten viewport detection edge cases before Phase 5 close-out"
-    }
+    { "start": "09:00", "end": "10:00", "slug": "takeoff-engine", "project": "Takeoff Engine", "task_id": "t26", "title": "Label lane v2: M3 vision for outlined-text firms + callout-vs-room filtering", "estimate": "m", "kind": "task" },
+    { "start": "10:15", "end": "12:15", "slug": "takeoff-engine", "project": "Takeoff Engine", "task_id": "t18", "title": "Assemblies-per-room → paint/drywall/flooring quantities + wall heights", "estimate": "l", "kind": "task" },
+    { "start": "12:30", "end": "13:00", "slug": "claude-todos-skill", "project": "Tasks Platform (claude-todos-skill rebuild)", "task_id": "t30", "title": "Writer docker-integration test on a real onboarded repo", "estimate": "s", "kind": "task" },
+    { "start": "13:00", "end": "14:00", "kind": "lunch", "title": "Lunch" },
+    { "start": "14:00", "end": "16:00", "slug": "claude-todos-skill", "project": "Tasks Platform (claude-todos-skill rebuild)", "task_id": "t20", "title": "Durable job queue (lease/heartbeat/reclaim, window-aware, priority, cap)", "estimate": "l", "kind": "task" },
+    { "start": "16:15", "end": "17:15", "slug": "claude-todos-skill", "project": "Tasks Platform (claude-todos-skill rebuild)", "task_id": "t29", "title": "Daemon-side cross-process refresh lock (prereq for live SWEEPER_REPOS)", "estimate": "m", "kind": "task" },
+    { "start": "17:30", "end": "18:00", "slug": "claude-todos-skill", "project": "Tasks Platform (claude-todos-skill rebuild)", "task_id": "t31", "title": "Pin sandbox image by digest (image axis: mutable tags evade freshness)", "estimate": "s", "kind": "task" }
   ],
   "projects": [
     {
       "slug": "takeoff-engine",
-      "name": "Takeoff Engine",
+      "project": "Takeoff Engine",
+      "client": "AZ Team AI",
+      "tasks_total": 34,
+      "tasks_done": 23,
       "on_deck": false,
-      "tasks_total": 29,
-      "tasks_done": 18,
       "tasks": [
-        {"id": "t26", "title": "Label lane v2 — outlined-text firms + callout-vs-room filtering", "phase": "p5", "priority": "high", "estimate": "m", "status": "todo"},
-        {"id": "t18", "title": "Assemblies-per-room → paint/drywall/flooring quantities + wall heights", "phase": "p6", "priority": "high", "estimate": "l", "status": "in_progress"},
-        {"id": "t34", "title": "Viewport-detection polish", "phase": "p5", "priority": "low", "estimate": "s", "status": "todo"},
-        {"id": "t16", "title": "Door recall round 2", "phase": "p5", "priority": "med", "estimate": "m", "status": "todo"},
-        {"id": "t17", "title": "Fixtures/counts v1", "phase": "p6", "priority": "med", "estimate": "m", "status": "todo"},
-        {"id": "t19", "title": "Set-wide aggregation", "phase": "p6", "priority": "med", "estimate": "m", "status": "todo"},
-        {"id": "t20", "title": "ML wall-segmentation", "phase": "p7", "priority": "med", "estimate": "l", "status": "in_progress"}
+        {
+          "id": "t26",
+          "title": "Label lane v2: M3 vision for outlined-text firms + callout-vs-room filtering",
+          "phase": "Phase 5 · 95% · Engine Upgrade Waves (W12 R2+)",
+          "estimate": "m",
+          "priority": "high",
+          "status": "todo",
+          "notes": "Caught live on the Harborview demo — outlined-text firms return zero room labels. v2 = productize the M3 tiles lane (opt-in 'read labels (AI)' action) + callout-vs-room filtering.",
+          "block": { "start": "09:00", "end": "10:00" },
+          "prep": {
+            "what": "Build the opt-in AI label-detection action for firms where PDFTron outlines all text (so the free lane finds nothing), and filter out non-room callouts like stair arrows and FEC notes.",
+            "understand": "The live-text lane works great when PDF text is readable (Holabird: 92/109 named). But firms that outline text return ZERO labels — PDFTron strips them all. The M3 tiles approach sends small page tiles to MiniMax image-01 (~4.3 min/sheet, costs credits via §7a metered event) and reads labels from pixels instead. Separately, callout noise is documented R13 polish: general-note paragraphs, 'UP' stair arrows, FEC callouts all match as room names and need to be filtered.",
+            "approach": [
+              "Productize `run_labels_m3tiles.py` into a proper service route (e.g. POST `/sheets/{id}/actions/read-labels-ai`) behind a feature gate and the §7a metered-credits event — triggered by an 'Read labels (AI)' button, not auto-run.",
+              "Wire the MINIMAX_AI key to the VPS (make the secrets decision: env var in `.env` on `/opt/takeoff-engine`, same pattern as the existing API_KEYS_RAW). Until done, the route returns 503 with a clear message.",
+              "Implement the callout-vs-room filter: build a regex/rule set for Holabird's documented noise patterns (general-note paragraphs, `UP`/`DN` stair text, FEC/AED/EXIT callouts) and apply it as a post-processing step in the text-label lane.",
+              "Test on Harborview (the zero-label case) and re-run Holabird to verify the noise filter doesn't drop real room names."
+            ],
+            "resources": [
+              "`docs/spike/run_labels_m3tiles.py` — the M3 tiles probe",
+              "`engine/labels.py` — current label extraction",
+              "MiniMax image-01 API (`api.minimax.io/v1/image/generation` — check the vision endpoint in `docs/`)",
+              "R13 polish notes in `STATE.md` — the callout noise taxonomy",
+              "`.env` on VPS `/opt/takeoff-engine` for secrets management"
+            ]
+          }
+        },
+        {
+          "id": "t18",
+          "title": "Assemblies-per-room → paint/drywall/flooring quantities + wall heights",
+          "phase": "Phase 6 · 95% · Pillar 3 (Counts) + Assemblies",
+          "estimate": "l",
+          "priority": "high",
+          "status": "in_progress",
+          "notes": "PRD Phase 1. assemblies-lite scaffolded in engine/assemblies.py as of B1. Full version = room type → assemblies + formulas + heights (one classification → up to 8 quantities, CSI libraries). The last pillar between us and estimator-grade Excel.",
+          "block": { "start": "10:15", "end": "12:15" },
+          "prep": {
+            "what": "Extend `engine/assemblies.py` from the scaffolded lite version to a full room-type → quantities engine: floor SF, wall SF, ceiling SF, base LF, paint SF — driven by room classification and wall heights.",
+            "understand": "The lite version is already wired into `build_sheet_takeoff` (the single orchestrator) and flows into the 5-tab Excel via `engine/excel.py`. Wall heights are already stored per-room via PATCH `wall_height_ft`. Room classifications are already produced by the engine. Your job is to fill in the *formula logic*: room_type + area + perimeter + height → up to 8 CSI-aligned quantities. This goes directly into the existing export pipeline — no new routes needed, just richer output from `assemblies.py`.",
+            "approach": [
+              "Open `engine/assemblies.py` and understand the existing lite scaffold — what's already wired vs what's stubbed. Then open `engine/excel.py` to see how the assembly output maps to Excel tabs.",
+              "Define a room_type → assembly recipe table (e.g. Office: floor=area, ceiling=area, wall=perimeter×height, base=perimeter, paint=wall+ceiling; Bathroom: add waterproofing). Start with 4–5 types covering the bulk of CT Pros sheets.",
+              "Implement the quantity formulas: SF floor = polygon area (already in engine); SF wall = perimeter × wall_height (use stored height or default 9ft); SF ceiling = area; LF base = perimeter. For rooms with a missing wall_height, emit a `wall_height_assumed: true` flag.",
+              "Wire the enriched assembly output into the Excel export (`build_sheet_takeoff` → the assemblies tab); run gauntlet to confirm room counts are unchanged, then do an end-to-end: upload a CT Pros sheet, classify, export XLSX, open the assemblies tab."
+            ],
+            "resources": [
+              "`engine/assemblies.py` — the in-progress scaffold to build on",
+              "`engine/excel.py` — the 5-tab workbook builder",
+              "`service/routes.py` + `build_sheet_takeoff` orchestrator — how the pipeline calls assemblies",
+              "CSI MasterFormat division 03–10 quantity categories (have the spec open)",
+              "CT Pros tester guide (`ct-pros/TESTE-TAKEOFF.md`) — the sample sheet for end-to-end verification"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "slug": "claude-todos-skill",
+      "project": "Tasks Platform (claude-todos-skill rebuild)",
+      "client": "",
+      "tasks_total": 31,
+      "tasks_done": 21,
+      "on_deck": false,
+      "tasks": [
+        {
+          "id": "t30",
+          "title": "Writer docker-integration test on a real onboarded repo",
+          "phase": "M3 · Phase 6 — Sweeper + CI/deploy",
+          "estimate": "s",
+          "priority": "med",
+          "status": "todo",
+          "notes": "refreshRepo orchestration is unit-proven with mocked runners; add ONE real in-image prep run against an onboarded repo to prove the docker transport end-to-end. The injected RefreshRunners seam makes it a ~30-min job once a repo is onboarded.",
+          "block": { "start": "12:30", "end": "13:00" },
+          "prep": {
+            "what": "Write one integration test that uses the real Docker runner (not a mock) to prove `refreshRepo` completes end-to-end against an already-onboarded repo.",
+            "understand": "The `RefreshRunners` interface is injected via DI — unit tests swap in a mock runner. The integration test simply injects the real `DockerRunner` instead. `refreshRepo` runs the repo's `prepareCommands`, verifies `prepareOutputs` exist, and writes the state marker outside the git tree. You need a repo that's already onboarded (Module-project is the proven recipe, per t28 notes). Run with a Docker socket available.",
+            "approach": [
+              "Open `lib/sweeper/refreshRepo.ts` and `test/sweeper/` to find where the mock injection point is.",
+              "Pick an onboarded repo (`MODULE_PROJECT_PATH` or similar) and write a single `describe('refreshRepo integration')` test that injects the real `DockerRunner`.",
+              "Run `refreshRepo(repoPath, realDockerRunner)` and assert: exit code 0, `prepareOutputs` files exist, state marker written at `SWEEPER_STATE_DIR/<slug>`.",
+              "Add the test to CI with a comment noting it requires a Docker socket (`# requires: docker`) and skip it in environments without one."
+            ],
+            "resources": [
+              "`lib/sweeper/refreshRepo.ts` — the function under test",
+              "`lib/sweeper/runners/dockerRunner.ts` — the real runner to inject",
+              "`test/sweeper/` — existing test structure",
+              "`docs/advisor-logs/2026-07-19-freshness-hardening.md` — the Module-project onboarding recipe"
+            ]
+          }
+        },
+        {
+          "id": "t20",
+          "title": "Durable job queue (lease/heartbeat/reclaim, window-aware, priority, cap)",
+          "phase": "M3 · Phase 6 — Sweeper + CI/deploy",
+          "estimate": "l",
+          "priority": "high",
+          "status": "todo",
+          "notes": "No durable queue today. This is the production foundation the sweeper (t21) will run on.",
+          "block": { "start": "14:00", "end": "16:00" },
+          "prep": {
+            "what": "Build the PG-backed durable job queue: lease rows with `SELECT FOR UPDATE SKIP LOCKED`, heartbeat to keep them alive, reclaim stalled jobs, enforce a worker concurrency cap, and schedule jobs only inside the 5h active window.",
+            "understand": "The sweeper daemon needs a durable queue that survives crashes and prevents duplicate runs. `SELECT FOR UPDATE SKIP LOCKED` is the PG pattern for this — each worker atomically claims exactly one row, no external queue service needed. Heartbeat is a periodic `UPDATE SET heartbeat_at = now()` from the worker; the reclaimer looks for rows where `heartbeat_at < now() - interval` and re-queues them. Window-awareness = `scheduled_at` not before 06:00 or after 22:00 America/New_York. Priority = `high`/`normal` enum, workers prefer `high`. Cap = at most N concurrent workers (controlled by a `max_workers` setting).",
+            "approach": [
+              "Design the `job_queue` schema: `(id, slug, payload jsonb, priority, status, scheduled_at, locked_by, locked_at, heartbeat_at, attempt_count, max_attempts, created_at)` — add a PG migration.",
+              "Implement `claimJob(workerId)`: `UPDATE ... SET status='running', locked_by=$1, locked_at=now() WHERE id = (SELECT id FROM job_queue WHERE status='pending' AND scheduled_at <= now() ORDER BY priority DESC, id LIMIT 1 FOR UPDATE SKIP LOCKED) RETURNING *`.",
+              "Implement `heartbeat(jobId)` (periodic UPDATE) and `reclaimer()` (finds heartbeat_at > 30s stale → re-queues with attempt_count+1, hard-fails if max_attempts exceeded).",
+              "Add window-aware `enqueueAt(job)`: if now is outside the window, push `scheduled_at` to next window open (next 06:00 local).",
+              "Write idempotency tests: same `(slug, payload_hash)` re-enqueue is a no-op; concurrent workers each claim distinct jobs; reclaimer re-queues exactly stalled rows."
+            ],
+            "resources": [
+              "`lib/db/` — PG connection and migration runner (use `db/migrate.ts` pattern already in the project)",
+              "`lib/queue/` — create this module fresh",
+              "PG docs: `SELECT FOR UPDATE SKIP LOCKED` (advisory locks not needed here)",
+              "Existing `todos_platform` PG instance on VPS — use `lib/pg-board-repository.ts` as reference for the connection pattern",
+              "The 5h window config in the triage agent (`lib/triage/governor.ts` or similar)"
+            ]
+          }
+        },
+        {
+          "id": "t29",
+          "title": "Daemon-side cross-process refresh lock (prereq for live SWEEPER_REPOS)",
+          "phase": "M3 · Phase 6 — Sweeper + CI/deploy",
+          "estimate": "m",
+          "priority": "high",
+          "status": "todo",
+          "notes": "The CLI takes a per-repo O_EXCL lockfile (CLI-vs-CLI only). The daemon's in-process lock is invisible to the CLI. Until done: run refresh ONLY while the sweeper is stopped.",
+          "block": { "start": "16:15", "end": "17:15" },
+          "prep": {
+            "what": "Make the sweeper daemon acquire the same per-repo O_EXCL lockfile that the CLI refresh command uses, so CLI and daemon can never race on the same repo.",
+            "understand": "The CLI's refresh uses `fs.openSync(lockPath, 'wx')` (O_EXCL — fails if the file exists) to prevent two CLI runs from refreshing the same repo concurrently. The daemon's job runner has an *in-process* mutex — which is completely invisible to the CLI's file lock. If someone runs `refresh <repo>` while the daemon also has a job for that repo, both proceed and corrupt the worktree. The fix is simple: the daemon must acquire the SAME `lockPath` before starting prep, and release it on job completion or error.",
+            "approach": [
+              "Find the lockfile path in the CLI's refresh code (`lib/sweeper/refresh.ts`): it's typically `path.join(SWEEPER_STATE_DIR, slug + '.lock')` — confirm the exact path.",
+              "In the daemon's job runner (`lib/sweeper/daemon.ts` or equivalent), wrap the prep phase: `acquireLock(lockPath)` → run prep → `releaseLock(lockPath)`. Use the same O_EXCL open pattern (`fs.openSync(lockPath, 'wx')` then `fs.closeSync(fd)` on release).",
+              "If the lock is already held (EEXIST), the daemon should NOT fail the job — instead, re-queue it with a short delay (e.g. 30s). Log the event.",
+              "Write a test: spawn the CLI refresh process (holding the lock) → attempt a daemon job for the same repo → verify it queues a retry, not a failure."
+            ],
+            "resources": [
+              "`lib/sweeper/refresh.ts` — the CLI's per-repo lock path and O_EXCL pattern",
+              "`lib/sweeper/daemon.ts` (or the job runner) — where to insert the lock acquire/release",
+              "`SWEEPER_STATE_DIR` env var — the lock directory",
+              "Node.js `fs.openSync(path, 'wx')` docs — the O_EXCL equivalent in Node"
+            ]
+          }
+        },
+        {
+          "id": "t31",
+          "title": "Pin sandbox image by digest (image axis: mutable tags evade freshness)",
+          "phase": "M3 · Phase 6 — Sweeper + CI/deploy",
+          "estimate": "s",
+          "priority": "med",
+          "status": "todo",
+          "notes": "depsState() hashes the image REFERENCE STRING but SWEEPER_REPOS examples use mutable tags (todos-sandbox:laravel). Same-tag rebuild evades freshness detection. Fix: resolve Docker image ID in both refreshRepo and refreshAndCheckBase.",
+          "block": { "start": "17:30", "end": "18:00" },
+          "prep": {
+            "what": "Fix `depsState()` so it hashes the Docker image's content-addressable ID (from `docker inspect`) instead of the tag string, catching same-tag rebuilds.",
+            "understand": "`depsState()` currently does `hash(image_reference_string)`. If `todos-sandbox:laravel` is rebuilt (new toolchain, new packages), the reference string is identical — the hash doesn't change — and the stale image goes undetected. `docker inspect <image> --format={{.Id}}` returns the actual content hash of the image layers. This is the correct thing to hash.",
+            "approach": [
+              "In `lib/sweeper/freshness.ts` (where `depsState()` lives), add `resolveImageId(imageName): string` that runs `docker inspect <imageName> --format={{.Id}}` and returns the sha256 string. Cache it for the duration of the check.",
+              "In `depsState()`, replace `hash(image_reference_string)` with `hash(resolveImageId(imageName))`.",
+              "Do the same in `refreshRepo` wherever it stores the image hash for same-commit comparison.",
+              "Write a minimal test: create two mock `docker inspect` responses with the same tag but different `.Id` values → `depsState()` returns different hashes."
+            ],
+            "resources": [
+              "`lib/sweeper/freshness.ts` — `depsState()` implementation",
+              "`lib/sweeper/refreshRepo.ts` — where image hash is also computed",
+              "`docker inspect --format={{.Id}}` — returns `sha256:...` content hash",
+              "Existing G10/G3 gauntlet test locks in the sweeper test suite"
+            ]
+          }
+        }
       ]
     },
     {
       "slug": "az-takeoff",
-      "name": "AZ Takeoff",
-      "on_deck": false,
+      "project": "AZ Takeoff SaaS",
+      "client": "AZ Team",
       "tasks_total": 73,
       "tasks_done": 51,
-      "tasks": [
-        {"id": "t47", "title": "Add PerLinearFt RateType enum", "phase": "p4", "priority": "med", "estimate": "s", "status": "todo"},
-        {"id": "t45", "title": "Derive wall paint area (perimeter × height)", "phase": "p4", "priority": "high", "estimate": "l", "status": "todo"},
-        {"id": "t46", "title": "Route takeoff measurements to trades", "phase": "p4", "priority": "high", "estimate": "m", "status": "todo"},
-        {"id": "t44", "title": "Engine profiles for blueprint trades", "phase": "p4", "priority": "med", "estimate": "m", "status": "in_progress"},
-        {"id": "t49", "title": "Create estimate button (blueprint → estimate flow)", "phase": "p4", "priority": "med", "estimate": "m", "status": "todo"},
-        {"id": "t28", "title": "QB sandbox validate", "phase": "p3", "priority": "high", "estimate": "m", "status": "todo"},
-        {"id": "t29", "title": "QB Vendor sandbox test", "phase": "p3", "priority": "high", "estimate": "m", "status": "todo"},
-        {"id": "t24", "title": "Company contact setup", "phase": "p3", "priority": "med", "estimate": "m", "status": "in_progress"}
-      ]
+      "on_deck": true,
+      "tasks": []
     },
-    {"slug": "azteamai-system", "name": "Azteamai System", "on_deck": true, "tasks_total": 74, "tasks_done": 44, "tasks": []},
-    {"slug": "ct-pros-sys", "name": "CT Pros", "on_deck": true, "tasks_total": 72, "tasks_done": 50, "tasks": []},
-    {"slug": "module-project", "name": "Module", "on_deck": true, "tasks_total": 63, "tasks_done": 18, "tasks": []},
-    {"slug": "dallo-usa", "name": "Dallo USA", "on_deck": true, "tasks_total": 48, "tasks_done": 23, "tasks": []},
-    {"slug": "haniel-finances", "name": "Haniel Finances", "on_deck": true, "tasks_total": 34, "tasks_done": 19, "tasks": []},
-    {"slug": "procounters-erp", "name": "ProCounters ERP", "on_deck": true, "tasks_total": 125, "tasks_done": 110, "tasks": []},
-    {"slug": "influencer-agent", "name": "Influencer Agent", "on_deck": true, "tasks_total": 51, "tasks_done": 8, "tasks": []},
-    {"slug": "claude-todos-skill", "name": "Claude Todos Skill", "on_deck": true, "tasks_total": 31, "tasks_done": 21, "tasks": []},
-    {"slug": "gs-woodworking-spec", "name": "GS Woodworking Spec", "on_deck": true, "tasks_total": 75, "tasks_done": 37, "tasks": []},
-    {"slug": "bench3-gs", "name": "Bench 3 GS", "on_deck": true, "tasks_total": 75, "tasks_done": 37, "tasks": []},
-    {"slug": "gs-datatable-w0", "name": "GS Datatable W0", "on_deck": true, "tasks_total": 75, "tasks_done": 37, "tasks": []},
-    {"slug": "gs-truth-t158x", "name": "GS Truth T158x", "on_deck": true, "tasks_total": 75, "tasks_done": 37, "tasks": []}
+    {
+      "slug": "azteamai-system",
+      "project": "AZ Team AI System",
+      "client": "AZ Team AI (internal)",
+      "tasks_total": 74,
+      "tasks_done": 44,
+      "on_deck": true,
+      "tasks": []
+    },
+    {
+      "slug": "bench3-gs",
+      "project": "GS-ERP",
+      "client": "GS Woodworking LLC",
+      "tasks_total": 75,
+      "tasks_done": 37,
+      "on_deck": true,
+      "tasks": []
+    },
+    {
+      "slug": "ct-pros-sys",
+      "project": "CT Pros",
+      "client": "CT Pros",
+      "tasks_total": 72,
+      "tasks_done": 50,
+      "on_deck": true,
+      "tasks": []
+    },
+    {
+      "slug": "dallo-usa",
+      "project": "dallo-usa",
+      "client": "Dallo USA",
+      "tasks_total": 48,
+      "tasks_done": 23,
+      "on_deck": true,
+      "tasks": []
+    },
+    {
+      "slug": "gs-datatable-w0",
+      "project": "GS-ERP",
+      "client": "GS Woodworking LLC",
+      "tasks_total": 75,
+      "tasks_done": 37,
+      "on_deck": true,
+      "tasks": []
+    },
+    {
+      "slug": "gs-truth-t158x",
+      "project": "GS-ERP",
+      "client": "GS Woodworking LLC",
+      "tasks_total": 75,
+      "tasks_done": 37,
+      "on_deck": true,
+      "tasks": []
+    },
+    {
+      "slug": "gs-woodworking-spec",
+      "project": "GS-ERP",
+      "client": "GS Woodworking LLC",
+      "tasks_total": 75,
+      "tasks_done": 37,
+      "on_deck": true,
+      "tasks": []
+    },
+    {
+      "slug": "haniel-finances",
+      "project": "Haniel Finances",
+      "client": "Personal",
+      "tasks_total": 33,
+      "tasks_done": 18,
+      "on_deck": true,
+      "tasks": []
+    },
+    {
+      "slug": "influencer-agent",
+      "project": "influencer-agent",
+      "client": "AZ Team AI (own SaaS product)",
+      "tasks_total": 51,
+      "tasks_done": 8,
+      "on_deck": true,
+      "tasks": []
+    },
+    {
+      "slug": "module-project",
+      "project": "Module",
+      "client": "Internal",
+      "tasks_total": 63,
+      "tasks_done": 18,
+      "on_deck": true,
+      "tasks": []
+    },
+    {
+      "slug": "procounters-erp",
+      "project": "procounters_erp",
+      "client": "ProCounters Inc.",
+      "tasks_total": 125,
+      "tasks_done": 110,
+      "on_deck": true,
+      "tasks": []
+    }
   ],
-  "waiting_on": [
-    {"project": "az-takeoff", "task_id": "t62", "title": "Buy CT Pros domain", "blocked_by": "Haniel", "note": "Domain purchase needed to unblock deployment"},
-    {"project": "az-takeoff", "task_id": "t60", "title": "Confirm catalog pricing", "blocked_by": "Rafa", "note": "Pricing confirmation required before catalog can be finalized"},
-    {"project": "az-takeoff", "task_id": "t65", "title": "Confirm margin target", "blocked_by": "Rafa", "note": "Margin target needed to configure pricing rules"},
-    {"project": "az-takeoff", "task_id": "t25", "title": "Connect QuickBooks (sandbox)", "blocked_by": "Rafa", "note": "Rafa's QB credentials needed to complete OAuth connection"}
-  ]
+  "waiting_on": []
 }
