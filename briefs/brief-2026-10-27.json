@@ -1,0 +1,282 @@
+{
+  "date": "2026-10-27",
+  "generated_at": "2026-10-27T10:00:00Z",
+  "data_as_of": "2026-10-27T05:00:03+00:00",
+  "greeting": "Morning, Haniel. Clean slate, no meetings — let's use every minute.",
+  "hype": "Two live products, both one session from a major unlock. Ship the assemblies engine and the estimator-grade Excel is real. Build the job queue and the sweeper goes live. We're doing both today.",
+  "notice": "Open SSH to the azteam-vps before 9 — t18 needs a live smoke test on prod and t26 needs the MINIMAX_AI key in the service env.",
+  "difficulty": {
+    "rating": "Solid",
+    "planned_minutes": 390,
+    "available_minutes": 480,
+    "ratio": 0.81,
+    "note": ""
+  },
+  "window": { "start": "09:00", "end": "18:00" },
+  "schedule": [
+    { "start": "09:00", "end": "11:00", "slug": "takeoff-engine", "project": "Takeoff Engine", "task_id": "t18", "title": "Assemblies-per-room → paint/drywall/flooring quantities + wall heights", "estimate": "l", "kind": "task" },
+    { "start": "11:15", "end": "12:15", "slug": "takeoff-engine", "project": "Takeoff Engine", "task_id": "t26", "title": "Label lane v2: M3 vision for outlined-text firms + callout-vs-room filtering", "estimate": "m", "kind": "task" },
+    { "start": "12:30", "end": "13:00", "slug": "claude-todos-skill", "project": "Tasks Platform (claude-todos-skill rebuild)", "task_id": "t30", "title": "Writer docker-integration test on a real onboarded repo", "estimate": "s", "kind": "task" },
+    { "start": "13:00", "end": "14:00", "kind": "lunch", "title": "Lunch" },
+    { "start": "14:15", "end": "15:15", "slug": "claude-todos-skill", "project": "Tasks Platform (claude-todos-skill rebuild)", "task_id": "t29", "title": "Daemon-side cross-process refresh lock (prereq for live SWEEPER_REPOS)", "estimate": "m", "kind": "task" },
+    { "start": "15:30", "end": "17:30", "slug": "claude-todos-skill", "project": "Tasks Platform (claude-todos-skill rebuild)", "task_id": "t20", "title": "Durable job queue (lease/heartbeat/reclaim, window-aware, priority, cap)", "estimate": "l", "kind": "task" }
+  ],
+  "projects": [
+    {
+      "slug": "takeoff-engine",
+      "project": "Takeoff Engine",
+      "client": "AZ Team AI",
+      "tasks_total": 29,
+      "tasks_done": 18,
+      "on_deck": false,
+      "tasks": [
+        {
+          "id": "t18",
+          "title": "Assemblies-per-room → paint/drywall/flooring quantities + wall heights",
+          "phase": "Phase 6 · 95% · Pillar 3 (Counts) + Assemblies",
+          "estimate": "l",
+          "priority": "high",
+          "status": "in_progress",
+          "notes": "PRD Phase 1. assemblies-lite scaffolded in B1 (engine/assemblies.py). Full version = room type → assemblies + formulas + heights (one classification → up to 8 quantities, CSI libraries). The last pillar between us and estimator-grade Excel.",
+          "block": { "start": "09:00", "end": "11:00" },
+          "prep": {
+            "what": "Build the full assemblies engine: room classification → derived quantities (paint, drywall, flooring, wall heights), then wire into the Excel export so the 5-tab workbook gains the assembly rows.",
+            "understand": "`engine/assemblies.py` has an existing lite scaffold from B1. You need the full room_type→assembly rules table using CSI divisions 9/10 (finishes), wall height inference from room type + the PATCH `wall_height_ft` already live in prod, and the quantities wired into `build_sheet_takeoff`. One room classification → up to 8 derived quantity columns in the Excel.",
+            "approach": [
+              "Read `engine/assemblies.py` to understand the lite scaffold and what `build_sheet_takeoff` currently expects from it.",
+              "Design the room_type → assembly rules dict: for each room type, map to quantities (paint SF = perimeter × height, drywall SF, floor SF = measured_sf, ceiling SF) with their CSI code and formula inputs.",
+              "Implement wall height inference: default table keyed by room type (e.g. office=9ft, corridor=8ft), overridden by the per-room `wall_height_ft` DB field when present.",
+              "Wire the new quantity columns into `build_sheet_takeoff` and run a live smoke test against a real sheet in prod — verify the Excel gains the assembly rows."
+            ],
+            "resources": [
+              "`engine/assemblies.py` (existing lite scaffold)",
+              "`engine/excel.py` and `build_sheet_takeoff` orchestrator",
+              "CSI MasterFormat Division 09 (Finishes) + Division 10 (Specialties)",
+              "PATCH /measurements/{id} `wall_height_ft` route already in prod",
+              "PRD §8 Phase 1 in the project docs"
+            ]
+          }
+        },
+        {
+          "id": "t26",
+          "title": "Label lane v2: M3 vision for outlined-text firms + callout-vs-room filtering",
+          "phase": "Phase 5 · 95% · Engine Upgrade Waves (W12 R2+)",
+          "estimate": "m",
+          "priority": "high",
+          "status": "todo",
+          "notes": "Harborview demo failure: PDFTron outlines ALL text, live-text lane finds nothing (0 labels). Holabird proves the lane works (92/109 named). v2 = (a) productize M3 tiles lane as opt-in 'read labels (AI)'; (b) callout-vs-room filtering for general notes, UP arrows, FEC callouts.",
+          "block": { "start": "11:15", "end": "12:15" },
+          "prep": {
+            "what": "Fix label extraction for outlined-text PDFs (Harborview = 0 labels found) by productizing the M3 vision tiles lane as an opt-in AI action, and add a callout filter to remove noise from Holabird-style matches.",
+            "understand": "The live-text lane fails completely for firms where PDFTron outlines all text. The spike `run_labels_m3tiles.py` already proves M3 vision works (~4.3 min/sheet) but costs money — so it's opt-in, gated by a §7a metered-credits event and requires `MINIMAX_AI` in the VPS env. The callout filter is a separate, free improvement: on Holabird 'UP' arrows, 'FEC' tags, and paragraph notes are all matching as room names.",
+            "approach": [
+              "Start with the callout filter (free, immediate): add a label-quality pass in `engine/labels.py` — reject matches that are >30 chars (paragraph notes), match directional keywords (UP/DN/STAIR/STAIRS), or match reference patterns (FEC/AHU/VAV/EQ). Verify no regression on Holabird.",
+              "Productize the M3 tiles lane: move `run_labels_m3tiles.py` logic into `engine/labels_m3.py`, add the `§7a metered-credits` event hook, and raise an error if `MINIMAX_AI` env var is absent.",
+              "Add a POST `/measurements/{id}/run-labels-ai` service route (service/routes.py) that calls the M3 lane; confirm `MINIMAX_AI` key is in the VPS `.env`.",
+              "Wire a 'Identify Rooms (AI)' button into the React SDK (`sdk/react/`) that fires the new route and refreshes the room table on completion."
+            ],
+            "resources": [
+              "`run_labels_m3tiles.py` (spike — find it in the engine spike dir)",
+              "`engine/labels.py` (existing live-text lane)",
+              "MiniMax Vision API docs at api.minimax.io",
+              "`service/routes.py` for the new route pattern",
+              "`sdk/react/` for the UI button pattern (follow the existing correction buttons)"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "slug": "claude-todos-skill",
+      "project": "Tasks Platform (claude-todos-skill rebuild)",
+      "client": "Internal",
+      "tasks_total": 31,
+      "tasks_done": 21,
+      "on_deck": false,
+      "tasks": [
+        {
+          "id": "t30",
+          "title": "Writer docker-integration test on a real onboarded repo",
+          "phase": "M3 · Phase 6 — Sweeper + CI/deploy",
+          "estimate": "s",
+          "priority": "med",
+          "status": "todo",
+          "notes": "refreshRepo orchestration is unit-proven with mocked runners. The injected RefreshRunners seam makes this ~30 min once a repo is onboarded. Proves the docker transport end-to-end.",
+          "block": { "start": "12:30", "end": "13:00" },
+          "prep": {
+            "what": "Write a single integration test that runs `refreshRepo` against a real onboarded repo through the actual Docker transport — the end-to-end proof before the sweeper goes live.",
+            "understand": "The `RefreshRunners` seam exists for this exact purpose: inject the real Docker runners instead of mocks, run the full `refreshRepo` flow (fetch base, run `prepareCommands`, verify `prepareOutputs`). One repo, one happy-path run. Gate with `SWEEPER_DOCKER_INTEGRATION=1` so normal CI skips it.",
+            "approach": [
+              "Read the `RefreshRunners` injection point in `lib/refresh/` and check the existing unit tests to understand the interface contract.",
+              "Pick Module-project as the target (the `t28` notes confirm it has `prepareCommands`/`prepareOutputs` wired).",
+              "Write the integration test: inject the real Docker transport via `RefreshRunners`, call `refreshRepo(moduleProjectPath)`, assert the marker file is written and `prepareOutputs` exist on disk.",
+              "Wrap the test in `if (!process.env.SWEEPER_DOCKER_INTEGRATION) test.skip(...)` so the standard suite stays fast."
+            ],
+            "resources": [
+              "`lib/refresh/` — RefreshRunners interface and refreshRepo function",
+              "`docs/advisor-logs/2026-07-19-freshness-hardening.md` — full context on the marker convention and prepareOutputs contract",
+              "Module-project `.claude/app-reach.json` — has the repo path and prepareCommands",
+              "Existing mocked-runner unit tests — use them as the interface reference"
+            ]
+          }
+        },
+        {
+          "id": "t29",
+          "title": "Daemon-side cross-process refresh lock (prereq for live SWEEPER_REPOS)",
+          "phase": "M3 · Phase 6 — Sweeper + CI/deploy",
+          "estimate": "m",
+          "priority": "high",
+          "status": "todo",
+          "notes": "The CLI takes a per-repo O_EXCL single-flight lockfile (CLI-vs-CLI only). Before flipping the sweeper on against live SWEEPER_REPOS, the daemon must honor the SAME per-repo lock across a job's whole lifecycle. Its current per-job lock is in-process and cannot see the CLI's file.",
+          "block": { "start": "14:15", "end": "15:15" },
+          "prep": {
+            "what": "Make the sweeper daemon honor the same per-repo O_EXCL file lock the CLI uses — so simultaneous CLI and daemon runs on the same repo can't race and corrupt it.",
+            "understand": "The CLI uses a per-repo O_EXCL lockfile (single-flight). The daemon's per-job lock is in-process — it's invisible to the CLI. If a manual `refresh` call runs while the daemon is mid-prep on the same repo, they race. The fix: the daemon acquires the same file before prep starts and releases it on job completion/failure/timeout. If the lock is busy, the job defers (re-enqueue) rather than crashing.",
+            "approach": [
+              "Find the CLI's lock file path convention (look for O_EXCL, `flock`, or `wx` flag usage in `lib/refresh/`) and the exact file path formula.",
+              "In the daemon's job lifecycle, wrap the prep step: try-acquire the per-repo file lock using `fs.openSync(path, 'wx')` → on EEXIST, re-enqueue the job for a later slot → release in `finally`.",
+              "Write a test: start a mock CLI holding the lock → start a daemon job on the same repo → assert the daemon defers; release the lock → assert the daemon proceeds.",
+              "Add a comment in both the CLI and daemon files cross-referencing the convention so it doesn't drift."
+            ],
+            "resources": [
+              "`lib/refresh/` — look for O_EXCL, flock, or `fs.openSync` with `wx` flag for the CLI lock",
+              "Daemon job lifecycle code — wherever jobs are claimed and executed",
+              "`STATE.md` or the sweeper architecture notes for the lock path convention",
+              "Node.js `fs.openSync` + `EEXIST` error code for the O_EXCL pattern"
+            ]
+          }
+        },
+        {
+          "id": "t20",
+          "title": "Durable job queue (lease/heartbeat/reclaim, window-aware, priority, cap)",
+          "phase": "M3 · Phase 6 — Sweeper + CI/deploy",
+          "estimate": "l",
+          "priority": "high",
+          "status": "todo",
+          "notes": "No blockers. Foundation for the sweeper live run — t21 (Sweeper) and t22 (CI) both depend on this.",
+          "block": { "start": "15:30", "end": "17:30" },
+          "prep": {
+            "what": "Build the persistent job queue that backs the sweeper: DB-backed leases, heartbeat, stale-job reclaim, work-window awareness, priority ordering, and a per-repo max-parallel cap.",
+            "understand": "Right now jobs are ephemeral. You need a `sweeper_jobs` table in the existing PG `todos_platform` DB with: atomic claim (lease), heartbeat to keep the lease alive, stale-lease reclaim (cron: reset expired running jobs), window-aware scheduling (don't mint new jobs outside work hours), priority (high > medium > low), and a per-repo cap. This is the foundation t21 (Sweeper) and t22 (CI lane) depend on — build it clean.",
+            "approach": [
+              "Add the migration: `sweeper_jobs(id, repo_slug, task_type, status, priority, payload jsonb, lease_expires_at, heartbeat_at, worker_id, attempts, max_attempts, created_at, updated_at)` — use PG `FOR UPDATE SKIP LOCKED` for atomic claim.",
+              "Implement core functions: `claimJob()` (atomic claim + set lease), `heartbeatJob(id)` (bump `lease_expires_at`), `reclaimStale()` (reset jobs where `lease_expires_at < now AND status = 'running'`).",
+              "Add window awareness: `shouldMintJobs(windowConfig)` checks `work_window.start`/`end` against current local time before the scheduler enqueues sweep jobs.",
+              "Build a `runQueue({ workers: 2, maxPerRepo: 1 })` loop that: runs `reclaimStale()` each cycle, claims up to `workers` jobs respecting per-repo cap and priority, runs each in a tracked async slot."
+            ],
+            "resources": [
+              "PG `todos_platform` DB — reuse the `db/migrate.ts` migrations pattern",
+              "`lib/pg-board-repository.ts` — follow its PG client pattern for the new repository",
+              "PostgreSQL `FOR UPDATE SKIP LOCKED` docs — the standard atomic queue claim pattern",
+              "`config.json` `work_window` shape — reuse for the window-aware gate"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "slug": "az-takeoff",
+      "project": "AZ Takeoff SaaS",
+      "client": "AZ Team",
+      "tasks_total": 73,
+      "tasks_done": 51,
+      "on_deck": true,
+      "tasks": []
+    },
+    {
+      "slug": "gs-woodworking-spec",
+      "project": "GS-ERP",
+      "client": "GS Woodworking LLC",
+      "tasks_total": 75,
+      "tasks_done": 37,
+      "on_deck": true,
+      "tasks": []
+    },
+    {
+      "slug": "module-project",
+      "project": "Module",
+      "client": "Internal",
+      "tasks_total": 63,
+      "tasks_done": 18,
+      "on_deck": true,
+      "tasks": []
+    },
+    {
+      "slug": "azteamai-system",
+      "project": "AZ Team AI System",
+      "client": "AZ Team AI (internal)",
+      "tasks_total": 74,
+      "tasks_done": 44,
+      "on_deck": true,
+      "tasks": []
+    },
+    {
+      "slug": "bench3-gs",
+      "project": "GS-ERP",
+      "client": "GS Woodworking LLC",
+      "tasks_total": 75,
+      "tasks_done": 37,
+      "on_deck": true,
+      "tasks": []
+    },
+    {
+      "slug": "ct-pros-sys",
+      "project": "CT Pros",
+      "client": "CT Pros",
+      "tasks_total": 72,
+      "tasks_done": 50,
+      "on_deck": true,
+      "tasks": []
+    },
+    {
+      "slug": "dallo-usa",
+      "project": "dallo-usa",
+      "client": "Dallo USA",
+      "tasks_total": 48,
+      "tasks_done": 23,
+      "on_deck": true,
+      "tasks": []
+    },
+    {
+      "slug": "haniel-finances",
+      "project": "Haniel Finances",
+      "client": "Personal",
+      "tasks_total": 34,
+      "tasks_done": 19,
+      "on_deck": true,
+      "tasks": []
+    },
+    {
+      "slug": "influencer-agent",
+      "project": "influencer-agent",
+      "client": "AZ Team AI (own SaaS product)",
+      "tasks_total": 51,
+      "tasks_done": 8,
+      "on_deck": true,
+      "tasks": []
+    },
+    {
+      "slug": "procounters-erp",
+      "project": "procounters_erp",
+      "client": "ProCounters Inc.",
+      "tasks_total": 125,
+      "tasks_done": 110,
+      "on_deck": true,
+      "tasks": []
+    }
+  ],
+  "waiting_on": [
+    {
+      "project": "dallo-usa",
+      "task_id": "t46",
+      "title": "Client: pick Shopify plan + configure payments",
+      "reason": "Bruno must choose a paid Shopify plan and configure payments — checkout is currently silently broken (redirects to empty cart), nobody can complete a purchase."
+    },
+    {
+      "project": "dallo-usa",
+      "task_id": "t47",
+      "title": "Wire contact-form lead delivery (Resend env vars in Vercel)",
+      "reason": "Resend API key not set in Vercel — every contact/wholesale form submission returns 503 and tells customers to email directly instead."
+    }
+  ]
+}
