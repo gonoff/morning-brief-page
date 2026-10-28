@@ -1,282 +1,446 @@
 {
-  "date": "2026-10-27",
-  "generated_at": "2026-10-27T10:00:00Z",
-  "data_as_of": "2026-10-27T05:00:03+00:00",
-  "greeting": "Morning, Haniel. Clean slate, no meetings — let's use every minute.",
-  "hype": "Two live products, both one session from a major unlock. Ship the assemblies engine and the estimator-grade Excel is real. Build the job queue and the sweeper goes live. We're doing both today.",
-  "notice": "Open SSH to the azteam-vps before 9 — t18 needs a live smoke test on prod and t26 needs the MINIMAX_AI key in the service env.",
+  "date": "2026-10-28",
+  "generated_at": "2026-10-28T10:12:30Z",
+  "data_as_of": "2026-10-28T05:00:23+00:00",
+  "greeting": "Morning, Haniel. Wednesday — time to close some real V1 debt and give the Tomato scanner its first eyes.",
+  "hype": "t164's purge guard is overdue and the job already ran — ship it, knock out the client-reply K2 bug, then spend the afternoon wiring the scanner diagnostics that make every future fix debuggable. These are not nice-to-haves. Let's go.",
+  "notice": "t164 (retention purge guard) missed its 2026-10-20 ship target — the purge has already executed once. First block, no excuses.",
   "difficulty": {
     "rating": "Solid",
     "planned_minutes": 390,
-    "available_minutes": 480,
-    "ratio": 0.81,
+    "available_minutes": 435,
+    "ratio": 0.9,
     "note": ""
   },
-  "window": { "start": "09:00", "end": "18:00" },
+  "window": {
+    "start": "09:00",
+    "end": "18:00"
+  },
   "schedule": [
-    { "start": "09:00", "end": "11:00", "slug": "takeoff-engine", "project": "Takeoff Engine", "task_id": "t18", "title": "Assemblies-per-room → paint/drywall/flooring quantities + wall heights", "estimate": "l", "kind": "task" },
-    { "start": "11:15", "end": "12:15", "slug": "takeoff-engine", "project": "Takeoff Engine", "task_id": "t26", "title": "Label lane v2: M3 vision for outlined-text firms + callout-vs-room filtering", "estimate": "m", "kind": "task" },
-    { "start": "12:30", "end": "13:00", "slug": "claude-todos-skill", "project": "Tasks Platform (claude-todos-skill rebuild)", "task_id": "t30", "title": "Writer docker-integration test on a real onboarded repo", "estimate": "s", "kind": "task" },
-    { "start": "13:00", "end": "14:00", "kind": "lunch", "title": "Lunch" },
-    { "start": "14:15", "end": "15:15", "slug": "claude-todos-skill", "project": "Tasks Platform (claude-todos-skill rebuild)", "task_id": "t29", "title": "Daemon-side cross-process refresh lock (prereq for live SWEEPER_REPOS)", "estimate": "m", "kind": "task" },
-    { "start": "15:30", "end": "17:30", "slug": "claude-todos-skill", "project": "Tasks Platform (claude-todos-skill rebuild)", "task_id": "t20", "title": "Durable job queue (lease/heartbeat/reclaim, window-aware, priority, cap)", "estimate": "l", "kind": "task" }
+    {
+      "start": "09:00",
+      "end": "10:00",
+      "slug": "tasks-platform-claude-todos-skill-rebuild",
+      "project": "Tasks Platform (claude-todos-skill rebuild)",
+      "task_id": "t164",
+      "title": "Retention purge never destroys evidence of open work",
+      "estimate": "m",
+      "kind": "task"
+    },
+    {
+      "start": "10:15",
+      "end": "10:45",
+      "slug": "tasks-platform-claude-todos-skill-rebuild",
+      "project": "Tasks Platform (claude-todos-skill rebuild)",
+      "task_id": "t262",
+      "title": "A local dashboard build never breaks the running Mac dashboard",
+      "estimate": "s",
+      "kind": "task"
+    },
+    {
+      "start": "11:00",
+      "end": "13:00",
+      "slug": "tasks-platform-claude-todos-skill-rebuild",
+      "project": "Tasks Platform (claude-todos-skill rebuild)",
+      "task_id": "t165",
+      "title": "Dismissed and legacy-closed requests stop showing clients a live status",
+      "estimate": "l",
+      "kind": "task"
+    },
+    {
+      "start": "13:00",
+      "end": "14:00",
+      "kind": "lunch",
+      "title": "Lunch"
+    },
+    {
+      "start": "14:00",
+      "end": "16:00",
+      "slug": "tomato-android-internal-field-tools",
+      "project": "Tomato Android — Internal Field Tools",
+      "task_id": "p1t0",
+      "title": "Build on-device scan diagnostics and session export",
+      "estimate": "l",
+      "kind": "task"
+    },
+    {
+      "start": "16:15",
+      "end": "17:15",
+      "slug": "tomato-android-internal-field-tools",
+      "project": "Tomato Android — Internal Field Tools",
+      "task_id": "p1t1",
+      "title": "Create the structured S25 room-scan test matrix",
+      "estimate": "m",
+      "kind": "task"
+    }
   ],
   "projects": [
     {
-      "slug": "takeoff-engine",
-      "project": "Takeoff Engine",
-      "client": "AZ Team AI",
-      "tasks_total": 29,
-      "tasks_done": 18,
-      "on_deck": false,
-      "tasks": [
-        {
-          "id": "t18",
-          "title": "Assemblies-per-room → paint/drywall/flooring quantities + wall heights",
-          "phase": "Phase 6 · 95% · Pillar 3 (Counts) + Assemblies",
-          "estimate": "l",
-          "priority": "high",
-          "status": "in_progress",
-          "notes": "PRD Phase 1. assemblies-lite scaffolded in B1 (engine/assemblies.py). Full version = room type → assemblies + formulas + heights (one classification → up to 8 quantities, CSI libraries). The last pillar between us and estimator-grade Excel.",
-          "block": { "start": "09:00", "end": "11:00" },
-          "prep": {
-            "what": "Build the full assemblies engine: room classification → derived quantities (paint, drywall, flooring, wall heights), then wire into the Excel export so the 5-tab workbook gains the assembly rows.",
-            "understand": "`engine/assemblies.py` has an existing lite scaffold from B1. You need the full room_type→assembly rules table using CSI divisions 9/10 (finishes), wall height inference from room type + the PATCH `wall_height_ft` already live in prod, and the quantities wired into `build_sheet_takeoff`. One room classification → up to 8 derived quantity columns in the Excel.",
-            "approach": [
-              "Read `engine/assemblies.py` to understand the lite scaffold and what `build_sheet_takeoff` currently expects from it.",
-              "Design the room_type → assembly rules dict: for each room type, map to quantities (paint SF = perimeter × height, drywall SF, floor SF = measured_sf, ceiling SF) with their CSI code and formula inputs.",
-              "Implement wall height inference: default table keyed by room type (e.g. office=9ft, corridor=8ft), overridden by the per-room `wall_height_ft` DB field when present.",
-              "Wire the new quantity columns into `build_sheet_takeoff` and run a live smoke test against a real sheet in prod — verify the Excel gains the assembly rows."
-            ],
-            "resources": [
-              "`engine/assemblies.py` (existing lite scaffold)",
-              "`engine/excel.py` and `build_sheet_takeoff` orchestrator",
-              "CSI MasterFormat Division 09 (Finishes) + Division 10 (Specialties)",
-              "PATCH /measurements/{id} `wall_height_ft` route already in prod",
-              "PRD §8 Phase 1 in the project docs"
-            ]
-          }
-        },
-        {
-          "id": "t26",
-          "title": "Label lane v2: M3 vision for outlined-text firms + callout-vs-room filtering",
-          "phase": "Phase 5 · 95% · Engine Upgrade Waves (W12 R2+)",
-          "estimate": "m",
-          "priority": "high",
-          "status": "todo",
-          "notes": "Harborview demo failure: PDFTron outlines ALL text, live-text lane finds nothing (0 labels). Holabird proves the lane works (92/109 named). v2 = (a) productize M3 tiles lane as opt-in 'read labels (AI)'; (b) callout-vs-room filtering for general notes, UP arrows, FEC callouts.",
-          "block": { "start": "11:15", "end": "12:15" },
-          "prep": {
-            "what": "Fix label extraction for outlined-text PDFs (Harborview = 0 labels found) by productizing the M3 vision tiles lane as an opt-in AI action, and add a callout filter to remove noise from Holabird-style matches.",
-            "understand": "The live-text lane fails completely for firms where PDFTron outlines all text. The spike `run_labels_m3tiles.py` already proves M3 vision works (~4.3 min/sheet) but costs money — so it's opt-in, gated by a §7a metered-credits event and requires `MINIMAX_AI` in the VPS env. The callout filter is a separate, free improvement: on Holabird 'UP' arrows, 'FEC' tags, and paragraph notes are all matching as room names.",
-            "approach": [
-              "Start with the callout filter (free, immediate): add a label-quality pass in `engine/labels.py` — reject matches that are >30 chars (paragraph notes), match directional keywords (UP/DN/STAIR/STAIRS), or match reference patterns (FEC/AHU/VAV/EQ). Verify no regression on Holabird.",
-              "Productize the M3 tiles lane: move `run_labels_m3tiles.py` logic into `engine/labels_m3.py`, add the `§7a metered-credits` event hook, and raise an error if `MINIMAX_AI` env var is absent.",
-              "Add a POST `/measurements/{id}/run-labels-ai` service route (service/routes.py) that calls the M3 lane; confirm `MINIMAX_AI` key is in the VPS `.env`.",
-              "Wire a 'Identify Rooms (AI)' button into the React SDK (`sdk/react/`) that fires the new route and refreshes the room table on completion."
-            ],
-            "resources": [
-              "`run_labels_m3tiles.py` (spike — find it in the engine spike dir)",
-              "`engine/labels.py` (existing live-text lane)",
-              "MiniMax Vision API docs at api.minimax.io",
-              "`service/routes.py` for the new route pattern",
-              "`sdk/react/` for the UI button pattern (follow the existing correction buttons)"
-            ]
-          }
-        }
-      ]
-    },
-    {
-      "slug": "claude-todos-skill",
-      "project": "Tasks Platform (claude-todos-skill rebuild)",
-      "client": "Internal",
-      "tasks_total": 31,
-      "tasks_done": 21,
-      "on_deck": false,
-      "tasks": [
-        {
-          "id": "t30",
-          "title": "Writer docker-integration test on a real onboarded repo",
-          "phase": "M3 · Phase 6 — Sweeper + CI/deploy",
-          "estimate": "s",
-          "priority": "med",
-          "status": "todo",
-          "notes": "refreshRepo orchestration is unit-proven with mocked runners. The injected RefreshRunners seam makes this ~30 min once a repo is onboarded. Proves the docker transport end-to-end.",
-          "block": { "start": "12:30", "end": "13:00" },
-          "prep": {
-            "what": "Write a single integration test that runs `refreshRepo` against a real onboarded repo through the actual Docker transport — the end-to-end proof before the sweeper goes live.",
-            "understand": "The `RefreshRunners` seam exists for this exact purpose: inject the real Docker runners instead of mocks, run the full `refreshRepo` flow (fetch base, run `prepareCommands`, verify `prepareOutputs`). One repo, one happy-path run. Gate with `SWEEPER_DOCKER_INTEGRATION=1` so normal CI skips it.",
-            "approach": [
-              "Read the `RefreshRunners` injection point in `lib/refresh/` and check the existing unit tests to understand the interface contract.",
-              "Pick Module-project as the target (the `t28` notes confirm it has `prepareCommands`/`prepareOutputs` wired).",
-              "Write the integration test: inject the real Docker transport via `RefreshRunners`, call `refreshRepo(moduleProjectPath)`, assert the marker file is written and `prepareOutputs` exist on disk.",
-              "Wrap the test in `if (!process.env.SWEEPER_DOCKER_INTEGRATION) test.skip(...)` so the standard suite stays fast."
-            ],
-            "resources": [
-              "`lib/refresh/` — RefreshRunners interface and refreshRepo function",
-              "`docs/advisor-logs/2026-07-19-freshness-hardening.md` — full context on the marker convention and prepareOutputs contract",
-              "Module-project `.claude/app-reach.json` — has the repo path and prepareCommands",
-              "Existing mocked-runner unit tests — use them as the interface reference"
-            ]
-          }
-        },
-        {
-          "id": "t29",
-          "title": "Daemon-side cross-process refresh lock (prereq for live SWEEPER_REPOS)",
-          "phase": "M3 · Phase 6 — Sweeper + CI/deploy",
-          "estimate": "m",
-          "priority": "high",
-          "status": "todo",
-          "notes": "The CLI takes a per-repo O_EXCL single-flight lockfile (CLI-vs-CLI only). Before flipping the sweeper on against live SWEEPER_REPOS, the daemon must honor the SAME per-repo lock across a job's whole lifecycle. Its current per-job lock is in-process and cannot see the CLI's file.",
-          "block": { "start": "14:15", "end": "15:15" },
-          "prep": {
-            "what": "Make the sweeper daemon honor the same per-repo O_EXCL file lock the CLI uses — so simultaneous CLI and daemon runs on the same repo can't race and corrupt it.",
-            "understand": "The CLI uses a per-repo O_EXCL lockfile (single-flight). The daemon's per-job lock is in-process — it's invisible to the CLI. If a manual `refresh` call runs while the daemon is mid-prep on the same repo, they race. The fix: the daemon acquires the same file before prep starts and releases it on job completion/failure/timeout. If the lock is busy, the job defers (re-enqueue) rather than crashing.",
-            "approach": [
-              "Find the CLI's lock file path convention (look for O_EXCL, `flock`, or `wx` flag usage in `lib/refresh/`) and the exact file path formula.",
-              "In the daemon's job lifecycle, wrap the prep step: try-acquire the per-repo file lock using `fs.openSync(path, 'wx')` → on EEXIST, re-enqueue the job for a later slot → release in `finally`.",
-              "Write a test: start a mock CLI holding the lock → start a daemon job on the same repo → assert the daemon defers; release the lock → assert the daemon proceeds.",
-              "Add a comment in both the CLI and daemon files cross-referencing the convention so it doesn't drift."
-            ],
-            "resources": [
-              "`lib/refresh/` — look for O_EXCL, flock, or `fs.openSync` with `wx` flag for the CLI lock",
-              "Daemon job lifecycle code — wherever jobs are claimed and executed",
-              "`STATE.md` or the sweeper architecture notes for the lock path convention",
-              "Node.js `fs.openSync` + `EEXIST` error code for the O_EXCL pattern"
-            ]
-          }
-        },
-        {
-          "id": "t20",
-          "title": "Durable job queue (lease/heartbeat/reclaim, window-aware, priority, cap)",
-          "phase": "M3 · Phase 6 — Sweeper + CI/deploy",
-          "estimate": "l",
-          "priority": "high",
-          "status": "todo",
-          "notes": "No blockers. Foundation for the sweeper live run — t21 (Sweeper) and t22 (CI) both depend on this.",
-          "block": { "start": "15:30", "end": "17:30" },
-          "prep": {
-            "what": "Build the persistent job queue that backs the sweeper: DB-backed leases, heartbeat, stale-job reclaim, work-window awareness, priority ordering, and a per-repo max-parallel cap.",
-            "understand": "Right now jobs are ephemeral. You need a `sweeper_jobs` table in the existing PG `todos_platform` DB with: atomic claim (lease), heartbeat to keep the lease alive, stale-lease reclaim (cron: reset expired running jobs), window-aware scheduling (don't mint new jobs outside work hours), priority (high > medium > low), and a per-repo cap. This is the foundation t21 (Sweeper) and t22 (CI lane) depend on — build it clean.",
-            "approach": [
-              "Add the migration: `sweeper_jobs(id, repo_slug, task_type, status, priority, payload jsonb, lease_expires_at, heartbeat_at, worker_id, attempts, max_attempts, created_at, updated_at)` — use PG `FOR UPDATE SKIP LOCKED` for atomic claim.",
-              "Implement core functions: `claimJob()` (atomic claim + set lease), `heartbeatJob(id)` (bump `lease_expires_at`), `reclaimStale()` (reset jobs where `lease_expires_at < now AND status = 'running'`).",
-              "Add window awareness: `shouldMintJobs(windowConfig)` checks `work_window.start`/`end` against current local time before the scheduler enqueues sweep jobs.",
-              "Build a `runQueue({ workers: 2, maxPerRepo: 1 })` loop that: runs `reclaimStale()` each cycle, claims up to `workers` jobs respecting per-repo cap and priority, runs each in a tracked async slot."
-            ],
-            "resources": [
-              "PG `todos_platform` DB — reuse the `db/migrate.ts` migrations pattern",
-              "`lib/pg-board-repository.ts` — follow its PG client pattern for the new repository",
-              "PostgreSQL `FOR UPDATE SKIP LOCKED` docs — the standard atomic queue claim pattern",
-              "`config.json` `work_window` shape — reuse for the window-aware gate"
-            ]
-          }
-        }
-      ]
-    },
-    {
-      "slug": "az-takeoff",
-      "project": "AZ Takeoff SaaS",
+      "slug": "az-print-shop-erp",
+      "project": "AZ Print Shop ERP",
       "client": "AZ Team",
-      "tasks_total": 73,
+      "tasks_total": 132,
       "tasks_done": 51,
       "on_deck": true,
       "tasks": []
     },
     {
-      "slug": "gs-woodworking-spec",
-      "project": "GS-ERP",
-      "client": "GS Woodworking LLC",
-      "tasks_total": 75,
-      "tasks_done": 37,
+      "slug": "az-takeoff-saas",
+      "project": "AZ Takeoff SaaS",
+      "client": "AZ Takeoff",
+      "tasks_total": 79,
+      "tasks_done": 41,
       "on_deck": true,
       "tasks": []
     },
     {
-      "slug": "module-project",
-      "project": "Module",
-      "client": "Internal",
-      "tasks_total": 63,
-      "tasks_done": 18,
-      "on_deck": true,
-      "tasks": []
-    },
-    {
-      "slug": "azteamai-system",
+      "slug": "az-team-ai-system",
       "project": "AZ Team AI System",
-      "client": "AZ Team AI (internal)",
+      "client": "AZ Team AI System",
       "tasks_total": 74,
-      "tasks_done": 44,
+      "tasks_done": 71,
       "on_deck": true,
       "tasks": []
     },
     {
-      "slug": "bench3-gs",
-      "project": "GS-ERP",
-      "client": "GS Woodworking LLC",
-      "tasks_total": 75,
-      "tasks_done": 37,
+      "slug": "cleansaas",
+      "project": "CleanSaaS",
+      "client": "CleanSaaS",
+      "tasks_total": 4,
+      "tasks_done": 3,
       "on_deck": true,
       "tasks": []
     },
     {
-      "slug": "ct-pros-sys",
-      "project": "CT Pros",
-      "client": "CT Pros",
+      "slug": "fitness-zone",
+      "project": "Fitness Zone",
+      "client": "Fitness Zone",
+      "tasks_total": 13,
+      "tasks_done": 10,
+      "on_deck": true,
+      "tasks": []
+    },
+    {
+      "slug": "gs-woodworking-erp",
+      "project": "GS WoodWorking ERP",
+      "client": "GS-ERP",
+      "tasks_total": 252,
+      "tasks_done": 36,
+      "on_deck": true,
+      "tasks": []
+    },
+    {
+      "slug": "gs-erp-next",
+      "project": "GS-ERP Next",
+      "client": "GS-ERP Next",
       "tasks_total": 72,
-      "tasks_done": 50,
+      "tasks_done": 24,
       "on_deck": true,
       "tasks": []
     },
     {
-      "slug": "dallo-usa",
-      "project": "dallo-usa",
-      "client": "Dallo USA",
-      "tasks_total": 48,
-      "tasks_done": 23,
+      "slug": "gloopy-3d-youtube-shorts",
+      "project": "Gloopy 3D · YouTube Shorts",
+      "client": "Gloopy 3D · YouTube Shorts",
+      "tasks_total": 176,
+      "tasks_done": 92,
+      "on_deck": true,
+      "tasks": []
+    },
+    {
+      "slug": "gloopy3d-site",
+      "project": "Gloopy3D Site",
+      "client": "Gloopy3D",
+      "tasks_total": 0,
+      "tasks_done": 0,
       "on_deck": true,
       "tasks": []
     },
     {
       "slug": "haniel-finances",
       "project": "Haniel Finances",
-      "client": "Personal",
-      "tasks_total": 34,
-      "tasks_done": 19,
+      "client": "Haniel Finances",
+      "tasks_total": 35,
+      "tasks_done": 20,
+      "on_deck": true,
+      "tasks": []
+    },
+    {
+      "slug": "module-starter",
+      "project": "Module Starter",
+      "client": "Module",
+      "tasks_total": 69,
+      "tasks_done": 27,
+      "on_deck": true,
+      "tasks": []
+    },
+    {
+      "slug": "peptiworth",
+      "project": "PeptiWorth",
+      "client": "PeptiWorth",
+      "tasks_total": 0,
+      "tasks_done": 0,
+      "on_deck": true,
+      "tasks": []
+    },
+    {
+      "slug": "pro-counters-erp",
+      "project": "Pro Counters ERP",
+      "client": "procounters_erp",
+      "tasks_total": 347,
+      "tasks_done": 308,
+      "on_deck": true,
+      "tasks": []
+    },
+    {
+      "slug": "pro-counters-website-rebuild",
+      "project": "Pro Counters — Website Rebuild",
+      "client": "Pro Counters New England (PCNE)",
+      "tasks_total": 33,
+      "tasks_done": 21,
+      "on_deck": true,
+      "tasks": []
+    },
+    {
+      "slug": "spellkin-nft-project",
+      "project": "Spellkin (NFT project)",
+      "client": "Spellkin",
+      "tasks_total": 0,
+      "tasks_done": 0,
+      "on_deck": true,
+      "tasks": []
+    },
+    {
+      "slug": "takeoff-engine-saas",
+      "project": "Takeoff Engine Saas",
+      "client": "Takeoff Engine",
+      "tasks_total": 37,
+      "tasks_done": 26,
+      "on_deck": true,
+      "tasks": []
+    },
+    {
+      "slug": "tasks-platform-claude-todos-skill-rebuild",
+      "project": "Tasks Platform (claude-todos-skill rebuild)",
+      "client": "Tasks Platform (claude-todos-skill rebuild)",
+      "tasks_total": 263,
+      "tasks_done": 168,
+      "on_deck": false,
+      "tasks": [
+        {
+          "id": "t164",
+          "title": "Retention purge never destroys evidence of open work",
+          "phase": "V1 · Client request lifecycle",
+          "estimate": "m",
+          "priority": "high",
+          "status": "in_progress",
+          "notes": "V1 stabilization K1. Hard deadline was 2026-10-20; purge first ran 2026-10-22 04:00. `task-request-context.ts` is the verification surface only — change it only if the purged-state test fails.",
+          "block": {
+            "start": "09:00",
+            "end": "10:00"
+          },
+          "prep": {
+            "what": "Guard the nightly retention purge so it never hard-deletes task evidence belonging to still-open client work.",
+            "understand": "The V1 purge job already ran on 2026-10-22. K1 of the V1 stabilization plan says open work is always kept. `task-request-context.ts` is the audit surface — the guard condition must be there; the test proves it.",
+            "approach": [
+              "Open `docs/current/v1-stabilization-audit-2026-09-28.md` and find the K1 spec — exact guard condition and expected test name.",
+              "Find the retention purge job (grep for `purge` or `retention`) and verify the open-work skip predicate is in place.",
+              "Run the purged-state test suite; if any test fails, add or fix the guard in `task-request-context.ts`.",
+              "Query the audit ledger (or DB) to confirm no open-work rows were deleted in the 2026-10-22 run."
+            ],
+            "resources": [
+              "docs/current/v1-stabilization-audit-2026-09-28.md",
+              "task-request-context.ts",
+              "retention purge job file (grep `purge` or `retention` in the codebase)",
+              "audit ledger / DB query on the VPS"
+            ]
+          }
+        },
+        {
+          "id": "t262",
+          "title": "A local dashboard build never breaks the running Mac dashboard",
+          "phase": "V1 · Calm operator redesign",
+          "estimate": "s",
+          "priority": "high",
+          "status": "todo",
+          "notes": "Options: server re-reads `runtime-assets.js` when react-dist changes, or build writes to a staging dir and swaps atomically, then signals the server.",
+          "block": {
+            "start": "10:15",
+            "end": "10:45"
+          },
+          "prep": {
+            "what": "Make the Vite build output atomic so a running Mac dashboard is never served a half-updated JS bundle.",
+            "understand": "The Mac server reads from the build output dir. A mid-flight build overwrites files the server is actively serving, causing 404s or broken state. Atomic swap (write to staging, rename) prevents this entirely.",
+            "approach": [
+              "Find current build output path (likely `react-dist/`) and how the server reads `runtime-assets.js` on startup.",
+              "Implement atomic swap: build to a staging dir (e.g. `react-dist-next/`), then `fs.rename()` over `react-dist/` and send SIGUSR1 to the server to reload.",
+              "Alternative if rename is complex: add a file-watcher on `runtime-assets.js` so the server re-reads it on change.",
+              "Test: trigger `npm run build` while the dashboard is open in a browser; confirm no broken state or downtime."
+            ],
+            "resources": [
+              "vite.config.ts / build script",
+              "runtime-assets.js (server read logic)",
+              "Mac dashboard server startup / signal handler",
+              "Node.js `fs.rename()` docs (atomic on POSIX)"
+            ]
+          }
+        },
+        {
+          "id": "t165",
+          "title": "Dismissed and legacy-closed requests stop showing clients a live status",
+          "phase": "V1 · Client request lifecycle",
+          "estimate": "l",
+          "priority": "high",
+          "status": "todo",
+          "notes": "V1 stabilization K2. The DB CHECK already prevents silent revival. Real defect: raw 400 on client reply needs to become 404. 6 dismissed/Done requests are live in the system.",
+          "block": {
+            "start": "11:00",
+            "end": "13:00"
+          },
+          "prep": {
+            "what": "Stop dismissed and legacy-closed client requests from showing a live status or leaking a raw 400 when a client tries to reply to them.",
+            "understand": "K2 of V1 stabilization. The DB CHECK already blocks silent revival, so the transactional safety is there. The surface bug: clients see a raw 400 (not 404) on reply, and their list view still shows these requests as active. 6 dismissed/Done requests are currently live.",
+            "approach": [
+              "Read K2 in `docs/current/v1-stabilization-audit-2026-09-28.md` for the exact endpoints and fix spec.",
+              "Find the client-reply endpoint: change the 400 from the CHECK violation to a clean 404 with a safe message ('Request not found').",
+              "Update the client-facing request list query to filter out `dismissed` and `legacy-closed` statuses.",
+              "Smoke-test with one of the 6 known affected requests: reply should return 404; request should not appear in the client list."
+            ],
+            "resources": [
+              "docs/current/v1-stabilization-audit-2026-09-28.md (K2 section)",
+              "client reply endpoint (grep `client.*reply` or `request.*reply`)",
+              "client-facing request list query/controller",
+              "RequestStatus enum / state machine",
+              "6 known dismissed/Done request IDs (in the audit doc or DB)"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "slug": "tomato-android-internal-field-tools",
+      "project": "Tomato Android — Internal Field Tools",
+      "client": "Tomato Android — Internal Field Tools",
+      "tasks_total": 35,
+      "tasks_done": 5,
+      "on_deck": false,
+      "tasks": [
+        {
+          "id": "p1t0",
+          "title": "Build on-device scan diagnostics and session export",
+          "phase": "Scanner Evidence — Make Tracking Failures Observable",
+          "estimate": "l",
+          "priority": "high",
+          "status": "todo",
+          "notes": "Record tracking state, plane/depth availability, camera pose, locked-corner samples, rejection reasons, and timing without collecting camera imagery by default.",
+          "block": {
+            "start": "14:00",
+            "end": "16:00"
+          },
+          "prep": {
+            "what": "Build a diagnostics module that records the scanner’s internal state every frame (no camera pixels) and lets you export the session log as JSON.",
+            "understand": "Phase 1 goal: make tracking failures observable before trying to fix them. ARCore’s `Frame.getTrackingState()`, `TrackingFailureReason`, depth availability, and corner lock events are the signals. A serializable per-session log lets you replay failure conditions on a desk.",
+            "approach": [
+              "Design `DiagnosticsSession` data class: fields for `trackingState`, `trackingFailureReason`, `planeCount`, `depthAvailable`, `cornerLockEvents[]`, `rejectionReasons[]`, timestamps — no pixel buffers.",
+              "Hook into the ARCore `Session.update()` callback; sample state on change or ~2 fps (not every frame — stay cheap).",
+              "Add an export function: serialize to JSON, write to `Context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS)`, share via `FileProvider` + `Intent.ACTION_SEND`.",
+              "Verify no camera imagery is ever stored: no `ImageReader`, no `AugmentedImage` pixel captures, no `Frame.acquireCameraImage()` calls in the new code."
+            ],
+            "resources": [
+              "ARCore `Session.update()` / `Frame` API",
+              "`TrackingState`, `TrackingFailureReason` enums (ARCore)",
+              "Android `FileProvider` export pattern",
+              "`Environment.DIRECTORY_DOWNLOADS` + `Intent.ACTION_SEND`",
+              "Existing scanner session / ARCore session code in the repo"
+            ]
+          }
+        },
+        {
+          "id": "p1t1",
+          "title": "Create the structured S25 room-scan test matrix",
+          "phase": "Scanner Evidence — Make Tracking Failures Observable",
+          "estimate": "m",
+          "priority": "high",
+          "status": "todo",
+          "notes": "Define repeatable cases for small/large rooms, plain walls, textured walls, reflective floors, low light, clutter, openings, and temporary tracking loss.",
+          "block": {
+            "start": "16:15",
+            "end": "17:15"
+          },
+          "prep": {
+            "what": "Write a repeatable test document for S25 room-scan scenarios — each row is a setup, expected ARCore behavior, and pass/fail threshold.",
+            "understand": "You can’t stabilize what you can’t measure. This matrix is your before/after baseline for every scanner change. S25 has specific IMU and camera characteristics; the `TrackingFailureReason` enum names the failure modes to cover. Pair each scenario with the diagnostics export from p1t0.",
+            "approach": [
+              "List all scanner failure modes: plain walls, reflective floors, low light, clutter, small rooms (<3m), large rooms (>8m), doorways/openings, temporary tracking loss.",
+              "For each scenario: define physical setup, expected `TrackingState` progression, pass threshold (e.g. ‘locks 4 corners within 30s’), and which `TrackingFailureReason` to watch for.",
+              "Create `tests/scan-test-matrix.md` (or wherever test docs live) with a Markdown table per scenario group.",
+              "Link each scenario to the diagnostics export fields from p1t0 so you know exactly what to capture during the test run."
+            ],
+            "resources": [
+              "`TrackingFailureReason` enum values (ARCore docs)",
+              "Samsung S25 ARCore compatibility / IMU notes",
+              "Diagnostics session export from p1t0",
+              "Existing test docs in `/tests` if any"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "slug": "dallo-usa",
+      "project": "dallo-usa",
+      "client": "Dallo",
+      "tasks_total": 46,
+      "tasks_done": 21,
+      "on_deck": true,
+      "tasks": []
+    },
+    {
+      "slug": "econoplatform",
+      "project": "econoplatform",
+      "client": "",
+      "tasks_total": 61,
+      "tasks_done": 33,
       "on_deck": true,
       "tasks": []
     },
     {
       "slug": "influencer-agent",
       "project": "influencer-agent",
-      "client": "AZ Team AI (own SaaS product)",
-      "tasks_total": 51,
-      "tasks_done": 8,
+      "client": "influencer-agent",
+      "tasks_total": 52,
+      "tasks_done": 9,
       "on_deck": true,
       "tasks": []
     },
     {
-      "slug": "procounters-erp",
-      "project": "procounters_erp",
-      "client": "ProCounters Inc.",
-      "tasks_total": 125,
-      "tasks_done": 110,
+      "slug": "orc",
+      "project": "orc",
+      "client": "orc",
+      "tasks_total": 107,
+      "tasks_done": 51,
       "on_deck": true,
       "tasks": []
     }
   ],
   "waiting_on": [
     {
-      "project": "dallo-usa",
-      "task_id": "t46",
-      "title": "Client: pick Shopify plan + configure payments",
-      "reason": "Bruno must choose a paid Shopify plan and configure payments — checkout is currently silently broken (redirects to empty cart), nobody can complete a purchase."
+      "project": "Tasks Platform (claude-todos-skill rebuild)",
+      "task_id": "t160",
+      "title": "GitHub contribution panel is fresh with a versioned refresher",
+      "reason": "Waiting on Haniel to run: `gh auth refresh -h github.com -s read:user` (approved 2026-09-28, action pending)."
     },
     {
-      "project": "dallo-usa",
-      "task_id": "t47",
-      "title": "Wire contact-form lead delivery (Resend env vars in Vercel)",
-      "reason": "Resend API key not set in Vercel — every contact/wholesale form submission returns 503 and tells customers to email directly instead."
+      "project": "Tasks Platform (claude-todos-skill rebuild)",
+      "task_id": "t266",
+      "title": "Project Truth worker: no pool-lifetime kills, honest DB-drop labels, unreadable files skipped",
+      "reason": "Last acceptance item: watch one truth_reconcile job live. No job queued since 2026-08-17. Unblocks when t211 ships on_demand producer or Haniel requests a manual refresh."
+    },
+    {
+      "project": "Module Starter",
+      "task_id": "t25",
+      "title": "SMS module (DEFERRED)",
+      "reason": "Deferred by decision — do not start until an SMS provider is chosen."
     }
   ]
 }
