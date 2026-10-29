@@ -1,15 +1,15 @@
 {
-  "date": "2026-10-28",
-  "generated_at": "2026-10-28T10:12:30Z",
-  "data_as_of": "2026-10-28T05:00:23+00:00",
-  "greeting": "Morning, Haniel. Wednesday — time to close some real V1 debt and give the Tomato scanner its first eyes.",
-  "hype": "t164's purge guard is overdue and the job already ran — ship it, knock out the client-reply K2 bug, then spend the afternoon wiring the scanner diagnostics that make every future fix debuggable. These are not nice-to-haves. Let's go.",
-  "notice": "t164 (retention purge guard) missed its 2026-10-20 ship target — the purge has already executed once. First block, no excuses.",
+  "date": "2026-10-29",
+  "generated_at": "2026-10-29T10:20:00Z",
+  "data_as_of": "2026-10-29T05:00:30+00:00",
+  "greeting": "Morning, Haniel. Thursday — four critical lock bugs in GS-ERP Next are sitting there waiting to corrupt real customer data. Kill them before lunch, squash 445 migrations in the afternoon, then finally close t164 which has been overdue for nine days.",
+  "hype": "Every one of those four lock fixes is under 30-60 minutes of targeted surgery. They're not vague — you have the file name, the line number, and the exact pattern. Bang them out one by one, then give the afternoon to the squash and the purge guard. Today you can close six real bugs.",
+  "notice": "t164 (retention purge guard) is 9 days overdue — the nightly purge already ran once on 2026-10-22. This must ship today.",
   "difficulty": {
     "rating": "Solid",
-    "planned_minutes": 390,
-    "available_minutes": 435,
-    "ratio": 0.9,
+    "planned_minutes": 360,
+    "available_minutes": 420,
+    "ratio": 0.86,
     "note": ""
   },
   "window": {
@@ -19,62 +19,264 @@
   "schedule": [
     {
       "start": "09:00",
-      "end": "10:00",
+      "end": "09:30",
+      "slug": "gs-erp-next",
+      "project": "GS-ERP Next",
+      "task_id": "t46",
+      "title": "Lock fix: CK5 markProjectComplete can complete a cancelled order",
+      "estimate": "s",
+      "kind": "task"
+    },
+    {
+      "start": "09:45",
+      "end": "10:15",
+      "slug": "gs-erp-next",
+      "project": "GS-ERP Next",
+      "task_id": "t48",
+      "title": "Lock fix: 3 estimate transitions run with no transaction at all",
+      "estimate": "s",
+      "kind": "task"
+    },
+    {
+      "start": "10:30",
+      "end": "11:30",
+      "slug": "gs-erp-next",
+      "project": "GS-ERP Next",
+      "task_id": "t47",
+      "title": "Lock fix: WorkflowTransitionSupport overwrites phase/substep",
+      "estimate": "m",
+      "kind": "task"
+    },
+    {
+      "start": "11:45",
+      "end": "12:45",
+      "slug": "gs-erp-next",
+      "project": "GS-ERP Next",
+      "task_id": "t50",
+      "title": "Lock fix: invoice writes outside a lock",
+      "estimate": "m",
+      "kind": "task"
+    },
+    {
+      "start": "12:45",
+      "end": "13:45",
+      "kind": "lunch",
+      "title": "Lunch"
+    },
+    {
+      "start": "13:45",
+      "end": "15:45",
+      "slug": "gs-erp-next",
+      "project": "GS-ERP Next",
+      "task_id": "t5",
+      "title": "Squash 445 migrations into one clean baseline schema",
+      "estimate": "l",
+      "kind": "task"
+    },
+    {
+      "start": "16:00",
+      "end": "17:00",
       "slug": "tasks-platform-claude-todos-skill-rebuild",
       "project": "Tasks Platform (claude-todos-skill rebuild)",
       "task_id": "t164",
       "title": "Retention purge never destroys evidence of open work",
       "estimate": "m",
       "kind": "task"
-    },
-    {
-      "start": "10:15",
-      "end": "10:45",
-      "slug": "tasks-platform-claude-todos-skill-rebuild",
-      "project": "Tasks Platform (claude-todos-skill rebuild)",
-      "task_id": "t262",
-      "title": "A local dashboard build never breaks the running Mac dashboard",
-      "estimate": "s",
-      "kind": "task"
-    },
-    {
-      "start": "11:00",
-      "end": "13:00",
-      "slug": "tasks-platform-claude-todos-skill-rebuild",
-      "project": "Tasks Platform (claude-todos-skill rebuild)",
-      "task_id": "t165",
-      "title": "Dismissed and legacy-closed requests stop showing clients a live status",
-      "estimate": "l",
-      "kind": "task"
-    },
-    {
-      "start": "13:00",
-      "end": "14:00",
-      "kind": "lunch",
-      "title": "Lunch"
-    },
-    {
-      "start": "14:00",
-      "end": "16:00",
-      "slug": "tomato-android-internal-field-tools",
-      "project": "Tomato Android — Internal Field Tools",
-      "task_id": "p1t0",
-      "title": "Build on-device scan diagnostics and session export",
-      "estimate": "l",
-      "kind": "task"
-    },
-    {
-      "start": "16:15",
-      "end": "17:15",
-      "slug": "tomato-android-internal-field-tools",
-      "project": "Tomato Android — Internal Field Tools",
-      "task_id": "p1t1",
-      "title": "Create the structured S25 room-scan test matrix",
-      "estimate": "m",
-      "kind": "task"
     }
   ],
   "projects": [
+    {
+      "slug": "gs-erp-next",
+      "project": "GS-ERP Next",
+      "client": "GS-ERP Next",
+      "tasks_total": 78,
+      "tasks_done": 36,
+      "on_deck": false,
+      "tasks": [
+        {
+          "id": "t46",
+          "title": "Lock fix: CK5 markProjectComplete can complete a cancelled order and release installer retention",
+          "phase": "P1 · Foundation: true names, clean schema, dead code out",
+          "estimate": "s",
+          "priority": "high",
+          "status": "todo",
+          "notes": "CkInspectionTransitions.php:139 — add status re-check with lockForUpdate() inside a DB::transaction.",
+          "block": {
+            "start": "09:00",
+            "end": "09:30"
+          },
+          "prep": {
+            "what": "Prevent the CK5 workflow step from completing an already-cancelled project and erroneously releasing installer retention pay.",
+            "understand": "Race: a project is cancelled (status flips) while a concurrent call to markProjectComplete reads the pre-cancel status. Without a lock, both reads see non-cancelled and proceed. lockForUpdate() forces the second caller to wait and re-read the true post-lock status.",
+            "approach": [
+              "Open CkInspectionTransitions.php:139 — find the markProjectComplete method entry.",
+              "Ensure the entire method body is wrapped in `DB::transaction(fn() => ...)`.",
+              "Replace the project load with `Project::lockForUpdate()->findOrFail($id)`.",
+              "Add early guard: `if ($project->status === 'cancelled') { throw new \\LogicException('Cannot complete a cancelled project'); }`",
+              "Run CkInspectionTransitions tests."
+            ],
+            "resources": [
+              "CkInspectionTransitions.php:139",
+              "Project model status constants",
+              "Existing CkInspection tests"
+            ]
+          }
+        },
+        {
+          "id": "t48",
+          "title": "Lock fix: 3 estimate transitions run with no transaction at all",
+          "phase": "P1 · Foundation: true names, clean schema, dead code out",
+          "estimate": "s",
+          "priority": "high",
+          "status": "todo",
+          "notes": "EstimateTransitions.php:37, :807, :849 — wrap each in DB::transaction().",
+          "block": {
+            "start": "09:45",
+            "end": "10:15"
+          },
+          "prep": {
+            "what": "Wrap 3 estimate transition methods in DB::transaction() so their multi-record status changes are atomic.",
+            "understand": "These methods update several related records with no transaction wrapper. A mid-method error leaves the DB in a partial state. Simply wrapping in DB::transaction() is the minimal fix — if any step throws, the whole thing rolls back.",
+            "approach": [
+              "Open EstimateTransitions.php. Go to lines :37, :807, :849 to identify the three transition methods.",
+              "For each: wrap the entire method body in `return DB::transaction(function () use (...) { ... });`",
+              "Verify no outer transaction already wraps callers (grep for callsites).",
+              "Run Estimate-related tests."
+            ],
+            "resources": [
+              "EstimateTransitions.php:37, :807, :849",
+              "Existing Estimate tests"
+            ]
+          }
+        },
+        {
+          "id": "t47",
+          "title": "Lock fix: workflow root — WorkflowTransitionSupport::transition overwrites phase/substep",
+          "phase": "P1 · Foundation: true names, clean schema, dead code out",
+          "estimate": "m",
+          "priority": "high",
+          "status": "todo",
+          "notes": "WorkflowTransitionSupport.php:135, :270 — use fresh()->lockForUpdate() to prevent concurrent overwrites.",
+          "block": {
+            "start": "10:30",
+            "end": "11:30"
+          },
+          "prep": {
+            "what": "Prevent two concurrent workflow transition calls from reading stale phase/substep state and overwriting each other's writes.",
+            "understand": "transition() reads current phase/substep, computes next, then writes. A second concurrent call reads the same pre-write state and writes conflicting values. This is the root lock defect — fixing it here protects all workflows that use this support class.",
+            "approach": [
+              "Open WorkflowTransitionSupport.php:135 — find where the model is first loaded before transition logic.",
+              "Replace the model load with `$model->fresh()->lockForUpdate()` (or add fresh/lockForUpdate if the model isn't refreshed here).",
+              "At line :270 — apply the same fresh()->lockForUpdate() pattern to the second read.",
+              "Ensure the entire transition block is inside `DB::transaction()`.",
+              "Run workflow transition tests."
+            ],
+            "resources": [
+              "WorkflowTransitionSupport.php:135, :270",
+              "Workflow transition tests"
+            ]
+          }
+        },
+        {
+          "id": "t50",
+          "title": "Lock fix: invoice writes outside a lock",
+          "phase": "P1 · Foundation: true names, clean schema, dead code out",
+          "estimate": "m",
+          "priority": "high",
+          "status": "todo",
+          "notes": "InvoiceStatusRollup.php:10 — 5 write paths need lockForUpdate() on the initial load.",
+          "block": {
+            "start": "11:45",
+            "end": "12:45"
+          },
+          "prep": {
+            "what": "Add lockForUpdate() to all 5 write paths in InvoiceStatusRollup so invoice status aggregations are never written on stale reads.",
+            "understand": "InvoiceStatusRollup reads invoice states and writes a rolled-up status. Two concurrent rollups can both read the same pre-write state and produce conflicting results. lockForUpdate() on the initial load prevents concurrent readers from advancing until the first caller commits.",
+            "approach": [
+              "Open InvoiceStatusRollup.php:10. Grep for `->save()` and `->update()` in this file to identify all 5 write paths.",
+              "For each path: trace back to where the relevant record is first loaded. Replace with `->lockForUpdate()->findOrFail()`.",
+              "Verify all 5 paths are inside `DB::transaction()`.",
+              "Run invoice rollup tests."
+            ],
+            "resources": [
+              "InvoiceStatusRollup.php:10",
+              "Invoice / rollup tests"
+            ]
+          }
+        },
+        {
+          "id": "t5",
+          "title": "Squash 445 migrations into one clean baseline schema; data seeding moves to seeders",
+          "phase": "P1 · Foundation: true names, clean schema, dead code out",
+          "estimate": "l",
+          "priority": "high",
+          "status": "in_progress",
+          "notes": "artisan schema:dump --prune. Unblocks t58 and t65.",
+          "block": {
+            "start": "13:45",
+            "end": "15:45"
+          },
+          "prep": {
+            "what": "Replace 445 individual migration files with a single schema dump so fresh installs are fast and the migration table is clean.",
+            "understand": "`artisan schema:dump --prune` writes the current DB schema to `database/schema/*.sql` and deletes migration files already reflected in it. Fresh installs run schema.sql then any remaining (post-squash) migrations. This is a destructive-but-reversible git change — commit the schema dump and the deleted migration files in one commit.",
+            "approach": [
+              "Verify all 445 migrations have been run on the local dev DB: `php artisan migrate:status` — all should show 'Ran'.",
+              "Run `php artisan schema:dump --prune` — confirm it writes `database/schema/*.sql` and removes migration files.",
+              "Spot-check the generated schema.sql: 5-10 known critical tables (projects, estimates, invoices, users, etc.) must be present with correct columns.",
+              "Test on a clean DB: `php artisan migrate:fresh` should apply without errors.",
+              "Commit the schema dump + deleted migration files together with a clear message."
+            ],
+            "resources": [
+              "database/migrations/ (445 files)",
+              "database/schema/ (output dir)",
+              "`php artisan schema:dump --prune` (Laravel 9+)",
+              "`php artisan migrate:fresh` for validation"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "slug": "tasks-platform-claude-todos-skill-rebuild",
+      "project": "Tasks Platform (claude-todos-skill rebuild)",
+      "client": "Tasks Platform (claude-todos-skill rebuild)",
+      "tasks_total": 263,
+      "tasks_done": 168,
+      "on_deck": false,
+      "tasks": [
+        {
+          "id": "t164",
+          "title": "Retention purge never destroys evidence of open work",
+          "phase": "V1 · Client request lifecycle is correct",
+          "estimate": "m",
+          "priority": "high",
+          "status": "in_progress",
+          "notes": "V1 stabilization K1. OVERDUE since 2026-10-20 — purge first ran 2026-10-22 04:00. `task-request-context.ts` is the verification surface — change it only if the purged-state test fails.",
+          "block": {
+            "start": "16:00",
+            "end": "17:00"
+          },
+          "prep": {
+            "what": "Guard the nightly retention purge so it never hard-deletes task evidence belonging to still-open client work.",
+            "understand": "The V1 purge job already ran on 2026-10-22. K1 of V1 stabilization says open work is always kept. The guard condition and its test name are in the K1 spec. This has been in_progress since yesterday — confirm what is already done, then ship the remaining piece.",
+            "approach": [
+              "Check git status / last commit on tasks-platform: what did yesterday's session land?",
+              "Open `docs/current/v1-stabilization-audit-2026-09-28.md` → K1 section: confirm the guard condition and expected test name.",
+              "Find the retention purge job (grep `purge` or `retention`) — verify the open-work skip predicate is present.",
+              "Run the purged-state test suite: `npm test` or equivalent filtered to retention/purge tests. Fix any failure in `task-request-context.ts`.",
+              "Query the audit ledger (or DB) to confirm the 2026-10-22 run left no open-work rows deleted.",
+              "Mark t164 done and push."
+            ],
+            "resources": [
+              "docs/current/v1-stabilization-audit-2026-09-28.md (K1 section)",
+              "task-request-context.ts",
+              "Retention purge job file (grep `purge` or `retention`)",
+              "Audit ledger / DB on the VPS"
+            ]
+          }
+        }
+      ]
+    },
     {
       "slug": "az-print-shop-erp",
       "project": "AZ Print Shop ERP",
@@ -130,15 +332,6 @@
       "tasks": []
     },
     {
-      "slug": "gs-erp-next",
-      "project": "GS-ERP Next",
-      "client": "GS-ERP Next",
-      "tasks_total": 72,
-      "tasks_done": 24,
-      "on_deck": true,
-      "tasks": []
-    },
-    {
       "slug": "gloopy-3d-youtube-shorts",
       "project": "Gloopy 3D · YouTube Shorts",
       "client": "Gloopy 3D · YouTube Shorts",
@@ -187,8 +380,8 @@
       "slug": "pro-counters-erp",
       "project": "Pro Counters ERP",
       "client": "procounters_erp",
-      "tasks_total": 347,
-      "tasks_done": 308,
+      "tasks_total": 355,
+      "tasks_done": 310,
       "on_deck": true,
       "tasks": []
     },
@@ -220,171 +413,13 @@
       "tasks": []
     },
     {
-      "slug": "tasks-platform-claude-todos-skill-rebuild",
-      "project": "Tasks Platform (claude-todos-skill rebuild)",
-      "client": "Tasks Platform (claude-todos-skill rebuild)",
-      "tasks_total": 263,
-      "tasks_done": 168,
-      "on_deck": false,
-      "tasks": [
-        {
-          "id": "t164",
-          "title": "Retention purge never destroys evidence of open work",
-          "phase": "V1 · Client request lifecycle",
-          "estimate": "m",
-          "priority": "high",
-          "status": "in_progress",
-          "notes": "V1 stabilization K1. Hard deadline was 2026-10-20; purge first ran 2026-10-22 04:00. `task-request-context.ts` is the verification surface only — change it only if the purged-state test fails.",
-          "block": {
-            "start": "09:00",
-            "end": "10:00"
-          },
-          "prep": {
-            "what": "Guard the nightly retention purge so it never hard-deletes task evidence belonging to still-open client work.",
-            "understand": "The V1 purge job already ran on 2026-10-22. K1 of the V1 stabilization plan says open work is always kept. `task-request-context.ts` is the audit surface — the guard condition must be there; the test proves it.",
-            "approach": [
-              "Open `docs/current/v1-stabilization-audit-2026-09-28.md` and find the K1 spec — exact guard condition and expected test name.",
-              "Find the retention purge job (grep for `purge` or `retention`) and verify the open-work skip predicate is in place.",
-              "Run the purged-state test suite; if any test fails, add or fix the guard in `task-request-context.ts`.",
-              "Query the audit ledger (or DB) to confirm no open-work rows were deleted in the 2026-10-22 run."
-            ],
-            "resources": [
-              "docs/current/v1-stabilization-audit-2026-09-28.md",
-              "task-request-context.ts",
-              "retention purge job file (grep `purge` or `retention` in the codebase)",
-              "audit ledger / DB query on the VPS"
-            ]
-          }
-        },
-        {
-          "id": "t262",
-          "title": "A local dashboard build never breaks the running Mac dashboard",
-          "phase": "V1 · Calm operator redesign",
-          "estimate": "s",
-          "priority": "high",
-          "status": "todo",
-          "notes": "Options: server re-reads `runtime-assets.js` when react-dist changes, or build writes to a staging dir and swaps atomically, then signals the server.",
-          "block": {
-            "start": "10:15",
-            "end": "10:45"
-          },
-          "prep": {
-            "what": "Make the Vite build output atomic so a running Mac dashboard is never served a half-updated JS bundle.",
-            "understand": "The Mac server reads from the build output dir. A mid-flight build overwrites files the server is actively serving, causing 404s or broken state. Atomic swap (write to staging, rename) prevents this entirely.",
-            "approach": [
-              "Find current build output path (likely `react-dist/`) and how the server reads `runtime-assets.js` on startup.",
-              "Implement atomic swap: build to a staging dir (e.g. `react-dist-next/`), then `fs.rename()` over `react-dist/` and send SIGUSR1 to the server to reload.",
-              "Alternative if rename is complex: add a file-watcher on `runtime-assets.js` so the server re-reads it on change.",
-              "Test: trigger `npm run build` while the dashboard is open in a browser; confirm no broken state or downtime."
-            ],
-            "resources": [
-              "vite.config.ts / build script",
-              "runtime-assets.js (server read logic)",
-              "Mac dashboard server startup / signal handler",
-              "Node.js `fs.rename()` docs (atomic on POSIX)"
-            ]
-          }
-        },
-        {
-          "id": "t165",
-          "title": "Dismissed and legacy-closed requests stop showing clients a live status",
-          "phase": "V1 · Client request lifecycle",
-          "estimate": "l",
-          "priority": "high",
-          "status": "todo",
-          "notes": "V1 stabilization K2. The DB CHECK already prevents silent revival. Real defect: raw 400 on client reply needs to become 404. 6 dismissed/Done requests are live in the system.",
-          "block": {
-            "start": "11:00",
-            "end": "13:00"
-          },
-          "prep": {
-            "what": "Stop dismissed and legacy-closed client requests from showing a live status or leaking a raw 400 when a client tries to reply to them.",
-            "understand": "K2 of V1 stabilization. The DB CHECK already blocks silent revival, so the transactional safety is there. The surface bug: clients see a raw 400 (not 404) on reply, and their list view still shows these requests as active. 6 dismissed/Done requests are currently live.",
-            "approach": [
-              "Read K2 in `docs/current/v1-stabilization-audit-2026-09-28.md` for the exact endpoints and fix spec.",
-              "Find the client-reply endpoint: change the 400 from the CHECK violation to a clean 404 with a safe message ('Request not found').",
-              "Update the client-facing request list query to filter out `dismissed` and `legacy-closed` statuses.",
-              "Smoke-test with one of the 6 known affected requests: reply should return 404; request should not appear in the client list."
-            ],
-            "resources": [
-              "docs/current/v1-stabilization-audit-2026-09-28.md (K2 section)",
-              "client reply endpoint (grep `client.*reply` or `request.*reply`)",
-              "client-facing request list query/controller",
-              "RequestStatus enum / state machine",
-              "6 known dismissed/Done request IDs (in the audit doc or DB)"
-            ]
-          }
-        }
-      ]
-    },
-    {
-      "slug": "tomato-android-internal-field-tools",
-      "project": "Tomato Android — Internal Field Tools",
-      "client": "Tomato Android — Internal Field Tools",
+      "slug": "tomato-android",
+      "project": "Tomato Android",
+      "client": "Tomato Android",
       "tasks_total": 35,
       "tasks_done": 5,
-      "on_deck": false,
-      "tasks": [
-        {
-          "id": "p1t0",
-          "title": "Build on-device scan diagnostics and session export",
-          "phase": "Scanner Evidence — Make Tracking Failures Observable",
-          "estimate": "l",
-          "priority": "high",
-          "status": "todo",
-          "notes": "Record tracking state, plane/depth availability, camera pose, locked-corner samples, rejection reasons, and timing without collecting camera imagery by default.",
-          "block": {
-            "start": "14:00",
-            "end": "16:00"
-          },
-          "prep": {
-            "what": "Build a diagnostics module that records the scanner’s internal state every frame (no camera pixels) and lets you export the session log as JSON.",
-            "understand": "Phase 1 goal: make tracking failures observable before trying to fix them. ARCore’s `Frame.getTrackingState()`, `TrackingFailureReason`, depth availability, and corner lock events are the signals. A serializable per-session log lets you replay failure conditions on a desk.",
-            "approach": [
-              "Design `DiagnosticsSession` data class: fields for `trackingState`, `trackingFailureReason`, `planeCount`, `depthAvailable`, `cornerLockEvents[]`, `rejectionReasons[]`, timestamps — no pixel buffers.",
-              "Hook into the ARCore `Session.update()` callback; sample state on change or ~2 fps (not every frame — stay cheap).",
-              "Add an export function: serialize to JSON, write to `Context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS)`, share via `FileProvider` + `Intent.ACTION_SEND`.",
-              "Verify no camera imagery is ever stored: no `ImageReader`, no `AugmentedImage` pixel captures, no `Frame.acquireCameraImage()` calls in the new code."
-            ],
-            "resources": [
-              "ARCore `Session.update()` / `Frame` API",
-              "`TrackingState`, `TrackingFailureReason` enums (ARCore)",
-              "Android `FileProvider` export pattern",
-              "`Environment.DIRECTORY_DOWNLOADS` + `Intent.ACTION_SEND`",
-              "Existing scanner session / ARCore session code in the repo"
-            ]
-          }
-        },
-        {
-          "id": "p1t1",
-          "title": "Create the structured S25 room-scan test matrix",
-          "phase": "Scanner Evidence — Make Tracking Failures Observable",
-          "estimate": "m",
-          "priority": "high",
-          "status": "todo",
-          "notes": "Define repeatable cases for small/large rooms, plain walls, textured walls, reflective floors, low light, clutter, openings, and temporary tracking loss.",
-          "block": {
-            "start": "16:15",
-            "end": "17:15"
-          },
-          "prep": {
-            "what": "Write a repeatable test document for S25 room-scan scenarios — each row is a setup, expected ARCore behavior, and pass/fail threshold.",
-            "understand": "You can’t stabilize what you can’t measure. This matrix is your before/after baseline for every scanner change. S25 has specific IMU and camera characteristics; the `TrackingFailureReason` enum names the failure modes to cover. Pair each scenario with the diagnostics export from p1t0.",
-            "approach": [
-              "List all scanner failure modes: plain walls, reflective floors, low light, clutter, small rooms (<3m), large rooms (>8m), doorways/openings, temporary tracking loss.",
-              "For each scenario: define physical setup, expected `TrackingState` progression, pass threshold (e.g. ‘locks 4 corners within 30s’), and which `TrackingFailureReason` to watch for.",
-              "Create `tests/scan-test-matrix.md` (or wherever test docs live) with a Markdown table per scenario group.",
-              "Link each scenario to the diagnostics export fields from p1t0 so you know exactly what to capture during the test run."
-            ],
-            "resources": [
-              "`TrackingFailureReason` enum values (ARCore docs)",
-              "Samsung S25 ARCore compatibility / IMU notes",
-              "Diagnostics session export from p1t0",
-              "Existing test docs in `/tests` if any"
-            ]
-          }
-        }
-      ]
+      "on_deck": true,
+      "tasks": []
     },
     {
       "slug": "dallo-usa",
@@ -417,8 +452,8 @@
       "slug": "orc",
       "project": "orc",
       "client": "orc",
-      "tasks_total": 107,
-      "tasks_done": 51,
+      "tasks_total": 187,
+      "tasks_done": 87,
       "on_deck": true,
       "tasks": []
     }
@@ -441,6 +476,18 @@
       "task_id": "t25",
       "title": "SMS module (DEFERRED)",
       "reason": "Deferred by decision — do not start until an SMS provider is chosen."
+    },
+    {
+      "project": "Fitness Zone",
+      "task_id": "t10",
+      "title": "Products & photos from gym owners",
+      "reason": "Waiting on gym owners for real products and photos."
+    },
+    {
+      "project": "Fitness Zone",
+      "task_id": "t11",
+      "title": "Payment integration keys",
+      "reason": "Waiting on gym owners + Stripe/Square payment keys."
     }
   ]
 }

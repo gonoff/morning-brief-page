@@ -1,0 +1,493 @@
+{
+  "date": "2026-10-29",
+  "generated_at": "2026-10-29T10:20:00Z",
+  "data_as_of": "2026-10-29T05:00:30+00:00",
+  "greeting": "Morning, Haniel. Thursday — four critical lock bugs in GS-ERP Next are sitting there waiting to corrupt real customer data. Kill them before lunch, squash 445 migrations in the afternoon, then finally close t164 which has been overdue for nine days.",
+  "hype": "Every one of those four lock fixes is under 30-60 minutes of targeted surgery. They're not vague — you have the file name, the line number, and the exact pattern. Bang them out one by one, then give the afternoon to the squash and the purge guard. Today you can close six real bugs.",
+  "notice": "t164 (retention purge guard) is 9 days overdue — the nightly purge already ran once on 2026-10-22. This must ship today.",
+  "difficulty": {
+    "rating": "Solid",
+    "planned_minutes": 360,
+    "available_minutes": 420,
+    "ratio": 0.86,
+    "note": ""
+  },
+  "window": {
+    "start": "09:00",
+    "end": "18:00"
+  },
+  "schedule": [
+    {
+      "start": "09:00",
+      "end": "09:30",
+      "slug": "gs-erp-next",
+      "project": "GS-ERP Next",
+      "task_id": "t46",
+      "title": "Lock fix: CK5 markProjectComplete can complete a cancelled order",
+      "estimate": "s",
+      "kind": "task"
+    },
+    {
+      "start": "09:45",
+      "end": "10:15",
+      "slug": "gs-erp-next",
+      "project": "GS-ERP Next",
+      "task_id": "t48",
+      "title": "Lock fix: 3 estimate transitions run with no transaction at all",
+      "estimate": "s",
+      "kind": "task"
+    },
+    {
+      "start": "10:30",
+      "end": "11:30",
+      "slug": "gs-erp-next",
+      "project": "GS-ERP Next",
+      "task_id": "t47",
+      "title": "Lock fix: WorkflowTransitionSupport overwrites phase/substep",
+      "estimate": "m",
+      "kind": "task"
+    },
+    {
+      "start": "11:45",
+      "end": "12:45",
+      "slug": "gs-erp-next",
+      "project": "GS-ERP Next",
+      "task_id": "t50",
+      "title": "Lock fix: invoice writes outside a lock",
+      "estimate": "m",
+      "kind": "task"
+    },
+    {
+      "start": "12:45",
+      "end": "13:45",
+      "kind": "lunch",
+      "title": "Lunch"
+    },
+    {
+      "start": "13:45",
+      "end": "15:45",
+      "slug": "gs-erp-next",
+      "project": "GS-ERP Next",
+      "task_id": "t5",
+      "title": "Squash 445 migrations into one clean baseline schema",
+      "estimate": "l",
+      "kind": "task"
+    },
+    {
+      "start": "16:00",
+      "end": "17:00",
+      "slug": "tasks-platform-claude-todos-skill-rebuild",
+      "project": "Tasks Platform (claude-todos-skill rebuild)",
+      "task_id": "t164",
+      "title": "Retention purge never destroys evidence of open work",
+      "estimate": "m",
+      "kind": "task"
+    }
+  ],
+  "projects": [
+    {
+      "slug": "gs-erp-next",
+      "project": "GS-ERP Next",
+      "client": "GS-ERP Next",
+      "tasks_total": 78,
+      "tasks_done": 36,
+      "on_deck": false,
+      "tasks": [
+        {
+          "id": "t46",
+          "title": "Lock fix: CK5 markProjectComplete can complete a cancelled order and release installer retention",
+          "phase": "P1 · Foundation: true names, clean schema, dead code out",
+          "estimate": "s",
+          "priority": "high",
+          "status": "todo",
+          "notes": "CkInspectionTransitions.php:139 — add status re-check with lockForUpdate() inside a DB::transaction.",
+          "block": {
+            "start": "09:00",
+            "end": "09:30"
+          },
+          "prep": {
+            "what": "Prevent the CK5 workflow step from completing an already-cancelled project and erroneously releasing installer retention pay.",
+            "understand": "Race: a project is cancelled (status flips) while a concurrent call to markProjectComplete reads the pre-cancel status. Without a lock, both reads see non-cancelled and proceed. lockForUpdate() forces the second caller to wait and re-read the true post-lock status.",
+            "approach": [
+              "Open CkInspectionTransitions.php:139 — find the markProjectComplete method entry.",
+              "Ensure the entire method body is wrapped in `DB::transaction(fn() => ...)`.",
+              "Replace the project load with `Project::lockForUpdate()->findOrFail($id)`.",
+              "Add early guard: `if ($project->status === 'cancelled') { throw new \\LogicException('Cannot complete a cancelled project'); }`",
+              "Run CkInspectionTransitions tests."
+            ],
+            "resources": [
+              "CkInspectionTransitions.php:139",
+              "Project model status constants",
+              "Existing CkInspection tests"
+            ]
+          }
+        },
+        {
+          "id": "t48",
+          "title": "Lock fix: 3 estimate transitions run with no transaction at all",
+          "phase": "P1 · Foundation: true names, clean schema, dead code out",
+          "estimate": "s",
+          "priority": "high",
+          "status": "todo",
+          "notes": "EstimateTransitions.php:37, :807, :849 — wrap each in DB::transaction().",
+          "block": {
+            "start": "09:45",
+            "end": "10:15"
+          },
+          "prep": {
+            "what": "Wrap 3 estimate transition methods in DB::transaction() so their multi-record status changes are atomic.",
+            "understand": "These methods update several related records with no transaction wrapper. A mid-method error leaves the DB in a partial state. Simply wrapping in DB::transaction() is the minimal fix — if any step throws, the whole thing rolls back.",
+            "approach": [
+              "Open EstimateTransitions.php. Go to lines :37, :807, :849 to identify the three transition methods.",
+              "For each: wrap the entire method body in `return DB::transaction(function () use (...) { ... });`",
+              "Verify no outer transaction already wraps callers (grep for callsites).",
+              "Run Estimate-related tests."
+            ],
+            "resources": [
+              "EstimateTransitions.php:37, :807, :849",
+              "Existing Estimate tests"
+            ]
+          }
+        },
+        {
+          "id": "t47",
+          "title": "Lock fix: workflow root — WorkflowTransitionSupport::transition overwrites phase/substep",
+          "phase": "P1 · Foundation: true names, clean schema, dead code out",
+          "estimate": "m",
+          "priority": "high",
+          "status": "todo",
+          "notes": "WorkflowTransitionSupport.php:135, :270 — use fresh()->lockForUpdate() to prevent concurrent overwrites.",
+          "block": {
+            "start": "10:30",
+            "end": "11:30"
+          },
+          "prep": {
+            "what": "Prevent two concurrent workflow transition calls from reading stale phase/substep state and overwriting each other's writes.",
+            "understand": "transition() reads current phase/substep, computes next, then writes. A second concurrent call reads the same pre-write state and writes conflicting values. This is the root lock defect — fixing it here protects all workflows that use this support class.",
+            "approach": [
+              "Open WorkflowTransitionSupport.php:135 — find where the model is first loaded before transition logic.",
+              "Replace the model load with `$model->fresh()->lockForUpdate()` (or add fresh/lockForUpdate if the model isn't refreshed here).",
+              "At line :270 — apply the same fresh()->lockForUpdate() pattern to the second read.",
+              "Ensure the entire transition block is inside `DB::transaction()`.",
+              "Run workflow transition tests."
+            ],
+            "resources": [
+              "WorkflowTransitionSupport.php:135, :270",
+              "Workflow transition tests"
+            ]
+          }
+        },
+        {
+          "id": "t50",
+          "title": "Lock fix: invoice writes outside a lock",
+          "phase": "P1 · Foundation: true names, clean schema, dead code out",
+          "estimate": "m",
+          "priority": "high",
+          "status": "todo",
+          "notes": "InvoiceStatusRollup.php:10 — 5 write paths need lockForUpdate() on the initial load.",
+          "block": {
+            "start": "11:45",
+            "end": "12:45"
+          },
+          "prep": {
+            "what": "Add lockForUpdate() to all 5 write paths in InvoiceStatusRollup so invoice status aggregations are never written on stale reads.",
+            "understand": "InvoiceStatusRollup reads invoice states and writes a rolled-up status. Two concurrent rollups can both read the same pre-write state and produce conflicting results. lockForUpdate() on the initial load prevents concurrent readers from advancing until the first caller commits.",
+            "approach": [
+              "Open InvoiceStatusRollup.php:10. Grep for `->save()` and `->update()` in this file to identify all 5 write paths.",
+              "For each path: trace back to where the relevant record is first loaded. Replace with `->lockForUpdate()->findOrFail()`.",
+              "Verify all 5 paths are inside `DB::transaction()`.",
+              "Run invoice rollup tests."
+            ],
+            "resources": [
+              "InvoiceStatusRollup.php:10",
+              "Invoice / rollup tests"
+            ]
+          }
+        },
+        {
+          "id": "t5",
+          "title": "Squash 445 migrations into one clean baseline schema; data seeding moves to seeders",
+          "phase": "P1 · Foundation: true names, clean schema, dead code out",
+          "estimate": "l",
+          "priority": "high",
+          "status": "in_progress",
+          "notes": "artisan schema:dump --prune. Unblocks t58 and t65.",
+          "block": {
+            "start": "13:45",
+            "end": "15:45"
+          },
+          "prep": {
+            "what": "Replace 445 individual migration files with a single schema dump so fresh installs are fast and the migration table is clean.",
+            "understand": "`artisan schema:dump --prune` writes the current DB schema to `database/schema/*.sql` and deletes migration files already reflected in it. Fresh installs run schema.sql then any remaining (post-squash) migrations. This is a destructive-but-reversible git change — commit the schema dump and the deleted migration files in one commit.",
+            "approach": [
+              "Verify all 445 migrations have been run on the local dev DB: `php artisan migrate:status` — all should show 'Ran'.",
+              "Run `php artisan schema:dump --prune` — confirm it writes `database/schema/*.sql` and removes migration files.",
+              "Spot-check the generated schema.sql: 5-10 known critical tables (projects, estimates, invoices, users, etc.) must be present with correct columns.",
+              "Test on a clean DB: `php artisan migrate:fresh` should apply without errors.",
+              "Commit the schema dump + deleted migration files together with a clear message."
+            ],
+            "resources": [
+              "database/migrations/ (445 files)",
+              "database/schema/ (output dir)",
+              "`php artisan schema:dump --prune` (Laravel 9+)",
+              "`php artisan migrate:fresh` for validation"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "slug": "tasks-platform-claude-todos-skill-rebuild",
+      "project": "Tasks Platform (claude-todos-skill rebuild)",
+      "client": "Tasks Platform (claude-todos-skill rebuild)",
+      "tasks_total": 263,
+      "tasks_done": 168,
+      "on_deck": false,
+      "tasks": [
+        {
+          "id": "t164",
+          "title": "Retention purge never destroys evidence of open work",
+          "phase": "V1 · Client request lifecycle is correct",
+          "estimate": "m",
+          "priority": "high",
+          "status": "in_progress",
+          "notes": "V1 stabilization K1. OVERDUE since 2026-10-20 — purge first ran 2026-10-22 04:00. `task-request-context.ts` is the verification surface — change it only if the purged-state test fails.",
+          "block": {
+            "start": "16:00",
+            "end": "17:00"
+          },
+          "prep": {
+            "what": "Guard the nightly retention purge so it never hard-deletes task evidence belonging to still-open client work.",
+            "understand": "The V1 purge job already ran on 2026-10-22. K1 of V1 stabilization says open work is always kept. The guard condition and its test name are in the K1 spec. This has been in_progress since yesterday — confirm what is already done, then ship the remaining piece.",
+            "approach": [
+              "Check git status / last commit on tasks-platform: what did yesterday's session land?",
+              "Open `docs/current/v1-stabilization-audit-2026-09-28.md` → K1 section: confirm the guard condition and expected test name.",
+              "Find the retention purge job (grep `purge` or `retention`) — verify the open-work skip predicate is present.",
+              "Run the purged-state test suite: `npm test` or equivalent filtered to retention/purge tests. Fix any failure in `task-request-context.ts`.",
+              "Query the audit ledger (or DB) to confirm the 2026-10-22 run left no open-work rows deleted.",
+              "Mark t164 done and push."
+            ],
+            "resources": [
+              "docs/current/v1-stabilization-audit-2026-09-28.md (K1 section)",
+              "task-request-context.ts",
+              "Retention purge job file (grep `purge` or `retention`)",
+              "Audit ledger / DB on the VPS"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "slug": "az-print-shop-erp",
+      "project": "AZ Print Shop ERP",
+      "client": "AZ Team",
+      "tasks_total": 132,
+      "tasks_done": 51,
+      "on_deck": true,
+      "tasks": []
+    },
+    {
+      "slug": "az-takeoff-saas",
+      "project": "AZ Takeoff SaaS",
+      "client": "AZ Takeoff",
+      "tasks_total": 79,
+      "tasks_done": 41,
+      "on_deck": true,
+      "tasks": []
+    },
+    {
+      "slug": "az-team-ai-system",
+      "project": "AZ Team AI System",
+      "client": "AZ Team AI System",
+      "tasks_total": 74,
+      "tasks_done": 71,
+      "on_deck": true,
+      "tasks": []
+    },
+    {
+      "slug": "cleansaas",
+      "project": "CleanSaaS",
+      "client": "CleanSaaS",
+      "tasks_total": 4,
+      "tasks_done": 3,
+      "on_deck": true,
+      "tasks": []
+    },
+    {
+      "slug": "fitness-zone",
+      "project": "Fitness Zone",
+      "client": "Fitness Zone",
+      "tasks_total": 13,
+      "tasks_done": 10,
+      "on_deck": true,
+      "tasks": []
+    },
+    {
+      "slug": "gs-woodworking-erp",
+      "project": "GS WoodWorking ERP",
+      "client": "GS-ERP",
+      "tasks_total": 252,
+      "tasks_done": 36,
+      "on_deck": true,
+      "tasks": []
+    },
+    {
+      "slug": "gloopy-3d-youtube-shorts",
+      "project": "Gloopy 3D · YouTube Shorts",
+      "client": "Gloopy 3D · YouTube Shorts",
+      "tasks_total": 176,
+      "tasks_done": 92,
+      "on_deck": true,
+      "tasks": []
+    },
+    {
+      "slug": "gloopy3d-site",
+      "project": "Gloopy3D Site",
+      "client": "Gloopy3D",
+      "tasks_total": 0,
+      "tasks_done": 0,
+      "on_deck": true,
+      "tasks": []
+    },
+    {
+      "slug": "haniel-finances",
+      "project": "Haniel Finances",
+      "client": "Haniel Finances",
+      "tasks_total": 35,
+      "tasks_done": 20,
+      "on_deck": true,
+      "tasks": []
+    },
+    {
+      "slug": "module-starter",
+      "project": "Module Starter",
+      "client": "Module",
+      "tasks_total": 69,
+      "tasks_done": 27,
+      "on_deck": true,
+      "tasks": []
+    },
+    {
+      "slug": "peptiworth",
+      "project": "PeptiWorth",
+      "client": "PeptiWorth",
+      "tasks_total": 0,
+      "tasks_done": 0,
+      "on_deck": true,
+      "tasks": []
+    },
+    {
+      "slug": "pro-counters-erp",
+      "project": "Pro Counters ERP",
+      "client": "procounters_erp",
+      "tasks_total": 355,
+      "tasks_done": 310,
+      "on_deck": true,
+      "tasks": []
+    },
+    {
+      "slug": "pro-counters-website-rebuild",
+      "project": "Pro Counters — Website Rebuild",
+      "client": "Pro Counters New England (PCNE)",
+      "tasks_total": 33,
+      "tasks_done": 21,
+      "on_deck": true,
+      "tasks": []
+    },
+    {
+      "slug": "spellkin-nft-project",
+      "project": "Spellkin (NFT project)",
+      "client": "Spellkin",
+      "tasks_total": 0,
+      "tasks_done": 0,
+      "on_deck": true,
+      "tasks": []
+    },
+    {
+      "slug": "takeoff-engine-saas",
+      "project": "Takeoff Engine Saas",
+      "client": "Takeoff Engine",
+      "tasks_total": 37,
+      "tasks_done": 26,
+      "on_deck": true,
+      "tasks": []
+    },
+    {
+      "slug": "tomato-android",
+      "project": "Tomato Android",
+      "client": "Tomato Android",
+      "tasks_total": 35,
+      "tasks_done": 5,
+      "on_deck": true,
+      "tasks": []
+    },
+    {
+      "slug": "dallo-usa",
+      "project": "dallo-usa",
+      "client": "Dallo",
+      "tasks_total": 46,
+      "tasks_done": 21,
+      "on_deck": true,
+      "tasks": []
+    },
+    {
+      "slug": "econoplatform",
+      "project": "econoplatform",
+      "client": "",
+      "tasks_total": 61,
+      "tasks_done": 33,
+      "on_deck": true,
+      "tasks": []
+    },
+    {
+      "slug": "influencer-agent",
+      "project": "influencer-agent",
+      "client": "influencer-agent",
+      "tasks_total": 52,
+      "tasks_done": 9,
+      "on_deck": true,
+      "tasks": []
+    },
+    {
+      "slug": "orc",
+      "project": "orc",
+      "client": "orc",
+      "tasks_total": 187,
+      "tasks_done": 87,
+      "on_deck": true,
+      "tasks": []
+    }
+  ],
+  "waiting_on": [
+    {
+      "project": "Tasks Platform (claude-todos-skill rebuild)",
+      "task_id": "t160",
+      "title": "GitHub contribution panel is fresh with a versioned refresher",
+      "reason": "Waiting on Haniel to run: `gh auth refresh -h github.com -s read:user` (approved 2026-09-28, action pending)."
+    },
+    {
+      "project": "Tasks Platform (claude-todos-skill rebuild)",
+      "task_id": "t266",
+      "title": "Project Truth worker: no pool-lifetime kills, honest DB-drop labels, unreadable files skipped",
+      "reason": "Last acceptance item: watch one truth_reconcile job live. No job queued since 2026-08-17. Unblocks when t211 ships on_demand producer or Haniel requests a manual refresh."
+    },
+    {
+      "project": "Module Starter",
+      "task_id": "t25",
+      "title": "SMS module (DEFERRED)",
+      "reason": "Deferred by decision — do not start until an SMS provider is chosen."
+    },
+    {
+      "project": "Fitness Zone",
+      "task_id": "t10",
+      "title": "Products & photos from gym owners",
+      "reason": "Waiting on gym owners for real products and photos."
+    },
+    {
+      "project": "Fitness Zone",
+      "task_id": "t11",
+      "title": "Payment integration keys",
+      "reason": "Waiting on gym owners + Stripe/Square payment keys."
+    }
+  ]
+}
