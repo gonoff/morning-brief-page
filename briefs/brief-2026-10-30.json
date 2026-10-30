@@ -1,0 +1,545 @@
+{
+  "date": "2026-10-30",
+  "generated_at": "2026-10-30T10:15:50Z",
+  "data_as_of": "2026-10-30T05:00:32+00:00",
+  "greeting": "Morning, Haniel. Happy Friday — let's finish this week with something shipped.",
+  "hype": "Dallo gets its missing pages today, Pro Counters unlocks Lighthouse — both projects move forward. Lock in and execute.",
+  "notice": "Two in-progress tasks (dallo t18, t20) are already warm — pick up from where you left off on the B2B page at 4 PM.",
+  "difficulty": {
+    "rating": "Solid",
+    "planned_minutes": 330,
+    "available_minutes": 465,
+    "ratio": 0.71,
+    "note": ""
+  },
+  "window": {
+    "start": "09:00",
+    "end": "18:00"
+  },
+  "schedule": [
+    {
+      "start": "09:00",
+      "end": "09:30",
+      "slug": "pro-counters-website-rebuild",
+      "project": "Pro Counters — Website Rebuild",
+      "task_id": "t2",
+      "title": "Rewrite the privacy policy",
+      "estimate": "s",
+      "kind": "task"
+    },
+    {
+      "start": "09:45",
+      "end": "10:45",
+      "slug": "dallo-usa",
+      "project": "dallo-usa",
+      "task_id": "t10",
+      "title": "Build Why Dallo USA page",
+      "estimate": "m",
+      "kind": "task"
+    },
+    {
+      "start": "11:00",
+      "end": "12:00",
+      "slug": "dallo-usa",
+      "project": "dallo-usa",
+      "task_id": "t11",
+      "title": "Build Contact page",
+      "estimate": "m",
+      "kind": "task"
+    },
+    {
+      "start": "12:15",
+      "end": "12:45",
+      "slug": "dallo-usa",
+      "project": "dallo-usa",
+      "task_id": "t16",
+      "title": "Search",
+      "estimate": "s",
+      "kind": "task"
+    },
+    {
+      "start": "13:00",
+      "end": "14:00",
+      "kind": "lunch",
+      "title": "Lunch"
+    },
+    {
+      "start": "14:00",
+      "end": "14:30",
+      "slug": "dallo-usa",
+      "project": "dallo-usa",
+      "task_id": "t12",
+      "title": "Build Terms & Refund pages",
+      "estimate": "s",
+      "kind": "task"
+    },
+    {
+      "start": "14:45",
+      "end": "15:45",
+      "slug": "pro-counters-website-rebuild",
+      "project": "Pro Counters — Website Rebuild",
+      "task_id": "p3t0",
+      "title": "Performance hardening — target 100 on every page, desktop + mobile",
+      "estimate": "m",
+      "kind": "task"
+    },
+    {
+      "start": "16:00",
+      "end": "17:00",
+      "slug": "dallo-usa",
+      "project": "dallo-usa",
+      "task_id": "t18",
+      "title": "B2B / Wholesale landing page with inquiry form (stubbed)",
+      "estimate": "m",
+      "kind": "task"
+    }
+  ],
+  "projects": [
+    {
+      "slug": "az-print-shop-erp",
+      "project": "AZ Print Shop ERP",
+      "client": "AZ Team",
+      "tasks_total": 133,
+      "tasks_done": 51,
+      "on_deck": true,
+      "tasks": []
+    },
+    {
+      "slug": "az-takeoff-saas",
+      "project": "AZ Takeoff SaaS",
+      "client": "AZ Takeoff",
+      "tasks_total": 79,
+      "tasks_done": 41,
+      "on_deck": true,
+      "tasks": []
+    },
+    {
+      "slug": "az-team-ai-system",
+      "project": "AZ Team AI System",
+      "client": "AZ Team AI System",
+      "tasks_total": 74,
+      "tasks_done": 71,
+      "on_deck": true,
+      "tasks": []
+    },
+    {
+      "slug": "cleansaas",
+      "project": "CleanSaaS",
+      "client": "CleanSaaS",
+      "tasks_total": 4,
+      "tasks_done": 3,
+      "on_deck": true,
+      "tasks": []
+    },
+    {
+      "slug": "fitness-zone",
+      "project": "Fitness Zone",
+      "client": "Fitness Zone",
+      "tasks_total": 13,
+      "tasks_done": 10,
+      "on_deck": true,
+      "tasks": []
+    },
+    {
+      "slug": "gs-woodworking-erp",
+      "project": "GS WoodWorking ERP",
+      "client": "GS-ERP",
+      "tasks_total": 256,
+      "tasks_done": 39,
+      "on_deck": true,
+      "tasks": []
+    },
+    {
+      "slug": "gs-erp-next",
+      "project": "GS-ERP Next",
+      "client": "GS-ERP Next",
+      "tasks_total": 78,
+      "tasks_done": 36,
+      "on_deck": true,
+      "tasks": []
+    },
+    {
+      "slug": "gloopy-3d-youtube-shorts",
+      "project": "Gloopy 3D · YouTube Shorts",
+      "client": "Gloopy 3D · YouTube Shorts",
+      "tasks_total": 176,
+      "tasks_done": 92,
+      "on_deck": true,
+      "tasks": []
+    },
+    {
+      "slug": "gloopy3d-site",
+      "project": "Gloopy3D Site",
+      "client": "Gloopy3D",
+      "tasks_total": 0,
+      "tasks_done": 0,
+      "on_deck": true,
+      "tasks": []
+    },
+    {
+      "slug": "haniel-finances",
+      "project": "Haniel Finances",
+      "client": "Haniel Finances",
+      "tasks_total": 35,
+      "tasks_done": 20,
+      "on_deck": true,
+      "tasks": []
+    },
+    {
+      "slug": "module-starter",
+      "project": "Module Starter",
+      "client": "Module",
+      "tasks_total": 69,
+      "tasks_done": 27,
+      "on_deck": true,
+      "tasks": []
+    },
+    {
+      "slug": "peptiworth",
+      "project": "PeptiWorth",
+      "client": "PeptiWorth",
+      "tasks_total": 0,
+      "tasks_done": 0,
+      "on_deck": true,
+      "tasks": []
+    },
+    {
+      "slug": "pro-counters-erp",
+      "project": "Pro Counters ERP",
+      "client": "procounters_erp",
+      "tasks_total": 355,
+      "tasks_done": 310,
+      "on_deck": true,
+      "tasks": []
+    },
+    {
+      "slug": "pro-counters-website-rebuild",
+      "project": "Pro Counters — Website Rebuild",
+      "client": "Pro Counters New England (PCNE)",
+      "tasks_total": 33,
+      "tasks_done": 21,
+      "on_deck": false,
+      "tasks": [
+        {
+          "id": "t2",
+          "title": "Rewrite the privacy policy — inherited text is now factually wrong",
+          "phase": "Pages",
+          "estimate": "s",
+          "priority": "high",
+          "status": "todo",
+          "notes": "`config/legal.php` carries the live site's policy verbatim plus a `needs_rewrite` flag. It references Netlify Forms (gone) and wrong data flows.",
+          "block": {
+            "start": "09:00",
+            "end": "09:30"
+          },
+          "prep": {
+            "what": "Rewrite the inherited privacy policy in `config/legal.php` so it accurately describes how this site handles data — no Netlify Forms, a real Laravel POST handler.",
+            "understand": "The old policy was copy-pasted from the previous site and references Netlify Forms for contact submissions. That's gone — the new site uses a Laravel controller. Open `config/legal.php`, read the `needs_rewrite` notes, and understand every place the old text is wrong: submission method, data storage, third-party services named.",
+            "approach": [
+              "Open `config/legal.php` and read the full policy text plus the `needs_rewrite` flag comment.",
+              "List every outdated claim: Netlify references, wrong data-processing descriptions, any named third parties that no longer apply.",
+              "Write a replacement policy that is short, plain, and accurate — what data is collected (contact form name/email), how it's used (respond to inquiries), no third-party processors other than the hosting provider.",
+              "Set `needs_rewrite` to false, run `php artisan test --compact` to confirm nothing broke, verify the /privacy page renders cleanly."
+            ],
+            "resources": [
+              "`config/legal.php`",
+              "The site's contact form controller (find via `app/Http/Controllers/`)",
+              "Live /privacy route to verify rendering",
+              "`php artisan test --compact`"
+            ]
+          }
+        },
+        {
+          "id": "p3t0",
+          "title": "Performance hardening — target 100 on every page, desktop + mobile",
+          "phase": "Lighthouse 100 + Agentic Browsing",
+          "estimate": "m",
+          "priority": "high",
+          "status": "todo",
+          "notes": "All Phase 1 deps are done. Structural levers already shipped — measure before optimizing. 34 of 35 routes ship only 3,209-byte `app.js` with no React on non-island pages.",
+          "block": {
+            "start": "14:45",
+            "end": "15:45"
+          },
+          "prep": {
+            "what": "Run Lighthouse on representative pages, read the scores, then fix the top performance blockers (image sizing, font loading, CLS) to drive toward 100.",
+            "understand": "The site already ships a tiny JS bundle (3KB app.js) on most pages — that's done. What remains is: (1) images without explicit width/height cause layout shift (CLS), (2) fonts may be render-blocking without `font-display: swap`, (3) images might not be WebP/AVIF or lazy-loaded. The rule is measure first, optimize second — do NOT guess what's slow.",
+            "approach": [
+              "Run Lighthouse on the home page and one service page (Chrome DevTools → Lighthouse tab, or `npm run lighthouse` if configured). Note baseline scores.",
+              "For each category under 100, expand the Lighthouse recommendations. Focus on Performance first: largest contentful paint (LCP), total blocking time (TBT), CLS.",
+              "Fix the 2-3 highest-impact items: add explicit `width`/`height` to all `<img>` tags, add `loading='lazy'` to below-fold images, and confirm fonts use `font-display: swap` in CSS.",
+              "Re-run Lighthouse after fixes to confirm score improvement, then repeat for the remaining routes."
+            ],
+            "resources": [
+              "Chrome DevTools → Lighthouse panel (or `npx lighthouse <url> --view`)",
+              "Laravel Blade templates in `resources/views/` for image tags",
+              "`public/` or `resources/css/` for font-face declarations",
+              "Lighthouse docs: web.dev/performance"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "slug": "spellkin-nft-project",
+      "project": "Spellkin (NFT project)",
+      "client": "Spellkin",
+      "tasks_total": 0,
+      "tasks_done": 0,
+      "on_deck": true,
+      "tasks": []
+    },
+    {
+      "slug": "takeoff-engine-saas",
+      "project": "Takeoff Engine Saas",
+      "client": "Takeoff Engine",
+      "tasks_total": 37,
+      "tasks_done": 26,
+      "on_deck": true,
+      "tasks": []
+    },
+    {
+      "slug": "tasks-platform-claude-todos-skill-rebuild",
+      "project": "Tasks Platform (claude-todos-skill rebuild)",
+      "client": "Tasks Platform (claude-todos-skill rebuild)",
+      "tasks_total": 263,
+      "tasks_done": 168,
+      "on_deck": true,
+      "tasks": []
+    },
+    {
+      "slug": "tomato-android-internal-field-tools",
+      "project": "Tomato Android — Internal Field Tools",
+      "client": "Tomato Android — Internal Field Tools",
+      "tasks_total": 35,
+      "tasks_done": 5,
+      "on_deck": true,
+      "tasks": []
+    },
+    {
+      "slug": "dallo-usa",
+      "project": "dallo-usa",
+      "client": "Dallo",
+      "tasks_total": 46,
+      "tasks_done": 21,
+      "on_deck": false,
+      "tasks": [
+        {
+          "id": "t10",
+          "title": "Build Why Dallo USA page",
+          "phase": "Phase 3: Storefront Pages",
+          "estimate": "m",
+          "priority": "medium",
+          "status": "todo",
+          "notes": "Source: `reference/content/why-dallo-usa.md`.",
+          "block": {
+            "start": "09:45",
+            "end": "10:45"
+          },
+          "prep": {
+            "what": "Build the `/why` storefront page using copy from `reference/content/why-dallo-usa.md` — a brand story / differentiation page.",
+            "understand": "This is a Next.js 15 App Router project. Pages are `app/<route>/page.tsx`. The project uses mock product data (no live Shopify yet). This page is pure content — no data fetching needed. Look at an existing page (`app/page.tsx` or a service page) for layout conventions and Tailwind class patterns.",
+            "approach": [
+              "Read `reference/content/why-dallo-usa.md` in full to understand the copy structure (headlines, body sections, calls to action).",
+              "Pick the closest existing page (e.g. home or collections) as a layout reference — note what imports, what wrapper/container patterns, and the Tailwind design tokens in use.",
+              "Create `app/why/page.tsx` with appropriate sections (hero text, body paragraphs, brand highlights, CTA). Mirror the site's typography and spacing.",
+              "Add a link to `/why` in the footer or nav if it's missing; confirm the route resolves and renders without console errors."
+            ],
+            "resources": [
+              "`reference/content/why-dallo-usa.md`",
+              "`app/page.tsx` (home) for layout reference",
+              "Tailwind config (`tailwind.config.ts`) for custom tokens",
+              "Next.js App Router docs: nextjs.org/docs/app"
+            ]
+          }
+        },
+        {
+          "id": "t11",
+          "title": "Build Contact page",
+          "phase": "Phase 3: Storefront Pages",
+          "estimate": "m",
+          "priority": "medium",
+          "status": "todo",
+          "notes": "Source: `reference/content/contact-us.md`. Submission can stub to `console.log` or local API route for now.",
+          "block": {
+            "start": "11:00",
+            "end": "12:00"
+          },
+          "prep": {
+            "what": "Build the `/contact` page with a contact form that posts to a local API route — no real email delivery yet, just logs the payload.",
+            "understand": "The form submission chain is: React form component → `fetch('/api/contact', {method:'POST', body: JSON.stringify(data)})` → Next.js route handler at `app/api/contact/route.ts` that returns `{ok: true}`. React state shows a success message on submit. Keep it simple — this gets wired to a real email service in Phase 6.",
+            "approach": [
+              "Read `reference/content/contact-us.md` for the page copy, form field names, and any section structure.",
+              "Create `app/api/contact/route.ts` — a POST handler that parses the JSON body, `console.log`s it, and returns `NextResponse.json({ok: true})`.",
+              "Create `app/contact/page.tsx` — a client component with controlled inputs for name, email, message (and any other fields from the content file). On submit, POST to `/api/contact` and show a success state.",
+              "Check the footer/nav has a Contact link; confirm no TypeScript errors and the form submits cleanly in the browser."
+            ],
+            "resources": [
+              "`reference/content/contact-us.md`",
+              "Next.js Route Handlers: nextjs.org/docs/app/building-your-application/routing/route-handlers",
+              "Existing API routes in `app/api/` for pattern reference",
+              "TypeScript check: `npx tsc --noEmit`"
+            ]
+          }
+        },
+        {
+          "id": "t16",
+          "title": "Search",
+          "phase": "Phase 3: Storefront Pages",
+          "estimate": "s",
+          "priority": "medium",
+          "status": "todo",
+          "notes": "Client-side filter over mock products is fine for now. Real search swaps in when Shopify is wired.",
+          "block": {
+            "start": "12:15",
+            "end": "12:45"
+          },
+          "prep": {
+            "what": "Add a `/search` page with a text input that filters the mock product list client-side — real Shopify search will swap in later.",
+            "understand": "The mock product data is defined somewhere in the project (likely a `lib/` or `data/` file that exports an array of product objects with name, handle, description, etc.). Client-side filtering means: keep a search query in React state, filter the mock array by `product.title.toLowerCase().includes(query.toLowerCase())`, render matching product cards.",
+            "approach": [
+              "Find where mock products are defined — search for `MOCK_PRODUCTS` or look in `lib/` / `data/` for the product array. Note the shape (id, title, handle, price, image, etc.).",
+              "Create `app/search/page.tsx` as a client component with a `useState` for the search query and a text input.",
+              "Filter the mock products array by the query string (title + description match) and render results using the existing product card component.",
+              "Add a search icon/link in the nav if not present; confirm the page renders empty state gracefully when no results match."
+            ],
+            "resources": [
+              "Mock product data source (search for `MOCK_PRODUCTS` or `products.ts` in `lib/` or `data/`)",
+              "Existing product card component (used on collection pages)",
+              "Next.js `'use client'` docs for client components"
+            ]
+          }
+        },
+        {
+          "id": "t12",
+          "title": "Build Terms & Refund pages",
+          "phase": "Phase 3: Storefront Pages",
+          "estimate": "s",
+          "priority": "low",
+          "status": "todo",
+          "notes": "Source: `reference/content/terms-and-conditions.md` + `refund-policy.md`. Fix the placeholder Effective Date and skipped numbering (Refund §11) per legacy quirks.",
+          "block": {
+            "start": "14:00",
+            "end": "14:30"
+          },
+          "prep": {
+            "what": "Build the `/terms` and `/refund` pages from their content files, fixing the placeholder Effective Date and the skipped §11 numbering in the Refund Policy.",
+            "understand": "Two markdown files contain the source copy. Both pages are pure content renders — no dynamic data. Two specific fixes needed before rendering: (1) the Effective Date is a placeholder like `[DATE]` or `YYYY-MM-DD` — replace it with today's date. (2) the Refund Policy has a §11 section that was skipped in numbering — either renumber or add the missing section stub.",
+            "approach": [
+              "Read `reference/content/terms-and-conditions.md` and `reference/content/refund-policy.md`. Note the Effective Date placeholder and the §11 gap.",
+              "Fix both quirks in the source files (update the date, fix numbering).",
+              "Create `app/terms/page.tsx` and `app/refund/page.tsx` that render the corrected content — use a simple prose container with the site's typography.",
+              "Link both pages from the footer (usually 'Terms' and 'Refund Policy' in the legal links row)."
+            ],
+            "resources": [
+              "`reference/content/terms-and-conditions.md`",
+              "`reference/content/refund-policy.md`",
+              "Existing footer component for link placement",
+              "Site typography/prose styles from Tailwind config"
+            ]
+          }
+        },
+        {
+          "id": "t18",
+          "title": "B2B / Wholesale landing page with inquiry form (stubbed)",
+          "phase": "Phase 4: Custom Features (UI-only, integrations stubbed)",
+          "estimate": "m",
+          "priority": "high",
+          "status": "in_progress",
+          "notes": "Partial — `/wholesale` route resolves with placeholder body copy. Still TODO: dedicated wholesale page UI (wholesale value props, inquiry form).",
+          "block": {
+            "start": "16:00",
+            "end": "17:00"
+          },
+          "prep": {
+            "what": "Finish the `/wholesale` page — replace the placeholder body with a real B2B/wholesale landing page: value props for trade accounts, bulk pricing pitch, and a stubbed inquiry form.",
+            "understand": "The route already exists in `MOCK_PAGES` and shows up in nav/footer. The skeleton renders but has placeholder copy. This is the UI build for it. Pattern the inquiry form the same way as the contact form you built earlier today — POST to a local route handler that logs. The wholesale page should communicate trade account benefits: bulk order discounts, dedicated account management, wholesale pricing.",
+            "approach": [
+              "Visit `/wholesale` in the browser to see the current skeleton and understand what's already there.",
+              "Create `app/api/wholesale-inquiry/route.ts` — POST handler that logs the inquiry payload and returns `{ok: true}`.",
+              "Build out the page: a hero section (headline: 'Partner With Dallo'), a 3-column value props grid (bulk pricing / dedicated support / fast shipping), and the inquiry form (company name, email, estimated monthly order volume, message).",
+              "Style with the site's Tailwind design system (dark/stone color palette). Confirm TypeScript builds clean and the form submits successfully."
+            ],
+            "resources": [
+              "Existing `/wholesale` route file (find via `app/wholesale/` or `MOCK_PAGES` definition)",
+              "`app/api/contact/route.ts` you built today — copy the handler pattern",
+              "Reference brand docs in `reference/` for tone and positioning",
+              "Tailwind config for design tokens"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "slug": "econoplatform",
+      "project": "econoplatform",
+      "client": "",
+      "tasks_total": 61,
+      "tasks_done": 33,
+      "on_deck": true,
+      "tasks": []
+    },
+    {
+      "slug": "influencer-agent",
+      "project": "influencer-agent",
+      "client": "influencer-agent",
+      "tasks_total": 52,
+      "tasks_done": 9,
+      "on_deck": true,
+      "tasks": []
+    },
+    {
+      "slug": "orc",
+      "project": "orc",
+      "client": "orc",
+      "tasks_total": 199,
+      "tasks_done": 97,
+      "on_deck": true,
+      "tasks": []
+    }
+  ],
+  "waiting_on": [
+    {
+      "project": "Pro Counters — Website Rebuild",
+      "task_id": "t1",
+      "title": "Copy for the 4 held service pages (Sink installation, backsplash, countertop repair, removal)",
+      "reason": "No body copy exists for these service pages — blocked on PCNE providing the content."
+    },
+    {
+      "project": "Pro Counters — Website Rebuild",
+      "task_id": "t8",
+      "title": "Owner confirmations from clickable + copy round",
+      "reason": "Needs PCNE to confirm: Google Business Profile review link, and which 'Enigma' font/branding choice to keep."
+    },
+    {
+      "project": "Pro Counters — Website Rebuild",
+      "task_id": "t3",
+      "title": "Verify NAP + geo against the Google Business Profile",
+      "reason": "Hours and contact info in `config/business.php` may not match the live GBP — needs PCNE or a GBP owner to confirm the correct data."
+    },
+    {
+      "project": "Fitness Zone",
+      "task_id": "t10",
+      "title": "Real products, photos, prices, shipping rates and policy pages from owners",
+      "reason": "Seven placeholder products seeded; all real product data (photos, prices, policies) must come from the owners."
+    },
+    {
+      "project": "Fitness Zone",
+      "task_id": "t11",
+      "title": "Stripe or Square account keys, webhooks and tax rules",
+      "reason": "No live payment credentials — owners must supply Stripe or Square account keys before the buy flow can go live."
+    },
+    {
+      "project": "Fitness Zone",
+      "task_id": "t12",
+      "title": "Deploy store complete — owners' admin account + store mailbox",
+      "reason": "Store preview is live but requires owners' admin email (to create their account) and a mailbox for SMTP."
+    },
+    {
+      "project": "dallo-usa",
+      "task_id": "t29",
+      "title": "Configure Shopify (payments, taxes, shipping zones, policies)",
+      "reason": "Client or a Shopify-designated person must configure the live Shopify store backend — this is outside Haniel's scope."
+    }
+  ]
+}

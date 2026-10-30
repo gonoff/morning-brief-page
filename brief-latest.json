@@ -1,15 +1,15 @@
 {
-  "date": "2026-10-29",
-  "generated_at": "2026-10-29T10:20:00Z",
-  "data_as_of": "2026-10-29T05:00:30+00:00",
-  "greeting": "Morning, Haniel. Thursday — four critical lock bugs in GS-ERP Next are sitting there waiting to corrupt real customer data. Kill them before lunch, squash 445 migrations in the afternoon, then finally close t164 which has been overdue for nine days.",
-  "hype": "Every one of those four lock fixes is under 30-60 minutes of targeted surgery. They're not vague — you have the file name, the line number, and the exact pattern. Bang them out one by one, then give the afternoon to the squash and the purge guard. Today you can close six real bugs.",
-  "notice": "t164 (retention purge guard) is 9 days overdue — the nightly purge already ran once on 2026-10-22. This must ship today.",
+  "date": "2026-10-30",
+  "generated_at": "2026-10-30T10:15:50Z",
+  "data_as_of": "2026-10-30T05:00:32+00:00",
+  "greeting": "Morning, Haniel. Happy Friday — let's finish this week with something shipped.",
+  "hype": "Dallo gets its missing pages today, Pro Counters unlocks Lighthouse — both projects move forward. Lock in and execute.",
+  "notice": "Two in-progress tasks (dallo t18, t20) are already warm — pick up from where you left off on the B2B page at 4 PM.",
   "difficulty": {
     "rating": "Solid",
-    "planned_minutes": 360,
-    "available_minutes": 420,
-    "ratio": 0.86,
+    "planned_minutes": 330,
+    "available_minutes": 465,
+    "ratio": 0.71,
     "note": ""
   },
   "window": {
@@ -20,268 +20,86 @@
     {
       "start": "09:00",
       "end": "09:30",
-      "slug": "gs-erp-next",
-      "project": "GS-ERP Next",
-      "task_id": "t46",
-      "title": "Lock fix: CK5 markProjectComplete can complete a cancelled order",
+      "slug": "pro-counters-website-rebuild",
+      "project": "Pro Counters — Website Rebuild",
+      "task_id": "t2",
+      "title": "Rewrite the privacy policy",
       "estimate": "s",
       "kind": "task"
     },
     {
       "start": "09:45",
-      "end": "10:15",
-      "slug": "gs-erp-next",
-      "project": "GS-ERP Next",
-      "task_id": "t48",
-      "title": "Lock fix: 3 estimate transitions run with no transaction at all",
+      "end": "10:45",
+      "slug": "dallo-usa",
+      "project": "dallo-usa",
+      "task_id": "t10",
+      "title": "Build Why Dallo USA page",
+      "estimate": "m",
+      "kind": "task"
+    },
+    {
+      "start": "11:00",
+      "end": "12:00",
+      "slug": "dallo-usa",
+      "project": "dallo-usa",
+      "task_id": "t11",
+      "title": "Build Contact page",
+      "estimate": "m",
+      "kind": "task"
+    },
+    {
+      "start": "12:15",
+      "end": "12:45",
+      "slug": "dallo-usa",
+      "project": "dallo-usa",
+      "task_id": "t16",
+      "title": "Search",
       "estimate": "s",
       "kind": "task"
     },
     {
-      "start": "10:30",
-      "end": "11:30",
-      "slug": "gs-erp-next",
-      "project": "GS-ERP Next",
-      "task_id": "t47",
-      "title": "Lock fix: WorkflowTransitionSupport overwrites phase/substep",
-      "estimate": "m",
-      "kind": "task"
-    },
-    {
-      "start": "11:45",
-      "end": "12:45",
-      "slug": "gs-erp-next",
-      "project": "GS-ERP Next",
-      "task_id": "t50",
-      "title": "Lock fix: invoice writes outside a lock",
-      "estimate": "m",
-      "kind": "task"
-    },
-    {
-      "start": "12:45",
-      "end": "13:45",
+      "start": "13:00",
+      "end": "14:00",
       "kind": "lunch",
       "title": "Lunch"
     },
     {
-      "start": "13:45",
+      "start": "14:00",
+      "end": "14:30",
+      "slug": "dallo-usa",
+      "project": "dallo-usa",
+      "task_id": "t12",
+      "title": "Build Terms & Refund pages",
+      "estimate": "s",
+      "kind": "task"
+    },
+    {
+      "start": "14:45",
       "end": "15:45",
-      "slug": "gs-erp-next",
-      "project": "GS-ERP Next",
-      "task_id": "t5",
-      "title": "Squash 445 migrations into one clean baseline schema",
-      "estimate": "l",
+      "slug": "pro-counters-website-rebuild",
+      "project": "Pro Counters — Website Rebuild",
+      "task_id": "p3t0",
+      "title": "Performance hardening — target 100 on every page, desktop + mobile",
+      "estimate": "m",
       "kind": "task"
     },
     {
       "start": "16:00",
       "end": "17:00",
-      "slug": "tasks-platform-claude-todos-skill-rebuild",
-      "project": "Tasks Platform (claude-todos-skill rebuild)",
-      "task_id": "t164",
-      "title": "Retention purge never destroys evidence of open work",
+      "slug": "dallo-usa",
+      "project": "dallo-usa",
+      "task_id": "t18",
+      "title": "B2B / Wholesale landing page with inquiry form (stubbed)",
       "estimate": "m",
       "kind": "task"
     }
   ],
   "projects": [
     {
-      "slug": "gs-erp-next",
-      "project": "GS-ERP Next",
-      "client": "GS-ERP Next",
-      "tasks_total": 78,
-      "tasks_done": 36,
-      "on_deck": false,
-      "tasks": [
-        {
-          "id": "t46",
-          "title": "Lock fix: CK5 markProjectComplete can complete a cancelled order and release installer retention",
-          "phase": "P1 · Foundation: true names, clean schema, dead code out",
-          "estimate": "s",
-          "priority": "high",
-          "status": "todo",
-          "notes": "CkInspectionTransitions.php:139 — add status re-check with lockForUpdate() inside a DB::transaction.",
-          "block": {
-            "start": "09:00",
-            "end": "09:30"
-          },
-          "prep": {
-            "what": "Prevent the CK5 workflow step from completing an already-cancelled project and erroneously releasing installer retention pay.",
-            "understand": "Race: a project is cancelled (status flips) while a concurrent call to markProjectComplete reads the pre-cancel status. Without a lock, both reads see non-cancelled and proceed. lockForUpdate() forces the second caller to wait and re-read the true post-lock status.",
-            "approach": [
-              "Open CkInspectionTransitions.php:139 — find the markProjectComplete method entry.",
-              "Ensure the entire method body is wrapped in `DB::transaction(fn() => ...)`.",
-              "Replace the project load with `Project::lockForUpdate()->findOrFail($id)`.",
-              "Add early guard: `if ($project->status === 'cancelled') { throw new \\LogicException('Cannot complete a cancelled project'); }`",
-              "Run CkInspectionTransitions tests."
-            ],
-            "resources": [
-              "CkInspectionTransitions.php:139",
-              "Project model status constants",
-              "Existing CkInspection tests"
-            ]
-          }
-        },
-        {
-          "id": "t48",
-          "title": "Lock fix: 3 estimate transitions run with no transaction at all",
-          "phase": "P1 · Foundation: true names, clean schema, dead code out",
-          "estimate": "s",
-          "priority": "high",
-          "status": "todo",
-          "notes": "EstimateTransitions.php:37, :807, :849 — wrap each in DB::transaction().",
-          "block": {
-            "start": "09:45",
-            "end": "10:15"
-          },
-          "prep": {
-            "what": "Wrap 3 estimate transition methods in DB::transaction() so their multi-record status changes are atomic.",
-            "understand": "These methods update several related records with no transaction wrapper. A mid-method error leaves the DB in a partial state. Simply wrapping in DB::transaction() is the minimal fix — if any step throws, the whole thing rolls back.",
-            "approach": [
-              "Open EstimateTransitions.php. Go to lines :37, :807, :849 to identify the three transition methods.",
-              "For each: wrap the entire method body in `return DB::transaction(function () use (...) { ... });`",
-              "Verify no outer transaction already wraps callers (grep for callsites).",
-              "Run Estimate-related tests."
-            ],
-            "resources": [
-              "EstimateTransitions.php:37, :807, :849",
-              "Existing Estimate tests"
-            ]
-          }
-        },
-        {
-          "id": "t47",
-          "title": "Lock fix: workflow root — WorkflowTransitionSupport::transition overwrites phase/substep",
-          "phase": "P1 · Foundation: true names, clean schema, dead code out",
-          "estimate": "m",
-          "priority": "high",
-          "status": "todo",
-          "notes": "WorkflowTransitionSupport.php:135, :270 — use fresh()->lockForUpdate() to prevent concurrent overwrites.",
-          "block": {
-            "start": "10:30",
-            "end": "11:30"
-          },
-          "prep": {
-            "what": "Prevent two concurrent workflow transition calls from reading stale phase/substep state and overwriting each other's writes.",
-            "understand": "transition() reads current phase/substep, computes next, then writes. A second concurrent call reads the same pre-write state and writes conflicting values. This is the root lock defect — fixing it here protects all workflows that use this support class.",
-            "approach": [
-              "Open WorkflowTransitionSupport.php:135 — find where the model is first loaded before transition logic.",
-              "Replace the model load with `$model->fresh()->lockForUpdate()` (or add fresh/lockForUpdate if the model isn't refreshed here).",
-              "At line :270 — apply the same fresh()->lockForUpdate() pattern to the second read.",
-              "Ensure the entire transition block is inside `DB::transaction()`.",
-              "Run workflow transition tests."
-            ],
-            "resources": [
-              "WorkflowTransitionSupport.php:135, :270",
-              "Workflow transition tests"
-            ]
-          }
-        },
-        {
-          "id": "t50",
-          "title": "Lock fix: invoice writes outside a lock",
-          "phase": "P1 · Foundation: true names, clean schema, dead code out",
-          "estimate": "m",
-          "priority": "high",
-          "status": "todo",
-          "notes": "InvoiceStatusRollup.php:10 — 5 write paths need lockForUpdate() on the initial load.",
-          "block": {
-            "start": "11:45",
-            "end": "12:45"
-          },
-          "prep": {
-            "what": "Add lockForUpdate() to all 5 write paths in InvoiceStatusRollup so invoice status aggregations are never written on stale reads.",
-            "understand": "InvoiceStatusRollup reads invoice states and writes a rolled-up status. Two concurrent rollups can both read the same pre-write state and produce conflicting results. lockForUpdate() on the initial load prevents concurrent readers from advancing until the first caller commits.",
-            "approach": [
-              "Open InvoiceStatusRollup.php:10. Grep for `->save()` and `->update()` in this file to identify all 5 write paths.",
-              "For each path: trace back to where the relevant record is first loaded. Replace with `->lockForUpdate()->findOrFail()`.",
-              "Verify all 5 paths are inside `DB::transaction()`.",
-              "Run invoice rollup tests."
-            ],
-            "resources": [
-              "InvoiceStatusRollup.php:10",
-              "Invoice / rollup tests"
-            ]
-          }
-        },
-        {
-          "id": "t5",
-          "title": "Squash 445 migrations into one clean baseline schema; data seeding moves to seeders",
-          "phase": "P1 · Foundation: true names, clean schema, dead code out",
-          "estimate": "l",
-          "priority": "high",
-          "status": "in_progress",
-          "notes": "artisan schema:dump --prune. Unblocks t58 and t65.",
-          "block": {
-            "start": "13:45",
-            "end": "15:45"
-          },
-          "prep": {
-            "what": "Replace 445 individual migration files with a single schema dump so fresh installs are fast and the migration table is clean.",
-            "understand": "`artisan schema:dump --prune` writes the current DB schema to `database/schema/*.sql` and deletes migration files already reflected in it. Fresh installs run schema.sql then any remaining (post-squash) migrations. This is a destructive-but-reversible git change — commit the schema dump and the deleted migration files in one commit.",
-            "approach": [
-              "Verify all 445 migrations have been run on the local dev DB: `php artisan migrate:status` — all should show 'Ran'.",
-              "Run `php artisan schema:dump --prune` — confirm it writes `database/schema/*.sql` and removes migration files.",
-              "Spot-check the generated schema.sql: 5-10 known critical tables (projects, estimates, invoices, users, etc.) must be present with correct columns.",
-              "Test on a clean DB: `php artisan migrate:fresh` should apply without errors.",
-              "Commit the schema dump + deleted migration files together with a clear message."
-            ],
-            "resources": [
-              "database/migrations/ (445 files)",
-              "database/schema/ (output dir)",
-              "`php artisan schema:dump --prune` (Laravel 9+)",
-              "`php artisan migrate:fresh` for validation"
-            ]
-          }
-        }
-      ]
-    },
-    {
-      "slug": "tasks-platform-claude-todos-skill-rebuild",
-      "project": "Tasks Platform (claude-todos-skill rebuild)",
-      "client": "Tasks Platform (claude-todos-skill rebuild)",
-      "tasks_total": 263,
-      "tasks_done": 168,
-      "on_deck": false,
-      "tasks": [
-        {
-          "id": "t164",
-          "title": "Retention purge never destroys evidence of open work",
-          "phase": "V1 · Client request lifecycle is correct",
-          "estimate": "m",
-          "priority": "high",
-          "status": "in_progress",
-          "notes": "V1 stabilization K1. OVERDUE since 2026-10-20 — purge first ran 2026-10-22 04:00. `task-request-context.ts` is the verification surface — change it only if the purged-state test fails.",
-          "block": {
-            "start": "16:00",
-            "end": "17:00"
-          },
-          "prep": {
-            "what": "Guard the nightly retention purge so it never hard-deletes task evidence belonging to still-open client work.",
-            "understand": "The V1 purge job already ran on 2026-10-22. K1 of V1 stabilization says open work is always kept. The guard condition and its test name are in the K1 spec. This has been in_progress since yesterday — confirm what is already done, then ship the remaining piece.",
-            "approach": [
-              "Check git status / last commit on tasks-platform: what did yesterday's session land?",
-              "Open `docs/current/v1-stabilization-audit-2026-09-28.md` → K1 section: confirm the guard condition and expected test name.",
-              "Find the retention purge job (grep `purge` or `retention`) — verify the open-work skip predicate is present.",
-              "Run the purged-state test suite: `npm test` or equivalent filtered to retention/purge tests. Fix any failure in `task-request-context.ts`.",
-              "Query the audit ledger (or DB) to confirm the 2026-10-22 run left no open-work rows deleted.",
-              "Mark t164 done and push."
-            ],
-            "resources": [
-              "docs/current/v1-stabilization-audit-2026-09-28.md (K1 section)",
-              "task-request-context.ts",
-              "Retention purge job file (grep `purge` or `retention`)",
-              "Audit ledger / DB on the VPS"
-            ]
-          }
-        }
-      ]
-    },
-    {
       "slug": "az-print-shop-erp",
       "project": "AZ Print Shop ERP",
       "client": "AZ Team",
-      "tasks_total": 132,
+      "tasks_total": 133,
       "tasks_done": 51,
       "on_deck": true,
       "tasks": []
@@ -326,7 +144,16 @@
       "slug": "gs-woodworking-erp",
       "project": "GS WoodWorking ERP",
       "client": "GS-ERP",
-      "tasks_total": 252,
+      "tasks_total": 256,
+      "tasks_done": 39,
+      "on_deck": true,
+      "tasks": []
+    },
+    {
+      "slug": "gs-erp-next",
+      "project": "GS-ERP Next",
+      "client": "GS-ERP Next",
+      "tasks_total": 78,
       "tasks_done": 36,
       "on_deck": true,
       "tasks": []
@@ -391,8 +218,67 @@
       "client": "Pro Counters New England (PCNE)",
       "tasks_total": 33,
       "tasks_done": 21,
-      "on_deck": true,
-      "tasks": []
+      "on_deck": false,
+      "tasks": [
+        {
+          "id": "t2",
+          "title": "Rewrite the privacy policy — inherited text is now factually wrong",
+          "phase": "Pages",
+          "estimate": "s",
+          "priority": "high",
+          "status": "todo",
+          "notes": "`config/legal.php` carries the live site's policy verbatim plus a `needs_rewrite` flag. It references Netlify Forms (gone) and wrong data flows.",
+          "block": {
+            "start": "09:00",
+            "end": "09:30"
+          },
+          "prep": {
+            "what": "Rewrite the inherited privacy policy in `config/legal.php` so it accurately describes how this site handles data — no Netlify Forms, a real Laravel POST handler.",
+            "understand": "The old policy was copy-pasted from the previous site and references Netlify Forms for contact submissions. That's gone — the new site uses a Laravel controller. Open `config/legal.php`, read the `needs_rewrite` notes, and understand every place the old text is wrong: submission method, data storage, third-party services named.",
+            "approach": [
+              "Open `config/legal.php` and read the full policy text plus the `needs_rewrite` flag comment.",
+              "List every outdated claim: Netlify references, wrong data-processing descriptions, any named third parties that no longer apply.",
+              "Write a replacement policy that is short, plain, and accurate — what data is collected (contact form name/email), how it's used (respond to inquiries), no third-party processors other than the hosting provider.",
+              "Set `needs_rewrite` to false, run `php artisan test --compact` to confirm nothing broke, verify the /privacy page renders cleanly."
+            ],
+            "resources": [
+              "`config/legal.php`",
+              "The site's contact form controller (find via `app/Http/Controllers/`)",
+              "Live /privacy route to verify rendering",
+              "`php artisan test --compact`"
+            ]
+          }
+        },
+        {
+          "id": "p3t0",
+          "title": "Performance hardening — target 100 on every page, desktop + mobile",
+          "phase": "Lighthouse 100 + Agentic Browsing",
+          "estimate": "m",
+          "priority": "high",
+          "status": "todo",
+          "notes": "All Phase 1 deps are done. Structural levers already shipped — measure before optimizing. 34 of 35 routes ship only 3,209-byte `app.js` with no React on non-island pages.",
+          "block": {
+            "start": "14:45",
+            "end": "15:45"
+          },
+          "prep": {
+            "what": "Run Lighthouse on representative pages, read the scores, then fix the top performance blockers (image sizing, font loading, CLS) to drive toward 100.",
+            "understand": "The site already ships a tiny JS bundle (3KB app.js) on most pages — that's done. What remains is: (1) images without explicit width/height cause layout shift (CLS), (2) fonts may be render-blocking without `font-display: swap`, (3) images might not be WebP/AVIF or lazy-loaded. The rule is measure first, optimize second — do NOT guess what's slow.",
+            "approach": [
+              "Run Lighthouse on the home page and one service page (Chrome DevTools → Lighthouse tab, or `npm run lighthouse` if configured). Note baseline scores.",
+              "For each category under 100, expand the Lighthouse recommendations. Focus on Performance first: largest contentful paint (LCP), total blocking time (TBT), CLS.",
+              "Fix the 2-3 highest-impact items: add explicit `width`/`height` to all `<img>` tags, add `loading='lazy'` to below-fold images, and confirm fonts use `font-display: swap` in CSS.",
+              "Re-run Lighthouse after fixes to confirm score improvement, then repeat for the remaining routes."
+            ],
+            "resources": [
+              "Chrome DevTools → Lighthouse panel (or `npx lighthouse <url> --view`)",
+              "Laravel Blade templates in `resources/views/` for image tags",
+              "`public/` or `resources/css/` for font-face declarations",
+              "Lighthouse docs: web.dev/performance"
+            ]
+          }
+        }
+      ]
     },
     {
       "slug": "spellkin-nft-project",
@@ -413,9 +299,18 @@
       "tasks": []
     },
     {
-      "slug": "tomato-android",
-      "project": "Tomato Android",
-      "client": "Tomato Android",
+      "slug": "tasks-platform-claude-todos-skill-rebuild",
+      "project": "Tasks Platform (claude-todos-skill rebuild)",
+      "client": "Tasks Platform (claude-todos-skill rebuild)",
+      "tasks_total": 263,
+      "tasks_done": 168,
+      "on_deck": true,
+      "tasks": []
+    },
+    {
+      "slug": "tomato-android-internal-field-tools",
+      "project": "Tomato Android — Internal Field Tools",
+      "client": "Tomato Android — Internal Field Tools",
       "tasks_total": 35,
       "tasks_done": 5,
       "on_deck": true,
@@ -427,8 +322,153 @@
       "client": "Dallo",
       "tasks_total": 46,
       "tasks_done": 21,
-      "on_deck": true,
-      "tasks": []
+      "on_deck": false,
+      "tasks": [
+        {
+          "id": "t10",
+          "title": "Build Why Dallo USA page",
+          "phase": "Phase 3: Storefront Pages",
+          "estimate": "m",
+          "priority": "medium",
+          "status": "todo",
+          "notes": "Source: `reference/content/why-dallo-usa.md`.",
+          "block": {
+            "start": "09:45",
+            "end": "10:45"
+          },
+          "prep": {
+            "what": "Build the `/why` storefront page using copy from `reference/content/why-dallo-usa.md` — a brand story / differentiation page.",
+            "understand": "This is a Next.js 15 App Router project. Pages are `app/<route>/page.tsx`. The project uses mock product data (no live Shopify yet). This page is pure content — no data fetching needed. Look at an existing page (`app/page.tsx` or a service page) for layout conventions and Tailwind class patterns.",
+            "approach": [
+              "Read `reference/content/why-dallo-usa.md` in full to understand the copy structure (headlines, body sections, calls to action).",
+              "Pick the closest existing page (e.g. home or collections) as a layout reference — note what imports, what wrapper/container patterns, and the Tailwind design tokens in use.",
+              "Create `app/why/page.tsx` with appropriate sections (hero text, body paragraphs, brand highlights, CTA). Mirror the site's typography and spacing.",
+              "Add a link to `/why` in the footer or nav if it's missing; confirm the route resolves and renders without console errors."
+            ],
+            "resources": [
+              "`reference/content/why-dallo-usa.md`",
+              "`app/page.tsx` (home) for layout reference",
+              "Tailwind config (`tailwind.config.ts`) for custom tokens",
+              "Next.js App Router docs: nextjs.org/docs/app"
+            ]
+          }
+        },
+        {
+          "id": "t11",
+          "title": "Build Contact page",
+          "phase": "Phase 3: Storefront Pages",
+          "estimate": "m",
+          "priority": "medium",
+          "status": "todo",
+          "notes": "Source: `reference/content/contact-us.md`. Submission can stub to `console.log` or local API route for now.",
+          "block": {
+            "start": "11:00",
+            "end": "12:00"
+          },
+          "prep": {
+            "what": "Build the `/contact` page with a contact form that posts to a local API route — no real email delivery yet, just logs the payload.",
+            "understand": "The form submission chain is: React form component → `fetch('/api/contact', {method:'POST', body: JSON.stringify(data)})` → Next.js route handler at `app/api/contact/route.ts` that returns `{ok: true}`. React state shows a success message on submit. Keep it simple — this gets wired to a real email service in Phase 6.",
+            "approach": [
+              "Read `reference/content/contact-us.md` for the page copy, form field names, and any section structure.",
+              "Create `app/api/contact/route.ts` — a POST handler that parses the JSON body, `console.log`s it, and returns `NextResponse.json({ok: true})`.",
+              "Create `app/contact/page.tsx` — a client component with controlled inputs for name, email, message (and any other fields from the content file). On submit, POST to `/api/contact` and show a success state.",
+              "Check the footer/nav has a Contact link; confirm no TypeScript errors and the form submits cleanly in the browser."
+            ],
+            "resources": [
+              "`reference/content/contact-us.md`",
+              "Next.js Route Handlers: nextjs.org/docs/app/building-your-application/routing/route-handlers",
+              "Existing API routes in `app/api/` for pattern reference",
+              "TypeScript check: `npx tsc --noEmit`"
+            ]
+          }
+        },
+        {
+          "id": "t16",
+          "title": "Search",
+          "phase": "Phase 3: Storefront Pages",
+          "estimate": "s",
+          "priority": "medium",
+          "status": "todo",
+          "notes": "Client-side filter over mock products is fine for now. Real search swaps in when Shopify is wired.",
+          "block": {
+            "start": "12:15",
+            "end": "12:45"
+          },
+          "prep": {
+            "what": "Add a `/search` page with a text input that filters the mock product list client-side — real Shopify search will swap in later.",
+            "understand": "The mock product data is defined somewhere in the project (likely a `lib/` or `data/` file that exports an array of product objects with name, handle, description, etc.). Client-side filtering means: keep a search query in React state, filter the mock array by `product.title.toLowerCase().includes(query.toLowerCase())`, render matching product cards.",
+            "approach": [
+              "Find where mock products are defined — search for `MOCK_PRODUCTS` or look in `lib/` / `data/` for the product array. Note the shape (id, title, handle, price, image, etc.).",
+              "Create `app/search/page.tsx` as a client component with a `useState` for the search query and a text input.",
+              "Filter the mock products array by the query string (title + description match) and render results using the existing product card component.",
+              "Add a search icon/link in the nav if not present; confirm the page renders empty state gracefully when no results match."
+            ],
+            "resources": [
+              "Mock product data source (search for `MOCK_PRODUCTS` or `products.ts` in `lib/` or `data/`)",
+              "Existing product card component (used on collection pages)",
+              "Next.js `'use client'` docs for client components"
+            ]
+          }
+        },
+        {
+          "id": "t12",
+          "title": "Build Terms & Refund pages",
+          "phase": "Phase 3: Storefront Pages",
+          "estimate": "s",
+          "priority": "low",
+          "status": "todo",
+          "notes": "Source: `reference/content/terms-and-conditions.md` + `refund-policy.md`. Fix the placeholder Effective Date and skipped numbering (Refund §11) per legacy quirks.",
+          "block": {
+            "start": "14:00",
+            "end": "14:30"
+          },
+          "prep": {
+            "what": "Build the `/terms` and `/refund` pages from their content files, fixing the placeholder Effective Date and the skipped §11 numbering in the Refund Policy.",
+            "understand": "Two markdown files contain the source copy. Both pages are pure content renders — no dynamic data. Two specific fixes needed before rendering: (1) the Effective Date is a placeholder like `[DATE]` or `YYYY-MM-DD` — replace it with today's date. (2) the Refund Policy has a §11 section that was skipped in numbering — either renumber or add the missing section stub.",
+            "approach": [
+              "Read `reference/content/terms-and-conditions.md` and `reference/content/refund-policy.md`. Note the Effective Date placeholder and the §11 gap.",
+              "Fix both quirks in the source files (update the date, fix numbering).",
+              "Create `app/terms/page.tsx` and `app/refund/page.tsx` that render the corrected content — use a simple prose container with the site's typography.",
+              "Link both pages from the footer (usually 'Terms' and 'Refund Policy' in the legal links row)."
+            ],
+            "resources": [
+              "`reference/content/terms-and-conditions.md`",
+              "`reference/content/refund-policy.md`",
+              "Existing footer component for link placement",
+              "Site typography/prose styles from Tailwind config"
+            ]
+          }
+        },
+        {
+          "id": "t18",
+          "title": "B2B / Wholesale landing page with inquiry form (stubbed)",
+          "phase": "Phase 4: Custom Features (UI-only, integrations stubbed)",
+          "estimate": "m",
+          "priority": "high",
+          "status": "in_progress",
+          "notes": "Partial — `/wholesale` route resolves with placeholder body copy. Still TODO: dedicated wholesale page UI (wholesale value props, inquiry form).",
+          "block": {
+            "start": "16:00",
+            "end": "17:00"
+          },
+          "prep": {
+            "what": "Finish the `/wholesale` page — replace the placeholder body with a real B2B/wholesale landing page: value props for trade accounts, bulk pricing pitch, and a stubbed inquiry form.",
+            "understand": "The route already exists in `MOCK_PAGES` and shows up in nav/footer. The skeleton renders but has placeholder copy. This is the UI build for it. Pattern the inquiry form the same way as the contact form you built earlier today — POST to a local route handler that logs. The wholesale page should communicate trade account benefits: bulk order discounts, dedicated account management, wholesale pricing.",
+            "approach": [
+              "Visit `/wholesale` in the browser to see the current skeleton and understand what's already there.",
+              "Create `app/api/wholesale-inquiry/route.ts` — POST handler that logs the inquiry payload and returns `{ok: true}`.",
+              "Build out the page: a hero section (headline: 'Partner With Dallo'), a 3-column value props grid (bulk pricing / dedicated support / fast shipping), and the inquiry form (company name, email, estimated monthly order volume, message).",
+              "Style with the site's Tailwind design system (dark/stone color palette). Confirm TypeScript builds clean and the form submits successfully."
+            ],
+            "resources": [
+              "Existing `/wholesale` route file (find via `app/wholesale/` or `MOCK_PAGES` definition)",
+              "`app/api/contact/route.ts` you built today — copy the handler pattern",
+              "Reference brand docs in `reference/` for tone and positioning",
+              "Tailwind config for design tokens"
+            ]
+          }
+        }
+      ]
     },
     {
       "slug": "econoplatform",
@@ -452,42 +492,54 @@
       "slug": "orc",
       "project": "orc",
       "client": "orc",
-      "tasks_total": 187,
-      "tasks_done": 87,
+      "tasks_total": 199,
+      "tasks_done": 97,
       "on_deck": true,
       "tasks": []
     }
   ],
   "waiting_on": [
     {
-      "project": "Tasks Platform (claude-todos-skill rebuild)",
-      "task_id": "t160",
-      "title": "GitHub contribution panel is fresh with a versioned refresher",
-      "reason": "Waiting on Haniel to run: `gh auth refresh -h github.com -s read:user` (approved 2026-09-28, action pending)."
+      "project": "Pro Counters — Website Rebuild",
+      "task_id": "t1",
+      "title": "Copy for the 4 held service pages (Sink installation, backsplash, countertop repair, removal)",
+      "reason": "No body copy exists for these service pages — blocked on PCNE providing the content."
     },
     {
-      "project": "Tasks Platform (claude-todos-skill rebuild)",
-      "task_id": "t266",
-      "title": "Project Truth worker: no pool-lifetime kills, honest DB-drop labels, unreadable files skipped",
-      "reason": "Last acceptance item: watch one truth_reconcile job live. No job queued since 2026-08-17. Unblocks when t211 ships on_demand producer or Haniel requests a manual refresh."
+      "project": "Pro Counters — Website Rebuild",
+      "task_id": "t8",
+      "title": "Owner confirmations from clickable + copy round",
+      "reason": "Needs PCNE to confirm: Google Business Profile review link, and which 'Enigma' font/branding choice to keep."
     },
     {
-      "project": "Module Starter",
-      "task_id": "t25",
-      "title": "SMS module (DEFERRED)",
-      "reason": "Deferred by decision — do not start until an SMS provider is chosen."
+      "project": "Pro Counters — Website Rebuild",
+      "task_id": "t3",
+      "title": "Verify NAP + geo against the Google Business Profile",
+      "reason": "Hours and contact info in `config/business.php` may not match the live GBP — needs PCNE or a GBP owner to confirm the correct data."
     },
     {
       "project": "Fitness Zone",
       "task_id": "t10",
-      "title": "Products & photos from gym owners",
-      "reason": "Waiting on gym owners for real products and photos."
+      "title": "Real products, photos, prices, shipping rates and policy pages from owners",
+      "reason": "Seven placeholder products seeded; all real product data (photos, prices, policies) must come from the owners."
     },
     {
       "project": "Fitness Zone",
       "task_id": "t11",
-      "title": "Payment integration keys",
-      "reason": "Waiting on gym owners + Stripe/Square payment keys."
+      "title": "Stripe or Square account keys, webhooks and tax rules",
+      "reason": "No live payment credentials — owners must supply Stripe or Square account keys before the buy flow can go live."
+    },
+    {
+      "project": "Fitness Zone",
+      "task_id": "t12",
+      "title": "Deploy store complete — owners' admin account + store mailbox",
+      "reason": "Store preview is live but requires owners' admin email (to create their account) and a mailbox for SMTP."
+    },
+    {
+      "project": "dallo-usa",
+      "task_id": "t29",
+      "title": "Configure Shopify (payments, taxes, shipping zones, policies)",
+      "reason": "Client or a Shopify-designated person must configure the live Shopify store backend — this is outside Haniel's scope."
     }
   ]
 }
