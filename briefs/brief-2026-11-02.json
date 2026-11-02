@@ -1,0 +1,507 @@
+{
+  "date": "2026-11-02",
+  "generated_at": "2026-11-02T11:15:00Z",
+  "data_as_of": "2026-11-02T06:00:20+00:00",
+  "greeting": "Morning, Haniel. Monday's here and the week is wide open. Let's make it count.",
+  "hype": "Scanner diagnostics all morning, Dallo Phase 3 fully closed this afternoon. Two projects move — that's a week-starter you'll feel.",
+  "notice": "10 AM: review Fiverr gig drafts (takeoff + n8n automations) and outreach emails — keep it 30 min, then straight back into scanner work.",
+  "difficulty": {
+    "rating": "Solid",
+    "planned_minutes": 360,
+    "available_minutes": 375,
+    "ratio": 0.96,
+    "note": ""
+  },
+  "window": {
+    "start": "09:00",
+    "end": "18:00"
+  },
+  "schedule": [
+    {
+      "start": "09:00",
+      "end": "10:00",
+      "slug": "tomato-android-internal-field-tools",
+      "project": "Tomato Android — Internal Field Tools",
+      "task_id": "p1t1",
+      "title": "Create the structured S25 room-scan test matrix",
+      "estimate": "m",
+      "kind": "task"
+    },
+    {
+      "start": "10:00",
+      "end": "10:30",
+      "kind": "meeting",
+      "title": "💰 Review Fiverr gigs + outreach emails"
+    },
+    {
+      "start": "10:45",
+      "end": "12:45",
+      "slug": "tomato-android-internal-field-tools",
+      "project": "Tomato Android — Internal Field Tools",
+      "task_id": "p1t0",
+      "title": "Build on-device scan diagnostics and session export",
+      "estimate": "l",
+      "kind": "task"
+    },
+    {
+      "start": "13:00",
+      "end": "14:00",
+      "kind": "lunch",
+      "title": "Lunch"
+    },
+    {
+      "start": "14:00",
+      "end": "14:30",
+      "slug": "dallo-usa",
+      "project": "dallo-usa",
+      "task_id": "t12",
+      "title": "Build Terms & Refund pages",
+      "estimate": "s",
+      "kind": "task"
+    },
+    {
+      "start": "14:45",
+      "end": "15:15",
+      "slug": "dallo-usa",
+      "project": "dallo-usa",
+      "task_id": "t16",
+      "title": "Search",
+      "estimate": "s",
+      "kind": "task"
+    },
+    {
+      "start": "15:30",
+      "end": "16:30",
+      "slug": "dallo-usa",
+      "project": "dallo-usa",
+      "task_id": "t10",
+      "title": "Build Why Dallo USA page",
+      "estimate": "m",
+      "kind": "task"
+    },
+    {
+      "start": "16:45",
+      "end": "17:45",
+      "slug": "dallo-usa",
+      "project": "dallo-usa",
+      "task_id": "t11",
+      "title": "Build Contact page",
+      "estimate": "m",
+      "kind": "task"
+    }
+  ],
+  "projects": [
+    {
+      "slug": "tomato-android-internal-field-tools",
+      "project": "Tomato Android — Internal Field Tools",
+      "client": "Tomato Android — Internal Field Tools",
+      "tasks_total": 35,
+      "tasks_done": 5,
+      "on_deck": false,
+      "tasks": [
+        {
+          "id": "p1t1",
+          "title": "Create the structured S25 room-scan test matrix",
+          "phase": "Scanner Evidence — Make Tracking Failures Observable",
+          "estimate": "m",
+          "priority": "high",
+          "status": "open",
+          "notes": "Define repeatable cases for small/large rooms, plain walls, textured walls, reflective floors, low light.",
+          "block": {
+            "start": "09:00",
+            "end": "10:00"
+          },
+          "prep": {
+            "what": "Define a repeatable test matrix covering every failure mode the S25 scanner encounters — the document every Phase 2 fix references to prove it works.",
+            "understand": "ARCore tracking degrades predictably: plain walls have no visual features for SLAM, reflective floors cause false plane detections, large rooms exceed depth sensor range. Without a structured matrix you can't reproduce a failure reliably or verify a fix worked. This is the ground-truth doc — 30 minutes now saves hours of debugging per Phase 2 task.",
+            "approach": [
+              "List the known failure modes from p1t0 notes: plain walls, reflective floors, low light, large rooms (>6m), excessive motion, S25-specific depth sensor edge cases",
+              "Define 10-12 matrix entries across dimensions: room size (small/large), wall texture (plain/textured), floor type (reflective/matte), lighting (bright/dim), scan path (clockwise / interrupted / restarted after loss)",
+              "For each entry: setup steps, expected behavior, failure indicators, which ARCore metric to watch (`TrackingState`, plane count, depth availability, corner rejection reason)",
+              "Add 4-6 pure-geometry fixture test cases: wall intersection correctness, endpoint clearance, loop closure gap, coordinate transform round-trip"
+            ],
+            "resources": [
+              "ARCore `TrackingState` enum: TRACKING / PAUSED / STOPPED",
+              "ARCore `Frame.acquireDepthImage16Bits()` and `Session.isDepthModeSupported()`",
+              "Samsung S25 camera spec and ARCore configuration docs",
+              "Existing `tests/` directory in the tomato-android repo"
+            ]
+          }
+        },
+        {
+          "id": "p1t0",
+          "title": "Build on-device scan diagnostics and session export",
+          "phase": "Scanner Evidence — Make Tracking Failures Observable",
+          "estimate": "l",
+          "priority": "high",
+          "status": "open",
+          "notes": "Record tracking state, plane/depth availability, camera pose, locked-corner samples, rejection reasons.",
+          "block": {
+            "start": "10:45",
+            "end": "12:45"
+          },
+          "prep": {
+            "what": "Add a developer debug overlay + session log export so you can see exactly what ARCore is doing in real time and export structured data from any failed scan.",
+            "understand": "Right now when the scanner drops a corner or loses tracking, you are debugging blind — no signal about which ARCore metric failed or why a corner was rejected. Every Phase 2 stabilization fix starts from reading a session log. Build the overlay first (real-time during scanning), then the export (structured post-scan analysis). Both are required for Phase 2 to be verifiable.",
+            "approach": [
+              "Add `DebugModeManager` (shake-to-toggle) with a floating overlay card: ARCore `TrackingState`, depth buffer status, active plane count, current corner-lock confidence score, last 3 corner rejection reasons with timestamps",
+              "Build `ScanSession` data class with a list of `ScanEvent` entries (timestamp, type: CORNER_ATTEMPT / CORNER_LOCKED / CORNER_REJECTED / TRACKING_LOST / PLANE_DETECTED, metadata map) — appended on every scanner state change",
+              "On scan end or explicit export tap: serialize session to JSON, share via `ShareCompat.IntentBuilder` with `application/json` MIME type",
+              "Smoke test on S25 in a plain-wall room: confirm the overlay shows `TrackingState.PAUSED` and rejection events appear with correct types in the exported JSON"
+            ],
+            "resources": [
+              "`Session.update()` → `Frame` → `frame.camera.trackingState` for tracking state",
+              "`frame.acquireDepthImage16Bits()` — null means depth unavailable",
+              "`Session.getAllTrackables(Plane::class.java).size` for plane count",
+              "Android `ShareCompat.IntentBuilder` for JSON share sheet",
+              "Existing scanner state machine in `app/src/main/java/` — hook events there"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "slug": "dallo-usa",
+      "project": "dallo-usa",
+      "client": "Dallo",
+      "tasks_total": 46,
+      "tasks_done": 21,
+      "on_deck": false,
+      "tasks": [
+        {
+          "id": "t12",
+          "title": "Build Terms & Refund pages",
+          "phase": "Phase 3: Storefront Pages",
+          "estimate": "s",
+          "priority": "low",
+          "status": "open",
+          "notes": "Source: `reference/content/terms-and-conditions.md` + `refund-policy.md`. Fix placeholder Effective Date and skipped §11 numbering in Refund Policy.",
+          "block": {
+            "start": "14:00",
+            "end": "14:30"
+          },
+          "prep": {
+            "what": "Build the `/terms` and `/refund` static pages from their content files, fixing a placeholder date and a numbering gap before rendering.",
+            "understand": "Two quirks in the source files to fix first: (1) Effective Date is a placeholder like `[DATE]` — replace with 2026-11-02. (2) Refund Policy has a §11 section skipped in numbering — either renumber or add the missing stub. Then create two pages and link them from the footer. Pure content render, no data fetching needed.",
+            "approach": [
+              "Read `reference/content/terms-and-conditions.md` and `reference/content/refund-policy.md` — note the Effective Date placeholder and the §11 gap",
+              "Fix both: update the date in the files and fix the refund §11 numbering",
+              "Create `app/terms/page.tsx` and `app/refund/page.tsx` — prose containers with the site's typography",
+              "Link both from the footer legal links row (typically 'Terms' and 'Refund Policy')"
+            ],
+            "resources": [
+              "`reference/content/terms-and-conditions.md`",
+              "`reference/content/refund-policy.md`",
+              "Footer component for link placement",
+              "Site typography/prose styles from `tailwind.config.ts`"
+            ]
+          }
+        },
+        {
+          "id": "t16",
+          "title": "Search",
+          "phase": "Phase 3: Storefront Pages",
+          "estimate": "s",
+          "priority": "med",
+          "status": "open",
+          "notes": "Client-side filter over mock products. Real Shopify search swaps in when wired.",
+          "block": {
+            "start": "14:45",
+            "end": "15:15"
+          },
+          "prep": {
+            "what": "Add a `/search` page with a text input that filters the mock product list client-side — Shopify's real search swaps in at launch.",
+            "understand": "Mock product data is defined somewhere in the project (likely `lib/` or `data/` — search for `MOCK_PRODUCTS` or `products.ts`). Client-side filtering: keep query in `useState`, filter the array by `product.title.toLowerCase().includes(query)`, render matching product cards with an empty-state message.",
+            "approach": [
+              "Find where mock products are defined — search the codebase for `MOCK_PRODUCTS` or look in `lib/` or `data/` for the product array",
+              "Create `app/search/page.tsx` as a client component with `useState` for the search query and a text input with `onChange`",
+              "Filter mock products by query string (title + optional description match), render results using the existing product card component",
+              "Add a search icon/link in the nav if not present; confirm graceful empty state when no results match"
+            ],
+            "resources": [
+              "Mock product data source (`lib/products.ts` or `data/`) — check for `MOCK_PRODUCTS` export",
+              "Existing product card component used on collection pages",
+              "Next.js `'use client'` directive docs"
+            ]
+          }
+        },
+        {
+          "id": "t10",
+          "title": "Build Why Dallo USA page",
+          "phase": "Phase 3: Storefront Pages",
+          "estimate": "m",
+          "priority": "med",
+          "status": "open",
+          "notes": "Source: `reference/content/why-dallo-usa.md`.",
+          "block": {
+            "start": "15:30",
+            "end": "16:30"
+          },
+          "prep": {
+            "what": "Build the `/why` brand story page from `reference/content/why-dallo-usa.md` — Dallo's differentiation pitch to customers.",
+            "understand": "Pure content page — no data fetching. Look at an existing page (`app/page.tsx` or a collections page) for layout conventions and Tailwind class patterns. This page earns its keep by turning browser traffic into intent: it answers 'Why should I buy from Dallo?'",
+            "approach": [
+              "Read `reference/content/why-dallo-usa.md` — note headlines, sections, and CTAs",
+              "Open an existing page (home or collections) as a layout reference — note wrapper, container, typography patterns",
+              "Create `app/why/page.tsx` mirroring those patterns: hero text, body sections, brand highlights, CTA button linking to collections",
+              "Add `/why` to the footer nav; confirm the route renders without console errors"
+            ],
+            "resources": [
+              "`reference/content/why-dallo-usa.md`",
+              "`app/page.tsx` (home) for layout reference",
+              "`tailwind.config.ts` for custom font and color tokens",
+              "Next.js App Router docs: nextjs.org/docs/app"
+            ]
+          }
+        },
+        {
+          "id": "t11",
+          "title": "Build Contact page",
+          "phase": "Phase 3: Storefront Pages",
+          "estimate": "m",
+          "priority": "med",
+          "status": "open",
+          "notes": "Submission stubs to local API route for now. Source: `reference/content/contact-us.md`.",
+          "block": {
+            "start": "16:45",
+            "end": "17:45"
+          },
+          "prep": {
+            "what": "Build the `/contact` page with a form that submits to a local stub API route — no real email delivery yet, just returns 200 and shows a success state.",
+            "understand": "Submission chain: React controlled form → `fetch('/api/contact', { method: 'POST', body: JSON.stringify(data) })` → Next.js route handler at `app/api/contact/route.ts` that logs the payload and returns `{ ok: true }`. The page shows an inline success message on submit without a full redirect. Keep the form short (name, email, message + any fields from the content file).",
+            "approach": [
+              "Read `reference/content/contact-us.md` for copy, field names, and any section structure",
+              "Create `app/api/contact/route.ts` — POST handler that parses JSON body, logs it, returns `NextResponse.json({ ok: true })`",
+              "Create `app/contact/page.tsx` as a client component with controlled inputs and `onSubmit` handler that calls the API and sets a success boolean in state",
+              "Add a Contact link to the footer/nav; run `npx tsc --noEmit` to confirm no TypeScript errors"
+            ],
+            "resources": [
+              "`reference/content/contact-us.md`",
+              "Next.js Route Handlers: nextjs.org/docs/app/building-your-application/routing/route-handlers",
+              "Existing API routes in `app/api/` for pattern reference",
+              "`npx tsc --noEmit` for type checking"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "slug": "az-print-shop-erp",
+      "project": "AZ Print Shop ERP",
+      "client": "AZ Team",
+      "tasks_total": 133,
+      "tasks_done": 51,
+      "on_deck": true,
+      "tasks": []
+    },
+    {
+      "slug": "az-takeoff-saas",
+      "project": "AZ Takeoff SaaS",
+      "client": "AZ Takeoff",
+      "tasks_total": 79,
+      "tasks_done": 41,
+      "on_deck": true,
+      "tasks": []
+    },
+    {
+      "slug": "az-team-ai-system",
+      "project": "AZ Team AI System",
+      "client": "AZ Team AI System",
+      "tasks_total": 74,
+      "tasks_done": 71,
+      "on_deck": true,
+      "tasks": []
+    },
+    {
+      "slug": "cleansaas",
+      "project": "CleanSaaS",
+      "client": "CleanSaaS",
+      "tasks_total": 4,
+      "tasks_done": 3,
+      "on_deck": true,
+      "tasks": []
+    },
+    {
+      "slug": "fitness-zone",
+      "project": "Fitness Zone",
+      "client": "Fitness Zone",
+      "tasks_total": 13,
+      "tasks_done": 10,
+      "on_deck": true,
+      "tasks": []
+    },
+    {
+      "slug": "gs-woodworking-erp",
+      "project": "GS WoodWorking ERP",
+      "client": "GS-ERP",
+      "tasks_total": 256,
+      "tasks_done": 39,
+      "on_deck": true,
+      "tasks": []
+    },
+    {
+      "slug": "gs-erp-next",
+      "project": "GS-ERP Next",
+      "client": "GS-ERP Next",
+      "tasks_total": 78,
+      "tasks_done": 36,
+      "on_deck": true,
+      "tasks": []
+    },
+    {
+      "slug": "gloopy-3d-youtube-shorts",
+      "project": "Gloopy 3D · YouTube Shorts",
+      "client": "Gloopy 3D · YouTube Shorts",
+      "tasks_total": 176,
+      "tasks_done": 92,
+      "on_deck": true,
+      "tasks": []
+    },
+    {
+      "slug": "gloopy3d-site",
+      "project": "Gloopy3D Site",
+      "client": "Gloopy3D",
+      "tasks_total": 0,
+      "tasks_done": 0,
+      "on_deck": true,
+      "tasks": []
+    },
+    {
+      "slug": "haniel-finances",
+      "project": "Haniel Finances",
+      "client": "Haniel Finances",
+      "tasks_total": 35,
+      "tasks_done": 20,
+      "on_deck": true,
+      "tasks": []
+    },
+    {
+      "slug": "module-starter",
+      "project": "Module Starter",
+      "client": "Module",
+      "tasks_total": 69,
+      "tasks_done": 27,
+      "on_deck": true,
+      "tasks": []
+    },
+    {
+      "slug": "peptiworth",
+      "project": "PeptiWorth",
+      "client": "PeptiWorth",
+      "tasks_total": 0,
+      "tasks_done": 0,
+      "on_deck": true,
+      "tasks": []
+    },
+    {
+      "slug": "pro-counters-erp",
+      "project": "Pro Counters ERP",
+      "client": "procounters_erp",
+      "tasks_total": 355,
+      "tasks_done": 310,
+      "on_deck": true,
+      "tasks": []
+    },
+    {
+      "slug": "pro-counters-website-rebuild",
+      "project": "Pro Counters — Website Rebuild",
+      "client": "Pro Counters New England (PCNE)",
+      "tasks_total": 33,
+      "tasks_done": 21,
+      "on_deck": true,
+      "tasks": []
+    },
+    {
+      "slug": "spellkin-nft-project",
+      "project": "Spellkin (NFT project)",
+      "client": "Spellkin",
+      "tasks_total": 0,
+      "tasks_done": 0,
+      "on_deck": true,
+      "tasks": []
+    },
+    {
+      "slug": "takeoff-engine-saas",
+      "project": "Takeoff Engine Saas",
+      "client": "Takeoff Engine",
+      "tasks_total": 38,
+      "tasks_done": 27,
+      "on_deck": true,
+      "tasks": []
+    },
+    {
+      "slug": "tasks-platform-claude-todos-skill-rebuild",
+      "project": "Tasks Platform (claude-todos-skill rebuild)",
+      "client": "Tasks Platform (claude-todos-skill rebuild)",
+      "tasks_total": 263,
+      "tasks_done": 168,
+      "on_deck": true,
+      "tasks": []
+    },
+    {
+      "slug": "econoplatform",
+      "project": "econoplatform",
+      "client": "",
+      "tasks_total": 61,
+      "tasks_done": 33,
+      "on_deck": true,
+      "tasks": []
+    },
+    {
+      "slug": "influencer-agent",
+      "project": "influencer-agent",
+      "client": "influencer-agent",
+      "tasks_total": 52,
+      "tasks_done": 9,
+      "on_deck": true,
+      "tasks": []
+    },
+    {
+      "slug": "orc",
+      "project": "orc",
+      "client": "orc",
+      "tasks_total": 204,
+      "tasks_done": 104,
+      "on_deck": true,
+      "tasks": []
+    }
+  ],
+  "waiting_on": [
+    {
+      "project": "Fitness Zone",
+      "task_id": "t10",
+      "title": "Real products, photos, prices, shipping rates and policy pages from owners",
+      "reason": "Owners must supply real product catalog, photos, and prices before the store can populate"
+    },
+    {
+      "project": "Fitness Zone",
+      "task_id": "t11",
+      "title": "Stripe or Square account keys, webhooks and tax rules",
+      "reason": "Owners must provide payment account credentials and confirm tax configuration before the buy flow can go live"
+    },
+    {
+      "project": "Fitness Zone",
+      "task_id": "t12",
+      "title": "Deploy store complete — owners' admin account + store mailbox",
+      "reason": "Store preview is live but still needs: owners' admin email (to create their account) and a mailbox for SMTP"
+    },
+    {
+      "project": "Pro Counters — Website Rebuild",
+      "task_id": "t1",
+      "title": "Copy for the 4 held service pages (blocked on PCNE)",
+      "reason": "PCNE must supply service page copy for sink installation, backsplash, countertop repair, and countertop removal"
+    },
+    {
+      "project": "Pro Counters — Website Rebuild",
+      "task_id": "t3",
+      "title": "Verify NAP + geo against the Google Business Profile",
+      "reason": "PCNE or GBP owner must supply their Google Business Profile export (name, address, phone, hours, lat/long pin) — cannot use search snippets"
+    },
+    {
+      "project": "Pro Counters — Website Rebuild",
+      "task_id": "t8",
+      "title": "Owner confirmations left over from the clickable + copy round",
+      "reason": "PCNE must decide: Google Business Profile review link destination and other open editorial decisions from t7"
+    }
+  ]
+}
