@@ -1,0 +1,415 @@
+{
+  "date": "2026-11-03",
+  "generated_at": "2026-11-03T11:05:00Z",
+  "data_as_of": "2026-11-03T06:00:36+00:00",
+  "greeting": "Morning, Haniel. Tuesday's here — let's close out a chapter today.",
+  "hype": "AZ Team AI is at 96% done. Three tasks. That's it. Finish the system, wrap CleanSaaS E2E, and walk away with two projects basically in the bag.",
+  "notice": "Fiverr at 10 AM: your seller account is set up and both gig drafts are ready — finish ID verification and click Publish on both. Don't skip it.",
+  "difficulty": {
+    "rating": "Solid",
+    "planned_minutes": 300,
+    "available_minutes": 375,
+    "ratio": 0.80,
+    "note": ""
+  },
+  "window": { "start": "09:00", "end": "18:00" },
+  "schedule": [
+    {
+      "start": "09:00",
+      "end": "10:00",
+      "slug": "az-team-ai-system",
+      "project": "AZ Team AI System",
+      "task_id": "t20",
+      "title": "NotificationChannel abstraction + ChatwootChannel (SMS)",
+      "estimate": "m",
+      "kind": "task"
+    },
+    {
+      "start": "10:00",
+      "end": "10:45",
+      "kind": "meeting",
+      "title": "Fiverr: finish ID verification + Publish 2 gig drafts"
+    },
+    {
+      "start": "11:00",
+      "end": "12:00",
+      "slug": "az-team-ai-system",
+      "project": "AZ Team AI System",
+      "task_id": "t30",
+      "title": "Dashboard AR cluster + cashflow calendar",
+      "estimate": "m",
+      "kind": "task"
+    },
+    {
+      "start": "12:00",
+      "end": "13:00",
+      "kind": "lunch",
+      "title": "Lunch"
+    },
+    {
+      "start": "13:00",
+      "end": "14:00",
+      "slug": "az-team-ai-system",
+      "project": "AZ Team AI System",
+      "task_id": "t74",
+      "title": "Add server/hosting provider model separate from domain registrar",
+      "estimate": "m",
+      "kind": "task"
+    },
+    {
+      "start": "14:15",
+      "end": "16:15",
+      "slug": "cleansaas",
+      "project": "CleanSaaS",
+      "task_id": "t4",
+      "title": "Click-driven E2E coverage + bilingual tutorials (final gaps)",
+      "estimate": "l",
+      "kind": "task"
+    }
+  ],
+  "projects": [
+    {
+      "slug": "az-team-ai-system",
+      "project": "AZ Team AI System",
+      "client": "AZ Team AI System",
+      "tasks_total": 74,
+      "tasks_done": 71,
+      "on_deck": false,
+      "tasks": [
+        {
+          "id": "t20",
+          "title": "NotificationChannel abstraction + ChatwootChannel (SMS, live-tested)",
+          "phase": "Phase 2 · Billing backend + battle-test",
+          "estimate": "m",
+          "priority": "high",
+          "status": "in_progress",
+          "notes": "Chatwoot SMS channel is LIVE and tested. The full NotificationChannel abstraction (spec §5.2) — OutboundMessage/NotificationRecipient VOs (R15), label()/medium()/supports() interface — is what remains.",
+          "block": { "start": "09:00", "end": "10:00" },
+          "prep": {
+            "what": "Complete the NotificationChannel abstraction layer that wraps the already-live Chatwoot SMS channel per spec §5.2.",
+            "understand": "The Chatwoot SMS integration already works end-to-end. This task is about making it architecturally correct: wrapping it in the formal `NotificationChannel` interface with proper value objects and routing. Rule R15 mandates `OutboundMessage`/`NotificationRecipient` VOs. `ReminderDispatcher` must skip at claim-time for unsupported channels.",
+            "approach": [
+              "Review spec §5.2 and rule R15 — note exactly what the interface contract requires (label, medium, supports methods).",
+              "Implement `OutboundMessage` and `NotificationRecipient` value objects under the existing notification namespace.",
+              "Add `label()`, `medium()`, `supports()` to the `NotificationChannel` interface and implement them in `ChatwootChannel`.",
+              "Update `ReminderDispatcher` to call `supports()` and skip unsupported channels at claim-time.",
+              "Run existing notification tests; add one test for `supports()` returning false for FB/IG/Telegram if not already covered."
+            ],
+            "resources": [
+              "spec §5.2 (notification channel contract)",
+              "rule R15 in project rules (VO requirements)",
+              "existing `ChatwootChannel` class and notification tests",
+              "`ReminderDispatcher` — the dispatch path to update",
+              "`config/chatwoot.channel_capabilities` (channel capability config)"
+            ]
+          }
+        },
+        {
+          "id": "t30",
+          "title": "Dashboard AR cluster + cashflow calendar",
+          "phase": "Phase 3 · Frontend vertical slices",
+          "estimate": "m",
+          "priority": "high",
+          "status": "in_progress",
+          "notes": "AR cluster (dashboard receivables) is done. 'Cashflow calendar' shipped as compact upcoming-due LIST widget at Region C, NOT the full /cashflow month-grid that spec §6 describes. Decision needed: accept list as v1, or build the grid.",
+          "block": { "start": "11:00", "end": "12:00" },
+          "prep": {
+            "what": "Close the cashflow calendar gap — either build the /cashflow month-grid per spec §6, or formally accept the current upcoming-due list widget as v1.",
+            "understand": "Spec §6 describes a dedicated `/cashflow` route with a monthly grid showing inflows/outflows by date. What shipped is a compact upcoming-due card list in the dashboard sidebar. These are different UX patterns. Before coding anything: re-read spec §6 to decide if a list is acceptable or if a grid is required.",
+            "approach": [
+              "Open spec §6 and compare the cashflow grid requirement against `upcoming-due-card.tsx` — list what's missing.",
+              "If the list is accepted as v1: update the task notes with the formal scope decision, close the gap entry, and mark done.",
+              "If the grid is required: scaffold a `/cashflow` Inertia page + month-grid component, reusing the AR data already exposed.",
+              "Wire the month-grid to pull invoice due-dates grouped by month and render inflow/outflow totals per day.",
+              "Run `npm run types:check` and existing dashboard tests."
+            ],
+            "resources": [
+              "spec §6 (cashflow calendar requirement)",
+              "`resources/js/components/dashboard/upcoming-due-card.tsx` (current implementation)",
+              "existing AR cluster components for data shape reference",
+              "InertiaJS routing — how other /dashboard sub-routes are wired",
+              "fin.azteam.cloud staging for visual verification"
+            ]
+          }
+        },
+        {
+          "id": "t74",
+          "title": "Add server/hosting provider model separate from domain registrar",
+          "phase": "Phase 7 · Post-audit completeness + polish",
+          "estimate": "m",
+          "priority": "medium",
+          "status": "todo",
+          "notes": "Gap found during AZ Agency legacy-domain migration: the system conflates domain registrar and server/hosting provider. These are separate relationships. Migration intentionally preserved registrar data only; hosting provider field is missing.",
+          "block": { "start": "13:00", "end": "14:00" },
+          "prep": {
+            "what": "Add a `hosting_provider` field (or FK model) to domains so registrar and hosting are tracked separately.",
+            "understand": "Right now a domain has one 'provider' field that mixes up who holds the domain registration (e.g. Namecheap, GoDaddy) and where the site is hosted (e.g. Hostinger, DigitalOcean). These can be different companies. The fix: separate them at the data model level.",
+            "approach": [
+              "Find the current domain model and its provider field — check `app/Models/Domain.php` and related migrations.",
+              "Decide the shape: simple nullable string `hosting_provider`, or a FK to a shared Provider/Service model if one exists.",
+              "Write a migration to add the column (or new table). Keep it nullable — old records get null.",
+              "Update the domain form (create + edit views) and domain detail view to show the new field.",
+              "Run `php artisan migrate` locally, then `php artisan test` and `npm run types:check`."
+            ],
+            "resources": [
+              "`app/Models/Domain.php` and domain migrations",
+              "existing domain create/edit views (`resources/js/pages/domains/`)",
+              "Laravel migration docs (`php artisan make:migration`)",
+              "fin.azteam.cloud staging DB for manual verification"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "slug": "cleansaas",
+      "project": "CleanSaaS",
+      "client": "CleanSaaS",
+      "tasks_total": 4,
+      "tasks_done": 3,
+      "on_deck": false,
+      "tasks": [
+        {
+          "id": "t4",
+          "title": "Exercise all SaaS controls through clicks and produce ordered bilingual tutorials",
+          "phase": "Phase 2 · Click-driven end-to-end coverage and user education",
+          "estimate": "l",
+          "priority": "high",
+          "status": "in_progress",
+          "notes": "172 browser tests pass, 609 clicked signatures verified. EN + PT-BR tutorial videos generated. Remaining: secondary/provider/conditional control gaps unverified; continuous listening/player subtitle review pending.",
+          "block": { "start": "14:15", "end": "16:15" },
+          "prep": {
+            "what": "Close the final control-coverage gaps and verify the tutorial video subtitles so this task can be marked done.",
+            "understand": "The big work is done — tests pass, videos exist, click coverage is solid. What remains is a targeted audit: which secondary/provider/conditional controls haven't been exercised yet, and whether the tutorial's continuous-listening subtitle sync holds up. `npm run test:e2e:inventory` will show you exactly where the gaps are.",
+            "approach": [
+              "Run `npm run test:e2e:inventory` — read the control coverage report to see which families are still uncovered.",
+              "Check `docs/e2e-control-coverage.md` for the documented gap list; cross-reference with the inventory output.",
+              "Write E2E coverage for each uncovered secondary/provider/conditional control family (aim for at least one outcome assertion per family).",
+              "Review tutorial subtitle timing: play both EN and PT-BR videos at 1x speed and spot-check cue sync on transitions.",
+              "Run `npm run test:e2e` and `npm run test:js` to confirm green; if all gaps are documented-covered, mark the branch ready."
+            ],
+            "resources": [
+              "`tests/e2e/README.md` and `docs/e2e-control-coverage.md`",
+              "`scripts/e2e-control-inventory.mjs` (run via `npm run test:e2e:inventory`)",
+              "`tests/e2e/tutorial-pipeline.spec.js`",
+              "`docs/tutorial-capture-plan.md`",
+              "dev.clean.azteamai.com (dev environment for live testing)"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "slug": "az-print-shop-erp",
+      "project": "AZ Print Shop ERP",
+      "client": "AZ Team",
+      "tasks_total": 133,
+      "tasks_done": 51,
+      "on_deck": true,
+      "tasks": []
+    },
+    {
+      "slug": "az-takeoff-saas",
+      "project": "AZ Takeoff SaaS",
+      "client": "AZ Takeoff",
+      "tasks_total": 79,
+      "tasks_done": 41,
+      "on_deck": true,
+      "tasks": []
+    },
+    {
+      "slug": "fitness-zone",
+      "project": "Fitness Zone",
+      "client": "Fitness Zone",
+      "tasks_total": 13,
+      "tasks_done": 10,
+      "on_deck": true,
+      "tasks": []
+    },
+    {
+      "slug": "gs-woodworking-erp",
+      "project": "GS WoodWorking ERP",
+      "client": "GS-ERP",
+      "tasks_total": 223,
+      "tasks_done": 39,
+      "on_deck": true,
+      "tasks": []
+    },
+    {
+      "slug": "gs-erp-next",
+      "project": "GS-ERP Next",
+      "client": "GS-ERP Next",
+      "tasks_total": 78,
+      "tasks_done": 36,
+      "on_deck": true,
+      "tasks": []
+    },
+    {
+      "slug": "gloopy-3d-youtube-shorts",
+      "project": "Gloopy 3D · YouTube Shorts",
+      "client": "Gloopy 3D · YouTube Shorts",
+      "tasks_total": 175,
+      "tasks_done": 92,
+      "on_deck": true,
+      "tasks": []
+    },
+    {
+      "slug": "gloopy3d-site",
+      "project": "Gloopy3D Site",
+      "client": "Gloopy3D",
+      "tasks_total": 0,
+      "tasks_done": 0,
+      "on_deck": true,
+      "tasks": []
+    },
+    {
+      "slug": "haniel-finances",
+      "project": "Haniel Finances",
+      "client": "Haniel Finances",
+      "tasks_total": 33,
+      "tasks_done": 18,
+      "on_deck": true,
+      "tasks": []
+    },
+    {
+      "slug": "module-starter",
+      "project": "Module Starter",
+      "client": "Module",
+      "tasks_total": 69,
+      "tasks_done": 27,
+      "on_deck": true,
+      "tasks": []
+    },
+    {
+      "slug": "peptiworth",
+      "project": "PeptiWorth",
+      "client": "PeptiWorth",
+      "tasks_total": 0,
+      "tasks_done": 0,
+      "on_deck": true,
+      "tasks": []
+    },
+    {
+      "slug": "pro-counters-erp",
+      "project": "Pro Counters ERP",
+      "client": "procounters_erp",
+      "tasks_total": 271,
+      "tasks_done": 226,
+      "on_deck": true,
+      "tasks": []
+    },
+    {
+      "slug": "pro-counters-website-rebuild",
+      "project": "Pro Counters — Website Rebuild",
+      "client": "Pro Counters New England (PCNE)",
+      "tasks_total": 35,
+      "tasks_done": 23,
+      "on_deck": true,
+      "tasks": []
+    },
+    {
+      "slug": "spellkin-nft-project",
+      "project": "Spellkin (NFT project)",
+      "client": "Spellkin",
+      "tasks_total": 0,
+      "tasks_done": 0,
+      "on_deck": true,
+      "tasks": []
+    },
+    {
+      "slug": "takeoff-engine-saas",
+      "project": "Takeoff Engine Saas",
+      "client": "Takeoff Engine",
+      "tasks_total": 38,
+      "tasks_done": 27,
+      "on_deck": true,
+      "tasks": []
+    },
+    {
+      "slug": "tasks-platform-claude-todos-skill-rebuild",
+      "project": "Tasks Platform (claude-todos-skill rebuild)",
+      "client": "Tasks Platform (claude-todos-skill rebuild)",
+      "tasks_total": 238,
+      "tasks_done": 143,
+      "on_deck": true,
+      "tasks": []
+    },
+    {
+      "slug": "tomato-android-internal-field-tools",
+      "project": "Tomato Android — Internal Field Tools",
+      "client": "Tomato Android — Internal Field Tools",
+      "tasks_total": 34,
+      "tasks_done": 5,
+      "on_deck": true,
+      "tasks": []
+    },
+    {
+      "slug": "dallo-usa",
+      "project": "dallo-usa",
+      "client": "Dallo",
+      "tasks_total": 46,
+      "tasks_done": 21,
+      "on_deck": true,
+      "tasks": []
+    },
+    {
+      "slug": "econoplatform",
+      "project": "econoplatform",
+      "client": "",
+      "tasks_total": 61,
+      "tasks_done": 33,
+      "on_deck": true,
+      "tasks": []
+    },
+    {
+      "slug": "influencer-agent",
+      "project": "influencer-agent",
+      "client": "influencer-agent",
+      "tasks_total": 51,
+      "tasks_done": 9,
+      "on_deck": true,
+      "tasks": []
+    },
+    {
+      "slug": "orc",
+      "project": "orc",
+      "client": "orc",
+      "tasks_total": 199,
+      "tasks_done": 111,
+      "on_deck": true,
+      "tasks": []
+    }
+  ],
+  "waiting_on": [
+    {
+      "project": "Fitness Zone",
+      "task_id": "t10",
+      "title": "Real products, photos, prices, shipping rates and policy pages from owners",
+      "reason": "Owners need to supply real product photos, prices, and policy pages before the store can go live. Seven placeholder drafts are seeded but hidden."
+    },
+    {
+      "project": "Fitness Zone",
+      "task_id": "t11",
+      "title": "Stripe or Square account keys, webhooks and tax rules",
+      "reason": "Needs owners' payment gateway test keys and tax decisions. Stripe CLI login expired 2026-09-30; no live keys in hand."
+    },
+    {
+      "project": "Fitness Zone",
+      "task_id": "t12",
+      "title": "Deploy store to Hostinger (owner admin account + mailbox left)",
+      "reason": "Preview is live and crons are on, but owners' admin account email and store mailbox SMTP are still needed to complete the deploy."
+    },
+    {
+      "project": "Pro Counters — Website Rebuild",
+      "task_id": "t1",
+      "title": "Copy for the 4 held service pages (blocked on PCNE)",
+      "reason": "Service page body copy (sink installation, backsplash, countertop repair, removal) must come from PCNE — pages exist in config with no content."
+    },
+    {
+      "project": "Pro Counters — Website Rebuild",
+      "task_id": "t8",
+      "title": "Owner confirmations left over from the clickable + copy round",
+      "reason": "Decisions only PCNE can make: Google Business Profile review link, any other owner-facing copy choices surfaced during t7."
+    }
+  ]
+}
