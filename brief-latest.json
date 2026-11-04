@@ -1,415 +1,328 @@
 {
-  "date": "2026-11-03",
-  "generated_at": "2026-11-03T11:05:00Z",
-  "data_as_of": "2026-11-03T06:00:36+00:00",
-  "greeting": "Morning, Haniel. Tuesday's here — let's close out a chapter today.",
-  "hype": "AZ Team AI is at 96% done. Three tasks. That's it. Finish the system, wrap CleanSaaS E2E, and walk away with two projects basically in the bag.",
-  "notice": "Fiverr at 10 AM: your seller account is set up and both gig drafts are ready — finish ID verification and click Publish on both. Don't skip it.",
+  "date": "2026-11-04",
+  "generated_at": "2026-11-04T11:07:00Z",
+  "data_as_of": "2026-11-04T06:00:24+00:00",
+  "greeting": "Morning, Haniel. Wednesday, November 4th — let's close some loops.",
+  "hype": "Dallo USA is one client action from launch and your finance app has an in-progress engine waiting to be finished. Both are sitting right there. Let's go.",
+  "notice": "Google Ads setup on your calendar at 10:00 AM (~30 min). Budget ~$70, follow the event description — quick execution, not deep work.",
   "difficulty": {
     "rating": "Solid",
-    "planned_minutes": 300,
-    "available_minutes": 375,
-    "ratio": 0.80,
+    "planned_minutes": 330,
+    "available_minutes": 450,
+    "ratio": 0.73,
     "note": ""
   },
   "window": { "start": "09:00", "end": "18:00" },
   "schedule": [
     {
       "start": "09:00",
-      "end": "10:00",
-      "slug": "az-team-ai-system",
-      "project": "AZ Team AI System",
-      "task_id": "t20",
-      "title": "NotificationChannel abstraction + ChatwootChannel (SMS)",
-      "estimate": "m",
+      "end": "09:30",
+      "slug": "haniel-finances",
+      "project": "Haniel Finances",
+      "task_id": "t28",
+      "title": "Add LLM client (Phase 5 foundation)",
+      "estimate": "s",
       "kind": "task"
     },
     {
       "start": "10:00",
-      "end": "10:45",
-      "kind": "meeting",
-      "title": "Fiverr: finish ID verification + Publish 2 gig drafts"
+      "end": "10:30",
+      "kind": "calendar",
+      "title": "💰 Set up Google Ads test ($5/day, 14 days)"
     },
     {
-      "start": "11:00",
-      "end": "12:00",
-      "slug": "az-team-ai-system",
-      "project": "AZ Team AI System",
-      "task_id": "t30",
-      "title": "Dashboard AR cluster + cashflow calendar",
+      "start": "10:45",
+      "end": "11:45",
+      "slug": "dallo-usa",
+      "project": "dallo-usa",
+      "task_id": "t10",
+      "title": "Build Why Dallo USA page",
       "estimate": "m",
       "kind": "task"
     },
     {
       "start": "12:00",
-      "end": "13:00",
-      "kind": "lunch",
-      "title": "Lunch"
+      "end": "12:30",
+      "slug": "dallo-usa",
+      "project": "dallo-usa",
+      "task_id": "t16",
+      "title": "Search (client-side filter over mock products)",
+      "estimate": "s",
+      "kind": "task"
     },
     {
       "start": "13:00",
       "end": "14:00",
-      "slug": "az-team-ai-system",
-      "project": "AZ Team AI System",
-      "task_id": "t74",
-      "title": "Add server/hosting provider model separate from domain registrar",
-      "estimate": "m",
-      "kind": "task"
+      "kind": "lunch",
+      "title": "Lunch"
     },
     {
       "start": "14:15",
       "end": "16:15",
-      "slug": "cleansaas",
-      "project": "CleanSaaS",
-      "task_id": "t4",
-      "title": "Click-driven E2E coverage + bilingual tutorials (final gaps)",
+      "slug": "haniel-finances",
+      "project": "Haniel Finances",
+      "task_id": "t16",
+      "title": "Household Cash Flow engine — fix safe-to-spend",
       "estimate": "l",
+      "kind": "task"
+    },
+    {
+      "start": "16:30",
+      "end": "17:30",
+      "slug": "dallo-usa",
+      "project": "dallo-usa",
+      "task_id": "t18",
+      "title": "B2B / Wholesale landing page with inquiry form",
+      "estimate": "m",
+      "kind": "task"
+    },
+    {
+      "start": "17:30",
+      "end": "18:00",
+      "slug": "dallo-usa",
+      "project": "dallo-usa",
+      "task_id": "t21",
+      "title": "Dynamic sitemap.ts + robots.txt",
+      "estimate": "s",
       "kind": "task"
     }
   ],
   "projects": [
-    {
-      "slug": "az-team-ai-system",
-      "project": "AZ Team AI System",
-      "client": "AZ Team AI System",
-      "tasks_total": 74,
-      "tasks_done": 71,
-      "on_deck": false,
-      "tasks": [
-        {
-          "id": "t20",
-          "title": "NotificationChannel abstraction + ChatwootChannel (SMS, live-tested)",
-          "phase": "Phase 2 · Billing backend + battle-test",
-          "estimate": "m",
-          "priority": "high",
-          "status": "in_progress",
-          "notes": "Chatwoot SMS channel is LIVE and tested. The full NotificationChannel abstraction (spec §5.2) — OutboundMessage/NotificationRecipient VOs (R15), label()/medium()/supports() interface — is what remains.",
-          "block": { "start": "09:00", "end": "10:00" },
-          "prep": {
-            "what": "Complete the NotificationChannel abstraction layer that wraps the already-live Chatwoot SMS channel per spec §5.2.",
-            "understand": "The Chatwoot SMS integration already works end-to-end. This task is about making it architecturally correct: wrapping it in the formal `NotificationChannel` interface with proper value objects and routing. Rule R15 mandates `OutboundMessage`/`NotificationRecipient` VOs. `ReminderDispatcher` must skip at claim-time for unsupported channels.",
-            "approach": [
-              "Review spec §5.2 and rule R15 — note exactly what the interface contract requires (label, medium, supports methods).",
-              "Implement `OutboundMessage` and `NotificationRecipient` value objects under the existing notification namespace.",
-              "Add `label()`, `medium()`, `supports()` to the `NotificationChannel` interface and implement them in `ChatwootChannel`.",
-              "Update `ReminderDispatcher` to call `supports()` and skip unsupported channels at claim-time.",
-              "Run existing notification tests; add one test for `supports()` returning false for FB/IG/Telegram if not already covered."
-            ],
-            "resources": [
-              "spec §5.2 (notification channel contract)",
-              "rule R15 in project rules (VO requirements)",
-              "existing `ChatwootChannel` class and notification tests",
-              "`ReminderDispatcher` — the dispatch path to update",
-              "`config/chatwoot.channel_capabilities` (channel capability config)"
-            ]
-          }
-        },
-        {
-          "id": "t30",
-          "title": "Dashboard AR cluster + cashflow calendar",
-          "phase": "Phase 3 · Frontend vertical slices",
-          "estimate": "m",
-          "priority": "high",
-          "status": "in_progress",
-          "notes": "AR cluster (dashboard receivables) is done. 'Cashflow calendar' shipped as compact upcoming-due LIST widget at Region C, NOT the full /cashflow month-grid that spec §6 describes. Decision needed: accept list as v1, or build the grid.",
-          "block": { "start": "11:00", "end": "12:00" },
-          "prep": {
-            "what": "Close the cashflow calendar gap — either build the /cashflow month-grid per spec §6, or formally accept the current upcoming-due list widget as v1.",
-            "understand": "Spec §6 describes a dedicated `/cashflow` route with a monthly grid showing inflows/outflows by date. What shipped is a compact upcoming-due card list in the dashboard sidebar. These are different UX patterns. Before coding anything: re-read spec §6 to decide if a list is acceptable or if a grid is required.",
-            "approach": [
-              "Open spec §6 and compare the cashflow grid requirement against `upcoming-due-card.tsx` — list what's missing.",
-              "If the list is accepted as v1: update the task notes with the formal scope decision, close the gap entry, and mark done.",
-              "If the grid is required: scaffold a `/cashflow` Inertia page + month-grid component, reusing the AR data already exposed.",
-              "Wire the month-grid to pull invoice due-dates grouped by month and render inflow/outflow totals per day.",
-              "Run `npm run types:check` and existing dashboard tests."
-            ],
-            "resources": [
-              "spec §6 (cashflow calendar requirement)",
-              "`resources/js/components/dashboard/upcoming-due-card.tsx` (current implementation)",
-              "existing AR cluster components for data shape reference",
-              "InertiaJS routing — how other /dashboard sub-routes are wired",
-              "fin.azteam.cloud staging for visual verification"
-            ]
-          }
-        },
-        {
-          "id": "t74",
-          "title": "Add server/hosting provider model separate from domain registrar",
-          "phase": "Phase 7 · Post-audit completeness + polish",
-          "estimate": "m",
-          "priority": "medium",
-          "status": "todo",
-          "notes": "Gap found during AZ Agency legacy-domain migration: the system conflates domain registrar and server/hosting provider. These are separate relationships. Migration intentionally preserved registrar data only; hosting provider field is missing.",
-          "block": { "start": "13:00", "end": "14:00" },
-          "prep": {
-            "what": "Add a `hosting_provider` field (or FK model) to domains so registrar and hosting are tracked separately.",
-            "understand": "Right now a domain has one 'provider' field that mixes up who holds the domain registration (e.g. Namecheap, GoDaddy) and where the site is hosted (e.g. Hostinger, DigitalOcean). These can be different companies. The fix: separate them at the data model level.",
-            "approach": [
-              "Find the current domain model and its provider field — check `app/Models/Domain.php` and related migrations.",
-              "Decide the shape: simple nullable string `hosting_provider`, or a FK to a shared Provider/Service model if one exists.",
-              "Write a migration to add the column (or new table). Keep it nullable — old records get null.",
-              "Update the domain form (create + edit views) and domain detail view to show the new field.",
-              "Run `php artisan migrate` locally, then `php artisan test` and `npm run types:check`."
-            ],
-            "resources": [
-              "`app/Models/Domain.php` and domain migrations",
-              "existing domain create/edit views (`resources/js/pages/domains/`)",
-              "Laravel migration docs (`php artisan make:migration`)",
-              "fin.azteam.cloud staging DB for manual verification"
-            ]
-          }
-        }
-      ]
-    },
-    {
-      "slug": "cleansaas",
-      "project": "CleanSaaS",
-      "client": "CleanSaaS",
-      "tasks_total": 4,
-      "tasks_done": 3,
-      "on_deck": false,
-      "tasks": [
-        {
-          "id": "t4",
-          "title": "Exercise all SaaS controls through clicks and produce ordered bilingual tutorials",
-          "phase": "Phase 2 · Click-driven end-to-end coverage and user education",
-          "estimate": "l",
-          "priority": "high",
-          "status": "in_progress",
-          "notes": "172 browser tests pass, 609 clicked signatures verified. EN + PT-BR tutorial videos generated. Remaining: secondary/provider/conditional control gaps unverified; continuous listening/player subtitle review pending.",
-          "block": { "start": "14:15", "end": "16:15" },
-          "prep": {
-            "what": "Close the final control-coverage gaps and verify the tutorial video subtitles so this task can be marked done.",
-            "understand": "The big work is done — tests pass, videos exist, click coverage is solid. What remains is a targeted audit: which secondary/provider/conditional controls haven't been exercised yet, and whether the tutorial's continuous-listening subtitle sync holds up. `npm run test:e2e:inventory` will show you exactly where the gaps are.",
-            "approach": [
-              "Run `npm run test:e2e:inventory` — read the control coverage report to see which families are still uncovered.",
-              "Check `docs/e2e-control-coverage.md` for the documented gap list; cross-reference with the inventory output.",
-              "Write E2E coverage for each uncovered secondary/provider/conditional control family (aim for at least one outcome assertion per family).",
-              "Review tutorial subtitle timing: play both EN and PT-BR videos at 1x speed and spot-check cue sync on transitions.",
-              "Run `npm run test:e2e` and `npm run test:js` to confirm green; if all gaps are documented-covered, mark the branch ready."
-            ],
-            "resources": [
-              "`tests/e2e/README.md` and `docs/e2e-control-coverage.md`",
-              "`scripts/e2e-control-inventory.mjs` (run via `npm run test:e2e:inventory`)",
-              "`tests/e2e/tutorial-pipeline.spec.js`",
-              "`docs/tutorial-capture-plan.md`",
-              "dev.clean.azteamai.com (dev environment for live testing)"
-            ]
-          }
-        }
-      ]
-    },
-    {
-      "slug": "az-print-shop-erp",
-      "project": "AZ Print Shop ERP",
-      "client": "AZ Team",
-      "tasks_total": 133,
-      "tasks_done": 51,
-      "on_deck": true,
-      "tasks": []
-    },
-    {
-      "slug": "az-takeoff-saas",
-      "project": "AZ Takeoff SaaS",
-      "client": "AZ Takeoff",
-      "tasks_total": 79,
-      "tasks_done": 41,
-      "on_deck": true,
-      "tasks": []
-    },
-    {
-      "slug": "fitness-zone",
-      "project": "Fitness Zone",
-      "client": "Fitness Zone",
-      "tasks_total": 13,
-      "tasks_done": 10,
-      "on_deck": true,
-      "tasks": []
-    },
-    {
-      "slug": "gs-woodworking-erp",
-      "project": "GS WoodWorking ERP",
-      "client": "GS-ERP",
-      "tasks_total": 223,
-      "tasks_done": 39,
-      "on_deck": true,
-      "tasks": []
-    },
-    {
-      "slug": "gs-erp-next",
-      "project": "GS-ERP Next",
-      "client": "GS-ERP Next",
-      "tasks_total": 78,
-      "tasks_done": 36,
-      "on_deck": true,
-      "tasks": []
-    },
-    {
-      "slug": "gloopy-3d-youtube-shorts",
-      "project": "Gloopy 3D · YouTube Shorts",
-      "client": "Gloopy 3D · YouTube Shorts",
-      "tasks_total": 175,
-      "tasks_done": 92,
-      "on_deck": true,
-      "tasks": []
-    },
-    {
-      "slug": "gloopy3d-site",
-      "project": "Gloopy3D Site",
-      "client": "Gloopy3D",
-      "tasks_total": 0,
-      "tasks_done": 0,
-      "on_deck": true,
-      "tasks": []
-    },
-    {
-      "slug": "haniel-finances",
-      "project": "Haniel Finances",
-      "client": "Haniel Finances",
-      "tasks_total": 33,
-      "tasks_done": 18,
-      "on_deck": true,
-      "tasks": []
-    },
-    {
-      "slug": "module-starter",
-      "project": "Module Starter",
-      "client": "Module",
-      "tasks_total": 69,
-      "tasks_done": 27,
-      "on_deck": true,
-      "tasks": []
-    },
-    {
-      "slug": "peptiworth",
-      "project": "PeptiWorth",
-      "client": "PeptiWorth",
-      "tasks_total": 0,
-      "tasks_done": 0,
-      "on_deck": true,
-      "tasks": []
-    },
-    {
-      "slug": "pro-counters-erp",
-      "project": "Pro Counters ERP",
-      "client": "procounters_erp",
-      "tasks_total": 271,
-      "tasks_done": 226,
-      "on_deck": true,
-      "tasks": []
-    },
-    {
-      "slug": "pro-counters-website-rebuild",
-      "project": "Pro Counters — Website Rebuild",
-      "client": "Pro Counters New England (PCNE)",
-      "tasks_total": 35,
-      "tasks_done": 23,
-      "on_deck": true,
-      "tasks": []
-    },
-    {
-      "slug": "spellkin-nft-project",
-      "project": "Spellkin (NFT project)",
-      "client": "Spellkin",
-      "tasks_total": 0,
-      "tasks_done": 0,
-      "on_deck": true,
-      "tasks": []
-    },
-    {
-      "slug": "takeoff-engine-saas",
-      "project": "Takeoff Engine Saas",
-      "client": "Takeoff Engine",
-      "tasks_total": 38,
-      "tasks_done": 27,
-      "on_deck": true,
-      "tasks": []
-    },
-    {
-      "slug": "tasks-platform-claude-todos-skill-rebuild",
-      "project": "Tasks Platform (claude-todos-skill rebuild)",
-      "client": "Tasks Platform (claude-todos-skill rebuild)",
-      "tasks_total": 238,
-      "tasks_done": 143,
-      "on_deck": true,
-      "tasks": []
-    },
-    {
-      "slug": "tomato-android-internal-field-tools",
-      "project": "Tomato Android — Internal Field Tools",
-      "client": "Tomato Android — Internal Field Tools",
-      "tasks_total": 34,
-      "tasks_done": 5,
-      "on_deck": true,
-      "tasks": []
-    },
     {
       "slug": "dallo-usa",
       "project": "dallo-usa",
       "client": "Dallo",
       "tasks_total": 46,
       "tasks_done": 21,
-      "on_deck": true,
-      "tasks": []
+      "on_deck": false,
+      "tasks": [
+        {
+          "id": "t10",
+          "title": "Build Why Dallo USA page",
+          "phase": "Phase 3: Storefront Pages",
+          "estimate": "m",
+          "priority": "medium",
+          "status": "todo",
+          "notes": "Source: reference/content/why-dallo-usa.md.",
+          "block": { "start": "10:45", "end": "11:45" },
+          "prep": {
+            "what": "Build the /why-dallo-usa page from copy in `reference/content/why-dallo-usa.md`.",
+            "understand": "Dallo USA is Next.js 15 App Router + Tailwind v4 with a custom atelier identity: obsidian/bone/gold tokens in `app/globals.css`, Fraunces display font. Static pages render via MOCK_PAGES in the mock Shopify adapter — verify whether /why-dallo-usa should use the existing generic `app/[page]/page.tsx` route or a dedicated route. Brain is clean, no unresolved contradictions.",
+            "approach": [
+              "Read `reference/content/why-dallo-usa.md` for all section copy and structure.",
+              "Check how other MOCK_PAGES (e.g. /wholesale) render — if the generic `app/[page]/page.tsx` is expressive enough, register the slug there via MOCK_PAGES; otherwise create a dedicated `app/why-dallo-usa/page.tsx`.",
+              "Build with atelier section patterns: eyebrow in gold tracked-caps, Fraunces display heading, body in Geist sans, a bone-background CTA at the close.",
+              "Run `pnpm build` to verify TypeScript + Tailwind compile; check axe for accessibility (0 violations target)."
+            ],
+            "resources": [
+              "reference/content/why-dallo-usa.md (all copy)",
+              "app/page.tsx (home sections — use as design reference for atelier section patterns)",
+              "app/globals.css (Tailwind v4 theme: --color-obsidian, --color-bone, --color-gold)",
+              "lib/shopify/index.ts (MOCK_PAGES — register slug here if using generic route)"
+            ]
+          }
+        },
+        {
+          "id": "t16",
+          "title": "Search (client-side filter over mock products)",
+          "phase": "Phase 3: Storefront Pages",
+          "estimate": "s",
+          "priority": "medium",
+          "status": "todo",
+          "notes": "Client-side filter over mock products is fine for now. Real search swaps in when Shopify is wired (Phase 6).",
+          "block": { "start": "12:00", "end": "12:30" },
+          "prep": {
+            "what": "Add a text input filter to the /search page so users can type and narrow the product grid in real time.",
+            "understand": "The /search route already renders all products via the vercel/commerce pattern. This is a UI-only addition — no Shopify API changes. When the real Storefront API is wired (Phase 6), native search replaces this. The existing template may already have partial search wiring — check before writing from scratch.",
+            "approach": [
+              "Open `app/search/page.tsx` and check whether a search query is already threaded through from URL params (`searchParams.q` or similar) — it probably is, check if the mock adapter handles it.",
+              "If the mock adapter ignores the query, add a client-side `useState` text filter that filters the product array by title and description using `useMemo`.",
+              "Style the input field with the atelier theme (bone background, obsidian border, tracked-caps placeholder text `SEARCH PRODUCTS`).",
+              "Confirm /search and /search/[collection] still work correctly with no regression — run a quick `pnpm build`."
+            ],
+            "resources": [
+              "app/search/page.tsx (main search route)",
+              "app/search/[collection]/page.tsx (collection route — must still work)",
+              "lib/shopify/index.ts (getProducts — returns the full mock array)",
+              "components/grid/tile.tsx (GridTileImage — the existing product card)"
+            ]
+          }
+        },
+        {
+          "id": "t18",
+          "title": "B2B / Wholesale landing page with inquiry form (stubbed)",
+          "phase": "Phase 4: Custom Features (UI-only, integrations stubbed)",
+          "estimate": "m",
+          "priority": "high",
+          "status": "in_progress",
+          "notes": "Partial — /wholesale route resolves with placeholder copy. Still TODO: dedicated landing page UI (hero + pitch + inquiry form) and /api/b2b-inquiry stub route.",
+          "block": { "start": "16:30", "end": "17:30" },
+          "prep": {
+            "what": "Replace the /wholesale placeholder with a real B2B landing page: atelier hero, wholesale pitch, inquiry form posting to a stub API route.",
+            "understand": "/wholesale is already in MOCK_PAGES and in both header and footer nav. The route resolves but shows placeholder body. The inquiry form submission stubs to console.log — real CRM/Klaviyo wiring is Phase 6. Use the existing contact form in `app/page.tsx` as the structural reference (`ContactSection`, `useActionState`). Brain is clean — no decisions block this.",
+            "approach": [
+              "Find the /wholesale page component — check if it's served by the generic `app/[page]/page.tsx` or has a dedicated file; either way, replace the body.",
+              "Build the landing page: dark atelier hero with Fraunces heading ('Bring Dallo USA to your showroom'), 3 wholesale value props (tiered pricing, dedicated support, exclusive collections), then the inquiry form below.",
+              "Inquiry form fields: Company Name, Contact Name, Email, Est. Monthly Volume (select), Message — submit to `/api/b2b-inquiry`.",
+              "Create `app/api/b2b-inquiry/route.ts` — log the payload with `console.log('[b2b-inquiry]', body)` and return `Response.json({ ok: true })`.",
+              "Run `pnpm build` + a quick axe check on /wholesale."
+            ],
+            "resources": [
+              "app/page.tsx (ContactSection — existing form pattern with `useActionState` to mirror)",
+              "app/api/lead/route.ts (existing stub route — exact pattern to copy for b2b-inquiry)",
+              "lib/shopify/index.ts (MOCK_PAGES — verify /wholesale slug is registered)",
+              "app/globals.css (obsidian/bone/gold tokens for atelier styling)"
+            ]
+          }
+        },
+        {
+          "id": "t21",
+          "title": "Dynamic sitemap.ts + robots.txt",
+          "phase": "Phase 4: Custom Features (UI-only, integrations stubbed)",
+          "estimate": "s",
+          "priority": "medium",
+          "status": "todo",
+          "notes": "Generate sitemap from the mock product list; will switch to live Shopify product list automatically in Phase 6 when getProducts() returns live data.",
+          "block": { "start": "17:30", "end": "18:00" },
+          "prep": {
+            "what": "Add `app/sitemap.ts` and `app/robots.ts` to generate a valid XML sitemap and robots file from the mock product + page data.",
+            "understand": "Next.js 14+ has native support for `app/sitemap.ts` (returns `MetadataRoute.Sitemap`) and `app/robots.ts` (returns `MetadataRoute.Robots`) — both are SSG'd at build time and auto-generate routes. When Phase 6 lands, `getProducts()` already returns live Shopify products so zero code change is needed. SITE_URL is set in the Vercel env vars.",
+            "approach": [
+              "Create `app/sitemap.ts`: `export async function generateSitemaps()` or `default async function sitemap()` — call `getProducts()` and `getPages()` from the Shopify adapter, map each to `{ url, lastModified, changeFrequency, priority }`.",
+              "Create `app/robots.ts`: export `default function robots()` returning `{ rules: { userAgent: '*', allow: '/' }, sitemap: `${process.env.SITE_URL}/sitemap.xml` }`.",
+              "Run `pnpm build` and confirm `/sitemap.xml` and `/robots.txt` appear in the `.next` output."
+            ],
+            "resources": [
+              "nextjs.org/docs/app/api-reference/file-conventions/metadata/sitemap",
+              "nextjs.org/docs/app/api-reference/file-conventions/metadata/robots",
+              "lib/shopify/index.ts (getProducts, getPages — both mock and real adapters)",
+              "next.config.ts or .env.production (SITE_URL env var)"
+            ]
+          }
+        }
+      ]
     },
     {
-      "slug": "econoplatform",
-      "project": "econoplatform",
-      "client": "",
-      "tasks_total": 61,
-      "tasks_done": 33,
-      "on_deck": true,
-      "tasks": []
+      "slug": "haniel-finances",
+      "project": "Haniel Finances",
+      "client": "Haniel Finances",
+      "tasks_total": 35,
+      "tasks_done": 20,
+      "on_deck": false,
+      "tasks": [
+        {
+          "id": "t28",
+          "title": "Add LLM client (provider-neutral) + graceful fallback — Phase 5 foundation",
+          "phase": "Phase 5 · 100% · AI & Timeline",
+          "estimate": "s",
+          "priority": "high",
+          "status": "todo",
+          "notes": "No LLM SDK installed — gates all of Phase 5 (t23 AI analyst, t24 natural-language Q&A). Recommended: MiniMax via openai pkg baseURL override.",
+          "block": { "start": "09:00", "end": "09:30" },
+          "prep": {
+            "what": "Install `openai` npm package and create `lib/ai/client.ts` — a small provider-neutral LLM client wrapper that returns null/no-op when unconfigured, so Phase 5 features fail gracefully.",
+            "understand": "No LLM SDK exists in this codebase. This one task unblocks everything in Phase 5. MiniMax (api.minimax.io) is Haniel's house model — it's OpenAI API-compatible, so the `openai` npm package + a `OPENAI_BASE_URL` env var override is the cleanest integration path. The fallback is critical: `lib/advisor/insights.ts` (the deterministic 6-rule advisor) must keep working without any AI credentials. Brain has 0 unresolved contradictions — clean path.",
+            "approach": [
+              "Run `pnpm add openai` in the project root.",
+              "Create `lib/ai/client.ts`: read `OPENAI_API_KEY` and `OPENAI_BASE_URL` from env; if both present, construct `new OpenAI({ apiKey, baseURL })`; if absent, return null.",
+              "Export a `chat(messages: { role: string; content: string }[]): Promise<string>` helper — calls the client's `chat.completions.create()` or returns `''` when client is null.",
+              "Add `OPENAI_API_KEY=` and `OPENAI_BASE_URL=https://api.minimax.io/v1` to `.env.example` (blank key so nothing leaks).",
+              "Run `tsc --noEmit` to confirm zero type errors."
+            ],
+            "resources": [
+              "api.minimax.io docs (MiniMax OpenAI-compatible API — confirm /v1/chat/completions endpoint)",
+              "npm: openai (npm.im/openai — use the installed version compatible with the project's Node)",
+              "lib/advisor/insights.ts (deterministic advisor — the Phase 5 fallback target, see the Insight[] shape)",
+              ".env.example (add new vars here)"
+            ]
+          }
+        },
+        {
+          "id": "t16",
+          "title": "Household Cash Flow engine — safe-to-spend + available-to-invest",
+          "phase": "Phase 4 · 95% · Cash Flow, Metrics & Reports",
+          "estimate": "l",
+          "priority": "high",
+          "status": "in_progress",
+          "notes": "REMAINING: monthlyInvestmentsCents is hardcoded 0 in dashboard page.tsx (~L301-309) — wire it to RecurringContribution schedules so safe-to-spend stops overstating by the auto-invest reserve.",
+          "block": { "start": "14:15", "end": "16:15" },
+          "prep": {
+            "what": "Fix the hardcoded `monthlyInvestmentsCents = 0` bug in the dashboard — query RecurringContribution totals and thread them into the safe-to-spend formula.",
+            "understand": "Safe-to-spend = income − fixed bills − investing − discretionary. The 'investing' term is currently 0 — the app ignores your recurring investment contributions when calculating spendable cash, so the number overstates by whatever you auto-invest monthly. The `RecurringContribution` Prisma model already stores these schedules; the fix queries it and passes the monthly total into the existing formula. Owner-scoping should mirror the pattern in `lib/finance/net-worth.ts`. Brain is clean — 0 unresolved contradictions.",
+            "approach": [
+              "Find the hardcoded value at `app/(app)/dashboard/page.tsx` ~L301-309 — confirm the exact variable name and what data shape the safe-to-spend function expects.",
+              "Check `lib/finance/bill-costs.ts` (or `lib/finance/cash-flow.ts`) to see if RecurringContribution is already queried anywhere — reuse rather than duplicate.",
+              "Add or extend a data-fetching function: `prisma.recurringContribution.aggregate({ where: { active: true, ownerUserId: ... }, _sum: { amountCents: true } })` — owner-scope it the same way net-worth.ts does.",
+              "Thread the result as `monthlyInvestmentsCents` into the safe-to-spend dashboard call.",
+              "Verify: the dashboard card shows a lower (more accurate) safe-to-spend number. Run `tsc --noEmit` + unit tests."
+            ],
+            "resources": [
+              "app/(app)/dashboard/page.tsx:301-309 (the hardcoded 0 — start here)",
+              "prisma/schema.prisma (RecurringContribution model — check field names: amountCents, active, ownerUserId)",
+              "lib/finance/net-worth.ts (fetchNetWorthInputs — owner-scoping pattern to mirror)",
+              "lib/finance/bill-costs.ts (existing recurring query pattern to reuse)"
+            ]
+          }
+        }
+      ]
     },
-    {
-      "slug": "influencer-agent",
-      "project": "influencer-agent",
-      "client": "influencer-agent",
-      "tasks_total": 51,
-      "tasks_done": 9,
-      "on_deck": true,
-      "tasks": []
-    },
-    {
-      "slug": "orc",
-      "project": "orc",
-      "client": "orc",
-      "tasks_total": 199,
-      "tasks_done": 111,
-      "on_deck": true,
-      "tasks": []
-    }
+    { "slug": "az-print-shop-erp", "project": "AZ Print Shop ERP", "client": "AZ Team", "tasks_total": 82, "tasks_done": 0, "on_deck": true, "tasks": [] },
+    { "slug": "az-takeoff-saas", "project": "AZ Takeoff SaaS", "client": "AZ Takeoff", "tasks_total": 38, "tasks_done": 0, "on_deck": true, "tasks": [] },
+    { "slug": "az-team-ai-system", "project": "AZ Team AI System", "client": "AZ Team AI System", "tasks_total": 3, "tasks_done": 0, "on_deck": true, "tasks": [] },
+    { "slug": "cleansaas", "project": "CleanSaaS", "client": "CleanSaaS", "tasks_total": 4, "tasks_done": 3, "on_deck": true, "tasks": [] },
+    { "slug": "econoplatform", "project": "econoplatform", "client": "", "tasks_total": 28, "tasks_done": 0, "on_deck": true, "tasks": [] },
+    { "slug": "fitness-zone", "project": "Fitness Zone", "client": "Fitness Zone", "tasks_total": 13, "tasks_done": 10, "on_deck": true, "tasks": [] },
+    { "slug": "gloopy-3d-youtube-shorts", "project": "Gloopy 3D · YouTube Shorts", "client": "Gloopy 3D · YouTube Shorts", "tasks_total": 84, "tasks_done": 0, "on_deck": true, "tasks": [] },
+    { "slug": "gloopy3d-site", "project": "Gloopy3D Site", "client": "Gloopy3D", "tasks_total": 0, "tasks_done": 0, "on_deck": true, "tasks": [] },
+    { "slug": "gs-erp-next", "project": "GS-ERP Next", "client": "GS-ERP Next", "tasks_total": 42, "tasks_done": 0, "on_deck": true, "tasks": [] },
+    { "slug": "gs-woodworking-erp", "project": "GS WoodWorking ERP", "client": "GS-ERP", "tasks_total": 217, "tasks_done": 0, "on_deck": true, "tasks": [] },
+    { "slug": "influencer-agent", "project": "influencer-agent", "client": "influencer-agent", "tasks_total": 43, "tasks_done": 0, "on_deck": true, "tasks": [] },
+    { "slug": "module-starter", "project": "Module Starter", "client": "Module", "tasks_total": 42, "tasks_done": 0, "on_deck": true, "tasks": [] },
+    { "slug": "peptiworth", "project": "PeptiWorth", "client": "PeptiWorth", "tasks_total": 0, "tasks_done": 0, "on_deck": true, "tasks": [] },
+    { "slug": "pro-counters-erp", "project": "Pro Counters ERP", "client": "procounters_erp", "tasks_total": 46, "tasks_done": 0, "on_deck": true, "tasks": [] },
+    { "slug": "pro-counters-website-rebuild", "project": "Pro Counters — Website Rebuild", "client": "Pro Counters New England (PCNE)", "tasks_total": 12, "tasks_done": 0, "on_deck": true, "tasks": [] },
+    { "slug": "spellkin-nft-project", "project": "Spellkin (NFT project)", "client": "Spellkin", "tasks_total": 0, "tasks_done": 0, "on_deck": true, "tasks": [] },
+    { "slug": "takeoff-engine-saas", "project": "Takeoff Engine Saas", "client": "Takeoff Engine", "tasks_total": 11, "tasks_done": 0, "on_deck": true, "tasks": [] },
+    { "slug": "tasks-platform-claude-todos-skill-rebuild", "project": "Tasks Platform (claude-todos-skill rebuild)", "client": "Tasks Platform (claude-todos-skill rebuild)", "tasks_total": 95, "tasks_done": 0, "on_deck": true, "tasks": [] },
+    { "slug": "tomato-android-internal-field-tools", "project": "Tomato Android — Internal Field Tools", "client": "Tomato Android — Internal Field Tools", "tasks_total": 30, "tasks_done": 0, "on_deck": true, "tasks": [] },
+    { "slug": "orc", "project": "orc", "client": "orc", "tasks_total": 110, "tasks_done": 0, "on_deck": true, "tasks": [] }
   ],
   "waiting_on": [
     {
-      "project": "Fitness Zone",
-      "task_id": "t10",
-      "title": "Real products, photos, prices, shipping rates and policy pages from owners",
-      "reason": "Owners need to supply real product photos, prices, and policy pages before the store can go live. Seven placeholder drafts are seeded but hidden."
+      "project": "dallo-usa",
+      "task_id": "t36",
+      "title": "DNS cutover to Vercel",
+      "reason": "Haniel has no GoDaddy login — needs Bruno (Dallo client) to grant delegate access so the A record and CNAME can be updated. GoDaddy credentials currently with Bruno."
     },
     {
-      "project": "Fitness Zone",
+      "project": "dallo-usa",
+      "task_id": "t46",
+      "title": "Client: pick Shopify plan + configure payments + rotate store password",
+      "reason": "Checkout shows 'store isn't set up to receive orders' — client (Bruno) must select the $1 promo plan and enable payments. Store password was also shared in plaintext and needs rotation + 2FA from client side."
+    },
+    {
+      "project": "dallo-usa",
+      "task_id": "t20",
+      "title": "301 redirect map — per-product stone-care URLs",
+      "reason": "Generic category redirects are live. Per-product redirects need the 4 stone-care SKUs to exist in Shopify — client must import/add them before the product-specific 301s can be finalized."
+    },
+    {
+      "project": "fitness-zone",
+      "task_id": "t10",
+      "title": "Real products, photos, prices, shipping rates and policy pages",
+      "reason": "Seven mockup products are seeded as hidden drafts with placeholder prices. Waiting for gym owners to provide real product catalog, photography, pricing and policy content."
+    },
+    {
+      "project": "fitness-zone",
       "task_id": "t11",
       "title": "Stripe or Square account keys, webhooks and tax rules",
-      "reason": "Needs owners' payment gateway test keys and tax decisions. Stripe CLI login expired 2026-09-30; no live keys in hand."
+      "reason": "Full buy flow proven locally with a Stripe stand-in, but real live keys haven't arrived. Stripe CLI login expired 2026-09-30. Waiting for owners to get paid accounts and provide keys."
     },
     {
-      "project": "Fitness Zone",
+      "project": "fitness-zone",
       "task_id": "t12",
-      "title": "Deploy store to Hostinger (owner admin account + mailbox left)",
-      "reason": "Preview is live and crons are on, but owners' admin account email and store mailbox SMTP are still needed to complete the deploy."
-    },
-    {
-      "project": "Pro Counters — Website Rebuild",
-      "task_id": "t1",
-      "title": "Copy for the 4 held service pages (blocked on PCNE)",
-      "reason": "Service page body copy (sink installation, backsplash, countertop repair, removal) must come from PCNE — pages exist in config with no content."
-    },
-    {
-      "project": "Pro Counters — Website Rebuild",
-      "task_id": "t8",
-      "title": "Owner confirmations left over from the clickable + copy round",
-      "reason": "Decisions only PCNE can make: Google Business Profile review link, any other owner-facing copy choices surfaced during t7."
+      "title": "Store deploy: owner admin account + store mailbox",
+      "reason": "Store preview is live with crons + registration closed. Last steps need owners' email for the admin account and a confirmed store mailbox for MAIL_* SMTP config."
     }
   ]
 }
