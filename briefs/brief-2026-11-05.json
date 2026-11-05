@@ -1,0 +1,288 @@
+{
+  "date": "2026-11-05",
+  "generated_at": "2026-11-05T11:09:39Z",
+  "data_as_of": "2026-11-05T06:00:28+00:00",
+  "greeting": "Morning, Haniel. VPS upgrade day — the server gets its RAM, the labels lane gets its AI, and Pro Counters gets one step closer to 100. Stack is lined up. Let's go.",
+  "hype": "You have a server upgrade scheduled for first thing, two high-value SaaS tasks queued behind it, and a client site closing in on Lighthouse 100. This is a full-send kind of day — work the list top to bottom and you'll finish it strong.",
+  "notice": "Open Hostinger hPanel before 9 AM and read .orc/reports/takeoff-engine-engine-cost-20261104-221300-upgrade-handoff.md — the VPS upgrade runs first block and the steps are precise.",
+  "difficulty": {
+    "rating": "Solid",
+    "planned_minutes": 390,
+    "available_minutes": 450,
+    "ratio": 0.87,
+    "note": ""
+  },
+  "window": { "start": "09:00", "end": "18:00" },
+  "schedule": [
+    {
+      "start": "09:00", "end": "10:00",
+      "slug": "takeoff-engine-saas", "project": "Takeoff Engine Saas",
+      "task_id": "t39", "title": "HANDOFF: Hostinger KVM1→KVM2 (8 GB) upgrade",
+      "estimate": "m", "kind": "task"
+    },
+    {
+      "start": "10:00", "end": "10:15",
+      "kind": "event", "title": "💰 Decide on RaptorX bounty (due Sat 9:59 PM)"
+    },
+    {
+      "start": "10:30", "end": "11:00",
+      "slug": "pro-counters-website-rebuild", "project": "Pro Counters — Website Rebuild",
+      "task_id": "t2", "title": "Rewrite the privacy policy — inherited text is now factually wrong",
+      "estimate": "s", "kind": "task"
+    },
+    {
+      "start": "11:00", "end": "12:00",
+      "slug": "takeoff-engine-saas", "project": "Takeoff Engine Saas",
+      "task_id": "t26", "title": "Label lane v2: M3 vision for outlined-text firms + callout-vs-room filtering",
+      "estimate": "m", "kind": "task"
+    },
+    {
+      "start": "12:00", "end": "13:00",
+      "slug": "pro-counters-website-rebuild", "project": "Pro Counters — Website Rebuild",
+      "task_id": "p3t0", "title": "Performance hardening — target 100 on every page, desktop + mobile",
+      "estimate": "m", "kind": "task"
+    },
+    {
+      "start": "13:00", "end": "14:00",
+      "kind": "lunch", "title": "Lunch"
+    },
+    {
+      "start": "14:00", "end": "16:00",
+      "slug": "takeoff-engine-saas", "project": "Takeoff Engine Saas",
+      "task_id": "t18", "title": "Assemblies-per-room → paint/drywall/flooring quantities + wall heights",
+      "estimate": "l", "kind": "task"
+    },
+    {
+      "start": "16:00", "end": "17:00",
+      "slug": "takeoff-engine-saas", "project": "Takeoff Engine Saas",
+      "task_id": "t16", "title": "Door recall round 2 + bi-fold / cased-opening recall",
+      "estimate": "m", "kind": "task"
+    }
+  ],
+  "projects": [
+    {
+      "slug": "takeoff-engine-saas",
+      "project": "Takeoff Engine Saas",
+      "client": "Takeoff Engine",
+      "tasks_total": 39,
+      "tasks_done": 27,
+      "on_deck": false,
+      "tasks": [
+        {
+          "id": "t39",
+          "title": "HANDOFF: Hostinger KVM1→KVM2 (8 GB) upgrade",
+          "phase": "Inbox",
+          "estimate": "m",
+          "priority": "med",
+          "status": "todo",
+          "notes": "Scheduled for today. Steps: quiesce writers → backup 6 app DBs → hPanel snapshot + click Upgrade → health check. Keep engine at 1500 MiB after upgrade.",
+          "block": { "start": "09:00", "end": "10:00" },
+          "prep": {
+            "what": "Run the Hostinger VPS upgrade from KVM1 to KVM2 (8 GB RAM) for the Takeoff Engine server.",
+            "understand": "This is a live server migration with a precise order of operations. The backup script (`backup_azteam_vps.py`) isolates all 6 app DBs with off-host hashes for a safe isolated restore. After the upgrade, the engine must stay at 1500 MiB limit until the Linux corpus proof at 4 GiB/3200 MiB passes separately. The free-plan branch (`cost/engine-free-plan-20261104`, commit 010570e) ships only after that proof.",
+            "approach": [
+              "Read `.orc/reports/takeoff-engine-engine-cost-20261104-221300-upgrade-handoff.md` and `tools/ops/README.md` (commit 930cabe) end-to-end before touching anything.",
+              "Quiesce writers, then run: `python3 tools/ops/backup_azteam_vps.py --execute --quiesced` — backs up 6 app DBs with isolated restore verification and off-host hashes.",
+              "Take the hPanel snapshot and click the KVM2 Upgrade in Hostinger's control panel.",
+              "Run `check_azteam_vps.py` health check to confirm all services are up; verify engine is still at 1500 MiB limit."
+            ],
+            "resources": [
+              ".orc/reports/takeoff-engine-engine-cost-20261104-221300-upgrade-handoff.md",
+              "tools/ops/README.md (commit 930cabe)",
+              "tools/ops/backup_azteam_vps.py",
+              "tools/ops/check_azteam_vps.py",
+              "Hostinger hPanel → KVM → Upgrade button"
+            ]
+          }
+        },
+        {
+          "id": "t26",
+          "title": "Label lane v2: M3 vision for outlined-text firms + callout-vs-room filtering",
+          "phase": "Phase 5 · 95% · Engine Upgrade Waves (W12 R2+)",
+          "estimate": "m",
+          "priority": "high",
+          "status": "todo",
+          "notes": "Rooms show 'unnamed' on PDFTron plans because all text is outlined — the live-text lane finds nothing. M3 tiles lane proven in spike (run_labels_m3tiles.py, ~4.3 min/sheet). MINIMAX_AI key must reach the VPS. Add callout-vs-room filtering for Holabird noise.",
+          "block": { "start": "11:00", "end": "12:00" },
+          "prep": {
+            "what": "Productize the M3 tiles vision lane as an opt-in 'read labels (AI)' action, and add callout-vs-room noise filtering.",
+            "understand": "PDFTron outlines ALL text on some firm plans (the famous probe finding — 55 live words, zero room labels found on Harborview). The M3 tiles lane (spike `run_labels_m3tiles.py`) reads labels from rasterized tiles using the MINIMAX_AI vision model at ~4.3 min/sheet. Holabird confirms the lane works: 92/109 rooms named in PROD. The noise problem is R13-documented: general-note paragraphs, UP stair arrows, and FEC callouts all match as room names. The §7a metered-credits event gates credit consumption. MINIMAX_AI key must be in VPS secrets.",
+            "approach": [
+              "Productize `run_labels_m3tiles.py` as an opt-in 'read labels (AI)' action triggered from the UI (button, not auto-run — it costs credits).",
+              "Wire the §7a metered-credits event so each invocation charges the correct credit amount.",
+              "Confirm MINIMAX_AI key is reachable from the VPS (the key must reach the VPS per existing decision); if not, add it to the secrets config.",
+              "Add callout-vs-room filtering: exclude general-note paragraphs, UP stair arrows, and FEC callouts from room-name candidates using R13 patterns."
+            ],
+            "resources": [
+              "spike: run_labels_m3tiles.py",
+              "MINIMAX_AI API key (VPS secrets — api.minimax.io)",
+              "R13 docs — callout-vs-room noise patterns",
+              "§7a metered-credits spec (PRD)",
+              "Holabird GT set (verify 92/109 baseline holds)"
+            ]
+          }
+        },
+        {
+          "id": "t18",
+          "title": "Assemblies-per-room → paint/drywall/flooring quantities + wall heights",
+          "phase": "Phase 6 · 95% · Pillar 3 (Counts) + Assemblies",
+          "estimate": "l",
+          "priority": "high",
+          "status": "in_progress",
+          "notes": "PRD Phase 1. Scaffold in engine/assemblies.py. Full version: room type → CSI assembly formulas → up to 8 quantities. Last pillar between us and estimator-grade Excel.",
+          "block": { "start": "14:00", "end": "16:00" },
+          "prep": {
+            "what": "Finish the assemblies-per-room engine: wire room-type classification into the CSI library to produce paint, drywall, flooring quantities, and wall heights per room.",
+            "understand": "This is PRD Phase 1 / Pillar 3. The scaffold is in `engine/assemblies.py` (folded into B1). The pattern: classified room type → CSI library formulas → up to 8 quantities per room. Example: 'bathroom' → wall sqft (paint), wall panels (drywall), floor sqft (flooring), 8-ft wall height. The room classifier (t6, done) feeds this. This is the last pillar before estimator-grade Excel output.",
+            "approach": [
+              "Review `engine/assemblies.py` scaffold and the existing room-type classifier output format to understand the interface contract.",
+              "Map each room type to its CSI library formulas: at minimum paint (wall sqft), drywall (wall + ceiling panels), flooring (floor sqft), wall height (type-specific default).",
+              "Wire the classifier output into assemblies.py and produce a quantities dict per room.",
+              "Add a round-trip test: classified room → assemblies dict → verify output quantities match a known room spec."
+            ],
+            "resources": [
+              "engine/assemblies.py (B1 scaffold)",
+              "PRD §C11 / Phase 1 (assemblies spec)",
+              "CSI division libraries (paint, drywall, flooring formulas)",
+              "Room classifier output format (from t6)"
+            ]
+          }
+        },
+        {
+          "id": "t16",
+          "title": "Door recall round 2 + bi-fold / cased-opening recall",
+          "phase": "Phase 5 · 95% · Engine Upgrade Waves (W12 R2+)",
+          "estimate": "m",
+          "priority": "med",
+          "status": "todo",
+          "notes": "Door recall is THE constraint blocking the global seal relax. t15 made chord chords safe (localseal guard). Bottleneck: 0.00 chords/GT on holabird/mitchell/washington/merrimack. Bi-fold shipped (scallop-ink-inside-gap); symbol detectors failed on furniture noise — shift to raster-gap detection.",
+          "block": { "start": "16:00", "end": "17:00" },
+          "prep": {
+            "what": "Improve door-opening recall via raster-gap detection and add bi-fold / cased-opening detection to unblock the global SEAL_FT relax.",
+            "understand": "Door recall blocks the SEAL_FT global seal relax. The localseal coverage guard (t15) made this safe: bad chords now self-revert instead of merging rooms. The bottleneck is chord coverage — 0.00 on holabird/mitchell/washington/merrimack (0.32 on dental). Once coverage passes ~0.6, localseal pays off. Symbol-based detectors failed due to furniture noise; raster-gap detection is the next approach. Bi-fold detection shipped (scallop-ink-inside-gap), so focus on recall improvements there + cased openings.",
+            "approach": [
+              "Pull the failing GT sets (holabird/mitchell/washington/merrimack) and run `docs/spike/w13_localseal_guard.py` to get baseline chord coverage per set.",
+              "Implement raster-gap detection for door recall as a replacement for the failed symbol-based approach.",
+              "Test bi-fold / cased-opening patterns against the dental GT set where scallop detection works.",
+              "Re-run the 12-judge GT corpus scorer and confirm chord coverage improvement above 0.3+ on the target sets."
+            ],
+            "resources": [
+              "docs/spike/w13_localseal_guard.py",
+              "GT sets: holabird, mitchell, washington, merrimack, dental",
+              "STATE.md (R13 era — door recall notes at line 472)",
+              "12-judge GT corpus scorer harness",
+              "ML-FINDINGS.md (raster approach notes)"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "slug": "pro-counters-website-rebuild",
+      "project": "Pro Counters — Website Rebuild",
+      "client": "Pro Counters New England (PCNE)",
+      "tasks_total": 35,
+      "tasks_done": 23,
+      "on_deck": false,
+      "tasks": [
+        {
+          "id": "t2",
+          "title": "Rewrite the privacy policy — inherited text is now factually wrong",
+          "phase": "Pages",
+          "estimate": "s",
+          "priority": "high",
+          "status": "todo",
+          "notes": "Current policy describes Netlify Forms and Elfsight (both gone). Real flow: submissions POST to CRM Lead Intake API; local mirror with 90-day deletion. Decision d10 has the answer. config/legal.php has the text + needs_rewrite flag.",
+          "block": { "start": "10:30", "end": "11:00" },
+          "prep": {
+            "what": "Rewrite the Pro Counters privacy policy in config/legal.php to accurately describe the new site's data flow (CRM API submissions, 90-day local mirror deletion).",
+            "understand": "The old policy is wrong: it mentions Netlify Forms (removed — forms now POST to the CRM Lead Intake API), Elfsight embeds (removed), and third-party-served fonts (now self-hosted). Decision d10 settled the answer: local delivery-safety mirror with a 90-day automatic deletion. A published retention claim the code doesn't enforce is WORSE than no policy. The dependency (p2t1 settling the leads mirror question) is now done — proceed.",
+            "approach": [
+              "Read `config/legal.php` to see the current policy text, the `needs_rewrite` flag, and what the old Sharing/Retention sections say.",
+              "Remove all Netlify Forms, Elfsight, and third-party font references from the policy text.",
+              "Rewrite the Sharing section: form submissions POST to the CRM Lead Intake API; a local delivery-safety mirror retains them for 90 days then auto-deletes.",
+              "Rewrite the Data Retention section with the 90-day auto-deletion policy and unset the `needs_rewrite` flag."
+            ],
+            "resources": [
+              "config/legal.php (current policy + needs_rewrite flag)",
+              "Decision d10 answer (90-day local mirror confirmed)",
+              "app/Http/ — lead intake route to verify the actual POST destination"
+            ]
+          }
+        },
+        {
+          "id": "p3t0",
+          "title": "Performance hardening — target 100 on every page, desktop + mobile",
+          "phase": "Lighthouse 100 + Agentic Browsing",
+          "estimate": "m",
+          "priority": "high",
+          "status": "todo",
+          "notes": "Structural work already done (3,209-byte app.js, self-hosted fonts, fetchpriority=high heroes, CLS structurally zero, no third-party embeds). Remaining: run Lighthouse per route, fix what actually fails. Likely culprit: shared-hosting TTFB on cold PHP.",
+          "block": { "start": "12:00", "end": "13:00" },
+          "prep": {
+            "what": "Run Lighthouse across the site's key pages and fix any performance failures — the structural foundation is already in place, this is measure-then-fix.",
+            "understand": "The heavy structural work is done: `app.js` ships at 3,209 bytes with no React preload, fonts are self-hosted woff2 via `bunny()` with metric-adjusted fallbacks (zero third-party origins), heroes use `fetchpriority=high` as real `<img>` elements, CLS is structurally zero (width+height from build manifest), and all three heavy third-party embeds are gone. The likely remaining issue is TTFB on cold PHP (shared hosting). Fix path: `php artisan optimize` (route/view/config caching) first, then full-page HTML cache if TTFB is still the blocker.",
+            "approach": [
+              "Run Lighthouse CLI or Chrome DevTools against: home page, a service page, and one town page — both mobile (Lighthouse 'mobile' preset) and desktop.",
+              "Record the actual failing metrics and their scores (don't guess — measure first).",
+              "If TTFB > 600ms: run `php artisan optimize` on the host (or confirm it already runs in the deploy script) to enable route/view/config caching.",
+              "Re-run Lighthouse after the cache fix and confirm the score improves; iterate until 100 on the tested pages."
+            ],
+            "resources": [
+              "Lighthouse CLI: `npx lighthouse <url> --preset=desktop --output=html`",
+              "Chrome DevTools MCP `lighthouse_audit` tool",
+              "Laravel `php artisan optimize` (route cache + view cache + config cache)",
+              "deploy/deploy-ssh.sh — check if optimize already runs at deploy time"
+            ]
+          }
+        }
+      ]
+    },
+    { "slug": "az-print-shop-erp", "project": "AZ Print Shop ERP", "client": "AZ Team", "tasks_total": 133, "tasks_done": 51, "on_deck": true, "tasks": [] },
+    { "slug": "az-takeoff-saas", "project": "AZ Takeoff SaaS", "client": "AZ Takeoff", "tasks_total": 81, "tasks_done": 41, "on_deck": true, "tasks": [] },
+    { "slug": "az-team-ai-system", "project": "AZ Team AI System", "client": "AZ Team AI System", "tasks_total": 75, "tasks_done": 72, "on_deck": true, "tasks": [] },
+    { "slug": "cleansaas", "project": "CleanSaaS", "client": "CleanSaaS", "tasks_total": 6, "tasks_done": 3, "on_deck": true, "tasks": [] },
+    { "slug": "dallo-usa", "project": "dallo-usa", "client": "Dallo", "tasks_total": 46, "tasks_done": 21, "on_deck": true, "tasks": [] },
+    { "slug": "econoplatform", "project": "econoplatform", "client": "", "tasks_total": 61, "tasks_done": 33, "on_deck": true, "tasks": [] },
+    { "slug": "fitness-zone", "project": "Fitness Zone", "client": "Fitness Zone", "tasks_total": 13, "tasks_done": 10, "on_deck": true, "tasks": [] },
+    { "slug": "gloopy-3d-youtube-shorts", "project": "Gloopy 3D · YouTube Shorts", "client": "Gloopy 3D · YouTube Shorts", "tasks_total": 176, "tasks_done": 92, "on_deck": true, "tasks": [] },
+    { "slug": "gloopy3d-site", "project": "Gloopy3D Site", "client": "Gloopy3D", "tasks_total": 0, "tasks_done": 0, "on_deck": true, "tasks": [] },
+    { "slug": "gs-erp-next", "project": "GS-ERP Next", "client": "GS-ERP Next", "tasks_total": 78, "tasks_done": 36, "on_deck": true, "tasks": [] },
+    { "slug": "gs-woodworking-erp", "project": "GS WoodWorking ERP", "client": "GS-ERP", "tasks_total": 261, "tasks_done": 41, "on_deck": true, "tasks": [] },
+    { "slug": "haniel-finances", "project": "Haniel Finances", "client": "Haniel Finances", "tasks_total": 35, "tasks_done": 20, "on_deck": true, "tasks": [] },
+    { "slug": "influencer-agent", "project": "influencer-agent", "client": "influencer-agent", "tasks_total": 52, "tasks_done": 9, "on_deck": true, "tasks": [] },
+    { "slug": "module-starter", "project": "Module Starter", "client": "Module", "tasks_total": 69, "tasks_done": 27, "on_deck": true, "tasks": [] },
+    { "slug": "orc", "project": "orc", "client": "orc", "tasks_total": 223, "tasks_done": 113, "on_deck": true, "tasks": [] },
+    { "slug": "peptiworth", "project": "PeptiWorth", "client": "PeptiWorth", "tasks_total": 0, "tasks_done": 0, "on_deck": true, "tasks": [] },
+    { "slug": "pro-counters-erp", "project": "Pro Counters ERP", "client": "procounters_erp", "tasks_total": 359, "tasks_done": 310, "on_deck": true, "tasks": [] },
+    { "slug": "spellkin-nft-project", "project": "Spellkin (NFT project)", "client": "Spellkin", "tasks_total": 0, "tasks_done": 0, "on_deck": true, "tasks": [] },
+    { "slug": "tasks-platform-claude-todos-skill-rebuild", "project": "Tasks Platform (claude-todos-skill rebuild)", "client": "Tasks Platform (claude-todos-skill rebuild)", "tasks_total": 263, "tasks_done": 168, "on_deck": true, "tasks": [] },
+    { "slug": "tomato-android-internal-field-tools", "project": "Tomato Android — Internal Field Tools", "client": "Tomato Android — Internal Field Tools", "tasks_total": 35, "tasks_done": 5, "on_deck": true, "tasks": [] }
+  ],
+  "waiting_on": [
+    {
+      "project": "Pro Counters — Website Rebuild",
+      "task_id": "t1",
+      "title": "Copy for the 4 held service pages",
+      "reason": "Needs real service-page copy from PCNE (sink installation, backsplash, countertop repair, countertop removal) — no body content exists yet"
+    },
+    {
+      "project": "Pro Counters — Website Rebuild",
+      "task_id": "t3",
+      "title": "Verify NAP + geo against the Google Business Profile",
+      "reason": "Needs PCNE to confirm hours, address, phone, and GBP lat/long pin before DNS cutover — a wrong NAP in JSON-LD damages local SEO site-wide"
+    },
+    {
+      "project": "Pro Counters — Website Rebuild",
+      "task_id": "t8",
+      "title": "Owner confirmations left over from the clickable + copy round",
+      "reason": "Decisions only PCNE can make: GBP review link, Enigma brand confirmation, four softened copy claims, and About-page card destinations"
+    },
+    {
+      "project": "CleanSaaS",
+      "task_id": "t5",
+      "title": "HANDOFF: ship AZ Maid site",
+      "reason": "Deploy is ready (PR #61 approved, CI fix known) but needs Haniel's fresh DB dump approval via orc relay before merge + deploy"
+    }
+  ]
+}
